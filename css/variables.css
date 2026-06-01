@@ -1,0 +1,107 @@
+/* =========================================================
+   RIO CHICO STUDIO — CSS VARIABLES
+   Cambia qui per personalizzare l'intero sito istantaneamente
+   ========================================================= */
+
+:root {
+
+  /* ---- COLORI PRINCIPALI ---- */
+  --clr-bg:           #0a0a0a;      /* sfondo base */
+  --clr-bg-2:         #111111;      /* sfondo alternativo sezioni */
+  --clr-surface:      #1a1a1a;      /* card, panel */
+  --clr-surface-2:    #222222;      /* card hover, bordi */
+
+  --clr-accent:       #cc0000;      /* colore principale */
+  --clr-accent-light: #ff3333;      /* accent più luminoso */
+  --clr-accent-dark:  #880000;      /* accent più scuro */
+  --clr-accent-glow:  rgba(204, 0, 0, 0.25);   /* glow/ombra accent */
+  --clr-accent-subtle:rgba(204, 0, 0, 0.08);   /* sfondo sottile accent */
+
+  --clr-text:         #ffffff;      /* testo principale */
+  --clr-text-muted:   #888888;      /* testo secondario */
+  --clr-text-dim:     #444444;      /* testo disabilitato */
+  --clr-border:       rgba(255,255,255,0.08);   /* bordi sottili */
+  --clr-border-accent:rgba(204, 0, 0, 0.4);    /* bordi con accent */
+
+  /* ---- TIPOGRAFIA ---- */
+  --font-heading: 'Bebas Neue', 'Impact', 'Arial Narrow', sans-serif;
+  --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'Courier New', 'Consolas', monospace;
+  --font-jp:      'Noto Serif JP', serif; /* per testo giapponese opzionale */
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  2rem;
+  --text-3xl:  3rem;
+  --text-4xl:  4rem;
+  --text-5xl:  6rem;
+  --text-6xl:  8rem;
+
+  --leading-tight:  1.1;
+  --leading-normal: 1.5;
+  --leading-loose:  1.8;
+  --tracking-wide:  0.08em;
+  --tracking-wider: 0.15em;
+  --tracking-widest:0.3em;
+
+  /* ---- LAYOUT & SPAZIATURA ---- */
+  --nav-height:      4rem;
+  --max-width:       1400px;
+  --section-pad-y:   7rem;
+  --section-pad-x:   2rem;
+  --gap-sm:          1rem;
+  --gap-md:          2rem;
+  --gap-lg:          4rem;
+
+  /* ---- BORDI & FORME ---- */
+  --radius-sm:  0.125rem;
+  --radius-md:  0.25rem;
+  --radius-lg:  0.5rem;
+  --radius-xl:  1rem;
+
+  /* Clip paths geometrici */
+  --clip-hero:      polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  --clip-diagonal:  polygon(1.5rem 0, 100% 0, calc(100% - 1.5rem) 100%, 0 100%);
+  --clip-slash-r:   polygon(0 0, 100% 0, 100% 100%, 1.5rem 100%);
+  --clip-slash-l:   polygon(0 0, calc(100% - 1.5rem) 0, 100% 100%, 0 100%);
+  --clip-corner:    polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), calc(100% - 1.5rem) 100%, 0 100%);
+
+  /* ---- OMBRE ---- */
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md:      0 4px 16px rgba(0,0,0,0.6);
+  --shadow-lg:      0 8px 40px rgba(0,0,0,0.8);
+  --shadow-accent:  0 0 30px var(--clr-accent-glow);
+  --shadow-glow:    0 0 60px var(--clr-accent-glow);
+
+  /* ---- TRANSIZIONI ---- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --dur-fast:   0.15s;
+  --dur-med:    0.3s;
+  --dur-slow:   0.6s;
+  --dur-slower: 1s;
+
+  /* ---- DECORATIVI ---- */
+  --stripe-pattern: repeating-linear-gradient(
+    -45deg,
+    var(--clr-accent) 0,
+    var(--clr-accent) 1px,
+    transparent 0,
+    transparent 50%
+  );
+  --noise-opacity:  0.03;   /* overlay noise texture */
+  --scanline-opacity: 0.02; /* effetto scanline opzionale */
+
+  /* ---- Z-INDEX ---- */
+  --z-below:    -1;
+  --z-base:      0;
+  --z-above:     10;
+  --z-nav:       100;
+  --z-overlay:   200;
+  --z-modal:     300;
+}

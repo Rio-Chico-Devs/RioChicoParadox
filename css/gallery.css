@@ -1,0 +1,202 @@
+/* =========================================================
+   GALLERY — griglia artwork con filtri
+   ========================================================= */
+
+.gallery {
+  background: var(--clr-bg);
+}
+
+/* Filter bar */
+.gallery__filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.gallery__filter-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--clr-border);
+  background: transparent;
+  cursor: pointer;
+  clip-path: var(--clip-diagonal);
+  transition:
+    color var(--dur-fast),
+    background var(--dur-fast),
+    border-color var(--dur-fast);
+  position: relative;
+}
+
+.gallery__filter-btn:hover {
+  color: var(--clr-text);
+  border-color: var(--clr-text-muted);
+}
+
+.gallery__filter-btn.is-active {
+  background: var(--clr-accent);
+  border-color: var(--clr-accent);
+  color: var(--clr-text);
+}
+
+/* Grid */
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5px;
+}
+
+/* Card */
+.gallery__card {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--clr-surface);
+  cursor: pointer;
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.gallery__card:hover {
+  z-index: 1;
+  transform: scale(1.02);
+}
+
+/* Artwork image / placeholder */
+.gallery__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out-quart);
+}
+
+.gallery__card:hover .gallery__card-img {
+  transform: scale(1.08);
+}
+
+.gallery__card-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+    var(--clr-surface) 0%,
+    var(--clr-surface-2) 50%,
+    var(--clr-surface) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: transform var(--dur-slow) var(--ease-out-quart);
+}
+
+.gallery__card:hover .gallery__card-placeholder {
+  transform: scale(1.08);
+}
+
+.gallery__card-placeholder-num {
+  font-family: var(--font-heading);
+  font-size: var(--text-4xl);
+  color: var(--clr-accent);
+  opacity: 0.15;
+  line-height: 1;
+}
+
+.gallery__card-placeholder-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Card overlay */
+.gallery__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9) 0%,
+    rgba(0,0,0,0.4) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-med);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.gallery__card:hover .gallery__card-overlay {
+  opacity: 1;
+}
+
+.gallery__card-category {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  transform: translateY(0.5rem);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.gallery__card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--clr-text);
+  transform: translateY(0.5rem);
+  transition: transform var(--dur-med) var(--ease-out-quart) 0.05s;
+}
+
+.gallery__card:hover .gallery__card-category,
+.gallery__card:hover .gallery__card-title {
+  transform: translateY(0);
+}
+
+/* Accent corner badge */
+.gallery__card-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--clr-accent);
+  color: var(--clr-text);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-wider);
+  padding: 0.3rem 0.75rem;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0.75rem 100%);
+  text-transform: uppercase;
+}
+
+/* Featured card (first item, bigger) */
+.gallery__card--featured {
+  grid-column: span 2;
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+@media (max-width: 600px) {
+  .gallery__card--featured {
+    grid-column: span 1;
+    grid-row: span 1;
+    aspect-ratio: 3/4;
+  }
+}
+
+/* Load more button area */
+.gallery__more {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+/* Filtered out items */
+.gallery__card[data-hidden="true"] {
+  display: none;
+}

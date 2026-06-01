@@ -1,0 +1,350 @@
+/* =========================================================
+   CHARACTERS — schede personaggi OC stile Persona
+   ========================================================= */
+
+.characters {
+  background: var(--clr-bg-2);
+  overflow: hidden;
+}
+
+/* Selector bar (come il menu personaggi di Persona) */
+.chars__selector {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 1px;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.chars__selector::-webkit-scrollbar {
+  display: none;
+}
+
+.chars__selector-btn {
+  flex-shrink: 0;
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--dur-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chars__selector-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--clr-accent);
+  transform: scaleX(0);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.chars__selector-btn.is-active {
+  color: var(--clr-text);
+}
+
+.chars__selector-btn.is-active::after {
+  transform: scaleX(1);
+}
+
+.chars__selector-btn:hover {
+  color: var(--clr-text-muted);
+}
+
+.chars__selector-num {
+  font-size: 0.6rem;
+  color: var(--clr-accent);
+  opacity: 0.7;
+}
+
+/* Character panels */
+.chars__panels {
+  position: relative;
+}
+
+.chars__panel {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.chars__panel.is-active {
+  display: grid;
+  animation: panelFadeIn var(--dur-med) var(--ease-out-quart);
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Character visual side */
+.chars__visual {
+  position: relative;
+}
+
+.chars__portrait-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.chars__portrait-bg {
+  position: absolute;
+  inset: -2rem -1rem;
+  background: var(--clr-accent-subtle);
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+  z-index: 0;
+}
+
+.chars__portrait-bg::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--clr-border-accent);
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+
+.chars__portrait {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  clip-path: var(--clip-slash-l);
+}
+
+.chars__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chars__portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg,
+    var(--clr-surface) 0%,
+    var(--clr-surface-2) 60%,
+    rgba(204,0,0,0.05) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.chars__portrait-placeholder-icon {
+  font-size: 5rem;
+  opacity: 0.12;
+}
+
+.chars__portrait-placeholder-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Name overlay on portrait */
+.chars__name-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 2rem 1.5rem 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+}
+
+.chars__name-jp {
+  font-family: var(--font-jp);
+  font-size: var(--text-sm);
+  color: var(--clr-accent);
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.1em;
+}
+
+.chars__name-main {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--clr-text);
+  line-height: 1;
+}
+
+/* Decorative character number */
+.chars__number {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  font-family: var(--font-heading);
+  font-size: var(--text-6xl);
+  color: var(--clr-accent);
+  opacity: 0.06;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Info side */
+.chars__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.chars__role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-accent);
+  text-transform: uppercase;
+}
+
+.chars__role::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: var(--clr-accent);
+}
+
+.chars__full-name {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.chars__full-name span {
+  color: var(--clr-accent);
+}
+
+.chars__bio {
+  font-size: var(--text-base);
+  color: var(--clr-text-muted);
+  line-height: var(--leading-loose);
+  max-width: 50ch;
+  border-left: 2px solid var(--clr-accent);
+  padding-left: 1.25rem;
+}
+
+/* Stats grid */
+.chars__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  border: 1px solid var(--clr-border);
+}
+
+.chars__stat {
+  padding: 1rem 1.25rem;
+  background: var(--clr-surface);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.chars__stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--clr-accent);
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+}
+
+.chars__stat:hover::before {
+  opacity: 1;
+}
+
+.chars__stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.chars__stat-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  color: var(--clr-text);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Tags / traits */
+.chars__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chars__tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  border: 1px solid var(--clr-border);
+  padding: 0.25rem 0.75rem;
+  clip-path: var(--clip-diagonal);
+  transition:
+    color var(--dur-fast),
+    border-color var(--dur-fast);
+}
+
+.chars__tag:hover {
+  color: var(--clr-accent);
+  border-color: var(--clr-accent);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .chars__panel {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .chars__portrait-wrap {
+    max-width: 280px;
+  }
+
+  .chars__number {
+    right: 0;
+    font-size: var(--text-5xl);
+  }
+}
