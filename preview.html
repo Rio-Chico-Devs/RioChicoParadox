@@ -1,0 +1,3066 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Rio Chico Studio — Artista anime, illustrazioni, personaggi originali." />
+  <title>RIO CHICO STUDIO</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS — moduli separati, facili da modificare -->
+  <style>
+    /* Cursor glow — inline perché dipende da JS */
+    .cursor-glow {
+      position: fixed;
+      top: -150px;
+      left: -150px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--clr-accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: var(--z-below);
+      will-change: transform;
+    }
+
+    @media (pointer: coarse) {
+      .cursor-glow { display: none; }
+    }
+
+    /* Card reveal animation */
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(1rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <style>
+/* =========================================================
+   RIO CHICO STUDIO — CSS VARIABLES
+   Cambia qui per personalizzare l'intero sito istantaneamente
+   ========================================================= */
+
+:root {
+
+  /* ---- COLORI PRINCIPALI ---- */
+  --clr-bg:           #0a0a0a;      /* sfondo base */
+  --clr-bg-2:         #111111;      /* sfondo alternativo sezioni */
+  --clr-surface:      #1a1a1a;      /* card, panel */
+  --clr-surface-2:    #222222;      /* card hover, bordi */
+
+  --clr-accent:       #cc0000;      /* colore principale */
+  --clr-accent-light: #ff3333;      /* accent più luminoso */
+  --clr-accent-dark:  #880000;      /* accent più scuro */
+  --clr-accent-glow:  rgba(204, 0, 0, 0.25);   /* glow/ombra accent */
+  --clr-accent-subtle:rgba(204, 0, 0, 0.08);   /* sfondo sottile accent */
+
+  --clr-text:         #ffffff;      /* testo principale */
+  --clr-text-muted:   #888888;      /* testo secondario */
+  --clr-text-dim:     #444444;      /* testo disabilitato */
+  --clr-border:       rgba(255,255,255,0.08);   /* bordi sottili */
+  --clr-border-accent:rgba(204, 0, 0, 0.4);    /* bordi con accent */
+
+  /* ---- TIPOGRAFIA ---- */
+  --font-heading: 'Bebas Neue', 'Impact', 'Arial Narrow', sans-serif;
+  --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'Courier New', 'Consolas', monospace;
+  --font-jp:      'Noto Serif JP', serif; /* per testo giapponese opzionale */
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  2rem;
+  --text-3xl:  3rem;
+  --text-4xl:  4rem;
+  --text-5xl:  6rem;
+  --text-6xl:  8rem;
+
+  --leading-tight:  1.1;
+  --leading-normal: 1.5;
+  --leading-loose:  1.8;
+  --tracking-wide:  0.08em;
+  --tracking-wider: 0.15em;
+  --tracking-widest:0.3em;
+
+  /* ---- LAYOUT & SPAZIATURA ---- */
+  --nav-height:      4rem;
+  --max-width:       1400px;
+  --section-pad-y:   7rem;
+  --section-pad-x:   2rem;
+  --gap-sm:          1rem;
+  --gap-md:          2rem;
+  --gap-lg:          4rem;
+
+  /* ---- BORDI & FORME ---- */
+  --radius-sm:  0.125rem;
+  --radius-md:  0.25rem;
+  --radius-lg:  0.5rem;
+  --radius-xl:  1rem;
+
+  /* Clip paths geometrici */
+  --clip-hero:      polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  --clip-diagonal:  polygon(1.5rem 0, 100% 0, calc(100% - 1.5rem) 100%, 0 100%);
+  --clip-slash-r:   polygon(0 0, 100% 0, 100% 100%, 1.5rem 100%);
+  --clip-slash-l:   polygon(0 0, calc(100% - 1.5rem) 0, 100% 100%, 0 100%);
+  --clip-corner:    polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), calc(100% - 1.5rem) 100%, 0 100%);
+
+  /* ---- OMBRE ---- */
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md:      0 4px 16px rgba(0,0,0,0.6);
+  --shadow-lg:      0 8px 40px rgba(0,0,0,0.8);
+  --shadow-accent:  0 0 30px var(--clr-accent-glow);
+  --shadow-glow:    0 0 60px var(--clr-accent-glow);
+
+  /* ---- TRANSIZIONI ---- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --dur-fast:   0.15s;
+  --dur-med:    0.3s;
+  --dur-slow:   0.6s;
+  --dur-slower: 1s;
+
+  /* ---- DECORATIVI ---- */
+  --stripe-pattern: repeating-linear-gradient(
+    -45deg,
+    var(--clr-accent) 0,
+    var(--clr-accent) 1px,
+    transparent 0,
+    transparent 50%
+  );
+  --noise-opacity:  0.03;   /* overlay noise texture */
+  --scanline-opacity: 0.02; /* effetto scanline opzionale */
+
+  /* ---- Z-INDEX ---- */
+  --z-below:    -1;
+  --z-base:      0;
+  --z-above:     10;
+  --z-nav:       100;
+  --z-overlay:   200;
+  --z-modal:     300;
+}
+
+/* =========================================================
+   BASE — reset, tipografia globale, utilities
+   ========================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar stilizzata */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--clr-bg-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--clr-accent);
+  border-radius: 2px;
+}
+
+/* ---- TIPOGRAFIA ---- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--clr-text);
+}
+
+p {
+  line-height: var(--leading-loose);
+  color: var(--clr-text-muted);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* ---- LAYOUT UTILITIES ---- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+.section {
+  padding: var(--section-pad-y) 0;
+  position: relative;
+}
+
+.section--dark {
+  background-color: var(--clr-bg);
+}
+
+.section--alt {
+  background-color: var(--clr-bg-2);
+}
+
+/* ---- SECTION HEADER ---- */
+.section-header {
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--clr-accent);
+}
+
+.section-title {
+  font-size: clamp(var(--text-4xl), 8vw, var(--text-6xl));
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.section-title span {
+  color: var(--clr-accent);
+}
+
+.section-subtitle {
+  margin-top: 1rem;
+  font-size: var(--text-base);
+  color: var(--clr-text-muted);
+  max-width: 40ch;
+  line-height: var(--leading-loose);
+}
+
+/* ---- DECORATIVE ELEMENTS ---- */
+.accent-bar {
+  display: block;
+  width: 3rem;
+  height: 3px;
+  background: var(--clr-accent);
+  margin-top: 1.5rem;
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ---- ANIMAZIONI ENTRANCE ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-quart),
+    transform var(--dur-slow) var(--ease-out-quart);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--left {
+  transform: translateX(-2rem);
+}
+.reveal--left.is-visible {
+  transform: translateX(0);
+}
+
+.reveal--right {
+  transform: translateX(2rem);
+}
+.reveal--right.is-visible {
+  transform: translateX(0);
+}
+
+/* stagger con delay */
+.reveal[data-delay="1"] { transition-delay: 0.1s; }
+.reveal[data-delay="2"] { transition-delay: 0.2s; }
+.reveal[data-delay="3"] { transition-delay: 0.3s; }
+.reveal[data-delay="4"] { transition-delay: 0.4s; }
+.reveal[data-delay="5"] { transition-delay: 0.5s; }
+.reveal[data-delay="6"] { transition-delay: 0.6s; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  :root {
+    --section-pad-y: 4rem;
+    --section-pad-x: 1.25rem;
+  }
+}
+
+/* =========================================================
+   BUTTONS — stili pulsanti riutilizzabili
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color var(--dur-fast),
+    transform var(--dur-fast),
+    box-shadow var(--dur-med);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Variant: Primary (filled accent) */
+.btn--primary {
+  background: var(--clr-accent);
+  color: var(--clr-text);
+  clip-path: var(--clip-diagonal);
+}
+
+.btn--primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--clr-accent-light);
+  transform: translateX(-100%) skewX(-8deg);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.btn--primary:hover::before {
+  transform: translateX(0) skewX(-8deg);
+}
+
+.btn--primary:hover {
+  box-shadow: var(--shadow-accent);
+}
+
+/* Variant: Ghost (outline) */
+.btn--ghost {
+  background: transparent;
+  color: var(--clr-text);
+  border: 1px solid var(--clr-border);
+  clip-path: var(--clip-diagonal);
+}
+
+.btn--ghost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--clr-accent-subtle);
+  transform: translateX(-100%) skewX(-8deg);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.btn--ghost:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+}
+
+.btn--ghost:hover::before {
+  transform: translateX(0) skewX(-8deg);
+}
+
+/* Variant: Text link */
+.btn--link {
+  background: transparent;
+  color: var(--clr-accent);
+  padding: 0.25rem 0;
+  gap: 0.5rem;
+}
+
+.btn--link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--clr-accent);
+  transition: width var(--dur-med) var(--ease-out-quart);
+}
+
+.btn--link:hover::after {
+  width: 100%;
+}
+
+/* Arrow icon */
+.btn__arrow {
+  display: inline-block;
+  transition: transform var(--dur-fast);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+/* Size variants */
+.btn--sm {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.65rem;
+}
+
+.btn--lg {
+  padding: 1.125rem 2.5rem;
+  font-size: var(--text-sm);
+}
+
+/* =========================================================
+   NAV — navigazione fissa con effetto scroll
+   ========================================================= */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  transition:
+    background var(--dur-med) var(--ease-out-quart),
+    backdrop-filter var(--dur-med) var(--ease-out-quart),
+    border-color var(--dur-med) var(--ease-out-quart);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.is-scrolled {
+  background: rgba(10, 10, 10, 0.88);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-bottom-color: var(--clr-border);
+}
+
+.nav__inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.nav__logo {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--clr-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color var(--dur-fast);
+}
+
+.nav__logo:hover {
+  color: var(--clr-accent);
+}
+
+.nav__logo-accent {
+  color: var(--clr-accent);
+}
+
+.nav__logo-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--clr-accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--clr-accent);
+}
+
+/* Links */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav__link {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  padding: 0.5rem 0.875rem;
+  transition: color var(--dur-fast);
+  clip-path: var(--clip-diagonal);
+}
+
+.nav__link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--clr-accent-subtle);
+  clip-path: var(--clip-diagonal);
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+}
+
+.nav__link:hover,
+.nav__link.is-active {
+  color: var(--clr-text);
+}
+
+.nav__link:hover::before,
+.nav__link.is-active::before {
+  opacity: 1;
+}
+
+.nav__link.is-active {
+  color: var(--clr-accent-light);
+}
+
+/* Numero decorativo */
+.nav__link-num {
+  font-size: 0.6rem;
+  color: var(--clr-accent);
+  margin-right: 0.25rem;
+  opacity: 0.7;
+}
+
+/* Mobile hamburger */
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.nav__toggle-bar {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--clr-text);
+  transition:
+    transform var(--dur-med) var(--ease-out-quart),
+    opacity var(--dur-fast);
+}
+
+.nav__toggle.is-open .nav__toggle-bar:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav__toggle.is-open .nav__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.nav__toggle.is-open .nav__toggle-bar:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .nav__toggle {
+    display: flex;
+  }
+
+  .nav__links {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: rgba(10, 10, 10, 0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--clr-border-accent);
+    padding: 1rem 0;
+    gap: 0;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform var(--dur-med) var(--ease-out-quart),
+      opacity var(--dur-med);
+  }
+
+  .nav__links.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav__link {
+    clip-path: none;
+    padding: 1rem var(--section-pad-x);
+    border-bottom: 1px solid var(--clr-border);
+    font-size: var(--text-sm);
+  }
+
+  .nav__link::before {
+    clip-path: none;
+  }
+}
+
+/* =========================================================
+   HERO — sezione di apertura full-viewport
+   ========================================================= */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: var(--nav-height);
+}
+
+/* Background layers */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-below);
+}
+
+.hero__bg-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, var(--clr-accent-glow) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,0,0,0.8) 0%, transparent 70%),
+    var(--clr-bg);
+}
+
+.hero__bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--clr-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--clr-border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 60% 50%, black 30%, transparent 80%);
+  opacity: 0.4;
+}
+
+.hero__bg-diagonal {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 55%;
+  height: 100%;
+  background: var(--clr-bg-2);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  opacity: 0.5;
+}
+
+/* Decorative accent slash */
+.hero__accent-slash {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--clr-accent), transparent);
+  transform: translateX(-50%) skewX(-8deg);
+  opacity: 0.4;
+  z-index: 1;
+}
+
+/* Floating geometric shapes */
+.hero__shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero__shape {
+  position: absolute;
+  background: var(--clr-accent);
+  opacity: 0.12;
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero__shape--1 {
+  width: 80px;
+  height: 80px;
+  top: 20%;
+  right: 25%;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  animation-delay: -2s;
+  animation-duration: 10s;
+}
+
+.hero__shape--2 {
+  width: 40px;
+  height: 40px;
+  top: 60%;
+  right: 35%;
+  transform: rotate(45deg);
+  animation-delay: -5s;
+  opacity: 0.08;
+}
+
+.hero__shape--3 {
+  width: 120px;
+  height: 2px;
+  top: 75%;
+  left: 10%;
+  background: linear-gradient(to right, transparent, var(--clr-accent), transparent);
+  opacity: 0.3;
+  animation: slideX 12s ease-in-out infinite;
+}
+
+.hero__shape--4 {
+  width: 60px;
+  height: 60px;
+  bottom: 20%;
+  right: 20%;
+  border: 1.5px solid var(--clr-accent);
+  background: transparent;
+  opacity: 0.15;
+  animation-delay: -3s;
+  clip-path: var(--clip-corner);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes slideX {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(30px); }
+}
+
+/* Content */
+.hero__content {
+  position: relative;
+  z-index: var(--z-above);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-lg);
+  align-items: center;
+}
+
+.hero__text {
+  max-width: 600px;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-accent);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.hero__eyebrow::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: var(--clr-accent);
+}
+
+.hero__title {
+  font-size: clamp(var(--text-4xl), 10vw, var(--text-6xl));
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.hero__title-line {
+  display: block;
+  transform: translateY(100%);
+  animation: slideUp var(--dur-slow) var(--ease-out-quart) forwards;
+}
+
+.hero__title-line:nth-child(1) { animation-delay: 0.1s; }
+.hero__title-line:nth-child(2) { animation-delay: 0.2s; }
+.hero__title-line:nth-child(3) { animation-delay: 0.3s; }
+
+.hero__title-line--accent {
+  color: var(--clr-accent);
+  -webkit-text-stroke: 0.02em var(--clr-accent);
+}
+
+.hero__title-line--outline {
+  -webkit-text-stroke: 1.5px var(--clr-text);
+  color: transparent;
+}
+
+@keyframes slideUp {
+  to { transform: translateY(0); }
+}
+
+.hero__desc {
+  font-size: var(--text-base);
+  color: var(--clr-text-muted);
+  line-height: var(--leading-loose);
+  max-width: 38ch;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out-quart) 0.6s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* CTA Buttons */
+.hero__cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out-quart) 0.8s forwards;
+}
+
+/* Artwork preview area */
+.hero__visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero__frame {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 3/4;
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out-quart) 0.4s forwards;
+}
+
+.hero__frame-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: var(--clip-slash-l);
+  background: var(--clr-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__frame-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--clr-surface) 0%, var(--clr-surface-2) 100%);
+  clip-path: var(--clip-slash-l);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 1px solid var(--clr-border);
+}
+
+.hero__frame-placeholder-icon {
+  font-size: 4rem;
+  opacity: 0.2;
+}
+
+.hero__frame-placeholder-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wider);
+}
+
+.hero__frame-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--clr-accent);
+  border-style: solid;
+  opacity: 0.6;
+}
+
+.hero__frame-corner--tl {
+  top: -4px;
+  left: -4px;
+  border-width: 2px 0 0 2px;
+}
+.hero__frame-corner--tr {
+  top: -4px;
+  right: -4px;
+  border-width: 2px 2px 0 0;
+}
+.hero__frame-corner--bl {
+  bottom: -4px;
+  left: -4px;
+  border-width: 0 0 2px 2px;
+}
+.hero__frame-corner--br {
+  bottom: -4px;
+  right: -4px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Decorative tag */
+.hero__tag {
+  position: absolute;
+  bottom: 2rem;
+  right: -1rem;
+  background: var(--clr-accent);
+  color: var(--clr-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  padding: 0.5rem 1rem;
+  clip-path: var(--clip-slash-r);
+  box-shadow: var(--shadow-accent);
+}
+
+/* Scroll indicator */
+.hero__scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.2s forwards;
+  z-index: var(--z-above);
+}
+
+.hero__scroll-text {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, var(--clr-accent), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .hero__content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero__visual {
+    order: -1;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .hero__eyebrow {
+    justify-content: center;
+  }
+
+  .hero__desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__cta {
+    justify-content: center;
+  }
+
+  .hero__bg-diagonal {
+    display: none;
+  }
+}
+
+/* =========================================================
+   GALLERY — griglia artwork con filtri
+   ========================================================= */
+
+.gallery {
+  background: var(--clr-bg);
+}
+
+/* Filter bar */
+.gallery__filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.gallery__filter-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--clr-border);
+  background: transparent;
+  cursor: pointer;
+  clip-path: var(--clip-diagonal);
+  transition:
+    color var(--dur-fast),
+    background var(--dur-fast),
+    border-color var(--dur-fast);
+  position: relative;
+}
+
+.gallery__filter-btn:hover {
+  color: var(--clr-text);
+  border-color: var(--clr-text-muted);
+}
+
+.gallery__filter-btn.is-active {
+  background: var(--clr-accent);
+  border-color: var(--clr-accent);
+  color: var(--clr-text);
+}
+
+/* Grid */
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5px;
+}
+
+/* Card */
+.gallery__card {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--clr-surface);
+  cursor: pointer;
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.gallery__card:hover {
+  z-index: 1;
+  transform: scale(1.02);
+}
+
+/* Artwork image / placeholder */
+.gallery__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out-quart);
+}
+
+.gallery__card:hover .gallery__card-img {
+  transform: scale(1.08);
+}
+
+.gallery__card-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+    var(--clr-surface) 0%,
+    var(--clr-surface-2) 50%,
+    var(--clr-surface) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: transform var(--dur-slow) var(--ease-out-quart);
+}
+
+.gallery__card:hover .gallery__card-placeholder {
+  transform: scale(1.08);
+}
+
+.gallery__card-placeholder-num {
+  font-family: var(--font-heading);
+  font-size: var(--text-4xl);
+  color: var(--clr-accent);
+  opacity: 0.15;
+  line-height: 1;
+}
+
+.gallery__card-placeholder-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Card overlay */
+.gallery__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9) 0%,
+    rgba(0,0,0,0.4) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-med);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.gallery__card:hover .gallery__card-overlay {
+  opacity: 1;
+}
+
+.gallery__card-category {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  transform: translateY(0.5rem);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.gallery__card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--clr-text);
+  transform: translateY(0.5rem);
+  transition: transform var(--dur-med) var(--ease-out-quart) 0.05s;
+}
+
+.gallery__card:hover .gallery__card-category,
+.gallery__card:hover .gallery__card-title {
+  transform: translateY(0);
+}
+
+/* Accent corner badge */
+.gallery__card-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--clr-accent);
+  color: var(--clr-text);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-wider);
+  padding: 0.3rem 0.75rem;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0.75rem 100%);
+  text-transform: uppercase;
+}
+
+/* Featured card (first item, bigger) */
+.gallery__card--featured {
+  grid-column: span 2;
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+@media (max-width: 600px) {
+  .gallery__card--featured {
+    grid-column: span 1;
+    grid-row: span 1;
+    aspect-ratio: 3/4;
+  }
+}
+
+/* Load more button area */
+.gallery__more {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+/* Filtered out items */
+.gallery__card[data-hidden="true"] {
+  display: none;
+}
+
+/* =========================================================
+   CHARACTERS — schede personaggi OC stile Persona
+   ========================================================= */
+
+.characters {
+  background: var(--clr-bg-2);
+  overflow: hidden;
+}
+
+/* Selector bar (come il menu personaggi di Persona) */
+.chars__selector {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 1px;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.chars__selector::-webkit-scrollbar {
+  display: none;
+}
+
+.chars__selector-btn {
+  flex-shrink: 0;
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--dur-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chars__selector-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--clr-accent);
+  transform: scaleX(0);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.chars__selector-btn.is-active {
+  color: var(--clr-text);
+}
+
+.chars__selector-btn.is-active::after {
+  transform: scaleX(1);
+}
+
+.chars__selector-btn:hover {
+  color: var(--clr-text-muted);
+}
+
+.chars__selector-num {
+  font-size: 0.6rem;
+  color: var(--clr-accent);
+  opacity: 0.7;
+}
+
+/* Character panels */
+.chars__panels {
+  position: relative;
+}
+
+.chars__panel {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.chars__panel.is-active {
+  display: grid;
+  animation: panelFadeIn var(--dur-med) var(--ease-out-quart);
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Character visual side */
+.chars__visual {
+  position: relative;
+}
+
+.chars__portrait-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.chars__portrait-bg {
+  position: absolute;
+  inset: -2rem -1rem;
+  background: var(--clr-accent-subtle);
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+  z-index: 0;
+}
+
+.chars__portrait-bg::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--clr-border-accent);
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+
+.chars__portrait {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  clip-path: var(--clip-slash-l);
+}
+
+.chars__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chars__portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg,
+    var(--clr-surface) 0%,
+    var(--clr-surface-2) 60%,
+    rgba(204,0,0,0.05) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.chars__portrait-placeholder-icon {
+  font-size: 5rem;
+  opacity: 0.12;
+}
+
+.chars__portrait-placeholder-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Name overlay on portrait */
+.chars__name-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 2rem 1.5rem 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+}
+
+.chars__name-jp {
+  font-family: var(--font-jp);
+  font-size: var(--text-sm);
+  color: var(--clr-accent);
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.1em;
+}
+
+.chars__name-main {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--clr-text);
+  line-height: 1;
+}
+
+/* Decorative character number */
+.chars__number {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  font-family: var(--font-heading);
+  font-size: var(--text-6xl);
+  color: var(--clr-accent);
+  opacity: 0.06;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Info side */
+.chars__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.chars__role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-accent);
+  text-transform: uppercase;
+}
+
+.chars__role::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: var(--clr-accent);
+}
+
+.chars__full-name {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.chars__full-name span {
+  color: var(--clr-accent);
+}
+
+.chars__bio {
+  font-size: var(--text-base);
+  color: var(--clr-text-muted);
+  line-height: var(--leading-loose);
+  max-width: 50ch;
+  border-left: 2px solid var(--clr-accent);
+  padding-left: 1.25rem;
+}
+
+/* Stats grid */
+.chars__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  border: 1px solid var(--clr-border);
+}
+
+.chars__stat {
+  padding: 1rem 1.25rem;
+  background: var(--clr-surface);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.chars__stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--clr-accent);
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+}
+
+.chars__stat:hover::before {
+  opacity: 1;
+}
+
+.chars__stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.chars__stat-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  color: var(--clr-text);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Tags / traits */
+.chars__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chars__tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  border: 1px solid var(--clr-border);
+  padding: 0.25rem 0.75rem;
+  clip-path: var(--clip-diagonal);
+  transition:
+    color var(--dur-fast),
+    border-color var(--dur-fast);
+}
+
+.chars__tag:hover {
+  color: var(--clr-accent);
+  border-color: var(--clr-accent);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .chars__panel {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .chars__portrait-wrap {
+    max-width: 280px;
+  }
+
+  .chars__number {
+    right: 0;
+    font-size: var(--text-5xl);
+  }
+}
+
+/* =========================================================
+   PROFILE — sezione artista
+   ========================================================= */
+
+.profile {
+  background: var(--clr-bg);
+}
+
+.profile__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* Visual / Photo */
+.profile__visual {
+  position: relative;
+}
+
+.profile__photo-wrap {
+  position: relative;
+  max-width: 380px;
+}
+
+.profile__photo-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  clip-path: var(--clip-slash-l);
+  background: var(--clr-surface);
+}
+
+.profile__photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile__photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, var(--clr-surface) 0%, var(--clr-surface-2) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.profile__photo-placeholder-icon {
+  font-size: 5rem;
+  opacity: 0.12;
+}
+
+.profile__photo-placeholder-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Decorative border frame */
+.profile__photo-border {
+  position: absolute;
+  inset: 0.75rem -0.75rem -0.75rem 0.75rem;
+  border: 1px solid var(--clr-border-accent);
+  clip-path: var(--clip-slash-l);
+  z-index: -1;
+}
+
+/* Info box under photo */
+.profile__info-box {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--clr-surface);
+  border-left: 3px solid var(--clr-accent);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.profile__info-item-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.profile__info-item-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--clr-text);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Content side */
+.profile__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.profile__name {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  line-height: 0.95;
+}
+
+.profile__name-accent {
+  color: var(--clr-accent);
+}
+
+.profile__handle {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--clr-text-muted);
+  margin-top: 0.5rem;
+}
+
+.profile__bio-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile__bio-text {
+  font-size: var(--text-base);
+  color: var(--clr-text-muted);
+  line-height: var(--leading-loose);
+}
+
+/* Skills / tools */
+.profile__skills {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile__skills-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profile__skills-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--clr-border);
+}
+
+.profile__skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.profile__skill-tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--clr-text-muted);
+  border: 1px solid var(--clr-border);
+  padding: 0.3rem 0.875rem;
+  clip-path: var(--clip-diagonal);
+  transition:
+    color var(--dur-fast),
+    border-color var(--dur-fast),
+    background var(--dur-fast);
+}
+
+.profile__skill-tag:hover {
+  color: var(--clr-accent);
+  border-color: var(--clr-accent);
+  background: var(--clr-accent-subtle);
+}
+
+/* Stats bar */
+.profile__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  border: 1px solid var(--clr-border);
+}
+
+.profile__stat {
+  padding: 1.25rem;
+  background: var(--clr-surface);
+  text-align: center;
+}
+
+.profile__stat-num {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  color: var(--clr-accent);
+  letter-spacing: var(--tracking-wide);
+  line-height: 1;
+}
+
+.profile__stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .profile__grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .profile__photo-wrap {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .profile__stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* =========================================================
+   SOCIAL / CONTACT — link social e contatti
+   ========================================================= */
+
+.social {
+  background: var(--clr-bg-2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Big decorative background text */
+.social__bg-text {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-heading);
+  font-size: clamp(5rem, 18vw, 18rem);
+  color: var(--clr-accent);
+  opacity: 0.03;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.social__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Commission CTA banner */
+.social__cta-banner {
+  padding: 2rem 3rem;
+  background: var(--clr-accent);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+  margin-bottom: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-glow);
+}
+
+.social__cta-text {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--text-xl), 4vw, var(--text-3xl));
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--clr-text);
+  line-height: 1.1;
+}
+
+.social__cta-sub {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.7);
+  letter-spacing: var(--tracking-wider);
+  margin-top: 0.25rem;
+}
+
+/* Social links grid */
+.social__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1px;
+}
+
+.social__card {
+  position: relative;
+  background: var(--clr-surface);
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background var(--dur-fast);
+  text-decoration: none;
+  color: inherit;
+}
+
+.social__card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--clr-accent);
+  transition: width var(--dur-med) var(--ease-out-quart);
+  z-index: 0;
+}
+
+.social__card:hover::before {
+  width: 3px;
+}
+
+.social__card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.social__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.social__card-icon {
+  font-size: var(--text-2xl);
+  line-height: 1;
+  transition: transform var(--dur-med) var(--ease-spring);
+}
+
+.social__card:hover .social__card-icon {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+.social__card-arrow {
+  font-size: var(--text-sm);
+  color: var(--clr-text-dim);
+  transition:
+    transform var(--dur-med) var(--ease-out-quart),
+    color var(--dur-fast);
+}
+
+.social__card:hover .social__card-arrow {
+  transform: translate(4px, -4px);
+  color: var(--clr-accent);
+}
+
+.social__card-platform {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-accent);
+  text-transform: uppercase;
+}
+
+.social__card-name {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--clr-text);
+  transition: color var(--dur-fast);
+}
+
+.social__card:hover .social__card-name {
+  color: var(--clr-text);
+}
+
+.social__card-handle {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-muted);
+}
+
+/* Email section */
+.social__email {
+  margin-top: 4rem;
+  padding-top: 4rem;
+  border-top: 1px solid var(--clr-border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.social__email-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+}
+
+.social__email-address {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--text-xl), 4vw, var(--text-3xl));
+  letter-spacing: var(--tracking-wide);
+  color: var(--clr-text);
+  text-transform: uppercase;
+  transition: color var(--dur-fast);
+  position: relative;
+}
+
+.social__email-address::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--clr-accent);
+  transition: width var(--dur-med) var(--ease-out-quart);
+}
+
+.social__email-address:hover {
+  color: var(--clr-accent);
+}
+
+.social__email-address:hover::after {
+  width: 100%;
+}
+
+/* Footer */
+.social__footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social__footer-copy {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wide);
+}
+
+.social__footer-logo {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+}
+
+.social__footer-logo span {
+  color: var(--clr-accent);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .social__cta-banner {
+    clip-path: none;
+    padding: 1.5rem;
+  }
+
+  .social__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .social__footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .social__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+    /* cursor-glow */
+    .cursor-glow {
+      position: fixed;
+      top: -150px;
+      left: -150px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--clr-accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: var(--z-below);
+      will-change: transform;
+    }
+    @media (pointer: coarse) { .cursor-glow { display: none; } }
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(1rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Noise texture overlay -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- ====================================================
+     NAV
+===================================================== -->
+<nav class="nav" role="navigation" aria-label="Navigazione principale">
+  <div class="nav__inner">
+    <a class="nav__logo" href="#hero" aria-label="Rio Chico Studio — Home">
+      <span class="nav__logo-accent">RIO</span>&nbsp;CHICO
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      STUDIO
+    </a>
+
+    <button
+      class="nav__toggle"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="nav-links"
+    >
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <ul class="nav__links" id="nav-links" role="list">
+      <li>
+        <a class="nav__link is-active" href="#hero">
+          <span class="nav__link-num">01</span>Home
+        </a>
+      </li>
+      <li>
+        <a class="nav__link" href="#gallery">
+          <span class="nav__link-num">02</span>Galleria
+        </a>
+      </li>
+      <li>
+        <a class="nav__link" href="#characters">
+          <span class="nav__link-num">03</span>Personaggi
+        </a>
+      </li>
+      <li>
+        <a class="nav__link" href="#profile">
+          <span class="nav__link-num">04</span>Profilo
+        </a>
+      </li>
+      <li>
+        <a class="nav__link" href="#social">
+          <span class="nav__link-num">05</span>Contatti
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ====================================================
+     HERO
+===================================================== -->
+<section class="hero" id="hero" aria-label="Benvenuto">
+
+  <!-- Backgrounds -->
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__bg-gradient"></div>
+    <div class="hero__bg-grid"></div>
+    <div class="hero__bg-diagonal"></div>
+    <div class="hero__accent-slash"></div>
+  </div>
+
+  <!-- Geometric shapes -->
+  <div class="hero__shapes" aria-hidden="true">
+    <div class="hero__shape hero__shape--1"></div>
+    <div class="hero__shape hero__shape--2"></div>
+    <div class="hero__shape hero__shape--3"></div>
+    <div class="hero__shape hero__shape--4"></div>
+  </div>
+
+  <div class="hero__content">
+    <!-- Text -->
+    <div class="hero__text">
+      <p class="hero__eyebrow" aria-label="Artista anime e illustratore">
+        Artista Anime &amp; Illustratore
+      </p>
+
+      <h1 class="hero__title" aria-label="Rio Chico Studio">
+        <span class="hero__title-line">RIO</span>
+        <span class="hero__title-line hero__title-line--accent">CHICO</span>
+        <span class="hero__title-line hero__title-line--outline">STUDIO</span>
+      </h1>
+
+      <p class="hero__desc">
+        Illustrazioni, personaggi originali e artwork in stile anime.
+        Ogni disegno racconta una storia — la mia.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="#gallery">
+          <span>Vedi Galleria</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#social">
+          <span>Commissioni</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Visual -->
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__frame">
+        <div class="hero__frame-placeholder">
+          <span class="hero__frame-placeholder-icon">🎨</span>
+          <span class="hero__frame-placeholder-text">[ FEATURED ARTWORK ]</span>
+        </div>
+        <span class="hero__frame-corner hero__frame-corner--tl"></span>
+        <span class="hero__frame-corner hero__frame-corner--tr"></span>
+        <span class="hero__frame-corner hero__frame-corner--bl"></span>
+        <span class="hero__frame-corner hero__frame-corner--br"></span>
+        <div class="hero__tag">OC · Original Character</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero__scroll" aria-hidden="true">
+    <span class="hero__scroll-text">scroll</span>
+    <span class="hero__scroll-line"></span>
+  </div>
+
+</section>
+
+
+<!-- ====================================================
+     GALLERY
+===================================================== -->
+<section class="section gallery" id="gallery" aria-labelledby="gallery-title">
+  <div class="container">
+
+    <header class="section-header reveal">
+      <span class="section-label">02 / Artwork</span>
+      <h2 class="section-title" id="gallery-title">
+        GALLE<span>RIA</span>
+      </h2>
+      <p class="section-subtitle">
+        Illustrazioni originali, fanart e character design.
+        Filtri per categoria, clicca per esplorare.
+      </p>
+      <span class="accent-bar"></span>
+    </header>
+
+    <!-- Filters -->
+    <div class="gallery__filters reveal" data-delay="1" role="group" aria-label="Filtra per categoria">
+      <button class="gallery__filter-btn is-active" data-filter="all">Tutti</button>
+      <button class="gallery__filter-btn" data-filter="oc">OC</button>
+      <button class="gallery__filter-btn" data-filter="fanart">Fanart</button>
+      <button class="gallery__filter-btn" data-filter="character">Character Design</button>
+      <button class="gallery__filter-btn" data-filter="sketch">Sketch</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="gallery__grid">
+
+      <!-- Featured (prima card grande) -->
+      <article class="gallery__card gallery__card--featured reveal" data-category="oc">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">01</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK PRINCIPALE ]</span>
+        </div>
+        <div class="gallery__card-badge">Featured</div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">OC</span>
+          <h3 class="gallery__card-title">Titolo Artwork</h3>
+        </div>
+      </article>
+
+      <article class="gallery__card reveal" data-category="character" data-delay="1">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">02</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK ]</span>
+        </div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">Character Design</span>
+          <h3 class="gallery__card-title">Titolo</h3>
+        </div>
+      </article>
+
+      <article class="gallery__card reveal" data-category="fanart" data-delay="2">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">03</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK ]</span>
+        </div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">Fanart</span>
+          <h3 class="gallery__card-title">Titolo</h3>
+        </div>
+      </article>
+
+      <article class="gallery__card reveal" data-category="oc" data-delay="1">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">04</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK ]</span>
+        </div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">OC</span>
+          <h3 class="gallery__card-title">Titolo</h3>
+        </div>
+      </article>
+
+      <article class="gallery__card reveal" data-category="sketch" data-delay="2">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">05</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK ]</span>
+        </div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">Sketch</span>
+          <h3 class="gallery__card-title">Titolo</h3>
+        </div>
+      </article>
+
+      <article class="gallery__card reveal" data-category="character" data-delay="3">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">06</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK ]</span>
+        </div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">Character Design</span>
+          <h3 class="gallery__card-title">Titolo</h3>
+        </div>
+      </article>
+
+      <article class="gallery__card reveal" data-category="fanart" data-delay="2">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">07</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK ]</span>
+        </div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">Fanart</span>
+          <h3 class="gallery__card-title">Titolo</h3>
+        </div>
+      </article>
+
+      <article class="gallery__card reveal" data-category="oc" data-delay="3">
+        <div class="gallery__card-placeholder">
+          <span class="gallery__card-placeholder-num">08</span>
+          <span class="gallery__card-placeholder-label">[ ARTWORK ]</span>
+        </div>
+        <div class="gallery__card-overlay">
+          <span class="gallery__card-category">OC</span>
+          <h3 class="gallery__card-title">Titolo</h3>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="gallery__more reveal" data-delay="2">
+      <a class="btn btn--ghost btn--lg" href="#social">
+        Vedi tutto su Instagram <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================
+     CHARACTERS
+===================================================== -->
+<section class="section characters" id="characters" aria-labelledby="chars-title">
+  <div class="container">
+
+    <header class="section-header reveal">
+      <span class="section-label">03 / Personaggi</span>
+      <h2 class="section-title" id="chars-title">
+        PERSON<span>AGGI</span>
+      </h2>
+      <p class="section-subtitle">
+        I miei personaggi originali — ognuno con la sua storia, il suo mondo.
+      </p>
+      <span class="accent-bar"></span>
+    </header>
+
+    <!-- Character selector -->
+    <div class="chars__selector reveal" role="tablist" aria-label="Seleziona personaggio">
+
+      <button
+        class="chars__selector-btn is-active"
+        data-char="char-01"
+        role="tab"
+        aria-selected="true"
+        aria-controls="panel-char-01"
+      >
+        <span class="chars__selector-num">01</span>
+        Nome Personaggio 1
+      </button>
+
+      <button
+        class="chars__selector-btn"
+        data-char="char-02"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-char-02"
+      >
+        <span class="chars__selector-num">02</span>
+        Nome Personaggio 2
+      </button>
+
+      <button
+        class="chars__selector-btn"
+        data-char="char-03"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-char-03"
+      >
+        <span class="chars__selector-num">03</span>
+        Nome Personaggio 3
+      </button>
+
+    </div>
+
+    <!-- Character panels -->
+    <div class="chars__panels">
+
+      <!-- PERSONAGGIO 1 -->
+      <div
+        class="chars__panel is-active"
+        data-char="char-01"
+        id="panel-char-01"
+        role="tabpanel"
+      >
+        <div class="chars__visual">
+          <div class="chars__portrait-wrap">
+            <div class="chars__portrait-bg" aria-hidden="true"></div>
+            <div class="chars__portrait">
+              <div class="chars__portrait-placeholder">
+                <span class="chars__portrait-placeholder-icon">👤</span>
+                <span class="chars__portrait-placeholder-label">[ RITRATTO ]</span>
+              </div>
+              <div class="chars__name-overlay">
+                <span class="chars__name-jp">キャラクター壱</span>
+                <span class="chars__name-main">NOME · 01</span>
+              </div>
+            </div>
+            <span class="chars__number" aria-hidden="true">01</span>
+          </div>
+        </div>
+
+        <div class="chars__info">
+          <span class="chars__role">Protagonista</span>
+
+          <h3 class="chars__full-name">
+            NOME<br/><span>PERSONAGGIO</span>
+          </h3>
+
+          <p class="chars__bio">
+            Descrizione del personaggio — la sua storia, personalità, motivazioni.
+            Cosa lo rende unico nel tuo universo creativo.
+            Puoi scrivere qui tutto quello che vuoi raccontare.
+          </p>
+
+          <div class="chars__stats">
+            <div class="chars__stat">
+              <div class="chars__stat-label">Età</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Origine</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Tipo</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Arma</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+          </div>
+
+          <div class="chars__tags">
+            <span class="chars__tag">Coraggioso</span>
+            <span class="chars__tag">Combattente</span>
+            <span class="chars__tag">Leale</span>
+            <span class="chars__tag">Solitario</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERSONAGGIO 2 -->
+      <div
+        class="chars__panel"
+        data-char="char-02"
+        id="panel-char-02"
+        role="tabpanel"
+      >
+        <div class="chars__visual">
+          <div class="chars__portrait-wrap">
+            <div class="chars__portrait-bg" aria-hidden="true"></div>
+            <div class="chars__portrait">
+              <div class="chars__portrait-placeholder">
+                <span class="chars__portrait-placeholder-icon">👤</span>
+                <span class="chars__portrait-placeholder-label">[ RITRATTO ]</span>
+              </div>
+              <div class="chars__name-overlay">
+                <span class="chars__name-jp">キャラクター弐</span>
+                <span class="chars__name-main">NOME · 02</span>
+              </div>
+            </div>
+            <span class="chars__number" aria-hidden="true">02</span>
+          </div>
+        </div>
+
+        <div class="chars__info">
+          <span class="chars__role">Deuteragonista</span>
+
+          <h3 class="chars__full-name">
+            NOME<br/><span>PERSONAGGIO</span>
+          </h3>
+
+          <p class="chars__bio">
+            Descrizione del secondo personaggio. La sua backstory,
+            il suo rapporto con gli altri personaggi e il suo ruolo
+            nella narrativa del tuo universo.
+          </p>
+
+          <div class="chars__stats">
+            <div class="chars__stat">
+              <div class="chars__stat-label">Età</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Origine</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Tipo</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Arma</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+          </div>
+
+          <div class="chars__tags">
+            <span class="chars__tag">Misterioso</span>
+            <span class="chars__tag">Strategico</span>
+            <span class="chars__tag">Freddo</span>
+            <span class="chars__tag">Brillante</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERSONAGGIO 3 -->
+      <div
+        class="chars__panel"
+        data-char="char-03"
+        id="panel-char-03"
+        role="tabpanel"
+      >
+        <div class="chars__visual">
+          <div class="chars__portrait-wrap">
+            <div class="chars__portrait-bg" aria-hidden="true"></div>
+            <div class="chars__portrait">
+              <div class="chars__portrait-placeholder">
+                <span class="chars__portrait-placeholder-icon">👤</span>
+                <span class="chars__portrait-placeholder-label">[ RITRATTO ]</span>
+              </div>
+              <div class="chars__name-overlay">
+                <span class="chars__name-jp">キャラクター参</span>
+                <span class="chars__name-main">NOME · 03</span>
+              </div>
+            </div>
+            <span class="chars__number" aria-hidden="true">03</span>
+          </div>
+        </div>
+
+        <div class="chars__info">
+          <span class="chars__role">Antagonista</span>
+
+          <h3 class="chars__full-name">
+            NOME<br/><span>PERSONAGGIO</span>
+          </h3>
+
+          <p class="chars__bio">
+            Il terzo personaggio. Antagonista, alleato ambiguo o
+            personaggio di supporto — racconta chi è e perché
+            esiste nel tuo universo creativo.
+          </p>
+
+          <div class="chars__stats">
+            <div class="chars__stat">
+              <div class="chars__stat-label">Età</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Origine</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Tipo</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+            <div class="chars__stat">
+              <div class="chars__stat-label">Arma</div>
+              <div class="chars__stat-value">— —</div>
+            </div>
+          </div>
+
+          <div class="chars__tags">
+            <span class="chars__tag">Oscuro</span>
+            <span class="chars__tag">Ambizioso</span>
+            <span class="chars__tag">Spietato</span>
+            <span class="chars__tag">Complesso</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================
+     PROFILE
+===================================================== -->
+<section class="section profile" id="profile" aria-labelledby="profile-title">
+  <div class="container">
+
+    <header class="section-header reveal">
+      <span class="section-label">04 / Artista</span>
+      <h2 class="section-title" id="profile-title">
+        IL MIO<br/><span>PROFILO</span>
+      </h2>
+      <span class="accent-bar"></span>
+    </header>
+
+    <div class="profile__grid">
+
+      <!-- Visual -->
+      <div class="profile__visual reveal reveal--left">
+        <div class="profile__photo-wrap">
+          <div class="profile__photo-frame">
+            <div class="profile__photo-placeholder">
+              <span class="profile__photo-placeholder-icon">🎨</span>
+              <span class="profile__photo-placeholder-text">[ FOTO ARTISTA ]</span>
+            </div>
+          </div>
+          <div class="profile__photo-border" aria-hidden="true"></div>
+        </div>
+
+        <div class="profile__info-box reveal" data-delay="2">
+          <div class="profile__info-item">
+            <div class="profile__info-item-label">Stile</div>
+            <div class="profile__info-item-value">Anime / Manga</div>
+          </div>
+          <div class="profile__info-item">
+            <div class="profile__info-item-label">Tipo</div>
+            <div class="profile__info-item-value">Digitale</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="profile__content reveal reveal--right">
+
+        <div>
+          <h3 class="profile__name">
+            RIO<br/><span class="profile__name-accent">CHICO</span>
+          </h3>
+          <p class="profile__handle">@riochicostudio</p>
+        </div>
+
+        <div class="profile__bio-block">
+          <p class="profile__bio-text">
+            Ciao! Sono Rio Chico, artista anime appassionata di character design
+            e storytelling visivo. Creo personaggi originali e illustrazioni
+            ispirate al mondo dell'animazione giapponese.
+          </p>
+          <p class="profile__bio-text">
+            Ogni lavoro è pensato per trasmettere emozioni — che sia
+            la solitudine di un combattente solitario o la gioia di
+            un personaggio che trova il suo posto nel mondo.
+          </p>
+        </div>
+
+        <div class="profile__skills" data-delay="1">
+          <p class="profile__skills-title">Strumenti & Stile</p>
+          <div class="profile__skill-list">
+            <span class="profile__skill-tag">Procreate</span>
+            <span class="profile__skill-tag">Clip Studio Paint</span>
+            <span class="profile__skill-tag">Character Design</span>
+            <span class="profile__skill-tag">OC Universe</span>
+            <span class="profile__skill-tag">Fanart</span>
+            <span class="profile__skill-tag">Sketch</span>
+            <span class="profile__skill-tag">Illustration</span>
+          </div>
+        </div>
+
+        <!-- Stats con counter animato -->
+        <div class="profile__stats reveal" data-delay="3">
+          <div class="profile__stat">
+            <div class="profile__stat-num" data-count="100" data-suffix="+">0+</div>
+            <div class="profile__stat-label">Opere</div>
+          </div>
+          <div class="profile__stat">
+            <div class="profile__stat-num" data-count="3" data-suffix="">0</div>
+            <div class="profile__stat-label">Personaggi OC</div>
+          </div>
+          <div class="profile__stat">
+            <div class="profile__stat-num" data-count="5" data-suffix="">0</div>
+            <div class="profile__stat-label">Anni di pratica</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================
+     SOCIAL / CONTACT
+===================================================== -->
+<section class="section social" id="social" aria-labelledby="social-title">
+  <div class="social__bg-text" aria-hidden="true">FOLLOW</div>
+
+  <div class="container social__inner">
+
+    <header class="section-header reveal">
+      <span class="section-label">05 / Contatti</span>
+      <h2 class="section-title" id="social-title">
+        TROVA<span>MI</span>
+      </h2>
+      <p class="section-subtitle">
+        Seguimi sui social, commissioni aperte.
+        Parliamo del tuo progetto.
+      </p>
+      <span class="accent-bar"></span>
+    </header>
+
+    <!-- Commission banner -->
+    <div class="social__cta-banner reveal">
+      <div>
+        <div class="social__cta-text">Commissioni Aperte</div>
+        <div class="social__cta-sub">DM su Instagram o email per info e prezzi</div>
+      </div>
+      <a class="btn btn--ghost btn--lg" href="mailto:tua@email.com">
+        Scrivimi <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <!-- Social cards grid -->
+    <div class="social__grid">
+
+      <a
+        class="social__card reveal"
+        href="https://instagram.com/riochicostudio"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram di Rio Chico Studio"
+      >
+        <div class="social__card-header">
+          <span class="social__card-icon">📸</span>
+          <span class="social__card-arrow" aria-hidden="true">↗</span>
+        </div>
+        <div>
+          <div class="social__card-platform">Instagram</div>
+          <div class="social__card-name">@riochicostudio</div>
+        </div>
+        <div class="social__card-handle">Artwork, WIPs, Storie</div>
+      </a>
+
+      <a
+        class="social__card reveal"
+        href="https://twitter.com/riochicostudio"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-delay="1"
+        aria-label="Twitter / X di Rio Chico Studio"
+      >
+        <div class="social__card-header">
+          <span class="social__card-icon">𝕏</span>
+          <span class="social__card-arrow" aria-hidden="true">↗</span>
+        </div>
+        <div>
+          <div class="social__card-platform">Twitter / X</div>
+          <div class="social__card-name">@riochicostudio</div>
+        </div>
+        <div class="social__card-handle">Pensieri, aggiornamenti</div>
+      </a>
+
+      <a
+        class="social__card reveal"
+        href="https://www.pixiv.net/en/users/XXXXXXXX"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-delay="2"
+        aria-label="Pixiv di Rio Chico Studio"
+      >
+        <div class="social__card-header">
+          <span class="social__card-icon">🖼️</span>
+          <span class="social__card-arrow" aria-hidden="true">↗</span>
+        </div>
+        <div>
+          <div class="social__card-platform">Pixiv</div>
+          <div class="social__card-name">Rio Chico Studio</div>
+        </div>
+        <div class="social__card-handle">Portfolio completo</div>
+      </a>
+
+      <a
+        class="social__card reveal"
+        href="https://ko-fi.com/riochicostudio"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-delay="3"
+        aria-label="Ko-fi di Rio Chico Studio"
+      >
+        <div class="social__card-header">
+          <span class="social__card-icon">☕</span>
+          <span class="social__card-arrow" aria-hidden="true">↗</span>
+        </div>
+        <div>
+          <div class="social__card-platform">Ko-fi</div>
+          <div class="social__card-name">Rio Chico Studio</div>
+        </div>
+        <div class="social__card-handle">Supporta il mio lavoro</div>
+      </a>
+
+    </div>
+
+    <!-- Email -->
+    <div class="social__email reveal">
+      <span class="social__email-label">Oppure scrivimi direttamente</span>
+      <a
+        class="social__email-address"
+        href="mailto:tua@email.com"
+        aria-label="Manda una email"
+      >
+        tua@email.com
+      </a>
+      <a class="btn btn--primary btn--lg" href="mailto:tua@email.com">
+        Invia Email <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="social__footer" role="contentinfo">
+      <p class="social__footer-copy">
+        &copy; 2024 Rio Chico Studio — Tutti i diritti riservati
+      </p>
+      <div class="social__footer-logo">
+        <span>RIO</span>&nbsp;CHICO&nbsp;<span>STUDIO</span>
+      </div>
+    </footer>
+
+  </div>
+</section>
+
+
+<!-- JS -->
+
+<script>
+/* =========================================================
+   RIO CHICO STUDIO — main.js
+   ========================================================= */
+
+// ---- NAV: scroll effect + mobile toggle + active link ----
+const nav = document.querySelector('.nav');
+const navToggle = document.querySelector('.nav__toggle');
+const navLinks = document.querySelector('.nav__links');
+const navLinkItems = document.querySelectorAll('.nav__link');
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('is-scrolled', window.scrollY > 40);
+}, { passive: true });
+
+navToggle?.addEventListener('click', () => {
+  const isOpen = navToggle.classList.toggle('is-open');
+  navLinks.classList.toggle('is-open', isOpen);
+  navToggle.setAttribute('aria-expanded', isOpen);
+});
+
+// Close mobile nav on link click
+navLinkItems.forEach(link => {
+  link.addEventListener('click', () => {
+    navToggle?.classList.remove('is-open');
+    navLinks?.classList.remove('is-open');
+    navToggle?.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// Active nav link on scroll (IntersectionObserver)
+const sections = document.querySelectorAll('section[id]');
+
+const navObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinkItems.forEach(link => {
+        const active = link.getAttribute('href') === `#${entry.target.id}`;
+        link.classList.toggle('is-active', active);
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+
+sections.forEach(s => navObserver.observe(s));
+
+
+// ---- REVEAL ANIMATIONS (scroll-triggered) ----
+const revealEls = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+revealEls.forEach(el => revealObserver.observe(el));
+
+
+// ---- GALLERY FILTERS ----
+const filterBtns = document.querySelectorAll('.gallery__filter-btn');
+const galleryCards = document.querySelectorAll('.gallery__card');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Update active button
+    filterBtns.forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+
+    const filter = btn.dataset.filter;
+
+    galleryCards.forEach(card => {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.removeAttribute('data-hidden');
+        card.style.animation = 'cardReveal 0.4s ease forwards';
+      } else {
+        card.setAttribute('data-hidden', 'true');
+      }
+    });
+  });
+});
+
+
+// ---- CHARACTER SELECTOR ----
+const charBtns = document.querySelectorAll('.chars__selector-btn');
+const charPanels = document.querySelectorAll('.chars__panel');
+
+charBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.char;
+
+    charBtns.forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+
+    charPanels.forEach(panel => {
+      panel.classList.toggle('is-active', panel.dataset.char === target);
+    });
+  });
+});
+
+
+// ---- CURSOR GLOW (desktop) ----
+const cursorGlow = document.createElement('div');
+cursorGlow.className = 'cursor-glow';
+document.body.appendChild(cursorGlow);
+
+let mouseX = 0, mouseY = 0;
+let glowX = 0, glowY = 0;
+
+window.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+}, { passive: true });
+
+// Smooth cursor follow
+function animateCursor() {
+  glowX += (mouseX - glowX) * 0.08;
+  glowY += (mouseY - glowY) * 0.08;
+  cursorGlow.style.transform = `translate(${glowX}px, ${glowY}px)`;
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+
+// ---- COUNTER ANIMATION (profile stats) ----
+const counters = document.querySelectorAll('[data-count]');
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+counters.forEach(el => counterObserver.observe(el));
+
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count, 10);
+  const suffix = el.dataset.suffix || '';
+  const dur = 1500;
+  const start = performance.now();
+
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / dur, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    el.textContent = Math.round(target * eased) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+
+// ---- KEYBOARD: close mobile nav on ESC ----
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    navToggle?.classList.remove('is-open');
+    navLinks?.classList.remove('is-open');
+    navToggle?.setAttribute('aria-expanded', 'false');
+  }
+});
+
+</script>
+</body>
+</html>
