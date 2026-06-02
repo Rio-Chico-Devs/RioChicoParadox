@@ -229,7 +229,83 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   ANIMATION SYSTEM — PERSONA-STYLE CLIP-PATH REVEALS
+   ANIMATION SYSTEM — SPRING BOING + CLIP-PATH
+   Il "boing" è la firma di Persona: gli elementi rimbalzano
+   dentro con una molla — non scivolano linearmente.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── BOING — spring bounce in place ───────────────────────── */
+@keyframes boingIn {
+  0%   { opacity: 0; transform: scale(0.35) translateY(40px); }
+  55%  { opacity: 1; transform: scale(1.13) translateY(-10px); }
+  75%  { transform: scale(0.96) translateY(3px); }
+  90%  { transform: scale(1.04) translateY(-1px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── BOING from LEFT ─────────────────────────────────────── */
+@keyframes boingLeft {
+  0%   { opacity: 0; transform: translateX(-120px) scale(0.8) rotate(-3deg); }
+  55%  { opacity: 1; transform: translateX(18px) scale(1.04) rotate(1deg); }
+  75%  { transform: translateX(-6px) scale(0.99) rotate(0deg); }
+  90%  { transform: translateX(3px) scale(1.01); }
+  100% { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); }
+}
+
+/* ── BOING from RIGHT ────────────────────────────────────── */
+@keyframes boingRight {
+  0%   { opacity: 0; transform: translateX(120px) scale(0.8) rotate(3deg); }
+  55%  { opacity: 1; transform: translateX(-18px) scale(1.04) rotate(-1deg); }
+  75%  { transform: translateX(6px) scale(0.99) rotate(0deg); }
+  90%  { transform: translateX(-3px) scale(1.01); }
+  100% { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); }
+}
+
+/* ── BOING star spin ─────────────────────────────────────── */
+@keyframes boingStar {
+  0%   { opacity: 0; transform: scale(0) rotate(-180deg); }
+  60%  { opacity: 1; transform: scale(1.3) rotate(20deg); }
+  80%  { transform: scale(0.9) rotate(-5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Animation triggers via data-r attribute */
+[data-r="boing"]   { opacity: 0; }
+[data-r="boing-l"] { opacity: 0; }
+[data-r="boing-r"] { opacity: 0; }
+[data-r="star"]    { opacity: 0; }
+
+[data-r="boing"].in-view   { animation: boingIn    0.9s cubic-bezier(0.34, 1.56, 0.64, 1) var(--rd, 0s) both; }
+[data-r="boing-l"].in-view { animation: boingLeft  0.85s cubic-bezier(0.34, 1.56, 0.64, 1) var(--rd, 0s) both; }
+[data-r="boing-r"].in-view { animation: boingRight 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) var(--rd, 0s) both; }
+[data-r="star"].in-view    { animation: boingStar  0.7s cubic-bezier(0.34, 1.56, 0.64, 1) var(--rd, 0s) both; }
+
+/* ── STAR pulse (after entrance) ─────────────────────────── */
+@keyframes starFloat {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  33% { transform: scale(1.08) rotate(8deg); }
+  66% { transform: scale(0.94) rotate(-5deg); }
+}
+
+.star-deco {
+  display: inline-block;
+  animation: starFloat 3s ease-in-out infinite;
+}
+
+/* ── PERSONA STAR ELEMENT ────────────────────────────────── */
+.p-star {
+  position: absolute;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 0 12px rgba(255,255,255,0.4);
+  animation: starFloat var(--sf-dur, 3s) ease-in-out var(--sf-del, 0s) infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLIP-PATH ANIMATION SYSTEM (per titoli + elementi UI)
    ═══════════════════════════════════════════════════════════ */
 
 /* ── 1. WIPE LEFT→RIGHT (titoli, immagini, sezioni intere) */
@@ -1402,213 +1478,159 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
 }
 
 /* =========================================================
-   CHARACTERS — schede personaggi OC stile game UI
+   CHARACTERS — sezione personaggi stile Persona
+   Ogni personaggio ha il suo blocco full-width.
+   I personaggi "boingano" dentro, senza pannelli UI rigidi.
    ========================================================= */
 
 .characters {
-  background: #0c0c0c;
+  background: var(--clr-bg);
   overflow: hidden;
 }
 
-/* ── SELECTOR BAR — come un menu di gioco ───────────────── */
-.chars__selector {
-  display: flex;
-  gap: 0;
-  margin-bottom: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-  border-bottom: 1px solid var(--clr-border);
+/* ── CHAR BLOCK — ogni personaggio ──────────────────────── */
+.char-block {
   position: relative;
-}
-.chars__selector::-webkit-scrollbar { display: none; }
-
-/* Animated indicator line */
-.chars__selector-indicator {
-  position: absolute;
-  bottom: -1px;
-  height: 2px;
-  background: var(--clr-accent);
-  transition: left var(--dur-med) var(--ease-out-quart),
-              width var(--dur-med) var(--ease-out-quart);
-  box-shadow: 0 0 12px var(--clr-accent);
-}
-
-.chars__selector-btn {
-  flex-shrink: 0;
-  position: relative;
-  padding: 1rem 2rem;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--clr-text-dim);
-  background: transparent;
-  cursor: none;
-  transition: color var(--dur-fast), background var(--dur-fast);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.chars__selector-btn:hover {
-  color: var(--clr-text-muted);
-  background: rgba(255,255,255,0.02);
-}
-
-.chars__selector-btn.is-active {
-  color: var(--clr-text);
-}
-
-.chars__selector-num {
-  font-size: 0.6rem;
-  color: var(--clr-accent);
-  opacity: 0.7;
-}
-
-/* ── PANELS ─────────────────────────────────────────────── */
-.chars__panels {
-  position: relative;
-  min-height: 600px;
-}
-
-.chars__panel {
-  display: none;
-  position: absolute;
-  inset: 0;
-}
-
-.chars__panel.is-active {
+  min-height: 100svh;
   display: grid;
-  grid-template-columns: 45% 1fr;
-  position: relative;
-  animation: panelIn 0.5s var(--ease-out-quart) both;
-}
-
-@keyframes panelIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* ── CHARACTER VISUAL (LEFT) ────────────────────────────── */
-.chars__visual {
-  position: relative;
-  background: #080808;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-height: 600px;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   overflow: hidden;
 }
 
-/* Background accent for character panel */
-.chars__visual-bg {
+/* Alterna: art a destra per blocchi pari */
+.char-block--even {
+  direction: rtl;
+}
+.char-block--even > * {
+  direction: ltr;
+}
+
+/* ── BLOCCO SFONDO ───────────────────────────────────────── */
+.char-block__bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 60%,
-    var(--clr-accent-glow) 0%,
-    transparent 70%);
-}
-
-/* Diagonal lines pattern */
-.chars__visual-lines {
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 40px,
-    rgba(204,0,0,0.025) 40px,
-    rgba(204,0,0,0.025) 41px
-  );
-}
-
-/* Portrait */
-.chars__portrait {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 380px;
-  bottom: 0;
-}
-
-.chars__portrait img,
-.chars__portrait svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 0 40px var(--clr-accent-glow));
-}
-
-/* Name plate over portrait */
-.chars__name-plate {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  padding: 2rem 1.5rem 1.5rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
-}
-
-.chars__name-jp {
-  display: block;
-  font-family: var(--font-jp);
-  font-size: var(--text-sm);
-  color: var(--clr-accent);
-  opacity: 0.8;
-  letter-spacing: 0.15em;
-  margin-bottom: 0.25rem;
-}
-
-.chars__name-en {
-  display: block;
-  font-family: var(--font-heading);
-  font-size: var(--text-3xl);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: #fff;
-  line-height: 1;
-}
-
-/* Character code top-left */
-.chars__code {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  z-index: 3;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-widest);
-  color: var(--clr-accent);
-  opacity: 0.7;
-}
-
-/* Big decorative bg number */
-.chars__bg-num {
-  position: absolute;
-  bottom: -3rem;
-  right: -1rem;
-  font-family: var(--font-heading);
-  font-size: 16rem;
-  color: var(--clr-accent);
-  opacity: 0.04;
-  line-height: 1;
-  user-select: none;
+  z-index: 0;
   pointer-events: none;
 }
 
-/* ── INFO PANEL (RIGHT) ─────────────────────────────────── */
-.chars__info {
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  background: var(--clr-bg-2);
-  border-left: 1px solid var(--clr-border);
+/* Gradient base */
+.char-block__bg-grad {
+  position: absolute;
+  inset: 0;
+  background: var(--char-grad, linear-gradient(135deg, #1a0000 0%, #080808 60%));
+  opacity: 0.7;
 }
 
-/* Role tag */
-.chars__role {
+/* Grande forma rossa a zig-zag — la firma Persona */
+.char-block__splash {
+  position: absolute;
+  fill: var(--clr-accent);
+  opacity: var(--splash-opacity, 0.12);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Stella decorativa grande sfondo */
+.char-block__bg-star {
+  position: absolute;
+  font-size: 40vw;
+  color: var(--clr-accent);
+  opacity: 0.025;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.char-block--odd  .char-block__bg-star { right: 5%; }
+.char-block--even .char-block__bg-star { left: 5%; }
+
+/* Linee decorative diagonali nel bg */
+.char-block__lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 60px,
+    rgba(255,255,255,0.015) 60px,
+    rgba(255,255,255,0.015) 61px
+  );
+}
+
+/* ── ARTE PERSONAGGIO ────────────────────────────────────── */
+.char-block__art {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 100svh;
+}
+
+.char-block__img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  filter: drop-shadow(0 0 60px var(--char-glow, rgba(204,0,0,0.35)));
+  position: relative;
+  z-index: 2;
+}
+
+/* Cerchio glow dietro al personaggio */
+.char-block__art::before {
+  content: '';
+  position: absolute;
+  width: 65%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--char-glow, rgba(204,0,0,0.3)) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  filter: blur(30px);
+}
+
+/* Numero grande che sovrappone */
+.char-block__number {
+  position: absolute;
+  font-family: var(--font-heading);
+  font-size: clamp(8rem, 25vw, 20rem);
+  color: var(--clr-accent);
+  opacity: 0.05;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  letter-spacing: -0.05em;
+}
+.char-block--odd  .char-block__number { right: -2rem; }
+.char-block--even .char-block__number { left: -2rem; }
+
+/* ── INFO PERSONAGGIO ────────────────────────────────────── */
+.char-block__info {
+  position: relative;
+  z-index: 10;
+  padding: 4rem 4rem 4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.char-block--even .char-block__info {
+  padding: 4rem 3rem 4rem 4rem;
+}
+
+/* Code / numero ruolo */
+.char-block__code {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
@@ -1618,148 +1640,164 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
   color: var(--clr-accent);
   text-transform: uppercase;
 }
-.chars__role::before {
+.char-block__code::before {
   content: '';
   width: 2rem;
   height: 1px;
   background: var(--clr-accent);
 }
 
-/* Full name large */
-.chars__full-name {
-  font-family: var(--font-heading);
-  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  line-height: 0.9;
+/* Nome giapponese */
+.char-block__name-jp {
+  display: block;
+  font-family: var(--font-jp);
+  font-size: var(--text-lg);
+  color: var(--clr-accent);
+  opacity: 0.75;
+  letter-spacing: 0.2em;
 }
-.chars__full-name span { color: var(--clr-accent); }
+
+/* Nome principale — ENORME */
+.char-block__name {
+  font-family: var(--font-heading);
+  font-size: clamp(var(--text-4xl), 7vw, 8rem);
+  text-transform: uppercase;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+}
+.char-block__name span {
+  display: block;
+  color: var(--clr-accent);
+}
 
 /* Bio */
-.chars__bio {
+.char-block__bio {
   font-size: var(--text-base);
   color: var(--clr-text-muted);
   line-height: var(--leading-loose);
-  max-width: 48ch;
-  border-left: 2px solid var(--clr-accent);
+  max-width: 46ch;
+  border-left: 3px solid var(--clr-accent);
   padding-left: 1.25rem;
 }
 
-/* ── STATS — stile game UI ──────────────────────────────── */
-.chars__stats {
+/* Stats barre */
+.char-block__stats {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 0.5rem;
 }
 
-.chars__stats-title {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.chars__stats-title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--clr-border);
-}
-
-.chars__stat-row {
+.char-stat {
   display: grid;
-  grid-template-columns: 6rem 1fr 3rem;
+  grid-template-columns: 5.5rem 1fr 2.5rem;
   align-items: center;
-  gap: 1rem;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  gap: 0.875rem;
 }
 
-.chars__stat-label {
+.char-stat__label {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: var(--tracking-wider);
   color: var(--clr-text-dim);
   text-transform: uppercase;
 }
 
-/* Animated progress bar */
-.chars__stat-bar-track {
-  height: 3px;
-  background: rgba(255,255,255,0.06);
-  position: relative;
+.char-stat__track {
+  height: 2px;
+  background: rgba(255,255,255,0.07);
   overflow: hidden;
 }
 
-.chars__stat-bar-fill {
+.char-stat__fill {
   height: 100%;
   background: var(--clr-accent);
   width: 0%;
-  transition: width 1.2s var(--ease-out-quart);
-  box-shadow: 0 0 6px var(--clr-accent-glow);
+  transition: width 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
+  box-shadow: 0 0 8px var(--clr-accent-glow);
 }
 
-.chars__panel.is-active .chars__stat-bar-fill {
+.in-view ~ .char-block__info .char-stat__fill,
+.char-block__info.in-view .char-stat__fill {
   width: var(--bar-w, 70%);
 }
 
-.chars__stat-val {
+.char-stat__val {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: var(--clr-accent);
   text-align: right;
 }
 
 /* Tags */
-.chars__tags {
+.char-block__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
-.chars__tag {
+.char-block__tag {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--clr-text-muted);
   border: 1px solid var(--clr-border);
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.65rem;
   clip-path: var(--clip-diagonal);
-  transition: color var(--dur-fast), border-color var(--dur-fast);
-  cursor: default;
 }
-.chars__tag:hover {
-  color: var(--clr-accent);
-  border-color: var(--clr-border-accent);
+
+/* ── STELLE DECORATIVE ───────────────────────────────────── */
+.char-block__stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── SEPARATORE TRA BLOCCHI ──────────────────────────────── */
+.char-divider {
+  width: 100%;
+  height: 80px;
+  overflow: hidden;
+  line-height: 0;
+  background: var(--clr-bg);
+}
+
+.char-divider svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .chars__panel.is-active {
+  .char-block {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 
-  .chars__visual {
-    min-height: 380px;
+  .char-block--even {
+    direction: ltr;
   }
 
-  .chars__portrait {
-    max-width: 240px;
+  .char-block__art {
+    min-height: 55svh;
   }
 
-  .chars__info {
-    padding: 2rem var(--section-pad-x);
-    border-left: none;
-    border-top: 1px solid var(--clr-border);
+  .char-block__img {
+    max-width: 280px;
   }
 
-  .chars__bg-num {
-    font-size: 8rem;
+  .char-block__info {
+    padding: 2.5rem var(--section-pad-x);
+  }
+
+  .char-block--even .char-block__info {
+    padding: 2.5rem var(--section-pad-x);
+  }
+
+  .char-block__number {
+    font-size: 40vw;
   }
 }
 
@@ -2529,241 +2567,206 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
 <!-- ════════════════════════════════════════════════════════
      CHARACTERS
 ════════════════════════════════════════════════════════ -->
-<section class="section characters" id="characters" aria-labelledby="chars-title">
-  <div class="container">
+<section class="characters" id="characters" aria-labelledby="chars-title">
 
-    <header class="section-header">
-      <span class="section-label" data-r="up">03 / Personaggi</span>
-      <h2 class="section-title" data-r="wipe" id="chars-title">
+  <!-- Section intro -->
+  <div style="padding: 5rem 0 3rem; text-align:center; position:relative; overflow:hidden;">
+    <div style="max-width:var(--max-width); margin:0 auto; padding:0 var(--section-pad-x); position:relative; z-index:1;">
+      <span class="section-label" data-r="up" style="justify-content:center;">03 / Personaggi</span>
+      <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center; font-size:clamp(4rem,12vw,12rem);">
         PERSON<span>AGGI</span>
       </h2>
-      <p class="section-subtitle" data-r="up" data-rd="2">
-        I miei personaggi originali — ognuno con la sua storia, il suo mondo.
-      </p>
-      <span class="accent-bar" data-r="wipe" data-rd="3"></span>
-    </header>
+    </div>
+    <!-- big bg stars -->
+    <span class="p-star" aria-hidden="true" style="font-size:3rem; top:20%; left:8%; --sf-dur:4s;" data-r="star" data-rd="2">☆</span>
+    <span class="p-star" aria-hidden="true" style="font-size:1.5rem; top:30%; right:10%; --sf-dur:3.2s; --sf-del:0.5s;" data-r="star" data-rd="3">☆</span>
+    <span class="p-star" aria-hidden="true" style="font-size:2rem; bottom:10%; left:20%; --sf-dur:3.8s; --sf-del:1s;" data-r="star" data-rd="4">☆</span>
+  </div>
 
-    <!-- SELECTOR -->
-    <div class="chars__selector" data-r="up" data-rd="2" role="tablist" aria-label="Seleziona personaggio">
-      <div class="chars__selector-indicator" aria-hidden="true"></div>
+  <!-- ── PERSONAGGIO 01 ──────────────────────────────────── -->
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #200000 0%, #090909 70%); --char-glow: rgba(204,0,0,0.4);">
 
-      <button class="chars__selector-btn is-active" data-char="char-01"
-              role="tab" aria-selected="true" aria-controls="panel-char-01">
-        <span class="chars__selector-num">01</span>Nome Personaggio 1
-      </button>
-      <button class="chars__selector-btn" data-char="char-02"
-              role="tab" aria-selected="false" aria-controls="panel-char-02">
-        <span class="chars__selector-num">02</span>Nome Personaggio 2
-      </button>
-      <button class="chars__selector-btn" data-char="char-03"
-              role="tab" aria-selected="false" aria-controls="panel-char-03">
-        <span class="chars__selector-num">03</span>Nome Personaggio 3
-      </button>
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <!-- Red splash SVG shape -->
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="0,0 500,0 380,900 0,900" opacity="0.15"/>
+        <polygon points="600,0 900,0 760,900 460,900" opacity="0.07"/>
+        <polygon points="1100,200 1440,0 1440,400 1200,450" opacity="0.1"/>
+      </svg>
     </div>
 
-    <!-- PANELS -->
-    <div class="chars__panels">
+    <!-- Stars -->
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="font-size:2.5rem; top:12%; right:30%; --sf-dur:3.5s;" data-r="star" data-rd="3">☆</span>
+      <span class="p-star" style="font-size:1rem; top:65%; right:52%; --sf-dur:2.8s; --sf-del:0.8s;" data-r="star" data-rd="5">☆</span>
+      <span class="p-star" style="font-size:3.5rem; bottom:15%; left:5%; --sf-dur:4.2s; --sf-del:0.3s;" data-r="star" data-rd="4">☆</span>
+      <span class="p-star" style="font-size:1.2rem; top:30%; left:45%; --sf-dur:3s;" data-r="star" data-rd="6">☆</span>
+    </div>
 
-      <!-- CHAR 01 -->
-      <div class="chars__panel is-active" data-char="char-01" id="panel-char-01" role="tabpanel">
+    <!-- Character art -->
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">01</span>
+      <img class="char-block__img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNjAgNTIwIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmcwMSIgY3g9IjUwJSIgY3k9IjM1JSIgcj0iNzAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFlMDAwMCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNjA2MDYiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImF1cmEwMSIgY3g9IjUwJSIgY3k9IjU4JSIgcj0iNDIlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjY2MwMDAwIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJibDAxIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxNCIvPjwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iZ3cwMSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1MjAiIGZpbGw9InVybCgjYmcwMSkiLz4KCiAgPCEtLSBncmlkIC0tPgogIDxnIG9wYWNpdHk9IjAuMDQiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI2MCIgeDI9IjM2MCIgeTI9IjYwIi8+PGxpbmUgeDE9IjAiIHkxPSIxMjAiIHgyPSIzNjAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMTgwIiB4Mj0iMzYwIiB5Mj0iMTgwIi8+PGxpbmUgeDE9IjAiIHkxPSIyNDAiIHgyPSIzNjAiIHkyPSIyNDAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMzAwIiB4Mj0iMzYwIiB5Mj0iMzAwIi8+PGxpbmUgeDE9IjAiIHkxPSIzNjAiIHgyPSIzNjAiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNDIwIiB4Mj0iMzYwIiB5Mj0iNDIwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSI1MjAiLz48bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjE4MCIgeTE9IjAiIHgyPSIxODAiIHkyPSI1MjAiLz48bGluZSB4MT0iMjQwIiB5MT0iMCIgeDI9IjI0MCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjMwMCIgeTE9IjAiIHgyPSIzMDAiIHkyPSI1MjAiLz4KICA8L2c+CgogIDwhLS0gYXVyYSAtLT4KICA8ZWxsaXBzZSBjeD0iMTgwIiBjeT0iMzEwIiByeD0iMTEwIiByeT0iMTYwIiBmaWxsPSJ1cmwoI2F1cmEwMSkiIGZpbHRlcj0idXJsKCNibDAxKSIvPgoKICA8IS0tIGRpYWdvbmFsIGFjY2VudCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjEwMCwwIDM2MCwwIDM2MCw1MjAgMjYwLDUyMCIgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC4wMyIvPgoKICA8IS0tIEhBSVIgLS0+CiAgPHBhdGggZD0iTTExMiwxMTggTDEwNiw2MCBMMTI0LDg1IEwxMzYsNDggTDE1MCw3OCBMMTYzLDM2IEwxNzcsNzIgTDE5MCwyOAogICAgICAgICAgIEwyMDMsNjggTDIxOCw0MCBMMjMwLDc4IEwyNDQsNTIgTDI1Niw4OCBMMjY4LDYyIEwyNjIsMTE4CiAgICAgICAgICAgQTY4LDc1IDAgMCwxIDExMiwxMTggWiIgZmlsbD0iIzBkMDAwMCIvPgoKICA8IS0tIEhFQUQgLS0+CiAgPGVsbGlwc2UgY3g9IjE4NyIgY3k9IjEyNCIgcng9IjY4IiByeT0iNzQiIGZpbGw9IiMxNTA4MDgiLz4KCiAgPCEtLSBleWVzIC0tPgogIDxlbGxpcHNlIGN4PSIxNjUiIGN5PSIxMjAiIHJ4PSIxMSIgcnk9IjUiIGZpbGw9IiNjYzAwMDAiIG9wYWNpdHk9IjAuOCIgZmlsdGVyPSJ1cmwoI2d3MDEpIi8+CiAgPGVsbGlwc2UgY3g9IjIwOSIgY3k9IjEyMCIgcng9IjExIiByeT0iNSIgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC44IiBmaWx0ZXI9InVybCgjZ3cwMSkiLz4KCiAgPCEtLSBORUNLIC0tPgogIDxyZWN0IHg9IjE3NCIgeT0iMTk0IiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIGZpbGw9IiMxNTA4MDgiLz4KCiAgPCEtLSBCT0RZIC0tPgogIDxwYXRoIGQ9Ik02NSwyMTQgTDcwLDMyMCBMMTIwLDMzOCBMMTUwLDM0NiBMMTc0LDM0MiBMMTc0LDIxOAogICAgICAgICAgIEwxODcsMjI4IEwyMDAsMjE4IEwyMDAsMzQyIEwyMTAsMzQ2IEwyNDAsMzM4IEwyOTAsMzIwIEwyOTUsMjE0CiAgICAgICAgICAgTDI2NSwyMDMgTDIzMCwxOTcgTDIwMCwxOTIgTDE4NywyMDAgTDE3NCwxOTIgTDE0NCwxOTcgTDExNSwyMDMgWiIKICAgICAgICBmaWxsPSIjMGQwMDAwIiBvcGFjaXR5PSIwLjkiLz4KCiAgPCEtLSBjb2xsYXIgZGV0YWlsIC0tPgogIDxwYXRoIGQ9Ik0xNzQsMjE4IEwxNTgsMjQ0IEwxODcsMjU0IEwyMTYsMjQ0IEwyMDAsMjE4IEwxODcsMjI4IFoiIAogICAgICAgIGZpbGw9IiMxNTA4MDgiIG9wYWNpdHk9IjAuOCIvPgoKICA8IS0tIGNlbnRlciBsaW5lIC0tPgogIDxsaW5lIHgxPSIxODciIHkxPSIyMjgiIHgyPSIxODciIHkyPSIzNDIiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjQiLz4KCiAgPCEtLSBMRUZUIEFSTSAtLT4KICA8cGF0aCBkPSJNNjUsMjE0IEw1MCwzMjAgTDY3LDMyNiBMODgsMzMyIEwxMDAsMjIyIFoiIGZpbGw9IiMwZDAwMDAiIG9wYWNpdHk9IjAuOSIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjMyOCIgcng9IjE0IiByeT0iOSIgZmlsbD0iIzE1MDgwOCIvPgoKICA8IS0tIFJJR0hUIEFSTSAtLT4KICA8cGF0aCBkPSJNMjk1LDIxNCBMMzEwLDMyMCBMMjkzLDMyNiBMMjcyLDMzMiBMMjYwLDIyMiBaIiBmaWxsPSIjMGQwMDAwIiBvcGFjaXR5PSIwLjkiLz4KICA8ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzI4IiByeD0iMTQiIHJ5PSI5IiBmaWxsPSIjMTUwODA4Ii8+CgogIDwhLS0gTEVGVCBMRUcgLS0+CiAgPHBhdGggZD0iTTEyMCwzNDQgTDEwOCw0ODggTDEzMCw0OTIgTDE1MiwzNTYgWiIgZmlsbD0iIzBkMDAwMCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gUklHSFQgTEVHIC0tPgogIDxwYXRoIGQ9Ik0yNTQsMzQ0IEwyNjYsNDg4IEwyNDQsNDkyIEwyMjIsMzU2IFoiIGZpbGw9IiMwZDAwMDAiIG9wYWNpdHk9IjAuODUiLz4KCiAgPCEtLSBTSE9FUyAtLT4KICA8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iNDkyIiByeD0iMjIiIHJ5PSI5IiBmaWxsPSIjMDYwNjA2Ii8+CiAgPGVsbGlwc2UgY3g9IjI1NCIgY3k9IjQ5MiIgcng9IjIyIiByeT0iOSIgZmlsbD0iIzA2MDYwNiIvPgoKICA8IS0tIOKUgOKUgCBVSSBkZWNvcmF0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjE4NywxNCAyMDAsMjcgMTg3LDQwIDE3NCwyNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2MwMDAwIiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iMC44NSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTg3LDE4IDE5NiwyNyAxODcsMzYgMTc4LDI3IiBmaWxsPSIjY2MwMDAwIiBvcGFjaXR5PSIwLjI1Ii8+CgogIDxsaW5lIHgxPSI4IiB5MT0iMTYwIiB4Mj0iNTgiIHkyPSIxNjAiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSI4IiB5MT0iMTY1IiB4Mj0iNDIiIHkyPSIxNjUiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgogIDxsaW5lIHgxPSIzMDIiIHkxPSIxNjAiIHgyPSIzNTIiIHkyPSIxNjAiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSIzMTgiIHkxPSIxNjUiIHgyPSIzNTIiIHkyPSIxNjUiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgoKICA8cGF0aCBkPSJNMTIsMTIgTDM2LDEyIEwzNiwxNCBMMTQsMTQgTDE0LDM2IEwxMiwzNiBaIiBmaWxsPSIjY2MwMDAwIiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHBhdGggZD0iTTM0OCwxMiBMMzI0LDEyIEwzMjQsMTQgTDM0NiwxNCBMMzQ2LDM2IEwzNDgsMzYgWiIgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC41NSIvPgogIDxwYXRoIGQ9Ik0xMiw1MDggTDM2LDUwOCBMMzYsNTA2IEwxNCw1MDYgTDE0LDQ4NCBMMTIsNDg0IFoiIGZpbGw9IiNjYzAwMDAiIG9wYWNpdHk9IjAuNTUiLz4KICA8cGF0aCBkPSJNMzQ4LDUwOCBMMzI0LDUwOCBMMzI0LDUwNiBMMzQ2LDUwNiBMMzQ2LDQ4NCBMMzQ4LDQ4NCBaIiBmaWxsPSIjY2MwMDAwIiBvcGFjaXR5PSIwLjU1Ii8+CgogIDxsaW5lIHgxPSIzMCIgeTE9IjUwMCIgeDI9IjMzMCIgeTI9IjUwMCIgc3Ryb2tlPSIjY2MwMDAwIiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC40Ii8+CiAgPHRleHQgeD0iMTg3IiB5PSI1MTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iOCIgCiAgICAgICAgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC43IiBsZXR0ZXItc3BhY2luZz0iNSI+UFJPVEFHT05JU1Q8L3RleHQ+CiAgPHRleHQgeD0iMTg3IiB5PSI1MjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iNyIgCiAgICAgICAgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC4zNSIgbGV0dGVyLXNwYWNpbmc9IjIiPk9DIMK3IDAxPC90ZXh0Pgo8L3N2Zz4="
+           alt="Personaggio OC 01 — Protagonista"
+           width="420" height="600"
+           data-r="boing-l" data-rd="1" />
+    </div>
 
-        <div class="chars__visual">
-          <div class="chars__visual-bg" aria-hidden="true"></div>
-          <div class="chars__visual-lines" aria-hidden="true"></div>
-          <span class="chars__code" aria-hidden="true">NO.01 / PROTAGONIST</span>
-          <span class="chars__bg-num" aria-hidden="true">01</span>
-
-          <div class="chars__portrait">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNjAgNTIwIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmcwMSIgY3g9IjUwJSIgY3k9IjM1JSIgcj0iNzAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFlMDAwMCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNjA2MDYiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImF1cmEwMSIgY3g9IjUwJSIgY3k9IjU4JSIgcj0iNDIlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjY2MwMDAwIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJibDAxIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxNCIvPjwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iZ3cwMSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1MjAiIGZpbGw9InVybCgjYmcwMSkiLz4KCiAgPCEtLSBncmlkIC0tPgogIDxnIG9wYWNpdHk9IjAuMDQiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI2MCIgeDI9IjM2MCIgeTI9IjYwIi8+PGxpbmUgeDE9IjAiIHkxPSIxMjAiIHgyPSIzNjAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMTgwIiB4Mj0iMzYwIiB5Mj0iMTgwIi8+PGxpbmUgeDE9IjAiIHkxPSIyNDAiIHgyPSIzNjAiIHkyPSIyNDAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMzAwIiB4Mj0iMzYwIiB5Mj0iMzAwIi8+PGxpbmUgeDE9IjAiIHkxPSIzNjAiIHgyPSIzNjAiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNDIwIiB4Mj0iMzYwIiB5Mj0iNDIwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSI1MjAiLz48bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjE4MCIgeTE9IjAiIHgyPSIxODAiIHkyPSI1MjAiLz48bGluZSB4MT0iMjQwIiB5MT0iMCIgeDI9IjI0MCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjMwMCIgeTE9IjAiIHgyPSIzMDAiIHkyPSI1MjAiLz4KICA8L2c+CgogIDwhLS0gYXVyYSAtLT4KICA8ZWxsaXBzZSBjeD0iMTgwIiBjeT0iMzEwIiByeD0iMTEwIiByeT0iMTYwIiBmaWxsPSJ1cmwoI2F1cmEwMSkiIGZpbHRlcj0idXJsKCNibDAxKSIvPgoKICA8IS0tIGRpYWdvbmFsIGFjY2VudCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjEwMCwwIDM2MCwwIDM2MCw1MjAgMjYwLDUyMCIgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC4wMyIvPgoKICA8IS0tIEhBSVIgLS0+CiAgPHBhdGggZD0iTTExMiwxMTggTDEwNiw2MCBMMTI0LDg1IEwxMzYsNDggTDE1MCw3OCBMMTYzLDM2IEwxNzcsNzIgTDE5MCwyOAogICAgICAgICAgIEwyMDMsNjggTDIxOCw0MCBMMjMwLDc4IEwyNDQsNTIgTDI1Niw4OCBMMjY4LDYyIEwyNjIsMTE4CiAgICAgICAgICAgQTY4LDc1IDAgMCwxIDExMiwxMTggWiIgZmlsbD0iIzBkMDAwMCIvPgoKICA8IS0tIEhFQUQgLS0+CiAgPGVsbGlwc2UgY3g9IjE4NyIgY3k9IjEyNCIgcng9IjY4IiByeT0iNzQiIGZpbGw9IiMxNTA4MDgiLz4KCiAgPCEtLSBleWVzIC0tPgogIDxlbGxpcHNlIGN4PSIxNjUiIGN5PSIxMjAiIHJ4PSIxMSIgcnk9IjUiIGZpbGw9IiNjYzAwMDAiIG9wYWNpdHk9IjAuOCIgZmlsdGVyPSJ1cmwoI2d3MDEpIi8+CiAgPGVsbGlwc2UgY3g9IjIwOSIgY3k9IjEyMCIgcng9IjExIiByeT0iNSIgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC44IiBmaWx0ZXI9InVybCgjZ3cwMSkiLz4KCiAgPCEtLSBORUNLIC0tPgogIDxyZWN0IHg9IjE3NCIgeT0iMTk0IiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIGZpbGw9IiMxNTA4MDgiLz4KCiAgPCEtLSBCT0RZIC0tPgogIDxwYXRoIGQ9Ik02NSwyMTQgTDcwLDMyMCBMMTIwLDMzOCBMMTUwLDM0NiBMMTc0LDM0MiBMMTc0LDIxOAogICAgICAgICAgIEwxODcsMjI4IEwyMDAsMjE4IEwyMDAsMzQyIEwyMTAsMzQ2IEwyNDAsMzM4IEwyOTAsMzIwIEwyOTUsMjE0CiAgICAgICAgICAgTDI2NSwyMDMgTDIzMCwxOTcgTDIwMCwxOTIgTDE4NywyMDAgTDE3NCwxOTIgTDE0NCwxOTcgTDExNSwyMDMgWiIKICAgICAgICBmaWxsPSIjMGQwMDAwIiBvcGFjaXR5PSIwLjkiLz4KCiAgPCEtLSBjb2xsYXIgZGV0YWlsIC0tPgogIDxwYXRoIGQ9Ik0xNzQsMjE4IEwxNTgsMjQ0IEwxODcsMjU0IEwyMTYsMjQ0IEwyMDAsMjE4IEwxODcsMjI4IFoiIAogICAgICAgIGZpbGw9IiMxNTA4MDgiIG9wYWNpdHk9IjAuOCIvPgoKICA8IS0tIGNlbnRlciBsaW5lIC0tPgogIDxsaW5lIHgxPSIxODciIHkxPSIyMjgiIHgyPSIxODciIHkyPSIzNDIiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjQiLz4KCiAgPCEtLSBMRUZUIEFSTSAtLT4KICA8cGF0aCBkPSJNNjUsMjE0IEw1MCwzMjAgTDY3LDMyNiBMODgsMzMyIEwxMDAsMjIyIFoiIGZpbGw9IiMwZDAwMDAiIG9wYWNpdHk9IjAuOSIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjMyOCIgcng9IjE0IiByeT0iOSIgZmlsbD0iIzE1MDgwOCIvPgoKICA8IS0tIFJJR0hUIEFSTSAtLT4KICA8cGF0aCBkPSJNMjk1LDIxNCBMMzEwLDMyMCBMMjkzLDMyNiBMMjcyLDMzMiBMMjYwLDIyMiBaIiBmaWxsPSIjMGQwMDAwIiBvcGFjaXR5PSIwLjkiLz4KICA8ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzI4IiByeD0iMTQiIHJ5PSI5IiBmaWxsPSIjMTUwODA4Ii8+CgogIDwhLS0gTEVGVCBMRUcgLS0+CiAgPHBhdGggZD0iTTEyMCwzNDQgTDEwOCw0ODggTDEzMCw0OTIgTDE1MiwzNTYgWiIgZmlsbD0iIzBkMDAwMCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gUklHSFQgTEVHIC0tPgogIDxwYXRoIGQ9Ik0yNTQsMzQ0IEwyNjYsNDg4IEwyNDQsNDkyIEwyMjIsMzU2IFoiIGZpbGw9IiMwZDAwMDAiIG9wYWNpdHk9IjAuODUiLz4KCiAgPCEtLSBTSE9FUyAtLT4KICA8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iNDkyIiByeD0iMjIiIHJ5PSI5IiBmaWxsPSIjMDYwNjA2Ii8+CiAgPGVsbGlwc2UgY3g9IjI1NCIgY3k9IjQ5MiIgcng9IjIyIiByeT0iOSIgZmlsbD0iIzA2MDYwNiIvPgoKICA8IS0tIOKUgOKUgCBVSSBkZWNvcmF0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjE4NywxNCAyMDAsMjcgMTg3LDQwIDE3NCwyNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2MwMDAwIiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iMC44NSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTg3LDE4IDE5NiwyNyAxODcsMzYgMTc4LDI3IiBmaWxsPSIjY2MwMDAwIiBvcGFjaXR5PSIwLjI1Ii8+CgogIDxsaW5lIHgxPSI4IiB5MT0iMTYwIiB4Mj0iNTgiIHkyPSIxNjAiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSI4IiB5MT0iMTY1IiB4Mj0iNDIiIHkyPSIxNjUiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgogIDxsaW5lIHgxPSIzMDIiIHkxPSIxNjAiIHgyPSIzNTIiIHkyPSIxNjAiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSIzMTgiIHkxPSIxNjUiIHgyPSIzNTIiIHkyPSIxNjUiIHN0cm9rZT0iI2NjMDAwMCIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgoKICA8cGF0aCBkPSJNMTIsMTIgTDM2LDEyIEwzNiwxNCBMMTQsMTQgTDE0LDM2IEwxMiwzNiBaIiBmaWxsPSIjY2MwMDAwIiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHBhdGggZD0iTTM0OCwxMiBMMzI0LDEyIEwzMjQsMTQgTDM0NiwxNCBMMzQ2LDM2IEwzNDgsMzYgWiIgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC41NSIvPgogIDxwYXRoIGQ9Ik0xMiw1MDggTDM2LDUwOCBMMzYsNTA2IEwxNCw1MDYgTDE0LDQ4NCBMMTIsNDg0IFoiIGZpbGw9IiNjYzAwMDAiIG9wYWNpdHk9IjAuNTUiLz4KICA8cGF0aCBkPSJNMzQ4LDUwOCBMMzI0LDUwOCBMMzI0LDUwNiBMMzQ2LDUwNiBMMzQ2LDQ4NCBMMzQ4LDQ4NCBaIiBmaWxsPSIjY2MwMDAwIiBvcGFjaXR5PSIwLjU1Ii8+CgogIDxsaW5lIHgxPSIzMCIgeTE9IjUwMCIgeDI9IjMzMCIgeTI9IjUwMCIgc3Ryb2tlPSIjY2MwMDAwIiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC40Ii8+CiAgPHRleHQgeD0iMTg3IiB5PSI1MTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iOCIgCiAgICAgICAgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC43IiBsZXR0ZXItc3BhY2luZz0iNSI+UFJPVEFHT05JU1Q8L3RleHQ+CiAgPHRleHQgeD0iMTg3IiB5PSI1MjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iNyIgCiAgICAgICAgZmlsbD0iI2NjMDAwMCIgb3BhY2l0eT0iMC4zNSIgbGV0dGVyLXNwYWNpbmc9IjIiPk9DIMK3IDAxPC90ZXh0Pgo8L3N2Zz4=" alt="Personaggio OC 01 — Protagonista" width="360" height="520" />
-          </div>
-
-          <div class="chars__name-plate">
-            <span class="chars__name-jp">プロタゴニスト</span>
-            <span class="chars__name-en">NOME · 01</span>
-          </div>
-        </div>
-
-        <div class="chars__info">
-          <span class="chars__role">Protagonista</span>
-
-          <h3 class="chars__full-name">NOME<br/><span>PERSONAGGIO</span></h3>
-
-          <p class="chars__bio">
-            Descrizione del personaggio — la sua storia, personalità, motivazioni.
-            Cosa lo rende unico nel tuo universo creativo.
-            Puoi scrivere qui tutto quello che vuoi raccontare di lui.
-          </p>
-
-          <div class="chars__stats">
-            <p class="chars__stats-title">Status</p>
-
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Forza</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="85%"></div>
-              </div>
-              <span class="chars__stat-val">85</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Velocità</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="72%"></div>
-              </div>
-              <span class="chars__stat-val">72</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Magia</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="60%"></div>
-              </div>
-              <span class="chars__stat-val">60</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Resistenza</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="90%"></div>
-              </div>
-              <span class="chars__stat-val">90</span>
-            </div>
-          </div>
-
-          <div class="chars__tags">
-            <span class="chars__tag">Coraggioso</span>
-            <span class="chars__tag">Combattente</span>
-            <span class="chars__tag">Leale</span>
-            <span class="chars__tag">Solitario</span>
-          </div>
-        </div>
+    <!-- Info -->
+    <div class="char-block__info" data-r="boing-r" data-rd="2">
+      <span class="char-block__code">01 · Protagonista</span>
+      <div>
+        <span class="char-block__name-jp">プロタゴニスト</span>
+        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
       </div>
-
-      <!-- CHAR 02 -->
-      <div class="chars__panel" data-char="char-02" id="panel-char-02" role="tabpanel">
-
-        <div class="chars__visual" style="--clr-accent-glow: rgba(0,119,204,0.2);">
-          <div class="chars__visual-bg" aria-hidden="true"></div>
-          <div class="chars__visual-lines" aria-hidden="true"></div>
-          <span class="chars__code" aria-hidden="true">NO.02 / STRATEGIST</span>
-          <span class="chars__bg-num" aria-hidden="true">02</span>
-
-          <div class="chars__portrait">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNjAgNTIwIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmcwMiIgY3g9IjUwJSIgY3k9IjM1JSIgcj0iNzAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMWEyZSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNjBhMGUiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImF1cmEwMiIgY3g9IjUwJSIgY3k9IjU4JSIgcj0iNDIlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwNzdjYyIgc3RvcC1vcGFjaXR5PSIwLjUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDA3N2NjIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJibDAyIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxNCIvPjwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iZ3cwMiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1MjAiIGZpbGw9InVybCgjYmcwMikiLz4KCiAgPCEtLSBncmlkIC0tPgogIDxnIG9wYWNpdHk9IjAuMDQiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjUiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI2MCIgeDI9IjM2MCIgeTI9IjYwIi8+PGxpbmUgeDE9IjAiIHkxPSIxMjAiIHgyPSIzNjAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMTgwIiB4Mj0iMzYwIiB5Mj0iMTgwIi8+PGxpbmUgeDE9IjAiIHkxPSIyNDAiIHgyPSIzNjAiIHkyPSIyNDAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMzAwIiB4Mj0iMzYwIiB5Mj0iMzAwIi8+PGxpbmUgeDE9IjAiIHkxPSIzNjAiIHgyPSIzNjAiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNDIwIiB4Mj0iMzYwIiB5Mj0iNDIwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSI1MjAiLz48bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjE4MCIgeTE9IjAiIHgyPSIxODAiIHkyPSI1MjAiLz48bGluZSB4MT0iMjQwIiB5MT0iMCIgeDI9IjI0MCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjMwMCIgeTE9IjAiIHgyPSIzMDAiIHkyPSI1MjAiLz4KICA8L2c+CgogIDwhLS0gYXVyYSAtLT4KICA8ZWxsaXBzZSBjeD0iMTgwIiBjeT0iMzEwIiByeD0iMTEwIiByeT0iMTYwIiBmaWxsPSJ1cmwoI2F1cmEwMikiIGZpbHRlcj0idXJsKCNibDAyKSIvPgoKICA8IS0tIGRpYWdvbmFsIGFjY2VudCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjEwMCwwIDM2MCwwIDM2MCw1MjAgMjYwLDUyMCIgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC4wMyIvPgoKICA8IS0tIEhBSVIgLS0+CiAgPHBhdGggZD0iTTExMiwxMTggTDEwNiw2MCBMMTI0LDg1IEwxMzYsNDggTDE1MCw3OCBMMTYzLDM2IEwxNzcsNzIgTDE5MCwyOAogICAgICAgICAgIEwyMDMsNjggTDIxOCw0MCBMMjMwLDc4IEwyNDQsNTIgTDI1Niw4OCBMMjY4LDYyIEwyNjIsMTE4CiAgICAgICAgICAgQTY4LDc1IDAgMCwxIDExMiwxMTggWiIgZmlsbD0iIzA4MGMxMiIvPgoKICA8IS0tIEhFQUQgLS0+CiAgPGVsbGlwc2UgY3g9IjE4NyIgY3k9IjEyNCIgcng9IjY4IiByeT0iNzQiIGZpbGw9IiMwYTEwMTgiLz4KCiAgPCEtLSBleWVzIC0tPgogIDxlbGxpcHNlIGN4PSIxNjUiIGN5PSIxMjAiIHJ4PSIxMSIgcnk9IjUiIGZpbGw9IiMwMDc3Y2MiIG9wYWNpdHk9IjAuOCIgZmlsdGVyPSJ1cmwoI2d3MDIpIi8+CiAgPGVsbGlwc2UgY3g9IjIwOSIgY3k9IjEyMCIgcng9IjExIiByeT0iNSIgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC44IiBmaWx0ZXI9InVybCgjZ3cwMikiLz4KCiAgPCEtLSBORUNLIC0tPgogIDxyZWN0IHg9IjE3NCIgeT0iMTk0IiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIGZpbGw9IiMwYTEwMTgiLz4KCiAgPCEtLSBCT0RZIC0tPgogIDxwYXRoIGQ9Ik02NSwyMTQgTDcwLDMyMCBMMTIwLDMzOCBMMTUwLDM0NiBMMTc0LDM0MiBMMTc0LDIxOAogICAgICAgICAgIEwxODcsMjI4IEwyMDAsMjE4IEwyMDAsMzQyIEwyMTAsMzQ2IEwyNDAsMzM4IEwyOTAsMzIwIEwyOTUsMjE0CiAgICAgICAgICAgTDI2NSwyMDMgTDIzMCwxOTcgTDIwMCwxOTIgTDE4NywyMDAgTDE3NCwxOTIgTDE0NCwxOTcgTDExNSwyMDMgWiIKICAgICAgICBmaWxsPSIjMDgwYzEyIiBvcGFjaXR5PSIwLjkiLz4KCiAgPCEtLSBjb2xsYXIgZGV0YWlsIC0tPgogIDxwYXRoIGQ9Ik0xNzQsMjE4IEwxNTgsMjQ0IEwxODcsMjU0IEwyMTYsMjQ0IEwyMDAsMjE4IEwxODcsMjI4IFoiIAogICAgICAgIGZpbGw9IiMwYTEwMTgiIG9wYWNpdHk9IjAuOCIvPgoKICA8IS0tIGNlbnRlciBsaW5lIC0tPgogIDxsaW5lIHgxPSIxODciIHkxPSIyMjgiIHgyPSIxODciIHkyPSIzNDIiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjQiLz4KCiAgPCEtLSBMRUZUIEFSTSAtLT4KICA8cGF0aCBkPSJNNjUsMjE0IEw1MCwzMjAgTDY3LDMyNiBMODgsMzMyIEwxMDAsMjIyIFoiIGZpbGw9IiMwODBjMTIiIG9wYWNpdHk9IjAuOSIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjMyOCIgcng9IjE0IiByeT0iOSIgZmlsbD0iIzBhMTAxOCIvPgoKICA8IS0tIFJJR0hUIEFSTSAtLT4KICA8cGF0aCBkPSJNMjk1LDIxNCBMMzEwLDMyMCBMMjkzLDMyNiBMMjcyLDMzMiBMMjYwLDIyMiBaIiBmaWxsPSIjMDgwYzEyIiBvcGFjaXR5PSIwLjkiLz4KICA8ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzI4IiByeD0iMTQiIHJ5PSI5IiBmaWxsPSIjMGExMDE4Ii8+CgogIDwhLS0gTEVGVCBMRUcgLS0+CiAgPHBhdGggZD0iTTEyMCwzNDQgTDEwOCw0ODggTDEzMCw0OTIgTDE1MiwzNTYgWiIgZmlsbD0iIzA4MGMxMiIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gUklHSFQgTEVHIC0tPgogIDxwYXRoIGQ9Ik0yNTQsMzQ0IEwyNjYsNDg4IEwyNDQsNDkyIEwyMjIsMzU2IFoiIGZpbGw9IiMwODBjMTIiIG9wYWNpdHk9IjAuODUiLz4KCiAgPCEtLSBTSE9FUyAtLT4KICA8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iNDkyIiByeD0iMjIiIHJ5PSI5IiBmaWxsPSIjMDYwYTBlIi8+CiAgPGVsbGlwc2UgY3g9IjI1NCIgY3k9IjQ5MiIgcng9IjIyIiByeT0iOSIgZmlsbD0iIzA2MGEwZSIvPgoKICA8IS0tIOKUgOKUgCBVSSBkZWNvcmF0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjE4NywxNCAyMDAsMjcgMTg3LDQwIDE3NCwyNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDA3N2NjIiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iMC44NSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTg3LDE4IDE5NiwyNyAxODcsMzYgMTc4LDI3IiBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjI1Ii8+CgogIDxsaW5lIHgxPSI4IiB5MT0iMTYwIiB4Mj0iNTgiIHkyPSIxNjAiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSI4IiB5MT0iMTY1IiB4Mj0iNDIiIHkyPSIxNjUiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgogIDxsaW5lIHgxPSIzMDIiIHkxPSIxNjAiIHgyPSIzNTIiIHkyPSIxNjAiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSIzMTgiIHkxPSIxNjUiIHgyPSIzNTIiIHkyPSIxNjUiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgoKICA8cGF0aCBkPSJNMTIsMTIgTDM2LDEyIEwzNiwxNCBMMTQsMTQgTDE0LDM2IEwxMiwzNiBaIiBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHBhdGggZD0iTTM0OCwxMiBMMzI0LDEyIEwzMjQsMTQgTDM0NiwxNCBMMzQ2LDM2IEwzNDgsMzYgWiIgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC41NSIvPgogIDxwYXRoIGQ9Ik0xMiw1MDggTDM2LDUwOCBMMzYsNTA2IEwxNCw1MDYgTDE0LDQ4NCBMMTIsNDg0IFoiIGZpbGw9IiMwMDc3Y2MiIG9wYWNpdHk9IjAuNTUiLz4KICA8cGF0aCBkPSJNMzQ4LDUwOCBMMzI0LDUwOCBMMzI0LDUwNiBMMzQ2LDUwNiBMMzQ2LDQ4NCBMMzQ4LDQ4NCBaIiBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjU1Ii8+CgogIDxsaW5lIHgxPSIzMCIgeTE9IjUwMCIgeDI9IjMzMCIgeTI9IjUwMCIgc3Ryb2tlPSIjMDA3N2NjIiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC40Ii8+CiAgPHRleHQgeD0iMTg3IiB5PSI1MTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iOCIgCiAgICAgICAgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC43IiBsZXR0ZXItc3BhY2luZz0iNSI+U1RSQVRFR0lTVDwvdGV4dD4KICA8dGV4dCB4PSIxODciIHk9IjUyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSI3IiAKICAgICAgICBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjM1IiBsZXR0ZXItc3BhY2luZz0iMiI+T0MgwrcgMDI8L3RleHQ+Cjwvc3ZnPg==" alt="Personaggio OC 02 — Stratega" width="360" height="520" />
-          </div>
-
-          <div class="chars__name-plate">
-            <span class="chars__name-jp">ストラテジスト</span>
-            <span class="chars__name-en">NOME · 02</span>
-          </div>
-        </div>
-
-        <div class="chars__info">
-          <span class="chars__role">Stratega</span>
-
-          <h3 class="chars__full-name">NOME<br/><span>PERSONAGGIO</span></h3>
-
-          <p class="chars__bio">
-            Descrizione del secondo personaggio. La sua backstory,
-            il suo rapporto con gli altri personaggi e il suo ruolo
-            nella narrativa del tuo universo creativo.
-          </p>
-
-          <div class="chars__stats">
-            <p class="chars__stats-title">Status</p>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Forza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="45%"></div></div>
-              <span class="chars__stat-val">45</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Velocità</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="68%"></div></div>
-              <span class="chars__stat-val">68</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Magia</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="95%"></div></div>
-              <span class="chars__stat-val">95</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Resistenza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="55%"></div></div>
-              <span class="chars__stat-val">55</span>
-            </div>
-          </div>
-
-          <div class="chars__tags">
-            <span class="chars__tag">Misterioso</span>
-            <span class="chars__tag">Strategico</span>
-            <span class="chars__tag">Freddo</span>
-            <span class="chars__tag">Brillante</span>
-          </div>
-        </div>
+      <p class="char-block__bio">
+        Descrizione del personaggio — la sua storia, personalità, motivazioni.
+        Cosa lo rende unico nel tuo universo creativo.
+        Ogni parola racconta chi è davvero.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:85%"></div></div><span class="char-stat__val">85</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:72%"></div></div><span class="char-stat__val">72</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:60%"></div></div><span class="char-stat__val">60</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:90%"></div></div><span class="char-stat__val">90</span></div>
       </div>
-
-      <!-- CHAR 03 -->
-      <div class="chars__panel" data-char="char-03" id="panel-char-03" role="tabpanel">
-
-        <div class="chars__visual" style="--clr-accent-glow: rgba(155,89,182,0.2);">
-          <div class="chars__visual-bg" aria-hidden="true"></div>
-          <div class="chars__visual-lines" aria-hidden="true"></div>
-          <span class="chars__code" aria-hidden="true">NO.03 / ANTAGONIST</span>
-          <span class="chars__bg-num" aria-hidden="true">03</span>
-
-          <div class="chars__portrait">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNjAgNTIwIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmcwMyIgY3g9IjUwJSIgY3k9IjM1JSIgcj0iNzAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE2MDAyNCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNjA2MDgiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImF1cmEwMyIgY3g9IjUwJSIgY3k9IjU4JSIgcj0iNDIlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzliNTliNiIgc3RvcC1vcGFjaXR5PSIwLjUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjOWI1OWI2IiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJibDAzIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxNCIvPjwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iZ3cwMyI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1MjAiIGZpbGw9InVybCgjYmcwMykiLz4KCiAgPCEtLSBncmlkIC0tPgogIDxnIG9wYWNpdHk9IjAuMDQiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjUiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI2MCIgeDI9IjM2MCIgeTI9IjYwIi8+PGxpbmUgeDE9IjAiIHkxPSIxMjAiIHgyPSIzNjAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMTgwIiB4Mj0iMzYwIiB5Mj0iMTgwIi8+PGxpbmUgeDE9IjAiIHkxPSIyNDAiIHgyPSIzNjAiIHkyPSIyNDAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMzAwIiB4Mj0iMzYwIiB5Mj0iMzAwIi8+PGxpbmUgeDE9IjAiIHkxPSIzNjAiIHgyPSIzNjAiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNDIwIiB4Mj0iMzYwIiB5Mj0iNDIwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSI1MjAiLz48bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjE4MCIgeTE9IjAiIHgyPSIxODAiIHkyPSI1MjAiLz48bGluZSB4MT0iMjQwIiB5MT0iMCIgeDI9IjI0MCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjMwMCIgeTE9IjAiIHgyPSIzMDAiIHkyPSI1MjAiLz4KICA8L2c+CgogIDwhLS0gYXVyYSAtLT4KICA8ZWxsaXBzZSBjeD0iMTgwIiBjeT0iMzEwIiByeD0iMTEwIiByeT0iMTYwIiBmaWxsPSJ1cmwoI2F1cmEwMykiIGZpbHRlcj0idXJsKCNibDAzKSIvPgoKICA8IS0tIGRpYWdvbmFsIGFjY2VudCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjEwMCwwIDM2MCwwIDM2MCw1MjAgMjYwLDUyMCIgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC4wMyIvPgoKICA8IS0tIEhBSVIgLS0+CiAgPHBhdGggZD0iTTExMiwxMTggTDEwNiw2MCBMMTI0LDg1IEwxMzYsNDggTDE1MCw3OCBMMTYzLDM2IEwxNzcsNzIgTDE5MCwyOAogICAgICAgICAgIEwyMDMsNjggTDIxOCw0MCBMMjMwLDc4IEwyNDQsNTIgTDI1Niw4OCBMMjY4LDYyIEwyNjIsMTE4CiAgICAgICAgICAgQTY4LDc1IDAgMCwxIDExMiwxMTggWiIgZmlsbD0iIzBlMDAxOCIvPgoKICA8IS0tIEhFQUQgLS0+CiAgPGVsbGlwc2UgY3g9IjE4NyIgY3k9IjEyNCIgcng9IjY4IiByeT0iNzQiIGZpbGw9IiMxMDA1MGUiLz4KCiAgPCEtLSBleWVzIC0tPgogIDxlbGxpcHNlIGN4PSIxNjUiIGN5PSIxMjAiIHJ4PSIxMSIgcnk9IjUiIGZpbGw9IiM5YjU5YjYiIG9wYWNpdHk9IjAuOCIgZmlsdGVyPSJ1cmwoI2d3MDMpIi8+CiAgPGVsbGlwc2UgY3g9IjIwOSIgY3k9IjEyMCIgcng9IjExIiByeT0iNSIgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC44IiBmaWx0ZXI9InVybCgjZ3cwMykiLz4KCiAgPCEtLSBORUNLIC0tPgogIDxyZWN0IHg9IjE3NCIgeT0iMTk0IiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIGZpbGw9IiMxMDA1MGUiLz4KCiAgPCEtLSBCT0RZIC0tPgogIDxwYXRoIGQ9Ik02NSwyMTQgTDcwLDMyMCBMMTIwLDMzOCBMMTUwLDM0NiBMMTc0LDM0MiBMMTc0LDIxOAogICAgICAgICAgIEwxODcsMjI4IEwyMDAsMjE4IEwyMDAsMzQyIEwyMTAsMzQ2IEwyNDAsMzM4IEwyOTAsMzIwIEwyOTUsMjE0CiAgICAgICAgICAgTDI2NSwyMDMgTDIzMCwxOTcgTDIwMCwxOTIgTDE4NywyMDAgTDE3NCwxOTIgTDE0NCwxOTcgTDExNSwyMDMgWiIKICAgICAgICBmaWxsPSIjMGUwMDE4IiBvcGFjaXR5PSIwLjkiLz4KCiAgPCEtLSBjb2xsYXIgZGV0YWlsIC0tPgogIDxwYXRoIGQ9Ik0xNzQsMjE4IEwxNTgsMjQ0IEwxODcsMjU0IEwyMTYsMjQ0IEwyMDAsMjE4IEwxODcsMjI4IFoiIAogICAgICAgIGZpbGw9IiMxMDA1MGUiIG9wYWNpdHk9IjAuOCIvPgoKICA8IS0tIGNlbnRlciBsaW5lIC0tPgogIDxsaW5lIHgxPSIxODciIHkxPSIyMjgiIHgyPSIxODciIHkyPSIzNDIiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjQiLz4KCiAgPCEtLSBMRUZUIEFSTSAtLT4KICA8cGF0aCBkPSJNNjUsMjE0IEw1MCwzMjAgTDY3LDMyNiBMODgsMzMyIEwxMDAsMjIyIFoiIGZpbGw9IiMwZTAwMTgiIG9wYWNpdHk9IjAuOSIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjMyOCIgcng9IjE0IiByeT0iOSIgZmlsbD0iIzEwMDUwZSIvPgoKICA8IS0tIFJJR0hUIEFSTSAtLT4KICA8cGF0aCBkPSJNMjk1LDIxNCBMMzEwLDMyMCBMMjkzLDMyNiBMMjcyLDMzMiBMMjYwLDIyMiBaIiBmaWxsPSIjMGUwMDE4IiBvcGFjaXR5PSIwLjkiLz4KICA8ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzI4IiByeD0iMTQiIHJ5PSI5IiBmaWxsPSIjMTAwNTBlIi8+CgogIDwhLS0gTEVGVCBMRUcgLS0+CiAgPHBhdGggZD0iTTEyMCwzNDQgTDEwOCw0ODggTDEzMCw0OTIgTDE1MiwzNTYgWiIgZmlsbD0iIzBlMDAxOCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gUklHSFQgTEVHIC0tPgogIDxwYXRoIGQ9Ik0yNTQsMzQ0IEwyNjYsNDg4IEwyNDQsNDkyIEwyMjIsMzU2IFoiIGZpbGw9IiMwZTAwMTgiIG9wYWNpdHk9IjAuODUiLz4KCiAgPCEtLSBTSE9FUyAtLT4KICA8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iNDkyIiByeD0iMjIiIHJ5PSI5IiBmaWxsPSIjMDYwNjA4Ii8+CiAgPGVsbGlwc2UgY3g9IjI1NCIgY3k9IjQ5MiIgcng9IjIyIiByeT0iOSIgZmlsbD0iIzA2MDYwOCIvPgoKICA8IS0tIOKUgOKUgCBVSSBkZWNvcmF0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjE4NywxNCAyMDAsMjcgMTg3LDQwIDE3NCwyNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOWI1OWI2IiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iMC44NSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTg3LDE4IDE5NiwyNyAxODcsMzYgMTc4LDI3IiBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjI1Ii8+CgogIDxsaW5lIHgxPSI4IiB5MT0iMTYwIiB4Mj0iNTgiIHkyPSIxNjAiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSI4IiB5MT0iMTY1IiB4Mj0iNDIiIHkyPSIxNjUiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgogIDxsaW5lIHgxPSIzMDIiIHkxPSIxNjAiIHgyPSIzNTIiIHkyPSIxNjAiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSIzMTgiIHkxPSIxNjUiIHgyPSIzNTIiIHkyPSIxNjUiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgoKICA8cGF0aCBkPSJNMTIsMTIgTDM2LDEyIEwzNiwxNCBMMTQsMTQgTDE0LDM2IEwxMiwzNiBaIiBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHBhdGggZD0iTTM0OCwxMiBMMzI0LDEyIEwzMjQsMTQgTDM0NiwxNCBMMzQ2LDM2IEwzNDgsMzYgWiIgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC41NSIvPgogIDxwYXRoIGQ9Ik0xMiw1MDggTDM2LDUwOCBMMzYsNTA2IEwxNCw1MDYgTDE0LDQ4NCBMMTIsNDg0IFoiIGZpbGw9IiM5YjU5YjYiIG9wYWNpdHk9IjAuNTUiLz4KICA8cGF0aCBkPSJNMzQ4LDUwOCBMMzI0LDUwOCBMMzI0LDUwNiBMMzQ2LDUwNiBMMzQ2LDQ4NCBMMzQ4LDQ4NCBaIiBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjU1Ii8+CgogIDxsaW5lIHgxPSIzMCIgeTE9IjUwMCIgeDI9IjMzMCIgeTI9IjUwMCIgc3Ryb2tlPSIjOWI1OWI2IiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC40Ii8+CiAgPHRleHQgeD0iMTg3IiB5PSI1MTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iOCIgCiAgICAgICAgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC43IiBsZXR0ZXItc3BhY2luZz0iNSI+QU5UQUdPTklTVDwvdGV4dD4KICA8dGV4dCB4PSIxODciIHk9IjUyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSI3IiAKICAgICAgICBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjM1IiBsZXR0ZXItc3BhY2luZz0iMiI+T0MgwrcgMDM8L3RleHQ+Cjwvc3ZnPg==" alt="Personaggio OC 03 — Antagonista" width="360" height="520" />
-          </div>
-
-          <div class="chars__name-plate">
-            <span class="chars__name-jp">アンタゴニスト</span>
-            <span class="chars__name-en">NOME · 03</span>
-          </div>
-        </div>
-
-        <div class="chars__info">
-          <span class="chars__role">Antagonista</span>
-
-          <h3 class="chars__full-name">NOME<br/><span>PERSONAGGIO</span></h3>
-
-          <p class="chars__bio">
-            Il terzo personaggio. Antagonista, alleato ambiguo o
-            personaggio di supporto — racconta chi è e perché
-            esiste nel tuo universo creativo.
-          </p>
-
-          <div class="chars__stats">
-            <p class="chars__stats-title">Status</p>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Forza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="78%"></div></div>
-              <span class="chars__stat-val">78</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Velocità</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="82%"></div></div>
-              <span class="chars__stat-val">82</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Magia</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="88%"></div></div>
-              <span class="chars__stat-val">88</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Resistenza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="70%"></div></div>
-              <span class="chars__stat-val">70</span>
-            </div>
-          </div>
-
-          <div class="chars__tags">
-            <span class="chars__tag">Oscuro</span>
-            <span class="chars__tag">Ambizioso</span>
-            <span class="chars__tag">Spietato</span>
-            <span class="chars__tag">Complesso</span>
-          </div>
-        </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Coraggioso</span>
+        <span class="char-block__tag">Combattente</span>
+        <span class="char-block__tag">Leale</span>
+        <span class="char-block__tag">Solitario</span>
       </div>
-
     </div>
   </div>
+
+  <!-- Separatore -->
+  <div class="char-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
+    </svg>
+  </div>
+
+  <!-- ── PERSONAGGIO 02 ──────────────────────────────────── -->
+  <div class="char-block char-block--even" style="--char-grad: linear-gradient(135deg, #001525 0%, #06090d 70%); --char-glow: rgba(0,100,200,0.35);">
+
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="940,0 1440,0 1440,900 1060,900" opacity="0.12" fill="#0077cc"/>
+        <polygon points="540,0 840,0 680,900 380,900" opacity="0.05" fill="#0077cc"/>
+        <polygon points="0,500 300,300 200,900 0,900" opacity="0.08" fill="#0077cc"/>
+      </svg>
+    </div>
+
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="font-size:2rem; top:15%; left:32%; --sf-dur:3.8s; --sf-del:0.2s;" data-r="star" data-rd="3" >☆</span>
+      <span class="p-star" style="font-size:3rem; bottom:20%; right:6%; --sf-dur:4s; --sf-del:0.6s;" data-r="star" data-rd="4">☆</span>
+      <span class="p-star" style="font-size:1rem; top:55%; left:8%; --sf-dur:2.6s; --sf-del:1s;" data-r="star" data-rd="6">☆</span>
+    </div>
+
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">02</span>
+      <img class="char-block__img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNjAgNTIwIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmcwMiIgY3g9IjUwJSIgY3k9IjM1JSIgcj0iNzAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMWEyZSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNjBhMGUiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImF1cmEwMiIgY3g9IjUwJSIgY3k9IjU4JSIgcj0iNDIlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwNzdjYyIgc3RvcC1vcGFjaXR5PSIwLjUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDA3N2NjIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJibDAyIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxNCIvPjwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iZ3cwMiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1MjAiIGZpbGw9InVybCgjYmcwMikiLz4KCiAgPCEtLSBncmlkIC0tPgogIDxnIG9wYWNpdHk9IjAuMDQiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjUiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI2MCIgeDI9IjM2MCIgeTI9IjYwIi8+PGxpbmUgeDE9IjAiIHkxPSIxMjAiIHgyPSIzNjAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMTgwIiB4Mj0iMzYwIiB5Mj0iMTgwIi8+PGxpbmUgeDE9IjAiIHkxPSIyNDAiIHgyPSIzNjAiIHkyPSIyNDAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMzAwIiB4Mj0iMzYwIiB5Mj0iMzAwIi8+PGxpbmUgeDE9IjAiIHkxPSIzNjAiIHgyPSIzNjAiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNDIwIiB4Mj0iMzYwIiB5Mj0iNDIwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSI1MjAiLz48bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjE4MCIgeTE9IjAiIHgyPSIxODAiIHkyPSI1MjAiLz48bGluZSB4MT0iMjQwIiB5MT0iMCIgeDI9IjI0MCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjMwMCIgeTE9IjAiIHgyPSIzMDAiIHkyPSI1MjAiLz4KICA8L2c+CgogIDwhLS0gYXVyYSAtLT4KICA8ZWxsaXBzZSBjeD0iMTgwIiBjeT0iMzEwIiByeD0iMTEwIiByeT0iMTYwIiBmaWxsPSJ1cmwoI2F1cmEwMikiIGZpbHRlcj0idXJsKCNibDAyKSIvPgoKICA8IS0tIGRpYWdvbmFsIGFjY2VudCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjEwMCwwIDM2MCwwIDM2MCw1MjAgMjYwLDUyMCIgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC4wMyIvPgoKICA8IS0tIEhBSVIgLS0+CiAgPHBhdGggZD0iTTExMiwxMTggTDEwNiw2MCBMMTI0LDg1IEwxMzYsNDggTDE1MCw3OCBMMTYzLDM2IEwxNzcsNzIgTDE5MCwyOAogICAgICAgICAgIEwyMDMsNjggTDIxOCw0MCBMMjMwLDc4IEwyNDQsNTIgTDI1Niw4OCBMMjY4LDYyIEwyNjIsMTE4CiAgICAgICAgICAgQTY4LDc1IDAgMCwxIDExMiwxMTggWiIgZmlsbD0iIzA4MGMxMiIvPgoKICA8IS0tIEhFQUQgLS0+CiAgPGVsbGlwc2UgY3g9IjE4NyIgY3k9IjEyNCIgcng9IjY4IiByeT0iNzQiIGZpbGw9IiMwYTEwMTgiLz4KCiAgPCEtLSBleWVzIC0tPgogIDxlbGxpcHNlIGN4PSIxNjUiIGN5PSIxMjAiIHJ4PSIxMSIgcnk9IjUiIGZpbGw9IiMwMDc3Y2MiIG9wYWNpdHk9IjAuOCIgZmlsdGVyPSJ1cmwoI2d3MDIpIi8+CiAgPGVsbGlwc2UgY3g9IjIwOSIgY3k9IjEyMCIgcng9IjExIiByeT0iNSIgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC44IiBmaWx0ZXI9InVybCgjZ3cwMikiLz4KCiAgPCEtLSBORUNLIC0tPgogIDxyZWN0IHg9IjE3NCIgeT0iMTk0IiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIGZpbGw9IiMwYTEwMTgiLz4KCiAgPCEtLSBCT0RZIC0tPgogIDxwYXRoIGQ9Ik02NSwyMTQgTDcwLDMyMCBMMTIwLDMzOCBMMTUwLDM0NiBMMTc0LDM0MiBMMTc0LDIxOAogICAgICAgICAgIEwxODcsMjI4IEwyMDAsMjE4IEwyMDAsMzQyIEwyMTAsMzQ2IEwyNDAsMzM4IEwyOTAsMzIwIEwyOTUsMjE0CiAgICAgICAgICAgTDI2NSwyMDMgTDIzMCwxOTcgTDIwMCwxOTIgTDE4NywyMDAgTDE3NCwxOTIgTDE0NCwxOTcgTDExNSwyMDMgWiIKICAgICAgICBmaWxsPSIjMDgwYzEyIiBvcGFjaXR5PSIwLjkiLz4KCiAgPCEtLSBjb2xsYXIgZGV0YWlsIC0tPgogIDxwYXRoIGQ9Ik0xNzQsMjE4IEwxNTgsMjQ0IEwxODcsMjU0IEwyMTYsMjQ0IEwyMDAsMjE4IEwxODcsMjI4IFoiIAogICAgICAgIGZpbGw9IiMwYTEwMTgiIG9wYWNpdHk9IjAuOCIvPgoKICA8IS0tIGNlbnRlciBsaW5lIC0tPgogIDxsaW5lIHgxPSIxODciIHkxPSIyMjgiIHgyPSIxODciIHkyPSIzNDIiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjQiLz4KCiAgPCEtLSBMRUZUIEFSTSAtLT4KICA8cGF0aCBkPSJNNjUsMjE0IEw1MCwzMjAgTDY3LDMyNiBMODgsMzMyIEwxMDAsMjIyIFoiIGZpbGw9IiMwODBjMTIiIG9wYWNpdHk9IjAuOSIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjMyOCIgcng9IjE0IiByeT0iOSIgZmlsbD0iIzBhMTAxOCIvPgoKICA8IS0tIFJJR0hUIEFSTSAtLT4KICA8cGF0aCBkPSJNMjk1LDIxNCBMMzEwLDMyMCBMMjkzLDMyNiBMMjcyLDMzMiBMMjYwLDIyMiBaIiBmaWxsPSIjMDgwYzEyIiBvcGFjaXR5PSIwLjkiLz4KICA8ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzI4IiByeD0iMTQiIHJ5PSI5IiBmaWxsPSIjMGExMDE4Ii8+CgogIDwhLS0gTEVGVCBMRUcgLS0+CiAgPHBhdGggZD0iTTEyMCwzNDQgTDEwOCw0ODggTDEzMCw0OTIgTDE1MiwzNTYgWiIgZmlsbD0iIzA4MGMxMiIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gUklHSFQgTEVHIC0tPgogIDxwYXRoIGQ9Ik0yNTQsMzQ0IEwyNjYsNDg4IEwyNDQsNDkyIEwyMjIsMzU2IFoiIGZpbGw9IiMwODBjMTIiIG9wYWNpdHk9IjAuODUiLz4KCiAgPCEtLSBTSE9FUyAtLT4KICA8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iNDkyIiByeD0iMjIiIHJ5PSI5IiBmaWxsPSIjMDYwYTBlIi8+CiAgPGVsbGlwc2UgY3g9IjI1NCIgY3k9IjQ5MiIgcng9IjIyIiByeT0iOSIgZmlsbD0iIzA2MGEwZSIvPgoKICA8IS0tIOKUgOKUgCBVSSBkZWNvcmF0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjE4NywxNCAyMDAsMjcgMTg3LDQwIDE3NCwyNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDA3N2NjIiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iMC44NSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTg3LDE4IDE5NiwyNyAxODcsMzYgMTc4LDI3IiBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjI1Ii8+CgogIDxsaW5lIHgxPSI4IiB5MT0iMTYwIiB4Mj0iNTgiIHkyPSIxNjAiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSI4IiB5MT0iMTY1IiB4Mj0iNDIiIHkyPSIxNjUiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgogIDxsaW5lIHgxPSIzMDIiIHkxPSIxNjAiIHgyPSIzNTIiIHkyPSIxNjAiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSIzMTgiIHkxPSIxNjUiIHgyPSIzNTIiIHkyPSIxNjUiIHN0cm9rZT0iIzAwNzdjYyIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgoKICA8cGF0aCBkPSJNMTIsMTIgTDM2LDEyIEwzNiwxNCBMMTQsMTQgTDE0LDM2IEwxMiwzNiBaIiBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHBhdGggZD0iTTM0OCwxMiBMMzI0LDEyIEwzMjQsMTQgTDM0NiwxNCBMMzQ2LDM2IEwzNDgsMzYgWiIgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC41NSIvPgogIDxwYXRoIGQ9Ik0xMiw1MDggTDM2LDUwOCBMMzYsNTA2IEwxNCw1MDYgTDE0LDQ4NCBMMTIsNDg0IFoiIGZpbGw9IiMwMDc3Y2MiIG9wYWNpdHk9IjAuNTUiLz4KICA8cGF0aCBkPSJNMzQ4LDUwOCBMMzI0LDUwOCBMMzI0LDUwNiBMMzQ2LDUwNiBMMzQ2LDQ4NCBMMzQ4LDQ4NCBaIiBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjU1Ii8+CgogIDxsaW5lIHgxPSIzMCIgeTE9IjUwMCIgeDI9IjMzMCIgeTI9IjUwMCIgc3Ryb2tlPSIjMDA3N2NjIiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC40Ii8+CiAgPHRleHQgeD0iMTg3IiB5PSI1MTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iOCIgCiAgICAgICAgZmlsbD0iIzAwNzdjYyIgb3BhY2l0eT0iMC43IiBsZXR0ZXItc3BhY2luZz0iNSI+U1RSQVRFR0lTVDwvdGV4dD4KICA8dGV4dCB4PSIxODciIHk9IjUyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSI3IiAKICAgICAgICBmaWxsPSIjMDA3N2NjIiBvcGFjaXR5PSIwLjM1IiBsZXR0ZXItc3BhY2luZz0iMiI+T0MgwrcgMDI8L3RleHQ+Cjwvc3ZnPg=="
+           alt="Personaggio OC 02 — Stratega"
+           width="420" height="600"
+           data-r="boing-r" data-rd="1" />
+    </div>
+
+    <div class="char-block__info" data-r="boing-l" data-rd="2">
+      <span class="char-block__code">02 · Stratega</span>
+      <div>
+        <span class="char-block__name-jp">ストラテジスト</span>
+        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
+      </div>
+      <p class="char-block__bio">
+        Descrizione del secondo personaggio. La sua backstory,
+        il suo rapporto con gli altri personaggi e il suo ruolo
+        nella narrativa del tuo universo creativo.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">45</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">68</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">95</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">55</span></div>
+      </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Misterioso</span>
+        <span class="char-block__tag">Strategico</span>
+        <span class="char-block__tag">Freddo</span>
+        <span class="char-block__tag">Brillante</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Separatore -->
+  <div class="char-divider" aria-hidden="true" style="transform:scaleX(-1);">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
+    </svg>
+  </div>
+
+  <!-- ── PERSONAGGIO 03 ──────────────────────────────────── -->
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #14001e 0%, #070609 70%); --char-glow: rgba(130,60,180,0.4);">
+
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="0,0 440,0 320,900 0,900" opacity="0.12" fill="#8e44ad"/>
+        <polygon points="1000,0 1440,0 1440,600 1100,900 900,900 1020,200" opacity="0.08" fill="#8e44ad"/>
+        <polygon points="500,0 800,0 680,500 380,400" opacity="0.05" fill="#8e44ad"/>
+      </svg>
+    </div>
+
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="font-size:4rem; top:10%; right:28%; --sf-dur:5s; --sf-del:0.4s;" data-r="star" data-rd="2">☆</span>
+      <span class="p-star" style="font-size:1.5rem; bottom:25%; right:48%; --sf-dur:3s; --sf-del:0.9s;" data-r="star" data-rd="5">☆</span>
+      <span class="p-star" style="font-size:2rem; top:50%; left:3%; --sf-dur:3.6s;" data-r="star" data-rd="4">☆</span>
+    </div>
+
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">03</span>
+      <img class="char-block__img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNjAgNTIwIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmcwMyIgY3g9IjUwJSIgY3k9IjM1JSIgcj0iNzAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE2MDAyNCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNjA2MDgiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImF1cmEwMyIgY3g9IjUwJSIgY3k9IjU4JSIgcj0iNDIlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzliNTliNiIgc3RvcC1vcGFjaXR5PSIwLjUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjOWI1OWI2IiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJibDAzIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxNCIvPjwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iZ3cwMyI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1MjAiIGZpbGw9InVybCgjYmcwMykiLz4KCiAgPCEtLSBncmlkIC0tPgogIDxnIG9wYWNpdHk9IjAuMDQiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjUiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI2MCIgeDI9IjM2MCIgeTI9IjYwIi8+PGxpbmUgeDE9IjAiIHkxPSIxMjAiIHgyPSIzNjAiIHkyPSIxMjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMTgwIiB4Mj0iMzYwIiB5Mj0iMTgwIi8+PGxpbmUgeDE9IjAiIHkxPSIyNDAiIHgyPSIzNjAiIHkyPSIyNDAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iMzAwIiB4Mj0iMzYwIiB5Mj0iMzAwIi8+PGxpbmUgeDE9IjAiIHkxPSIzNjAiIHgyPSIzNjAiIHkyPSIzNjAiLz4KICAgIDxsaW5lIHgxPSIwIiB5MT0iNDIwIiB4Mj0iMzYwIiB5Mj0iNDIwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSI1MjAiLz48bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjE4MCIgeTE9IjAiIHgyPSIxODAiIHkyPSI1MjAiLz48bGluZSB4MT0iMjQwIiB5MT0iMCIgeDI9IjI0MCIgeTI9IjUyMCIvPgogICAgPGxpbmUgeDE9IjMwMCIgeTE9IjAiIHgyPSIzMDAiIHkyPSI1MjAiLz4KICA8L2c+CgogIDwhLS0gYXVyYSAtLT4KICA8ZWxsaXBzZSBjeD0iMTgwIiBjeT0iMzEwIiByeD0iMTEwIiByeT0iMTYwIiBmaWxsPSJ1cmwoI2F1cmEwMykiIGZpbHRlcj0idXJsKCNibDAzKSIvPgoKICA8IS0tIGRpYWdvbmFsIGFjY2VudCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjEwMCwwIDM2MCwwIDM2MCw1MjAgMjYwLDUyMCIgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC4wMyIvPgoKICA8IS0tIEhBSVIgLS0+CiAgPHBhdGggZD0iTTExMiwxMTggTDEwNiw2MCBMMTI0LDg1IEwxMzYsNDggTDE1MCw3OCBMMTYzLDM2IEwxNzcsNzIgTDE5MCwyOAogICAgICAgICAgIEwyMDMsNjggTDIxOCw0MCBMMjMwLDc4IEwyNDQsNTIgTDI1Niw4OCBMMjY4LDYyIEwyNjIsMTE4CiAgICAgICAgICAgQTY4LDc1IDAgMCwxIDExMiwxMTggWiIgZmlsbD0iIzBlMDAxOCIvPgoKICA8IS0tIEhFQUQgLS0+CiAgPGVsbGlwc2UgY3g9IjE4NyIgY3k9IjEyNCIgcng9IjY4IiByeT0iNzQiIGZpbGw9IiMxMDA1MGUiLz4KCiAgPCEtLSBleWVzIC0tPgogIDxlbGxpcHNlIGN4PSIxNjUiIGN5PSIxMjAiIHJ4PSIxMSIgcnk9IjUiIGZpbGw9IiM5YjU5YjYiIG9wYWNpdHk9IjAuOCIgZmlsdGVyPSJ1cmwoI2d3MDMpIi8+CiAgPGVsbGlwc2UgY3g9IjIwOSIgY3k9IjEyMCIgcng9IjExIiByeT0iNSIgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC44IiBmaWx0ZXI9InVybCgjZ3cwMykiLz4KCiAgPCEtLSBORUNLIC0tPgogIDxyZWN0IHg9IjE3NCIgeT0iMTk0IiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIGZpbGw9IiMxMDA1MGUiLz4KCiAgPCEtLSBCT0RZIC0tPgogIDxwYXRoIGQ9Ik02NSwyMTQgTDcwLDMyMCBMMTIwLDMzOCBMMTUwLDM0NiBMMTc0LDM0MiBMMTc0LDIxOAogICAgICAgICAgIEwxODcsMjI4IEwyMDAsMjE4IEwyMDAsMzQyIEwyMTAsMzQ2IEwyNDAsMzM4IEwyOTAsMzIwIEwyOTUsMjE0CiAgICAgICAgICAgTDI2NSwyMDMgTDIzMCwxOTcgTDIwMCwxOTIgTDE4NywyMDAgTDE3NCwxOTIgTDE0NCwxOTcgTDExNSwyMDMgWiIKICAgICAgICBmaWxsPSIjMGUwMDE4IiBvcGFjaXR5PSIwLjkiLz4KCiAgPCEtLSBjb2xsYXIgZGV0YWlsIC0tPgogIDxwYXRoIGQ9Ik0xNzQsMjE4IEwxNTgsMjQ0IEwxODcsMjU0IEwyMTYsMjQ0IEwyMDAsMjE4IEwxODcsMjI4IFoiIAogICAgICAgIGZpbGw9IiMxMDA1MGUiIG9wYWNpdHk9IjAuOCIvPgoKICA8IS0tIGNlbnRlciBsaW5lIC0tPgogIDxsaW5lIHgxPSIxODciIHkxPSIyMjgiIHgyPSIxODciIHkyPSIzNDIiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjQiLz4KCiAgPCEtLSBMRUZUIEFSTSAtLT4KICA8cGF0aCBkPSJNNjUsMjE0IEw1MCwzMjAgTDY3LDMyNiBMODgsMzMyIEwxMDAsMjIyIFoiIGZpbGw9IiMwZTAwMTgiIG9wYWNpdHk9IjAuOSIvPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjMyOCIgcng9IjE0IiByeT0iOSIgZmlsbD0iIzEwMDUwZSIvPgoKICA8IS0tIFJJR0hUIEFSTSAtLT4KICA8cGF0aCBkPSJNMjk1LDIxNCBMMzEwLDMyMCBMMjkzLDMyNiBMMjcyLDMzMiBMMjYwLDIyMiBaIiBmaWxsPSIjMGUwMDE4IiBvcGFjaXR5PSIwLjkiLz4KICA8ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzI4IiByeD0iMTQiIHJ5PSI5IiBmaWxsPSIjMTAwNTBlIi8+CgogIDwhLS0gTEVGVCBMRUcgLS0+CiAgPHBhdGggZD0iTTEyMCwzNDQgTDEwOCw0ODggTDEzMCw0OTIgTDE1MiwzNTYgWiIgZmlsbD0iIzBlMDAxOCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gUklHSFQgTEVHIC0tPgogIDxwYXRoIGQ9Ik0yNTQsMzQ0IEwyNjYsNDg4IEwyNDQsNDkyIEwyMjIsMzU2IFoiIGZpbGw9IiMwZTAwMTgiIG9wYWNpdHk9IjAuODUiLz4KCiAgPCEtLSBTSE9FUyAtLT4KICA8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iNDkyIiByeD0iMjIiIHJ5PSI5IiBmaWxsPSIjMDYwNjA4Ii8+CiAgPGVsbGlwc2UgY3g9IjI1NCIgY3k9IjQ5MiIgcng9IjIyIiByeT0iOSIgZmlsbD0iIzA2MDYwOCIvPgoKICA8IS0tIOKUgOKUgCBVSSBkZWNvcmF0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjE4NywxNCAyMDAsMjcgMTg3LDQwIDE3NCwyNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOWI1OWI2IiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iMC44NSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTg3LDE4IDE5NiwyNyAxODcsMzYgMTc4LDI3IiBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjI1Ii8+CgogIDxsaW5lIHgxPSI4IiB5MT0iMTYwIiB4Mj0iNTgiIHkyPSIxNjAiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSI4IiB5MT0iMTY1IiB4Mj0iNDIiIHkyPSIxNjUiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgogIDxsaW5lIHgxPSIzMDIiIHkxPSIxNjAiIHgyPSIzNTIiIHkyPSIxNjAiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuNSIvPgogIDxsaW5lIHgxPSIzMTgiIHkxPSIxNjUiIHgyPSIzNTIiIHkyPSIxNjUiIHN0cm9rZT0iIzliNTliNiIgc3Ryb2tlLXdpZHRoPSIwLjQiIG9wYWNpdHk9IjAuMyIvPgoKICA8cGF0aCBkPSJNMTIsMTIgTDM2LDEyIEwzNiwxNCBMMTQsMTQgTDE0LDM2IEwxMiwzNiBaIiBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHBhdGggZD0iTTM0OCwxMiBMMzI0LDEyIEwzMjQsMTQgTDM0NiwxNCBMMzQ2LDM2IEwzNDgsMzYgWiIgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC41NSIvPgogIDxwYXRoIGQ9Ik0xMiw1MDggTDM2LDUwOCBMMzYsNTA2IEwxNCw1MDYgTDE0LDQ4NCBMMTIsNDg0IFoiIGZpbGw9IiM5YjU5YjYiIG9wYWNpdHk9IjAuNTUiLz4KICA8cGF0aCBkPSJNMzQ4LDUwOCBMMzI0LDUwOCBMMzI0LDUwNiBMMzQ2LDUwNiBMMzQ2LDQ4NCBMMzQ4LDQ4NCBaIiBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjU1Ii8+CgogIDxsaW5lIHgxPSIzMCIgeTE9IjUwMCIgeDI9IjMzMCIgeTI9IjUwMCIgc3Ryb2tlPSIjOWI1OWI2IiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC40Ii8+CiAgPHRleHQgeD0iMTg3IiB5PSI1MTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iOCIgCiAgICAgICAgZmlsbD0iIzliNTliNiIgb3BhY2l0eT0iMC43IiBsZXR0ZXItc3BhY2luZz0iNSI+QU5UQUdPTklTVDwvdGV4dD4KICA8dGV4dCB4PSIxODciIHk9IjUyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSI3IiAKICAgICAgICBmaWxsPSIjOWI1OWI2IiBvcGFjaXR5PSIwLjM1IiBsZXR0ZXItc3BhY2luZz0iMiI+T0MgwrcgMDM8L3RleHQ+Cjwvc3ZnPg=="
+           alt="Personaggio OC 03 — Antagonista"
+           width="420" height="600"
+           data-r="boing-l" data-rd="1" />
+    </div>
+
+    <div class="char-block__info" data-r="boing-r" data-rd="2">
+      <span class="char-block__code">03 · Antagonista</span>
+      <div>
+        <span class="char-block__name-jp">アンタゴニスト</span>
+        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
+      </div>
+      <p class="char-block__bio">
+        Il terzo personaggio. Antagonista, alleato ambiguo o
+        personaggio di supporto — racconta chi è e perché
+        esiste nel tuo universo creativo.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">78</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">82</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">88</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">70</span></div>
+      </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Oscuro</span>
+        <span class="char-block__tag">Ambizioso</span>
+        <span class="char-block__tag">Spietato</span>
+        <span class="char-block__tag">Complesso</span>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 
