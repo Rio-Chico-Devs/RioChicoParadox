@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 740">
+  <defs>
+    <radialGradient id="hbg" cx="55%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#280000"/>
+      <stop offset="60%" stop-color="#0e0000"/>
+      <stop offset="100%" stop-color="#060606"/>
+    </radialGradient>
+    <radialGradient id="haura" cx="50%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#cc0000" stop-opacity="0.55"/>
+      <stop offset="70%" stop-color="#cc0000" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#cc0000" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="hblur"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="hglow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="hleg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e0000"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="480" height="740" fill="url(#hbg)"/>
+
+  <!-- subtle grid -->
+  <g opacity="0.04" stroke="#cc0000" stroke-width="0.5">
+    <line x1="0" y1="80" x2="480" y2="80"/><line x1="0" y1="160" x2="480" y2="160"/>
+    <line x1="0" y1="240" x2="480" y2="240"/><line x1="0" y1="320" x2="480" y2="320"/>
+    <line x1="0" y1="400" x2="480" y2="400"/><line x1="0" y1="480" x2="480" y2="480"/>
+    <line x1="0" y1="560" x2="480" y2="560"/><line x1="0" y1="640" x2="480" y2="640"/>
+    <line x1="80" y1="0" x2="80" y2="740"/><line x1="160" y1="0" x2="160" y2="740"/>
+    <line x1="240" y1="0" x2="240" y2="740"/><line x1="320" y1="0" x2="320" y2="740"/>
+    <line x1="400" y1="0" x2="400" y2="740"/>
+  </g>
+
+  <!-- aura glow -->
+  <ellipse cx="240" cy="430" rx="140" ry="220" fill="url(#haura)" filter="url(#hblur)"/>
+
+  <!-- diagonal accent behind char -->
+  <polygon points="140,0 480,0 480,740 300,740" fill="#cc0000" opacity="0.04"/>
+
+  <!-- HAIR -->
+  <path d="M155,150 L148,80 L168,110 L180,62 L196,95 L210,48 L224,92 L240,40 
+           L256,88 L272,50 L288,95 L300,62 L318,108 L332,80 L325,150
+           A80,85 0 0,1 155,150 Z" fill="#0c0000"/>
+
+  <!-- HEAD -->
+  <ellipse cx="240" cy="160" rx="80" ry="88" fill="#120808"/>
+
+  <!-- face features -->
+  <ellipse cx="215" cy="155" rx="14" ry="6" fill="#cc0000" opacity="0.75" filter="url(#hglow)"/>
+  <ellipse cx="265" cy="155" rx="14" ry="6" fill="#cc0000" opacity="0.75" filter="url(#hglow)"/>
+  <path d="M225,185 Q240,195 255,185" fill="none" stroke="#cc0000" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <!-- NECK -->
+  <rect x="222" y="244" width="36" height="32" fill="#120808"/>
+
+  <!-- BODY / JACKET -->
+  <path d="M80,272 L85,420 L155,445 L180,455 L222,450 L222,278
+           L240,292 L258,278 L258,450 L300,455 L325,445 L395,420 L400,272
+           L360,258 L310,250 L258,244 L240,255 L222,244 L170,250 L120,258 Z"
+        fill="#0e0505"/>
+
+  <!-- jacket collar -->
+  <path d="M222,278 L200,310 L240,320 L280,310 L258,278 L240,292 Z" fill="#190a0a"/>
+
+  <!-- jacket centre line -->
+  <line x1="240" y1="292" x2="240" y2="450" stroke="#cc0000" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- jacket buttons -->
+  <circle cx="240" cy="340" r="3" fill="#cc0000" opacity="0.5"/>
+  <circle cx="240" cy="370" r="3" fill="#cc0000" opacity="0.5"/>
+  <circle cx="240" cy="400" r="3" fill="#cc0000" opacity="0.5"/>
+
+  <!-- belt -->
+  <rect x="155" y="442" width="170" height="10" fill="#0a0000" rx="2"/>
+  <rect x="230" y="440" width="20" height="14" fill="#cc0000" opacity="0.6" rx="1"/>
+
+  <!-- LEFT ARM -->
+  <path d="M80,272 L60,420 L82,428 L108,440 L125,278 Z" fill="#0e0505"/>
+  <!-- LEFT HAND -->
+  <ellipse cx="95" cy="432" rx="18" ry="12" fill="#120808"/>
+
+  <!-- RIGHT ARM -->
+  <path d="M400,272 L420,420 L398,428 L372,440 L355,278 Z" fill="#0e0505"/>
+  <!-- RIGHT HAND -->
+  <ellipse cx="385" cy="432" rx="18" ry="12" fill="#120808"/>
+
+  <!-- LEFT LEG -->
+  <path d="M155,452 L140,650 L168,655 L195,465 Z" fill="url(#hleg)"/>
+  <!-- RIGHT LEG -->
+  <path d="M325,452 L340,650 L312,655 L285,465 Z" fill="url(#hleg)"/>
+
+  <!-- SHOES -->
+  <ellipse cx="155" cy="657" rx="30" ry="12" fill="#090000"/>
+  <ellipse cx="325" cy="657" rx="30" ry="12" fill="#090000"/>
+
+  <!-- SCARF/DETAIL -->
+  <path d="M190,260 Q240,240 290,260 L280,310 L240,295 L200,310 Z"
+        fill="#cc0000" opacity="0.5"/>
+
+  <!-- ── DECORATIVE UI ─────────────────────────────────── -->
+  <!-- top diamond -->
+  <polygon points="240,18 258,36 240,54 222,36" fill="none" stroke="#cc0000" stroke-width="1.5" opacity="0.8"/>
+  <polygon points="240,24 252,36 240,48 228,36" fill="#cc0000" opacity="0.2"/>
+
+  <!-- side accent lines -->
+  <line x1="8" y1="210" x2="75" y2="210" stroke="#cc0000" stroke-width="0.8" opacity="0.5"/>
+  <line x1="8" y1="215" x2="55" y2="215" stroke="#cc0000" stroke-width="0.5" opacity="0.3"/>
+  <line x1="405" y1="210" x2="472" y2="210" stroke="#cc0000" stroke-width="0.8" opacity="0.5"/>
+  <line x1="425" y1="215" x2="472" y2="215" stroke="#cc0000" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- corner markers -->
+  <path d="M15,15 L45,15 L45,18 L18,18 L18,45 L15,45 Z" fill="#cc0000" opacity="0.5"/>
+  <path d="M465,15 L435,15 L435,18 L462,18 L462,45 L465,45 Z" fill="#cc0000" opacity="0.5"/>
+  <path d="M15,725 L45,725 L45,722 L18,722 L18,695 L15,695 Z" fill="#cc0000" opacity="0.5"/>
+  <path d="M465,725 L435,725 L435,722 L462,722 L462,695 L465,695 Z" fill="#cc0000" opacity="0.5"/>
+
+  <!-- bottom frame -->
+  <line x1="40" y1="695" x2="440" y2="695" stroke="#cc0000" stroke-width="0.7" opacity="0.4"/>
+  <line x1="60" y1="700" x2="420" y2="700" stroke="#cc0000" stroke-width="0.4" opacity="0.25"/>
+
+  <!-- label -->
+  <text x="240" y="714" text-anchor="middle" font-family="monospace" font-size="9" 
+        fill="#cc0000" opacity="0.7" letter-spacing="6">OC · PROTAGONIST</text>
+  <text x="240" y="728" text-anchor="middle" font-family="monospace" font-size="7" 
+        fill="#cc0000" opacity="0.3" letter-spacing="3">[ FEATURED CHARACTER ]</text>
+</svg>
