@@ -2,17 +2,34 @@
    RIO CHICO STUDIO — main.js
    ========================================================= */
 
-/* ── PAGE INTRO WIPE ──────────────────────────────────────
-   Sequenza di apertura: slash rosso → scompare → sito appare
+/* ── LOADING SCREEN — "NOW LOADING X%" ────────────────────
+   Conta da 0 a 100% poi rivela il sito (stile Persona)
    ======================================================== */
-const intro = document.querySelector('.page-intro');
+const loader      = document.getElementById('loader');
+const loaderFill  = document.getElementById('loader-fill');
+const loaderCount = document.getElementById('loader-count');
 
-if (intro) {
-  // Dopo 1s la splash scompare
-  setTimeout(() => {
-    intro.classList.add('done');
-    setTimeout(() => intro.remove(), 400);
-  }, 1000);
+if (loader) {
+  let pct = 0;
+  const tick = () => {
+    // avanza a scatti irregolari per sembrare "vero" caricamento
+    pct += Math.random() * 18 + 4;
+    if (pct >= 100) pct = 100;
+    if (loaderFill)  loaderFill.style.width = pct + '%';
+    if (loaderCount) loaderCount.textContent = Math.floor(pct);
+    if (pct < 100) {
+      setTimeout(tick, 90 + Math.random() * 120);
+    } else {
+      setTimeout(() => {
+        loader.classList.add('is-done');
+        // trigger hero animations only after loader gone
+        document.body.classList.add('loaded');
+        setTimeout(() => loader.remove(), 700);
+      }, 350);
+    }
+  };
+  // start after a tiny delay
+  setTimeout(tick, 200);
 }
 
 /* ── CUSTOM CURSOR ──────────────────────────────────────── */

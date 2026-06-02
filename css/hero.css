@@ -2,6 +2,31 @@
    HERO — apertura full-viewport drammatica
    ========================================================= */
 
+/* Le animazioni d'ingresso aspettano la fine del loader.
+   body.loaded viene aggiunto dal JS quando il loader finisce. */
+.hero__slash,
+.hero__shape,
+.hero__eyebrow,
+.hero__title-line,
+.hero__desc,
+.hero__cta,
+.hero__stats,
+.hero__char-wrap,
+.hero__scroll {
+  animation-play-state: paused;
+}
+body.loaded .hero__slash,
+body.loaded .hero__shape,
+body.loaded .hero__eyebrow,
+body.loaded .hero__title-line,
+body.loaded .hero__desc,
+body.loaded .hero__cta,
+body.loaded .hero__stats,
+body.loaded .hero__char-wrap,
+body.loaded .hero__scroll {
+  animation-play-state: running;
+}
+
 .hero {
   position: relative;
   min-height: 100svh;
@@ -290,6 +315,7 @@
 
 .hero__char-wrap {
   position: relative;
+  z-index: 2;
   width: 100%;
   max-width: 480px;
   /* reveal from bottom with clip-path */

@@ -17,16 +17,28 @@
   <link rel="stylesheet" href="css/hero.css" />
   <link rel="stylesheet" href="css/gallery.css" />
   <link rel="stylesheet" href="css/characters.css" />
+  <link rel="stylesheet" href="css/persona.css" />
   <link rel="stylesheet" href="css/profile.css" />
   <link rel="stylesheet" href="css/social.css" />
+
+  <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
+  <noscript><style>
+    #loader { display: none !important; }
+    .hero__slash, .hero__shape, .hero__eyebrow, .hero__title-line,
+    .hero__desc, .hero__cta, .hero__stats, .hero__char-wrap, .hero__scroll
+      { animation-play-state: running !important; }
+    [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
+  </style></noscript>
 </head>
 
 <body>
 
-<!-- ── PAGE INTRO WIPE ─────────────────────────────────── -->
-<div class="page-intro" aria-hidden="true">
-  <div class="page-intro__slash"></div>
-  <div class="page-intro__slash page-intro__slash--2"></div>
+<!-- ── LOADING SCREEN ──────────────────────────────────── -->
+<div class="loader" id="loader">
+  <div class="loader__burst" aria-hidden="true"></div>
+  <div class="loader__logo"><span>RIO</span> CHICO STUDIO</div>
+  <div class="loader__bar"><div class="loader__bar-fill" id="loader-fill"></div></div>
+  <div class="loader__count">NOW LOADING... <b><span id="loader-count">0</span>%</b></div>
 </div>
 
 <!-- ── NOISE OVERLAY ───────────────────────────────────── -->
@@ -140,10 +152,15 @@
 
   <!-- RIGHT: CHARACTER ─────────────────── -->
   <div class="hero__right">
+    <!-- comic burst behind character -->
+    <div class="burst burst--slow-spin" aria-hidden="true"
+         style="width:560px; height:560px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.9;"></div>
+
     <div class="hero__char-wrap">
+      <span class="ph-flag">placeholder</span>
       <img
-        class="hero__char-img"
-        src="assets/img/hero-char.svg"
+        class="hero__char-img is-placeholder"
+        src="assets/img/ph-hero.svg"
         alt="Personaggio principale — placeholder"
         width="480"
         height="740"
@@ -155,6 +172,11 @@
       <div class="hero__char-tag">OC · Original Character</div>
       <span class="hero__char-number" aria-hidden="true">01</span>
     </div>
+
+    <!-- stars around hero character -->
+    <span class="p-star" aria-hidden="true" style="--star-size:2.6rem; top:14%; left:8%; --sf-dur:3.6s;" data-r="star" data-rd="3"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.4rem; top:30%; right:10%; --sf-dur:2.8s; --sf-del:0.4s;" data-r="star" data-rd="4"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.8rem; bottom:18%; left:14%; --sf-dur:4s; --sf-del:0.8s;" data-r="star" data-rd="5"></span>
   </div>
 
 </section>
@@ -188,7 +210,7 @@
     <div class="gallery__grid">
 
       <article class="gallery__card" data-category="oc" data-r="clip-up">
-        <img class="gallery__card-img" src="assets/img/gallery-01.svg" alt="Artwork 01 — OC protagonist" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-01.svg" alt="Artwork 01 — OC protagonist" loading="lazy" />
         <span class="gallery__card-num">No.01</span>
         <span class="gallery__card-badge">Featured</span>
         <div class="gallery__card-overlay">
@@ -199,7 +221,7 @@
       </article>
 
       <article class="gallery__card" data-category="character" data-r="clip-up" data-rd="1">
-        <img class="gallery__card-img" src="assets/img/gallery-02.svg" alt="Artwork 02 — Character Design" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-02.svg" alt="Artwork 02 — Character Design" loading="lazy" />
         <span class="gallery__card-num">No.02</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Character Design</span>
@@ -209,7 +231,7 @@
       </article>
 
       <article class="gallery__card" data-category="fanart" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/gallery-03.svg" alt="Artwork 03 — Fanart" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-03.svg" alt="Artwork 03 — Fanart" loading="lazy" />
         <span class="gallery__card-num">No.03</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Fanart</span>
@@ -219,7 +241,7 @@
       </article>
 
       <article class="gallery__card" data-category="oc" data-r="clip-up" data-rd="1">
-        <img class="gallery__card-img" src="assets/img/gallery-04.svg" alt="Artwork 04 — OC" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-04.svg" alt="Artwork 04 — OC" loading="lazy" />
         <span class="gallery__card-num">No.04</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">OC</span>
@@ -229,7 +251,7 @@
       </article>
 
       <article class="gallery__card" data-category="sketch" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/gallery-05.svg" alt="Artwork 05 — Sketch" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-05.svg" alt="Artwork 05 — Sketch" loading="lazy" />
         <span class="gallery__card-num">No.05</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Sketch</span>
@@ -239,7 +261,7 @@
       </article>
 
       <article class="gallery__card" data-category="character" data-r="clip-up" data-rd="3">
-        <img class="gallery__card-img" src="assets/img/gallery-06.svg" alt="Artwork 06 — Character Design" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-06.svg" alt="Artwork 06 — Character Design" loading="lazy" />
         <span class="gallery__card-num">No.06</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Character Design</span>
@@ -249,7 +271,7 @@
       </article>
 
       <article class="gallery__card" data-category="fanart" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/gallery-07.svg" alt="Artwork 07 — Fanart" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-07.svg" alt="Artwork 07 — Fanart" loading="lazy" />
         <span class="gallery__card-num">No.07</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Fanart</span>
@@ -259,7 +281,7 @@
       </article>
 
       <article class="gallery__card" data-category="oc" data-r="clip-up" data-rd="3">
-        <img class="gallery__card-img" src="assets/img/gallery-08.svg" alt="Artwork 08 — OC" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-08.svg" alt="Artwork 08 — OC" loading="lazy" />
         <span class="gallery__card-num">No.08</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">OC</span>
@@ -294,9 +316,9 @@
       </h2>
     </div>
     <!-- big bg stars -->
-    <span class="p-star" aria-hidden="true" style="font-size:3rem; top:20%; left:8%; --sf-dur:4s;" data-r="star" data-rd="2">☆</span>
-    <span class="p-star" aria-hidden="true" style="font-size:1.5rem; top:30%; right:10%; --sf-dur:3.2s; --sf-del:0.5s;" data-r="star" data-rd="3">☆</span>
-    <span class="p-star" aria-hidden="true" style="font-size:2rem; bottom:10%; left:20%; --sf-dur:3.8s; --sf-del:1s;" data-r="star" data-rd="4">☆</span>
+    <span class="p-star" aria-hidden="true" style="--star-size:3rem; top:20%; left:8%; --sf-dur:4s;" data-r="star" data-rd="2"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.5rem; top:30%; right:10%; --sf-dur:3.2s; --sf-del:0.5s;" data-r="star" data-rd="3"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:2rem; bottom:10%; left:20%; --sf-dur:3.8s; --sf-del:1s;" data-r="star" data-rd="4"></span>
   </div>
 
   <!-- ── PERSONAGGIO 01 ──────────────────────────────────── -->
@@ -317,16 +339,16 @@
 
     <!-- Stars -->
     <div class="char-block__stars" aria-hidden="true">
-      <span class="p-star" style="font-size:2.5rem; top:12%; right:30%; --sf-dur:3.5s;" data-r="star" data-rd="3">☆</span>
-      <span class="p-star" style="font-size:1rem; top:65%; right:52%; --sf-dur:2.8s; --sf-del:0.8s;" data-r="star" data-rd="5">☆</span>
-      <span class="p-star" style="font-size:3.5rem; bottom:15%; left:5%; --sf-dur:4.2s; --sf-del:0.3s;" data-r="star" data-rd="4">☆</span>
-      <span class="p-star" style="font-size:1.2rem; top:30%; left:45%; --sf-dur:3s;" data-r="star" data-rd="6">☆</span>
+      <span class="p-star" style="--star-size:2.5rem; top:12%; right:30%; --sf-dur:3.5s;" data-r="star" data-rd="3"></span>
+      <span class="p-star" style="--star-size:1rem; top:65%; right:52%; --sf-dur:2.8s; --sf-del:0.8s;" data-r="star" data-rd="5"></span>
+      <span class="p-star" style="--star-size:3.5rem; bottom:15%; left:5%; --sf-dur:4.2s; --sf-del:0.3s;" data-r="star" data-rd="4"></span>
+      <span class="p-star" style="--star-size:1.2rem; top:30%; left:45%; --sf-dur:3s;" data-r="star" data-rd="6"></span>
     </div>
 
     <!-- Character art -->
     <div class="char-block__art">
       <span class="char-block__number" aria-hidden="true">01</span>
-      <img class="char-block__img" src="assets/img/char-01.svg"
+      <img class="char-block__img" src="assets/img/ph-char-01.svg"
            alt="Personaggio OC 01 — Protagonista"
            width="420" height="600"
            data-r="boing-l" data-rd="1" />
@@ -382,14 +404,14 @@
     </div>
 
     <div class="char-block__stars" aria-hidden="true">
-      <span class="p-star" style="font-size:2rem; top:15%; left:32%; --sf-dur:3.8s; --sf-del:0.2s;" data-r="star" data-rd="3" >☆</span>
-      <span class="p-star" style="font-size:3rem; bottom:20%; right:6%; --sf-dur:4s; --sf-del:0.6s;" data-r="star" data-rd="4">☆</span>
-      <span class="p-star" style="font-size:1rem; top:55%; left:8%; --sf-dur:2.6s; --sf-del:1s;" data-r="star" data-rd="6">☆</span>
+      <span class="p-star" style="--star-size:2rem; top:15%; left:32%; --sf-dur:3.8s; --sf-del:0.2s;" data-r="star" data-rd="3" ></span>
+      <span class="p-star" style="--star-size:3rem; bottom:20%; right:6%; --sf-dur:4s; --sf-del:0.6s;" data-r="star" data-rd="4"></span>
+      <span class="p-star" style="--star-size:1rem; top:55%; left:8%; --sf-dur:2.6s; --sf-del:1s;" data-r="star" data-rd="6"></span>
     </div>
 
     <div class="char-block__art">
       <span class="char-block__number" aria-hidden="true">02</span>
-      <img class="char-block__img" src="assets/img/char-02.svg"
+      <img class="char-block__img" src="assets/img/ph-char-02.svg"
            alt="Personaggio OC 02 — Stratega"
            width="420" height="600"
            data-r="boing-r" data-rd="1" />
@@ -444,14 +466,14 @@
     </div>
 
     <div class="char-block__stars" aria-hidden="true">
-      <span class="p-star" style="font-size:4rem; top:10%; right:28%; --sf-dur:5s; --sf-del:0.4s;" data-r="star" data-rd="2">☆</span>
-      <span class="p-star" style="font-size:1.5rem; bottom:25%; right:48%; --sf-dur:3s; --sf-del:0.9s;" data-r="star" data-rd="5">☆</span>
-      <span class="p-star" style="font-size:2rem; top:50%; left:3%; --sf-dur:3.6s;" data-r="star" data-rd="4">☆</span>
+      <span class="p-star" style="--star-size:4rem; top:10%; right:28%; --sf-dur:5s; --sf-del:0.4s;" data-r="star" data-rd="2"></span>
+      <span class="p-star" style="--star-size:1.5rem; bottom:25%; right:48%; --sf-dur:3s; --sf-del:0.9s;" data-r="star" data-rd="5"></span>
+      <span class="p-star" style="--star-size:2rem; top:50%; left:3%; --sf-dur:3.6s;" data-r="star" data-rd="4"></span>
     </div>
 
     <div class="char-block__art">
       <span class="char-block__number" aria-hidden="true">03</span>
-      <img class="char-block__img" src="assets/img/char-03.svg"
+      <img class="char-block__img" src="assets/img/ph-char-03.svg"
            alt="Personaggio OC 03 — Antagonista"
            width="420" height="600"
            data-r="boing-l" data-rd="1" />
@@ -503,11 +525,10 @@
     <div class="profile__grid">
       <div class="profile__visual" data-r="left">
         <div class="profile__photo-wrap">
+          <span class="ph-flag">placeholder</span>
           <div class="profile__photo-frame">
-            <div class="profile__photo-placeholder">
-              <span class="profile__photo-placeholder-icon">🎨</span>
-              <span class="profile__photo-placeholder-text">[ FOTO ARTISTA ]</span>
-            </div>
+            <img class="is-placeholder" src="assets/img/ph-profile.svg"
+                 alt="Foto artista — placeholder" width="440" height="440" />
           </div>
           <div class="profile__photo-border" aria-hidden="true"></div>
         </div>
