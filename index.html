@@ -283,241 +283,206 @@
 <!-- ════════════════════════════════════════════════════════
      CHARACTERS
 ════════════════════════════════════════════════════════ -->
-<section class="section characters" id="characters" aria-labelledby="chars-title">
-  <div class="container">
+<section class="characters" id="characters" aria-labelledby="chars-title">
 
-    <header class="section-header">
-      <span class="section-label" data-r="up">03 / Personaggi</span>
-      <h2 class="section-title" data-r="wipe" id="chars-title">
+  <!-- Section intro -->
+  <div style="padding: 5rem 0 3rem; text-align:center; position:relative; overflow:hidden;">
+    <div style="max-width:var(--max-width); margin:0 auto; padding:0 var(--section-pad-x); position:relative; z-index:1;">
+      <span class="section-label" data-r="up" style="justify-content:center;">03 / Personaggi</span>
+      <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center; font-size:clamp(4rem,12vw,12rem);">
         PERSON<span>AGGI</span>
       </h2>
-      <p class="section-subtitle" data-r="up" data-rd="2">
-        I miei personaggi originali — ognuno con la sua storia, il suo mondo.
-      </p>
-      <span class="accent-bar" data-r="wipe" data-rd="3"></span>
-    </header>
+    </div>
+    <!-- big bg stars -->
+    <span class="p-star" aria-hidden="true" style="font-size:3rem; top:20%; left:8%; --sf-dur:4s;" data-r="star" data-rd="2">☆</span>
+    <span class="p-star" aria-hidden="true" style="font-size:1.5rem; top:30%; right:10%; --sf-dur:3.2s; --sf-del:0.5s;" data-r="star" data-rd="3">☆</span>
+    <span class="p-star" aria-hidden="true" style="font-size:2rem; bottom:10%; left:20%; --sf-dur:3.8s; --sf-del:1s;" data-r="star" data-rd="4">☆</span>
+  </div>
 
-    <!-- SELECTOR -->
-    <div class="chars__selector" data-r="up" data-rd="2" role="tablist" aria-label="Seleziona personaggio">
-      <div class="chars__selector-indicator" aria-hidden="true"></div>
+  <!-- ── PERSONAGGIO 01 ──────────────────────────────────── -->
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #200000 0%, #090909 70%); --char-glow: rgba(204,0,0,0.4);">
 
-      <button class="chars__selector-btn is-active" data-char="char-01"
-              role="tab" aria-selected="true" aria-controls="panel-char-01">
-        <span class="chars__selector-num">01</span>Nome Personaggio 1
-      </button>
-      <button class="chars__selector-btn" data-char="char-02"
-              role="tab" aria-selected="false" aria-controls="panel-char-02">
-        <span class="chars__selector-num">02</span>Nome Personaggio 2
-      </button>
-      <button class="chars__selector-btn" data-char="char-03"
-              role="tab" aria-selected="false" aria-controls="panel-char-03">
-        <span class="chars__selector-num">03</span>Nome Personaggio 3
-      </button>
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <!-- Red splash SVG shape -->
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="0,0 500,0 380,900 0,900" opacity="0.15"/>
+        <polygon points="600,0 900,0 760,900 460,900" opacity="0.07"/>
+        <polygon points="1100,200 1440,0 1440,400 1200,450" opacity="0.1"/>
+      </svg>
     </div>
 
-    <!-- PANELS -->
-    <div class="chars__panels">
+    <!-- Stars -->
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="font-size:2.5rem; top:12%; right:30%; --sf-dur:3.5s;" data-r="star" data-rd="3">☆</span>
+      <span class="p-star" style="font-size:1rem; top:65%; right:52%; --sf-dur:2.8s; --sf-del:0.8s;" data-r="star" data-rd="5">☆</span>
+      <span class="p-star" style="font-size:3.5rem; bottom:15%; left:5%; --sf-dur:4.2s; --sf-del:0.3s;" data-r="star" data-rd="4">☆</span>
+      <span class="p-star" style="font-size:1.2rem; top:30%; left:45%; --sf-dur:3s;" data-r="star" data-rd="6">☆</span>
+    </div>
 
-      <!-- CHAR 01 -->
-      <div class="chars__panel is-active" data-char="char-01" id="panel-char-01" role="tabpanel">
+    <!-- Character art -->
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">01</span>
+      <img class="char-block__img" src="assets/img/char-01.svg"
+           alt="Personaggio OC 01 — Protagonista"
+           width="420" height="600"
+           data-r="boing-l" data-rd="1" />
+    </div>
 
-        <div class="chars__visual">
-          <div class="chars__visual-bg" aria-hidden="true"></div>
-          <div class="chars__visual-lines" aria-hidden="true"></div>
-          <span class="chars__code" aria-hidden="true">NO.01 / PROTAGONIST</span>
-          <span class="chars__bg-num" aria-hidden="true">01</span>
-
-          <div class="chars__portrait">
-            <img src="assets/img/char-01.svg" alt="Personaggio OC 01 — Protagonista" width="360" height="520" />
-          </div>
-
-          <div class="chars__name-plate">
-            <span class="chars__name-jp">プロタゴニスト</span>
-            <span class="chars__name-en">NOME · 01</span>
-          </div>
-        </div>
-
-        <div class="chars__info">
-          <span class="chars__role">Protagonista</span>
-
-          <h3 class="chars__full-name">NOME<br/><span>PERSONAGGIO</span></h3>
-
-          <p class="chars__bio">
-            Descrizione del personaggio — la sua storia, personalità, motivazioni.
-            Cosa lo rende unico nel tuo universo creativo.
-            Puoi scrivere qui tutto quello che vuoi raccontare di lui.
-          </p>
-
-          <div class="chars__stats">
-            <p class="chars__stats-title">Status</p>
-
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Forza</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="85%"></div>
-              </div>
-              <span class="chars__stat-val">85</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Velocità</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="72%"></div>
-              </div>
-              <span class="chars__stat-val">72</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Magia</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="60%"></div>
-              </div>
-              <span class="chars__stat-val">60</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Resistenza</span>
-              <div class="chars__stat-bar-track">
-                <div class="chars__stat-bar-fill" data-w="90%"></div>
-              </div>
-              <span class="chars__stat-val">90</span>
-            </div>
-          </div>
-
-          <div class="chars__tags">
-            <span class="chars__tag">Coraggioso</span>
-            <span class="chars__tag">Combattente</span>
-            <span class="chars__tag">Leale</span>
-            <span class="chars__tag">Solitario</span>
-          </div>
-        </div>
+    <!-- Info -->
+    <div class="char-block__info" data-r="boing-r" data-rd="2">
+      <span class="char-block__code">01 · Protagonista</span>
+      <div>
+        <span class="char-block__name-jp">プロタゴニスト</span>
+        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
       </div>
-
-      <!-- CHAR 02 -->
-      <div class="chars__panel" data-char="char-02" id="panel-char-02" role="tabpanel">
-
-        <div class="chars__visual" style="--clr-accent-glow: rgba(0,119,204,0.2);">
-          <div class="chars__visual-bg" aria-hidden="true"></div>
-          <div class="chars__visual-lines" aria-hidden="true"></div>
-          <span class="chars__code" aria-hidden="true">NO.02 / STRATEGIST</span>
-          <span class="chars__bg-num" aria-hidden="true">02</span>
-
-          <div class="chars__portrait">
-            <img src="assets/img/char-02.svg" alt="Personaggio OC 02 — Stratega" width="360" height="520" />
-          </div>
-
-          <div class="chars__name-plate">
-            <span class="chars__name-jp">ストラテジスト</span>
-            <span class="chars__name-en">NOME · 02</span>
-          </div>
-        </div>
-
-        <div class="chars__info">
-          <span class="chars__role">Stratega</span>
-
-          <h3 class="chars__full-name">NOME<br/><span>PERSONAGGIO</span></h3>
-
-          <p class="chars__bio">
-            Descrizione del secondo personaggio. La sua backstory,
-            il suo rapporto con gli altri personaggi e il suo ruolo
-            nella narrativa del tuo universo creativo.
-          </p>
-
-          <div class="chars__stats">
-            <p class="chars__stats-title">Status</p>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Forza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="45%"></div></div>
-              <span class="chars__stat-val">45</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Velocità</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="68%"></div></div>
-              <span class="chars__stat-val">68</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Magia</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="95%"></div></div>
-              <span class="chars__stat-val">95</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Resistenza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="55%"></div></div>
-              <span class="chars__stat-val">55</span>
-            </div>
-          </div>
-
-          <div class="chars__tags">
-            <span class="chars__tag">Misterioso</span>
-            <span class="chars__tag">Strategico</span>
-            <span class="chars__tag">Freddo</span>
-            <span class="chars__tag">Brillante</span>
-          </div>
-        </div>
+      <p class="char-block__bio">
+        Descrizione del personaggio — la sua storia, personalità, motivazioni.
+        Cosa lo rende unico nel tuo universo creativo.
+        Ogni parola racconta chi è davvero.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:85%"></div></div><span class="char-stat__val">85</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:72%"></div></div><span class="char-stat__val">72</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:60%"></div></div><span class="char-stat__val">60</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:90%"></div></div><span class="char-stat__val">90</span></div>
       </div>
-
-      <!-- CHAR 03 -->
-      <div class="chars__panel" data-char="char-03" id="panel-char-03" role="tabpanel">
-
-        <div class="chars__visual" style="--clr-accent-glow: rgba(155,89,182,0.2);">
-          <div class="chars__visual-bg" aria-hidden="true"></div>
-          <div class="chars__visual-lines" aria-hidden="true"></div>
-          <span class="chars__code" aria-hidden="true">NO.03 / ANTAGONIST</span>
-          <span class="chars__bg-num" aria-hidden="true">03</span>
-
-          <div class="chars__portrait">
-            <img src="assets/img/char-03.svg" alt="Personaggio OC 03 — Antagonista" width="360" height="520" />
-          </div>
-
-          <div class="chars__name-plate">
-            <span class="chars__name-jp">アンタゴニスト</span>
-            <span class="chars__name-en">NOME · 03</span>
-          </div>
-        </div>
-
-        <div class="chars__info">
-          <span class="chars__role">Antagonista</span>
-
-          <h3 class="chars__full-name">NOME<br/><span>PERSONAGGIO</span></h3>
-
-          <p class="chars__bio">
-            Il terzo personaggio. Antagonista, alleato ambiguo o
-            personaggio di supporto — racconta chi è e perché
-            esiste nel tuo universo creativo.
-          </p>
-
-          <div class="chars__stats">
-            <p class="chars__stats-title">Status</p>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Forza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="78%"></div></div>
-              <span class="chars__stat-val">78</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Velocità</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="82%"></div></div>
-              <span class="chars__stat-val">82</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Magia</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="88%"></div></div>
-              <span class="chars__stat-val">88</span>
-            </div>
-            <div class="chars__stat-row">
-              <span class="chars__stat-label">Resistenza</span>
-              <div class="chars__stat-bar-track"><div class="chars__stat-bar-fill" data-w="70%"></div></div>
-              <span class="chars__stat-val">70</span>
-            </div>
-          </div>
-
-          <div class="chars__tags">
-            <span class="chars__tag">Oscuro</span>
-            <span class="chars__tag">Ambizioso</span>
-            <span class="chars__tag">Spietato</span>
-            <span class="chars__tag">Complesso</span>
-          </div>
-        </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Coraggioso</span>
+        <span class="char-block__tag">Combattente</span>
+        <span class="char-block__tag">Leale</span>
+        <span class="char-block__tag">Solitario</span>
       </div>
-
     </div>
   </div>
+
+  <!-- Separatore -->
+  <div class="char-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
+    </svg>
+  </div>
+
+  <!-- ── PERSONAGGIO 02 ──────────────────────────────────── -->
+  <div class="char-block char-block--even" style="--char-grad: linear-gradient(135deg, #001525 0%, #06090d 70%); --char-glow: rgba(0,100,200,0.35);">
+
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="940,0 1440,0 1440,900 1060,900" opacity="0.12" fill="#0077cc"/>
+        <polygon points="540,0 840,0 680,900 380,900" opacity="0.05" fill="#0077cc"/>
+        <polygon points="0,500 300,300 200,900 0,900" opacity="0.08" fill="#0077cc"/>
+      </svg>
+    </div>
+
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="font-size:2rem; top:15%; left:32%; --sf-dur:3.8s; --sf-del:0.2s;" data-r="star" data-rd="3" >☆</span>
+      <span class="p-star" style="font-size:3rem; bottom:20%; right:6%; --sf-dur:4s; --sf-del:0.6s;" data-r="star" data-rd="4">☆</span>
+      <span class="p-star" style="font-size:1rem; top:55%; left:8%; --sf-dur:2.6s; --sf-del:1s;" data-r="star" data-rd="6">☆</span>
+    </div>
+
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">02</span>
+      <img class="char-block__img" src="assets/img/char-02.svg"
+           alt="Personaggio OC 02 — Stratega"
+           width="420" height="600"
+           data-r="boing-r" data-rd="1" />
+    </div>
+
+    <div class="char-block__info" data-r="boing-l" data-rd="2">
+      <span class="char-block__code">02 · Stratega</span>
+      <div>
+        <span class="char-block__name-jp">ストラテジスト</span>
+        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
+      </div>
+      <p class="char-block__bio">
+        Descrizione del secondo personaggio. La sua backstory,
+        il suo rapporto con gli altri personaggi e il suo ruolo
+        nella narrativa del tuo universo creativo.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">45</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">68</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">95</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">55</span></div>
+      </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Misterioso</span>
+        <span class="char-block__tag">Strategico</span>
+        <span class="char-block__tag">Freddo</span>
+        <span class="char-block__tag">Brillante</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Separatore -->
+  <div class="char-divider" aria-hidden="true" style="transform:scaleX(-1);">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
+    </svg>
+  </div>
+
+  <!-- ── PERSONAGGIO 03 ──────────────────────────────────── -->
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #14001e 0%, #070609 70%); --char-glow: rgba(130,60,180,0.4);">
+
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="0,0 440,0 320,900 0,900" opacity="0.12" fill="#8e44ad"/>
+        <polygon points="1000,0 1440,0 1440,600 1100,900 900,900 1020,200" opacity="0.08" fill="#8e44ad"/>
+        <polygon points="500,0 800,0 680,500 380,400" opacity="0.05" fill="#8e44ad"/>
+      </svg>
+    </div>
+
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="font-size:4rem; top:10%; right:28%; --sf-dur:5s; --sf-del:0.4s;" data-r="star" data-rd="2">☆</span>
+      <span class="p-star" style="font-size:1.5rem; bottom:25%; right:48%; --sf-dur:3s; --sf-del:0.9s;" data-r="star" data-rd="5">☆</span>
+      <span class="p-star" style="font-size:2rem; top:50%; left:3%; --sf-dur:3.6s;" data-r="star" data-rd="4">☆</span>
+    </div>
+
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">03</span>
+      <img class="char-block__img" src="assets/img/char-03.svg"
+           alt="Personaggio OC 03 — Antagonista"
+           width="420" height="600"
+           data-r="boing-l" data-rd="1" />
+    </div>
+
+    <div class="char-block__info" data-r="boing-r" data-rd="2">
+      <span class="char-block__code">03 · Antagonista</span>
+      <div>
+        <span class="char-block__name-jp">アンタゴニスト</span>
+        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
+      </div>
+      <p class="char-block__bio">
+        Il terzo personaggio. Antagonista, alleato ambiguo o
+        personaggio di supporto — racconta chi è e perché
+        esiste nel tuo universo creativo.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">78</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">82</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">88</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">70</span></div>
+      </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Oscuro</span>
+        <span class="char-block__tag">Ambizioso</span>
+        <span class="char-block__tag">Spietato</span>
+        <span class="char-block__tag">Complesso</span>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 
