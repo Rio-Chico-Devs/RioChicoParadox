@@ -25,10 +25,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cursor stilizzata */
+/* Cursor stilizzata — solo su elementi interattivi per non rompere input/scrollbar */
 @media (pointer: fine) {
-  * { cursor: none; }
-  a, button, [role="tab"] { cursor: none; }
+  body, a, button, [role="tab"],
+  .gallery__card, .gallery__filter-btn,
+  .social__card, .chars__selector-btn,
+  label, [tabindex] {
+    cursor: none;
+  }
 }
 
 /* Scrollbar */
@@ -47,7 +51,7 @@ p { line-height: var(--leading-loose); color: var(--clr-text-muted); }
 a { color: inherit; text-decoration: none; }
 img, svg { max-width: 100%; display: block; }
 ul, ol { list-style: none; }
-button { cursor: none; border: none; background: none; font-family: inherit; }
+button { border: none; background: none; font-family: inherit; }
 
 /* ── LAYOUT ────────────────────────────────────────────── */
 .container {
@@ -306,60 +310,73 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
 }
 
 /* ── CUSTOM CURSOR ──────────────────────────────────────── */
+/* .cursor wraps only the dot — moves directly with mouse (no lag) */
 .cursor {
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: var(--z-modal);
-  mix-blend-mode: difference;
+  will-change: transform;
 }
 
+/* Red diamond dot */
 .cursor__dot {
   position: absolute;
-  top: -4px;
-  left: -4px;
-  width: 8px;
-  height: 8px;
-  background: #fff;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--clr-accent);
   transform: rotate(45deg);
-  transition: transform 0.15s var(--ease-spring), width 0.15s, height 0.15s;
+  transition: width 0.15s var(--ease-spring), height 0.15s, top 0.15s, left 0.15s, background 0.15s;
 }
 
+/* Ring — separate fixed element, lags behind with inertia via JS */
 .cursor__ring {
-  position: absolute;
-  top: -18px;
-  left: -18px;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(255,255,255,0.5);
+  position: fixed;
+  top: -20px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255,255,255,0.55);
   border-radius: 50%;
-  transition: all 0.4s var(--ease-out-quart);
+  pointer-events: none;
+  z-index: calc(var(--z-modal) - 1);
+  will-change: transform;
+  transition: width 0.3s var(--ease-out-quart), height 0.3s, border-color 0.3s, opacity 0.3s;
 }
 
 .cursor.is-hover .cursor__dot {
-  width: 12px;
-  height: 12px;
-  top: -6px;
-  left: -6px;
+  width: 14px;
+  height: 14px;
+  top: -7px;
+  left: -7px;
+  background: var(--clr-accent-light);
 }
 
-.cursor.is-hover .cursor__ring {
-  width: 56px;
-  height: 56px;
-  top: -28px;
-  left: -28px;
-  opacity: 0.4;
+.cursor__ring.is-hover {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: -30px;
+  border-color: var(--clr-accent);
+  opacity: 0.7;
 }
 
-@media (pointer: coarse) { .cursor { display: none; } }
+@media (pointer: coarse) {
+  .cursor, .cursor__ring { display: none; }
+}
 
 /* ── CURSOR GLOW ────────────────────────────────────────── */
 .cursor-glow {
   position: fixed;
-  top: -200px;
-  left: -200px;
+  top: 0;
+  left: 0;
   width: 400px;
   height: 400px;
   border-radius: 50%;
+  margin: -200px 0 0 -200px;   /* center at origin so translate(x,y) lands center on cursor */
   background: radial-gradient(circle, var(--clr-accent-glow) 0%, transparent 70%);
   pointer-events: none;
   z-index: var(--z-below);

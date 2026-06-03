@@ -34,44 +34,47 @@ if (loader) {
 
 /* ── CUSTOM CURSOR ──────────────────────────────────────── */
 const cursor    = document.querySelector('.cursor');
-const cursorDot = document.querySelector('.cursor__dot');
 const cursorRing= document.querySelector('.cursor__ring');
 const glowEl    = document.querySelector('.cursor-glow');
 
-let mx = -999, my = -999;
-let gx = 0,    gy = 0;
-let cx = 0,    cy = 0;
-let rx = 0,    ry = 0;
+// Init at viewport center so cursor isn't invisible before first move
+let mx = window.innerWidth / 2;
+let my = window.innerHeight / 2;
+let gx = mx, gy = my;
+let rx = mx, ry = my;
 
 window.addEventListener('mousemove', e => {
   mx = e.clientX;
   my = e.clientY;
-
-  // Dot: segue immediatamente
+  // Dot follows cursor instantly
   if (cursor) cursor.style.transform = `translate(${mx}px, ${my}px)`;
 }, { passive: true });
 
-// Glow e ring: seguono con inerzia
+// Glow and ring follow with inertia (ring and glow are separate fixed elements)
 function animLoop() {
-  // glow (molto lento)
   gx += (mx - gx) * 0.06;
   gy += (my - gy) * 0.06;
   if (glowEl) glowEl.style.transform = `translate(${gx}px, ${gy}px)`;
 
-  // ring (medio)
   rx += (mx - rx) * 0.12;
   ry += (my - ry) * 0.12;
-  if (cursorRing) cursorRing.style.transform = `translate(${rx - (parseFloat(getComputedStyle(cursorRing).width)/2) + 18}px, ${ry - (parseFloat(getComputedStyle(cursorRing).height)/2) + 18}px)`;
+  if (cursorRing) cursorRing.style.transform = `translate(${rx}px, ${ry}px)`;
 
   requestAnimationFrame(animLoop);
 }
 requestAnimationFrame(animLoop);
 
-// Hover state su elementi interattivi
+// Hover state
 document.querySelectorAll('a, button, [role="tab"], .gallery__card, .social__card')
   .forEach(el => {
-    el.addEventListener('mouseenter', () => cursor?.classList.add('is-hover'));
-    el.addEventListener('mouseleave', () => cursor?.classList.remove('is-hover'));
+    el.addEventListener('mouseenter', () => {
+      cursor?.classList.add('is-hover');
+      cursorRing?.classList.add('is-hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor?.classList.remove('is-hover');
+      cursorRing?.classList.remove('is-hover');
+    });
   });
 
 /* ── NAV ────────────────────────────────────────────────── */

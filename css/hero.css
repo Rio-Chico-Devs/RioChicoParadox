@@ -295,11 +295,11 @@ body.loaded .hero__scroll {
 }
 .hero__stat-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
 }
 
 /* ── RIGHT SIDE — CHARACTER ─────────────────────────────── */
@@ -393,9 +393,9 @@ body.loaded .hero__scroll {
 
 .hero__scroll-text {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
 }
 

@@ -83,11 +83,11 @@
 
 .profile__info-item-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .profile__info-item-value {
@@ -144,9 +144,9 @@
 
 .profile__skills-title {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 0.7rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -210,11 +210,11 @@
 
 .profile__stat-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
 }
 
 /* ---- RESPONSIVE ---- */

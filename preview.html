@@ -6,9 +6,21 @@
   <meta name="description" content="Rio Chico Studio — Artista anime, illustrazioni, personaggi originali." />
   <title>RIO CHICO STUDIO</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet" />
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
   <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
   <noscript><style>
     #loader { display: none !important; }
@@ -17,8 +29,8 @@
       { animation-play-state: running !important; }
     [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
   </style></noscript>
-
-  <style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+JP:wght@400;700&display=swap');
 /* =========================================================
    RIO CHICO STUDIO — CSS VARIABLES
    Cambia qui per personalizzare l'intero sito istantaneamente
@@ -154,10 +166,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cursor stilizzata */
+/* Cursor stilizzata — solo su elementi interattivi per non rompere input/scrollbar */
 @media (pointer: fine) {
-  * { cursor: none; }
-  a, button, [role="tab"] { cursor: none; }
+  body, a, button, [role="tab"],
+  .gallery__card, .gallery__filter-btn,
+  .social__card, .chars__selector-btn,
+  label, [tabindex] {
+    cursor: none;
+  }
 }
 
 /* Scrollbar */
@@ -176,7 +192,7 @@ p { line-height: var(--leading-loose); color: var(--clr-text-muted); }
 a { color: inherit; text-decoration: none; }
 img, svg { max-width: 100%; display: block; }
 ul, ol { list-style: none; }
-button { cursor: none; border: none; background: none; font-family: inherit; }
+button { border: none; background: none; font-family: inherit; }
 
 /* ── LAYOUT ────────────────────────────────────────────── */
 .container {
@@ -435,60 +451,73 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
 }
 
 /* ── CUSTOM CURSOR ──────────────────────────────────────── */
+/* .cursor wraps only the dot — moves directly with mouse (no lag) */
 .cursor {
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: var(--z-modal);
-  mix-blend-mode: difference;
+  will-change: transform;
 }
 
+/* Red diamond dot */
 .cursor__dot {
   position: absolute;
-  top: -4px;
-  left: -4px;
-  width: 8px;
-  height: 8px;
-  background: #fff;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--clr-accent);
   transform: rotate(45deg);
-  transition: transform 0.15s var(--ease-spring), width 0.15s, height 0.15s;
+  transition: width 0.15s var(--ease-spring), height 0.15s, top 0.15s, left 0.15s, background 0.15s;
 }
 
+/* Ring — separate fixed element, lags behind with inertia via JS */
 .cursor__ring {
-  position: absolute;
-  top: -18px;
-  left: -18px;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(255,255,255,0.5);
+  position: fixed;
+  top: -20px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255,255,255,0.55);
   border-radius: 50%;
-  transition: all 0.4s var(--ease-out-quart);
+  pointer-events: none;
+  z-index: calc(var(--z-modal) - 1);
+  will-change: transform;
+  transition: width 0.3s var(--ease-out-quart), height 0.3s, border-color 0.3s, opacity 0.3s;
 }
 
 .cursor.is-hover .cursor__dot {
-  width: 12px;
-  height: 12px;
-  top: -6px;
-  left: -6px;
+  width: 14px;
+  height: 14px;
+  top: -7px;
+  left: -7px;
+  background: var(--clr-accent-light);
 }
 
-.cursor.is-hover .cursor__ring {
-  width: 56px;
-  height: 56px;
-  top: -28px;
-  left: -28px;
-  opacity: 0.4;
+.cursor__ring.is-hover {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: -30px;
+  border-color: var(--clr-accent);
+  opacity: 0.7;
 }
 
-@media (pointer: coarse) { .cursor { display: none; } }
+@media (pointer: coarse) {
+  .cursor, .cursor__ring { display: none; }
+}
 
 /* ── CURSOR GLOW ────────────────────────────────────────── */
 .cursor-glow {
   position: fixed;
-  top: -200px;
-  left: -200px;
+  top: 0;
+  left: 0;
   width: 400px;
   height: 400px;
   border-radius: 50%;
+  margin: -200px 0 0 -200px;   /* center at origin so translate(x,y) lands center on cursor */
   background: radial-gradient(circle, var(--clr-accent-glow) 0%, transparent 70%);
   pointer-events: none;
   z-index: var(--z-below);
@@ -757,10 +786,10 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
 
 /* Numero decorativo */
 .nav__link-num {
-  font-size: 0.6rem;
+  font-size: 0.62rem;
   color: var(--clr-accent);
-  margin-right: 0.25rem;
-  opacity: 0.7;
+  margin-right: 0.3rem;
+  opacity: 0.8;
 }
 
 /* Mobile hamburger */
@@ -769,7 +798,6 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
   flex-direction: column;
   gap: 5px;
   padding: 0.5rem;
-  cursor: pointer;
 }
 
 .nav__toggle-bar {
@@ -1133,11 +1161,11 @@ body.loaded .hero__scroll {
 }
 .hero__stat-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
 }
 
 /* ── RIGHT SIDE — CHARACTER ─────────────────────────────── */
@@ -1231,9 +1259,9 @@ body.loaded .hero__scroll {
 
 .hero__scroll-text {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
 }
 
@@ -1320,13 +1348,12 @@ body.loaded .hero__scroll {
 
 .gallery__filter-btn {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 0.68rem;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--clr-text-muted);
-  padding: 0.75rem 1.25rem;
+  padding: 0.875rem 1.375rem;
   background: transparent;
-  cursor: none;
   position: relative;
   transition: color var(--dur-fast);
   border: none;
@@ -1357,8 +1384,8 @@ body.loaded .hero__scroll {
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 260px;
-  gap: 2px;
+  grid-auto-rows: 280px;
+  gap: 3px;
 }
 
 /* Layout mapping — different card sizes */
@@ -1376,7 +1403,6 @@ body.loaded .hero__scroll {
   position: relative;
   overflow: hidden;
   background: var(--clr-surface);
-  cursor: none;
 }
 
 /* Image */
@@ -1416,11 +1442,11 @@ body.loaded .hero__scroll {
 
 .gallery__card-category {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.8);
   text-transform: uppercase;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .gallery__card-title {
@@ -1437,11 +1463,11 @@ body.loaded .hero__scroll {
   top: 1rem;
   left: 1rem;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-wider);
   color: var(--clr-accent);
-  background: rgba(0,0,0,0.7);
-  padding: 0.2rem 0.5rem;
+  background: rgba(0,0,0,0.75);
+  padding: 0.25rem 0.6rem;
   z-index: 2;
 }
 
@@ -1453,9 +1479,9 @@ body.loaded .hero__scroll {
   background: var(--clr-accent);
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-wider);
-  padding: 0.3rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0.75rem 100%);
   text-transform: uppercase;
   z-index: 2;
@@ -1670,7 +1696,7 @@ body.loaded .hero__scroll {
   align-items: center;
   gap: 0.75rem;
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 0.68rem;
   letter-spacing: var(--tracking-widest);
   color: var(--clr-accent);
   text-transform: uppercase;
@@ -1680,6 +1706,7 @@ body.loaded .hero__scroll {
   width: 2rem;
   height: 1px;
   background: var(--clr-accent);
+  flex-shrink: 0;
 }
 
 /* Nome giapponese */
@@ -1707,10 +1734,10 @@ body.loaded .hero__scroll {
 
 /* Bio */
 .char-block__bio {
-  font-size: var(--text-base);
+  font-size: 1.05rem;
   color: var(--clr-text-muted);
   line-height: var(--leading-loose);
-  max-width: 46ch;
+  max-width: 44ch;
   border-left: 3px solid var(--clr-accent);
   padding-left: 1.25rem;
 }
@@ -1719,27 +1746,27 @@ body.loaded .hero__scroll {
 .char-block__stats {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .char-stat {
   display: grid;
-  grid-template-columns: 5.5rem 1fr 2.5rem;
+  grid-template-columns: 6rem 1fr 2.5rem;
   align-items: center;
   gap: 0.875rem;
 }
 
 .char-stat__label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   letter-spacing: var(--tracking-wider);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
 }
 
 .char-stat__track {
-  height: 2px;
-  background: rgba(255,255,255,0.07);
+  height: 3px;
+  background: rgba(255,255,255,0.08);
   overflow: hidden;
 }
 
@@ -1758,9 +1785,10 @@ body.loaded .hero__scroll {
 
 .char-stat__val {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   color: var(--clr-accent);
   text-align: right;
+  font-weight: bold;
 }
 
 /* Tags */
@@ -1772,13 +1800,18 @@ body.loaded .hero__scroll {
 
 .char-block__tag {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--clr-text-muted);
   border: 1px solid var(--clr-border);
-  padding: 0.2rem 0.65rem;
+  padding: 0.25rem 0.75rem;
   clip-path: var(--clip-diagonal);
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+.char-block__tag:hover {
+  color: var(--clr-accent);
+  border-color: var(--clr-border-accent);
 }
 
 /* ── STELLE DECORATIVE ───────────────────────────────────── */
@@ -1869,8 +1902,8 @@ body.loaded .hero__scroll {
   width: 60vmin;
   height: 60vmin;
   background: var(--clr-accent);
-  -webkit-mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cG9seWdvbiBwb2ludHM9IjEwMC4wLDUwLjAgODkuNSw1Ni4zIDk3LjYsNjUuNSA4NS42LDY4LjIgOTAuNSw3OS40IDc4LjMsNzguMyA3OS40LDkwLjUgNjguMiw4NS42IDY1LjUsOTcuNiA1Ni4zLDg5LjUgNTAuMCwxMDAuMCA0My43LDg5LjUgMzQuNSw5Ny42IDMxLjgsODUuNiAyMC42LDkwLjUgMjEuNyw3OC4zIDkuNSw3OS40IDE0LjQsNjguMiAyLjQsNjUuNSAxMC41LDU2LjMgMC4wLDUwLjAgMTAuNSw0My43IDIuNCwzNC41IDE0LjQsMzEuOCA5LjUsMjAuNiAyMS43LDIxLjcgMjAuNiw5LjUgMzEuOCwxNC40IDM0LjUsMi40IDQzLjcsMTAuNSA1MC4wLDAuMCA1Ni4zLDEwLjUgNjUuNSwyLjQgNjguMiwxNC40IDc5LjQsOS41IDc4LjMsMjEuNyA5MC41LDIwLjYgODUuNiwzMS44IDk3LjYsMzQuNSA4OS41LDQzLjciIGZpbGw9IiNlNjAwMTIiLz4KPC9zdmc+) center / contain no-repeat;
-          mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cG9seWdvbiBwb2ludHM9IjEwMC4wLDUwLjAgODkuNSw1Ni4zIDk3LjYsNjUuNSA4NS42LDY4LjIgOTAuNSw3OS40IDc4LjMsNzguMyA3OS40LDkwLjUgNjguMiw4NS42IDY1LjUsOTcuNiA1Ni4zLDg5LjUgNTAuMCwxMDAuMCA0My43LDg5LjUgMzQuNSw5Ny42IDMxLjgsODUuNiAyMC42LDkwLjUgMjEuNyw3OC4zIDkuNSw3OS40IDE0LjQsNjguMiAyLjQsNjUuNSAxMC41LDU2LjMgMC4wLDUwLjAgMTAuNSw0My43IDIuNCwzNC41IDE0LjQsMzEuOCA5LjUsMjAuNiAyMS43LDIxLjcgMjAuNiw5LjUgMzEuOCwxNC40IDM0LjUsMi40IDQzLjcsMTAuNSA1MC4wLDAuMCA1Ni4zLDEwLjUgNjUuNSwyLjQgNjguMiwxNC40IDc5LjQsOS41IDc4LjMsMjEuNyA5MC41LDIwLjYgODUuNiwzMS44IDk3LjYsMzQuNSA4OS41LDQzLjciIGZpbGw9IiNlNjAwMTIiLz4KPC9zdmc+) center / contain no-repeat;
+  -webkit-mask: url(../assets/img/burst.svg) center / contain no-repeat;
+          mask: url(../assets/img/burst.svg) center / contain no-repeat;
   opacity: 0.12;
   animation: loaderSpin 20s linear infinite;
 }
@@ -1920,7 +1953,7 @@ body.loaded .hero__scroll {
   position: absolute;
   width: var(--star-size, 2rem);
   height: var(--star-size, 2rem);
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cG9seWdvbiBwb2ludHM9IjUwLjAsMC4wIDYyLjMsMzMuMCA5Ny42LDM0LjUgNzAuMCw1Ni41IDc5LjQsOTAuNSA1MC4wLDcxLjAgMjAuNiw5MC41IDMwLjAsNTYuNSAyLjQsMzQuNSAzNy43LDMzLjAiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==) center / contain no-repeat;
+  background: url(../assets/img/star.svg) center / contain no-repeat;
   pointer-events: none;
   user-select: none;
   z-index: 6;
@@ -1928,7 +1961,7 @@ body.loaded .hero__scroll {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 .p-star--red {
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cG9seWdvbiBwb2ludHM9IjUwLjAsMC4wIDYyLjMsMzMuMCA5Ny42LDM0LjUgNzAuMCw1Ni41IDc5LjQsOTAuNSA1MC4wLDcxLjAgMjAuNiw5MC41IDMwLjAsNTYuNSAyLjQsMzQuNSAzNy43LDMzLjAiIGZpbGw9IiNlNjAwMTIiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==);
+  background-image: url(../assets/img/star-red.svg);
 }
 
 /* boing-in for stars handled in base.css via [data-r=star] */
@@ -1940,7 +1973,7 @@ body.loaded .hero__scroll {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+CiAgPHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSJub25lIi8+CiAgPGNpcmNsZSBjeD0iNSIgY3k9IjUiIHI9IjIuMiIgZmlsbD0iIzAwMCIvPgogIDxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjIuMiIgZmlsbD0iIzAwMCIvPgo8L3N2Zz4=);
+  background: url(../assets/img/halftone.svg);
   background-size: 8px 8px;
   opacity: 0.04;
   mix-blend-mode: screen;
@@ -1952,8 +1985,8 @@ body.loaded .hero__scroll {
 .burst {
   position: absolute;
   background: var(--clr-accent);
-  -webkit-mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cG9seWdvbiBwb2ludHM9IjEwMC4wLDUwLjAgODkuNSw1Ni4zIDk3LjYsNjUuNSA4NS42LDY4LjIgOTAuNSw3OS40IDc4LjMsNzguMyA3OS40LDkwLjUgNjguMiw4NS42IDY1LjUsOTcuNiA1Ni4zLDg5LjUgNTAuMCwxMDAuMCA0My43LDg5LjUgMzQuNSw5Ny42IDMxLjgsODUuNiAyMC42LDkwLjUgMjEuNyw3OC4zIDkuNSw3OS40IDE0LjQsNjguMiAyLjQsNjUuNSAxMC41LDU2LjMgMC4wLDUwLjAgMTAuNSw0My43IDIuNCwzNC41IDE0LjQsMzEuOCA5LjUsMjAuNiAyMS43LDIxLjcgMjAuNiw5LjUgMzEuOCwxNC40IDM0LjUsMi40IDQzLjcsMTAuNSA1MC4wLDAuMCA1Ni4zLDEwLjUgNjUuNSwyLjQgNjguMiwxNC40IDc5LjQsOS41IDc4LjMsMjEuNyA5MC41LDIwLjYgODUuNiwzMS44IDk3LjYsMzQuNSA4OS41LDQzLjciIGZpbGw9IiNlNjAwMTIiLz4KPC9zdmc+) center / contain no-repeat;
-          mask: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cG9seWdvbiBwb2ludHM9IjEwMC4wLDUwLjAgODkuNSw1Ni4zIDk3LjYsNjUuNSA4NS42LDY4LjIgOTAuNSw3OS40IDc4LjMsNzguMyA3OS40LDkwLjUgNjguMiw4NS42IDY1LjUsOTcuNiA1Ni4zLDg5LjUgNTAuMCwxMDAuMCA0My43LDg5LjUgMzQuNSw5Ny42IDMxLjgsODUuNiAyMC42LDkwLjUgMjEuNyw3OC4zIDkuNSw3OS40IDE0LjQsNjguMiAyLjQsNjUuNSAxMC41LDU2LjMgMC4wLDUwLjAgMTAuNSw0My43IDIuNCwzNC41IDE0LjQsMzEuOCA5LjUsMjAuNiAyMS43LDIxLjcgMjAuNiw5LjUgMzEuOCwxNC40IDM0LjUsMi40IDQzLjcsMTAuNSA1MC4wLDAuMCA1Ni4zLDEwLjUgNjUuNSwyLjQgNjguMiwxNC40IDc5LjQsOS41IDc4LjMsMjEuNyA5MC41LDIwLjYgODUuNiwzMS44IDk3LjYsMzQuNSA4OS41LDQzLjciIGZpbGw9IiNlNjAwMTIiLz4KPC9zdmc+) center / contain no-repeat;
+  -webkit-mask: url(../assets/img/burst.svg) center / contain no-repeat;
+          mask: url(../assets/img/burst.svg) center / contain no-repeat;
   pointer-events: none;
   z-index: 1;
 }
@@ -2116,11 +2149,11 @@ body.loaded .hero__scroll {
 
 .profile__info-item-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .profile__info-item-value {
@@ -2177,9 +2210,9 @@ body.loaded .hero__scroll {
 
 .profile__skills-title {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 0.7rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -2243,11 +2276,11 @@ body.loaded .hero__scroll {
 
 .profile__stat-label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-dim);
+  color: var(--clr-text-muted);
   text-transform: uppercase;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
 }
 
 /* ---- RESPONSIVE ---- */
@@ -2345,7 +2378,6 @@ body.loaded .hero__scroll {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  cursor: pointer;
   overflow: hidden;
   transition: background var(--dur-fast);
   text-decoration: none;
@@ -2404,7 +2436,7 @@ body.loaded .hero__scroll {
 
 .social__card-platform {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   letter-spacing: var(--tracking-widest);
   color: var(--clr-accent);
   text-transform: uppercase;
@@ -2532,7 +2564,7 @@ body.loaded .hero__scroll {
   }
 }
 
-  </style>
+</style>
 </head>
 
 <body>
@@ -2551,8 +2583,8 @@ body.loaded .hero__scroll {
 <!-- ── CUSTOM CURSOR ───────────────────────────────────── -->
 <div class="cursor" aria-hidden="true">
   <div class="cursor__dot"></div>
-  <div class="cursor__ring"></div>
 </div>
+<div class="cursor__ring" aria-hidden="true"></div>
 <div class="cursor-glow" aria-hidden="true"></div>
 
 
@@ -2815,7 +2847,7 @@ body.loaded .hero__scroll {
   <div style="padding: 5rem 0 3rem; text-align:center; position:relative; overflow:hidden;">
     <div style="max-width:var(--max-width); margin:0 auto; padding:0 var(--section-pad-x); position:relative; z-index:1;">
       <span class="section-label" data-r="up" style="justify-content:center;">03 / Personaggi</span>
-      <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center; font-size:clamp(4rem,12vw,12rem);">
+      <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center;">
         PERSON<span>AGGI</span>
       </h2>
     </div>
@@ -3197,6 +3229,7 @@ body.loaded .hero__scroll {
 
   </div>
 </section>
+
 <script>
 /* =========================================================
    RIO CHICO STUDIO — main.js
@@ -3234,44 +3267,47 @@ if (loader) {
 
 /* ── CUSTOM CURSOR ──────────────────────────────────────── */
 const cursor    = document.querySelector('.cursor');
-const cursorDot = document.querySelector('.cursor__dot');
 const cursorRing= document.querySelector('.cursor__ring');
 const glowEl    = document.querySelector('.cursor-glow');
 
-let mx = -999, my = -999;
-let gx = 0,    gy = 0;
-let cx = 0,    cy = 0;
-let rx = 0,    ry = 0;
+// Init at viewport center so cursor isn't invisible before first move
+let mx = window.innerWidth / 2;
+let my = window.innerHeight / 2;
+let gx = mx, gy = my;
+let rx = mx, ry = my;
 
 window.addEventListener('mousemove', e => {
   mx = e.clientX;
   my = e.clientY;
-
-  // Dot: segue immediatamente
+  // Dot follows cursor instantly
   if (cursor) cursor.style.transform = `translate(${mx}px, ${my}px)`;
 }, { passive: true });
 
-// Glow e ring: seguono con inerzia
+// Glow and ring follow with inertia (ring and glow are separate fixed elements)
 function animLoop() {
-  // glow (molto lento)
   gx += (mx - gx) * 0.06;
   gy += (my - gy) * 0.06;
   if (glowEl) glowEl.style.transform = `translate(${gx}px, ${gy}px)`;
 
-  // ring (medio)
   rx += (mx - rx) * 0.12;
   ry += (my - ry) * 0.12;
-  if (cursorRing) cursorRing.style.transform = `translate(${rx - (parseFloat(getComputedStyle(cursorRing).width)/2) + 18}px, ${ry - (parseFloat(getComputedStyle(cursorRing).height)/2) + 18}px)`;
+  if (cursorRing) cursorRing.style.transform = `translate(${rx}px, ${ry}px)`;
 
   requestAnimationFrame(animLoop);
 }
 requestAnimationFrame(animLoop);
 
-// Hover state su elementi interattivi
+// Hover state
 document.querySelectorAll('a, button, [role="tab"], .gallery__card, .social__card')
   .forEach(el => {
-    el.addEventListener('mouseenter', () => cursor?.classList.add('is-hover'));
-    el.addEventListener('mouseleave', () => cursor?.classList.remove('is-hover'));
+    el.addEventListener('mouseenter', () => {
+      cursor?.classList.add('is-hover');
+      cursorRing?.classList.add('is-hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor?.classList.remove('is-hover');
+      cursorRing?.classList.remove('is-hover');
+    });
   });
 
 /* ── NAV ────────────────────────────────────────────────── */

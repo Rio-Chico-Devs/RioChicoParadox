@@ -17,13 +17,12 @@
 
 .gallery__filter-btn {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 0.68rem;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--clr-text-muted);
-  padding: 0.75rem 1.25rem;
+  padding: 0.875rem 1.375rem;
   background: transparent;
-  cursor: none;
   position: relative;
   transition: color var(--dur-fast);
   border: none;
@@ -54,8 +53,8 @@
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 260px;
-  gap: 2px;
+  grid-auto-rows: 280px;
+  gap: 3px;
 }
 
 /* Layout mapping — different card sizes */
@@ -73,7 +72,6 @@
   position: relative;
   overflow: hidden;
   background: var(--clr-surface);
-  cursor: none;
 }
 
 /* Image */
@@ -113,11 +111,11 @@
 
 .gallery__card-category {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-widest);
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.8);
   text-transform: uppercase;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .gallery__card-title {
@@ -134,11 +132,11 @@
   top: 1rem;
   left: 1rem;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-wider);
   color: var(--clr-accent);
-  background: rgba(0,0,0,0.7);
-  padding: 0.2rem 0.5rem;
+  background: rgba(0,0,0,0.75);
+  padding: 0.25rem 0.6rem;
   z-index: 2;
 }
 
@@ -150,9 +148,9 @@
   background: var(--clr-accent);
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-wider);
-  padding: 0.3rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0.75rem 100%);
   text-transform: uppercase;
   z-index: 2;
