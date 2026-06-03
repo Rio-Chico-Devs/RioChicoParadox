@@ -39,28 +39,34 @@
 :root {
 
   /* ---- COLORI PRINCIPALI ---- */
-  --clr-bg:           #0a0a0a;      /* sfondo base */
-  --clr-bg-2:         #111111;      /* sfondo alternativo sezioni */
-  --clr-surface:      #1a1a1a;      /* card, panel */
-  --clr-surface-2:    #222222;      /* card hover, bordi */
+  /*
+     Palette: midnight indigo × cobalt elettrico
+     Pensata per showcasare arte anime vibrante su sfondo neutro-scuro.
+     Ogni personaggio ha la sua palette in index.html (--char-grad, --char-glow).
+     Cambia --clr-accent per ridefinire l'identità del sito in un colpo solo.
+  */
+  --clr-bg:           #09090f;      /* midnight — quasi-nero, profondità blu-viola */
+  --clr-bg-2:         #0e0e1a;      /* sezioni alternate */
+  --clr-surface:      #141428;      /* card, panel */
+  --clr-surface-2:    #1c1c3a;      /* card hover, bordi */
 
-  --clr-accent:       #cc0000;      /* colore principale */
-  --clr-accent-light: #ff3333;      /* accent più luminoso */
-  --clr-accent-dark:  #880000;      /* accent più scuro */
-  --clr-accent-glow:  rgba(204, 0, 0, 0.25);   /* glow/ombra accent */
-  --clr-accent-subtle:rgba(204, 0, 0, 0.08);   /* sfondo sottile accent */
+  --clr-accent:       #4466ff;      /* cobalt elettrico — identità brand */
+  --clr-accent-light: #7899ff;      /* cobalt chiaro */
+  --clr-accent-dark:  #2244cc;      /* cobalt scuro */
+  --clr-accent-glow:  rgba(68, 102, 255, 0.30);
+  --clr-accent-subtle:rgba(68, 102, 255, 0.08);
 
-  --clr-text:         #ffffff;      /* testo principale */
-  --clr-text-muted:   #888888;      /* testo secondario */
-  --clr-text-dim:     #444444;      /* testo disabilitato */
-  --clr-border:       rgba(255,255,255,0.08);   /* bordi sottili */
-  --clr-border-accent:rgba(204, 0, 0, 0.4);    /* bordi con accent */
+  --clr-text:         #f0eeff;      /* bianco caldo con tocco viola */
+  --clr-text-muted:   #8888b8;      /* muted indigo-grigio */
+  --clr-text-dim:     #3e3e68;      /* testo disabilitato */
+  --clr-border:       rgba(120, 120, 200, 0.09);
+  --clr-border-accent:rgba(68, 102, 255, 0.40);
 
   /* ---- TIPOGRAFIA ---- */
   --font-heading: 'Bebas Neue', 'Impact', 'Arial Narrow', sans-serif;
   --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
   --font-mono:    'Courier New', 'Consolas', monospace;
-  --font-jp:      'Noto Serif JP', serif; /* per testo giapponese opzionale */
+  --font-jp:      'Noto Serif JP', serif;
 
   --text-xs:   0.75rem;
   --text-sm:   0.875rem;
@@ -95,7 +101,6 @@
   --radius-lg:  0.5rem;
   --radius-xl:  1rem;
 
-  /* Clip paths geometrici */
   --clip-hero:      polygon(0 0, 100% 0, 100% 88%, 0 100%);
   --clip-diagonal:  polygon(1.5rem 0, 100% 0, calc(100% - 1.5rem) 100%, 0 100%);
   --clip-slash-r:   polygon(0 0, 100% 0, 100% 100%, 1.5rem 100%);
@@ -127,8 +132,8 @@
     transparent 0,
     transparent 50%
   );
-  --noise-opacity:  0.03;   /* overlay noise texture */
-  --scanline-opacity: 0.02; /* effetto scanline opzionale */
+  --noise-opacity:    0.03;
+  --scanline-opacity: 0.02;
 
   /* ---- Z-INDEX ---- */
   --z-below:    -1;
@@ -916,14 +921,14 @@ body.loaded .hero__scroll {
   background: var(--clr-bg);
 }
 
-/* right panel — leggermente più chiaro */
+/* right panel — sfondo neutro per personaggi trasparenti */
 .hero__bg-right {
   position: absolute;
   right: 0;
   top: 0;
   width: 52%;
   height: 100%;
-  background: #0e0e0e;
+  background: #0c0d18;
   clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
 }
 
@@ -1193,11 +1198,14 @@ body.loaded .hero__scroll {
   to { clip-path: inset(0% 0 0 0); }
 }
 
+/* drop-shadow segue il contorno trasparente del WebP/PNG */
 .hero__char-img {
   width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 0 60px var(--clr-accent-glow));
+  filter:
+    drop-shadow(0 0 50px var(--clr-accent-glow))
+    drop-shadow(0 30px 80px rgba(0,0,0,0.8));
 }
 
 /* Corner brackets on char */
@@ -1381,10 +1389,15 @@ body.loaded .hero__scroll {
 }
 
 /* ── GRID ───────────────────────────────────────────────── */
+/*
+   object-fit: contain con padding — funziona sia per artwork quadrati
+   che per personaggi verticali senza sfondo (WebP/PNG trasparenti).
+   Il --clr-surface del card fa da "mat" neutro dietro l'immagine.
+*/
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 280px;
+  grid-auto-rows: 300px;
   gap: 3px;
 }
 
@@ -1399,35 +1412,42 @@ body.loaded .hero__scroll {
 .gallery__card:nth-child(8) { grid-column: span 6; }
 
 /* ── CARD ───────────────────────────────────────────────── */
+/* griglia sottile visible dietro PNG/WebP trasparenti come mat neutro */
 .gallery__card {
   position: relative;
   overflow: hidden;
-  background: var(--clr-surface);
+  background-color: var(--clr-surface);
+  background-image:
+    linear-gradient(var(--clr-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--clr-border) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Image */
+/* Image — contain per supportare caratteri trasparenti verticali */
 .gallery__card-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 0.5rem;
   transition: transform 0.8s var(--ease-out-quart);
 }
 
 .gallery__card:hover .gallery__card-img {
-  transform: scale(1.07);
+  transform: scale(1.05);
 }
 
-/* Overlay — appears on hover with clip-path wipe */
+/* Overlay — usa l'accent color del sito, non rosso hardcoded */
 .gallery__card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(204,0,0,0.85) 0%,
-    rgba(0,0,0,0.95) 60%
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.96) 55%
   );
+  border-top: 2px solid var(--clr-accent);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -1583,10 +1603,11 @@ body.loaded .hero__scroll {
   opacity: 0.7;
 }
 
-/* Grande forma rossa a zig-zag — la firma Persona */
+/* Splash SVG — usa il colore del personaggio, non il global accent.
+   Ogni char-block deve dichiarare fill espliciti sui suoi poligoni. */
 .char-block__splash {
   position: absolute;
-  fill: var(--clr-accent);
+  fill: var(--char-color, currentColor);
   opacity: var(--splash-opacity, 0.12);
   inset: 0;
   width: 100%;
@@ -1633,11 +1654,16 @@ body.loaded .hero__scroll {
   min-height: 100svh;
 }
 
+/* Immagine personaggio — funziona sia con PNG quadrati che con
+   WebP/PNG verticali senza sfondo. drop-shadow segue i contorni
+   trasparenti (a differenza di box-shadow). */
 .char-block__img {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   height: auto;
-  filter: drop-shadow(0 0 60px var(--char-glow, rgba(204,0,0,0.35)));
+  filter:
+    drop-shadow(0 0 40px var(--char-glow, rgba(68,102,255,0.4)))
+    drop-shadow(0 20px 60px rgba(0,0,0,0.7));
   position: relative;
   z-index: 2;
 }
@@ -1690,7 +1716,7 @@ body.loaded .hero__scroll {
   padding: 4rem 3rem 4rem 4rem;
 }
 
-/* Code / numero ruolo */
+/* Code / numero ruolo — usa --char-accent se definito, altrimenti accent globale */
 .char-block__code {
   display: inline-flex;
   align-items: center;
@@ -1698,23 +1724,22 @@ body.loaded .hero__scroll {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: var(--tracking-widest);
-  color: var(--clr-accent);
+  color: var(--char-accent, var(--clr-accent));
   text-transform: uppercase;
 }
 .char-block__code::before {
   content: '';
   width: 2rem;
   height: 1px;
-  background: var(--clr-accent);
+  background: var(--char-accent, var(--clr-accent));
   flex-shrink: 0;
 }
 
-/* Nome giapponese */
 .char-block__name-jp {
   display: block;
   font-family: var(--font-jp);
   font-size: var(--text-lg);
-  color: var(--clr-accent);
+  color: var(--char-accent, var(--clr-accent));
   opacity: 0.75;
   letter-spacing: 0.2em;
 }
@@ -1729,16 +1754,15 @@ body.loaded .hero__scroll {
 }
 .char-block__name span {
   display: block;
-  color: var(--clr-accent);
+  color: var(--char-accent, var(--clr-accent));
 }
 
-/* Bio */
 .char-block__bio {
   font-size: 1.05rem;
   color: var(--clr-text-muted);
   line-height: var(--leading-loose);
   max-width: 44ch;
-  border-left: 3px solid var(--clr-accent);
+  border-left: 3px solid var(--char-accent, var(--clr-accent));
   padding-left: 1.25rem;
 }
 
@@ -1772,10 +1796,10 @@ body.loaded .hero__scroll {
 
 .char-stat__fill {
   height: 100%;
-  background: var(--clr-accent);
+  background: var(--char-accent, var(--clr-accent));
   width: 0%;
   transition: width 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
-  box-shadow: 0 0 8px var(--clr-accent-glow);
+  box-shadow: 0 0 8px var(--char-glow, var(--clr-accent-glow));
 }
 
 .in-view ~ .char-block__info .char-stat__fill,
@@ -1786,7 +1810,7 @@ body.loaded .hero__scroll {
 .char-stat__val {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--clr-accent);
+  color: var(--char-accent, var(--clr-accent));
   text-align: right;
   font-weight: bold;
 }
@@ -2858,18 +2882,18 @@ body.loaded .hero__scroll {
   </div>
 
   <!-- ── PERSONAGGIO 01 ──────────────────────────────────── -->
-  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #200000 0%, #090909 70%); --char-glow: rgba(204,0,0,0.4);">
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #200000 0%, #090909 70%); --char-glow: rgba(204,0,0,0.4); --char-accent: #dd2211;">
 
     <div class="char-block__bg" aria-hidden="true">
       <div class="char-block__bg-grad"></div>
       <div class="char-block__lines"></div>
       <span class="char-block__bg-star">☆</span>
 
-      <!-- Red splash SVG shape -->
+      <!-- Splash SVG — fill esplicito rosso (colore del protagonista) -->
       <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <polygon points="0,0 500,0 380,900 0,900" opacity="0.15"/>
-        <polygon points="600,0 900,0 760,900 460,900" opacity="0.07"/>
-        <polygon points="1100,200 1440,0 1440,400 1200,450" opacity="0.1"/>
+        <polygon points="0,0 500,0 380,900 0,900" fill="#cc1100" opacity="0.18"/>
+        <polygon points="600,0 900,0 760,900 460,900" fill="#cc1100" opacity="0.08"/>
+        <polygon points="1100,200 1440,0 1440,400 1200,450" fill="#cc1100" opacity="0.12"/>
       </svg>
     </div>
 
@@ -2925,7 +2949,7 @@ body.loaded .hero__scroll {
   </div>
 
   <!-- ── PERSONAGGIO 02 ──────────────────────────────────── -->
-  <div class="char-block char-block--even" style="--char-grad: linear-gradient(135deg, #001525 0%, #06090d 70%); --char-glow: rgba(0,100,200,0.35);">
+  <div class="char-block char-block--even" style="--char-grad: linear-gradient(135deg, #001525 0%, #06090d 70%); --char-glow: rgba(0,100,200,0.35); --char-accent: #0077cc;">
 
     <div class="char-block__bg" aria-hidden="true">
       <div class="char-block__bg-grad"></div>
@@ -2965,10 +2989,10 @@ body.loaded .hero__scroll {
         nella narrativa del tuo universo creativo.
       </p>
       <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">45</span></div>
-        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">68</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">95</span></div>
-        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%; background:#0077cc;"></div></div><span class="char-stat__val" style="color:#0077cc">55</span></div>
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%"></div></div><span class="char-stat__val">45</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%"></div></div><span class="char-stat__val">68</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%"></div></div><span class="char-stat__val">95</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%"></div></div><span class="char-stat__val">55</span></div>
       </div>
       <div class="char-block__tags">
         <span class="char-block__tag">Misterioso</span>
@@ -2987,7 +3011,7 @@ body.loaded .hero__scroll {
   </div>
 
   <!-- ── PERSONAGGIO 03 ──────────────────────────────────── -->
-  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #14001e 0%, #070609 70%); --char-glow: rgba(130,60,180,0.4);">
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #14001e 0%, #070609 70%); --char-glow: rgba(130,60,180,0.4); --char-accent: #9933cc;">
 
     <div class="char-block__bg" aria-hidden="true">
       <div class="char-block__bg-grad"></div>
@@ -3027,10 +3051,10 @@ body.loaded .hero__scroll {
         esiste nel tuo universo creativo.
       </p>
       <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">78</span></div>
-        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">82</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">88</span></div>
-        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%; background:#8e44ad;"></div></div><span class="char-stat__val" style="color:#8e44ad">70</span></div>
+        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%"></div></div><span class="char-stat__val">78</span></div>
+        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%"></div></div><span class="char-stat__val">82</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%"></div></div><span class="char-stat__val">88</span></div>
+        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%"></div></div><span class="char-stat__val">70</span></div>
       </div>
       <div class="char-block__tags">
         <span class="char-block__tag">Oscuro</span>

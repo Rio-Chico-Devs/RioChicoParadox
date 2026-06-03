@@ -50,14 +50,14 @@ body.loaded .hero__scroll {
   background: var(--clr-bg);
 }
 
-/* right panel — leggermente più chiaro */
+/* right panel — sfondo neutro per personaggi trasparenti */
 .hero__bg-right {
   position: absolute;
   right: 0;
   top: 0;
   width: 52%;
   height: 100%;
-  background: #0e0e0e;
+  background: #0c0d18;
   clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
 }
 
@@ -327,11 +327,14 @@ body.loaded .hero__scroll {
   to { clip-path: inset(0% 0 0 0); }
 }
 
+/* drop-shadow segue il contorno trasparente del WebP/PNG */
 .hero__char-img {
   width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 0 60px var(--clr-accent-glow));
+  filter:
+    drop-shadow(0 0 50px var(--clr-accent-glow))
+    drop-shadow(0 30px 80px rgba(0,0,0,0.8));
 }
 
 /* Corner brackets on char */

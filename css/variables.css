@@ -6,28 +6,34 @@
 :root {
 
   /* ---- COLORI PRINCIPALI ---- */
-  --clr-bg:           #0a0a0a;      /* sfondo base */
-  --clr-bg-2:         #111111;      /* sfondo alternativo sezioni */
-  --clr-surface:      #1a1a1a;      /* card, panel */
-  --clr-surface-2:    #222222;      /* card hover, bordi */
+  /*
+     Palette: midnight indigo × cobalt elettrico
+     Pensata per showcasare arte anime vibrante su sfondo neutro-scuro.
+     Ogni personaggio ha la sua palette in index.html (--char-grad, --char-glow).
+     Cambia --clr-accent per ridefinire l'identità del sito in un colpo solo.
+  */
+  --clr-bg:           #09090f;      /* midnight — quasi-nero, profondità blu-viola */
+  --clr-bg-2:         #0e0e1a;      /* sezioni alternate */
+  --clr-surface:      #141428;      /* card, panel */
+  --clr-surface-2:    #1c1c3a;      /* card hover, bordi */
 
-  --clr-accent:       #cc0000;      /* colore principale */
-  --clr-accent-light: #ff3333;      /* accent più luminoso */
-  --clr-accent-dark:  #880000;      /* accent più scuro */
-  --clr-accent-glow:  rgba(204, 0, 0, 0.25);   /* glow/ombra accent */
-  --clr-accent-subtle:rgba(204, 0, 0, 0.08);   /* sfondo sottile accent */
+  --clr-accent:       #4466ff;      /* cobalt elettrico — identità brand */
+  --clr-accent-light: #7899ff;      /* cobalt chiaro */
+  --clr-accent-dark:  #2244cc;      /* cobalt scuro */
+  --clr-accent-glow:  rgba(68, 102, 255, 0.30);
+  --clr-accent-subtle:rgba(68, 102, 255, 0.08);
 
-  --clr-text:         #ffffff;      /* testo principale */
-  --clr-text-muted:   #888888;      /* testo secondario */
-  --clr-text-dim:     #444444;      /* testo disabilitato */
-  --clr-border:       rgba(255,255,255,0.08);   /* bordi sottili */
-  --clr-border-accent:rgba(204, 0, 0, 0.4);    /* bordi con accent */
+  --clr-text:         #f0eeff;      /* bianco caldo con tocco viola */
+  --clr-text-muted:   #8888b8;      /* muted indigo-grigio */
+  --clr-text-dim:     #3e3e68;      /* testo disabilitato */
+  --clr-border:       rgba(120, 120, 200, 0.09);
+  --clr-border-accent:rgba(68, 102, 255, 0.40);
 
   /* ---- TIPOGRAFIA ---- */
   --font-heading: 'Bebas Neue', 'Impact', 'Arial Narrow', sans-serif;
   --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
   --font-mono:    'Courier New', 'Consolas', monospace;
-  --font-jp:      'Noto Serif JP', serif; /* per testo giapponese opzionale */
+  --font-jp:      'Noto Serif JP', serif;
 
   --text-xs:   0.75rem;
   --text-sm:   0.875rem;
@@ -62,7 +68,6 @@
   --radius-lg:  0.5rem;
   --radius-xl:  1rem;
 
-  /* Clip paths geometrici */
   --clip-hero:      polygon(0 0, 100% 0, 100% 88%, 0 100%);
   --clip-diagonal:  polygon(1.5rem 0, 100% 0, calc(100% - 1.5rem) 100%, 0 100%);
   --clip-slash-r:   polygon(0 0, 100% 0, 100% 100%, 1.5rem 100%);
@@ -94,8 +99,8 @@
     transparent 0,
     transparent 50%
   );
-  --noise-opacity:  0.03;   /* overlay noise texture */
-  --scanline-opacity: 0.02; /* effetto scanline opzionale */
+  --noise-opacity:    0.03;
+  --scanline-opacity: 0.02;
 
   /* ---- Z-INDEX ---- */
   --z-below:    -1;

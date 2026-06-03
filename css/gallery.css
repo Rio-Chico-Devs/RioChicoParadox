@@ -50,10 +50,15 @@
 }
 
 /* ── GRID ───────────────────────────────────────────────── */
+/*
+   object-fit: contain con padding — funziona sia per artwork quadrati
+   che per personaggi verticali senza sfondo (WebP/PNG trasparenti).
+   Il --clr-surface del card fa da "mat" neutro dietro l'immagine.
+*/
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 280px;
+  grid-auto-rows: 300px;
   gap: 3px;
 }
 
@@ -68,35 +73,42 @@
 .gallery__card:nth-child(8) { grid-column: span 6; }
 
 /* ── CARD ───────────────────────────────────────────────── */
+/* griglia sottile visible dietro PNG/WebP trasparenti come mat neutro */
 .gallery__card {
   position: relative;
   overflow: hidden;
-  background: var(--clr-surface);
+  background-color: var(--clr-surface);
+  background-image:
+    linear-gradient(var(--clr-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--clr-border) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Image */
+/* Image — contain per supportare caratteri trasparenti verticali */
 .gallery__card-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 0.5rem;
   transition: transform 0.8s var(--ease-out-quart);
 }
 
 .gallery__card:hover .gallery__card-img {
-  transform: scale(1.07);
+  transform: scale(1.05);
 }
 
-/* Overlay — appears on hover with clip-path wipe */
+/* Overlay — usa l'accent color del sito, non rosso hardcoded */
 .gallery__card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(204,0,0,0.85) 0%,
-    rgba(0,0,0,0.95) 60%
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.96) 55%
   );
+  border-top: 2px solid var(--clr-accent);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
