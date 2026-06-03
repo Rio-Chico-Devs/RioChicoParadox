@@ -131,33 +131,51 @@ const revealObs = new IntersectionObserver(entries => {
 revealEls.forEach(el => revealObs.observe(el));
 
 /* ── PARALLAX SCROLL ────────────────────────────────────── */
-const heroChar   = document.querySelector('.hero__char-wrap');
 const heroBgGlow = document.querySelector('.hero__bg-glow');
 const heroBgGrid = document.querySelector('.hero__bg-grid');
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
-  if (heroChar)   heroChar.style.transform   = `translateY(${y * 0.12}px)`;
   if (heroBgGlow) heroBgGlow.style.transform = `translateY(${y * 0.3}px)`;
   if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
 }, { passive: true });
 
-/* ── MOUSE PARALLAX (hero only) ─────────────────────────── */
-const heroSection = document.querySelector('.hero');
-let isInHero = true;
+/* ── ART WHEEL — ruota 3D con boing ────────────────────────
+   4 immagini verticali, rotazione antioraria -90° per step.
+   Il boing viene da cubic-bezier(0.34, 1.56, 0.64, 1).
+   Ogni immagine rimane visibile 3s dopo il settle (~920ms).
+   ========================================================= */
+const awStage = document.getElementById('artWheelStage');
+const awCards = awStage ? awStage.querySelectorAll('.art-wheel__card') : [];
+const awDots  = document.querySelectorAll('.art-wheel__dot');
 
-const heroVisObs = new IntersectionObserver(entries => {
-  isInHero = entries[0].isIntersecting;
-}, { threshold: 0.1 });
-if (heroSection) heroVisObs.observe(heroSection);
+if (awStage && awCards.length === 4) {
+  let step = 0;
 
-window.addEventListener('mousemove', e => {
-  if (!isInHero || !heroChar) return;
-  const { innerWidth: w, innerHeight: h } = window;
-  const xPct = (e.clientX / w - 0.5);
-  const yPct = (e.clientY / h - 0.5);
-  heroChar.style.transform = `translate(${xPct * -16}px, ${yPct * -10}px)`;
-}, { passive: true });
+  function wheelNext() {
+    step++;
+    // -90° per step → antiorario: il card a destra (item-i 1) arriva davanti
+    const angle = -(step * 90);
+    const activeIdx = step % 4;
+
+    // Rotate stage — boing via CSS transition
+    awStage.style.setProperty('--aw-angle', angle + 'deg');
+
+    // Update active card (immediately so filter transition starts)
+    awCards.forEach((card, i) => {
+      card.classList.toggle('is-active', i === activeIdx);
+    });
+    awDots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === activeIdx);
+    });
+
+    // Next rotation: 3s display + ~920ms animation = 3920ms total
+    setTimeout(wheelNext, 3920);
+  }
+
+  // First card already visible → wait 3s then start rotating
+  setTimeout(wheelNext, 3000);
+}
 
 /* ── GALLERY FILTERS ────────────────────────────────────── */
 const filterBtns = document.querySelectorAll('.gallery__filter-btn');

@@ -6,33 +6,11 @@
   <meta name="description" content="Rio Chico Studio — Artista anime, illustrazioni, personaggi originali." />
   <title>RIO CHICO STUDIO</title>
 
-  
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
 
-  <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
-  <noscript><style>
-    #loader { display: none !important; }
-    .hero__slash, .hero__shape, .hero__eyebrow, .hero__title-line,
-    .hero__desc, .hero__cta, .hero__stats, .hero__char-wrap, .hero__scroll
-      { animation-play-state: running !important; }
-    [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
-  </style></noscript>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+JP:wght@400;700&display=swap');
-/* =========================================================
+  <style>/* =========================================================
    RIO CHICO STUDIO — CSS VARIABLES
    Cambia qui per personalizzare l'intero sito istantaneamente
    ========================================================= */
@@ -144,8 +122,8 @@
   --z-overlay:   200;
   --z-modal:     300;
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    BASE — reset, tipografia globale, SISTEMA ANIMAZIONI
    ========================================================= */
 
@@ -559,8 +537,8 @@ button { border: none; background: none; font-family: inherit; }
     --section-pad-x: 1.25rem;
   }
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    BUTTONS — stili pulsanti riutilizzabili
    ========================================================= */
 
@@ -680,8 +658,8 @@ button { border: none; background: none; font-family: inherit; }
   padding: 1.125rem 2.5rem;
   font-size: var(--text-sm);
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    NAV — navigazione fissa con effetto scroll
    ========================================================= */
 
@@ -869,8 +847,8 @@ button { border: none; background: none; font-family: inherit; }
     clip-path: none;
   }
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    HERO — apertura full-viewport drammatica
    ========================================================= */
 
@@ -883,7 +861,6 @@ button { border: none; background: none; font-family: inherit; }
 .hero__desc,
 .hero__cta,
 .hero__stats,
-.hero__char-wrap,
 .hero__scroll {
   animation-play-state: paused;
 }
@@ -894,7 +871,6 @@ body.loaded .hero__title-line,
 body.loaded .hero__desc,
 body.loaded .hero__cta,
 body.loaded .hero__stats,
-body.loaded .hero__char-wrap,
 body.loaded .hero__scroll {
   animation-play-state: running;
 }
@@ -1288,6 +1264,120 @@ body.loaded .hero__scroll {
 
 @keyframes fadeIn { to { opacity: 1; } }
 
+/* ═══════════════════════════════════════════════════════════
+   ART WHEEL — ruota 3D con 4 immagini verticali
+   Boing: cubic-bezier(0.34, 1.56, 0.64, 1) overshoot + settle
+   ═══════════════════════════════════════════════════════════ */
+
+.art-wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
+}
+
+.art-wheel__stage {
+  width: 320px;
+  height: 500px;
+  flex-shrink: 0;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--aw-angle, 0deg));
+  transition: transform 0.92s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 4 cards arranged at 90° intervals on the Y axis */
+.art-wheel__card {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(calc(var(--item-i, 0) * 90deg)) translateZ(260px);
+  backface-visibility: hidden;
+  filter: brightness(0.08) saturate(0.2);
+  /* dim quickly when leaving front */
+  transition: filter 0.3s ease;
+}
+
+/* Slow bright-in with delay so card is arriving as it brightens */
+.art-wheel__card.is-active {
+  filter: brightness(1) saturate(1);
+  transition: filter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.28s;
+}
+
+.art-wheel__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.art-wheel__card.is-active img {
+  filter:
+    drop-shadow(0 0 40px var(--clr-accent-glow))
+    drop-shadow(0 20px 60px rgba(0,0,0,0.85));
+}
+
+/* Fixed ambient glow behind the front card — does NOT rotate */
+.art-wheel__glow {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--clr-accent-glow) 0%, transparent 68%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.4s;
+}
+
+/* Diamond dot indicators */
+.art-wheel__dots {
+  position: absolute;
+  bottom: 2.5rem;
+  display: flex;
+  gap: 0.6rem;
+  z-index: 20;
+}
+
+.art-wheel__dot {
+  width: 7px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(45deg);
+  transition: background 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.art-wheel__dot.is-active {
+  background: var(--clr-accent);
+  transform: rotate(45deg) scale(1.45);
+  box-shadow: 0 0 10px var(--clr-accent-glow);
+}
+
+/* Card number overlay on active card */
+.art-wheel__num {
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1rem;
+  font-family: var(--font-heading);
+  font-size: 10rem;
+  color: var(--clr-accent);
+  opacity: 0;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+  letter-spacing: -0.04em;
+}
+
+.art-wheel__card.is-active .art-wheel__num {
+  opacity: 0.06;
+}
+
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero {
@@ -1327,6 +1417,22 @@ body.loaded .hero__scroll {
     position: static;
     margin-top: 2rem;
   }
+
+  .art-wheel {
+    min-height: 55svh;
+  }
+
+  .art-wheel__stage {
+    width: 220px;
+    height: 360px;
+  }
+
+  .art-wheel__glow {
+    width: 260px;
+    height: 260px;
+  }
+
+  .art-wheel__num { display: none; }
 }
 
 @media (max-width: 600px) {
@@ -1336,9 +1442,14 @@ body.loaded .hero__scroll {
   .hero__stats {
     gap: 1.5rem;
   }
-}
 
-/* =========================================================
+  .art-wheel__stage {
+    width: 180px;
+    height: 300px;
+  }
+}
+</style>
+  <style>/* =========================================================
    GALLERY — griglia artwork con immagini reali
    ========================================================= */
 
@@ -1558,8 +1669,8 @@ body.loaded .hero__scroll {
   }
   .gallery__card:nth-child(n) { grid-column: span 1; }
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    CHARACTERS — sezione personaggi stile Persona
    Ogni personaggio ha il suo blocco full-width.
    I personaggi "boingano" dentro, senza pannelli UI rigidi.
@@ -1893,8 +2004,8 @@ body.loaded .hero__scroll {
     font-size: 40vw;
   }
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    PERSONA — elementi "loud" stile Persona 5
    Loading screen, halftone, stelle, burst comic.
    Tutti gli asset sono in assets/img/ e facilmente sostituibili.
@@ -2088,8 +2199,8 @@ body.loaded .hero__scroll {
     animation: none !important;
   }
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    PROFILE — sezione artista
    ========================================================= */
 
@@ -2324,8 +2435,8 @@ body.loaded .hero__scroll {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    SOCIAL / CONTACT — link social e contatti
    ========================================================= */
 
@@ -2588,8 +2699,8 @@ body.loaded .hero__scroll {
     grid-template-columns: 1fr;
   }
 }
-
-/* =========================================================
+</style>
+  <style>/* =========================================================
    RIO CHICO STUDIO — EDITORIAL ELEMENTS
    Marquee strips, floating data cards, gallery editorial,
    profile quote — Persona 5 "graphic artifact" style
@@ -2918,8 +3029,16 @@ body.loaded .hero__scroll {
   line-height: 1;
   margin-right: 0.5rem;
 }
-
 </style>
+
+  <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
+  <noscript><style>
+    #loader { display: none !important; }
+    .hero__slash, .hero__shape, .hero__eyebrow, .hero__title-line,
+    .hero__desc, .hero__cta, .hero__stats, .hero__char-wrap, .hero__scroll
+      { animation-play-state: running !important; }
+    [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
+  </style></noscript>
 </head>
 
 <body>
@@ -3041,33 +3160,60 @@ body.loaded .hero__scroll {
 
   </div>
 
-  <!-- RIGHT: CHARACTER ─────────────────── -->
+  <!-- RIGHT: ART WHEEL ─────────────────── -->
   <div class="hero__right">
-    <!-- comic burst behind character -->
-    <div class="burst burst--slow-spin" aria-hidden="true"
-         style="width:560px; height:560px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.9;"></div>
 
-    <div class="hero__char-wrap">
-      <span class="ph-flag">placeholder</span>
-      <img
-        class="hero__char-img is-placeholder"
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODAgNzQwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0ODA3NDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0ODA3NDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI3NDAiIGZpbGw9InVybCgjZzQ4MDc0MCkiLz4KICA8cmVjdCB3aWR0aD0iNDgwIiBoZWlnaHQ9Ijc0MCIgZmlsbD0idXJsKCNkNDgwNzQwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0ODAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5QRVJTT05BR0dJTyBIRVJPPC90ZXh0PgogICAgPHRleHQgeD0iNDY2IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIxIiB0ZXh0LWFuY2hvcj0iZW5kIj5TT1NUSVRVSVNDSSDilro8L3RleHQ+CiAgPC9nPgoKICAKICAgIDxlbGxpcHNlIGN4PSIyNDAuMCIgY3k9IjE2Mi44IiByeD0iNTUuNSIgcnk9IjYzLjgyNDk5OTk5OTk5OTk5NiIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEzNC41NSw0NDQuMAogICAgICAgICAgICAgQzEyOS4wLDI0Ni4wNSAxNjcuODUsMjE4LjMgMjA2LjcsMjIzLjg1MDAwMDAwMDAwMDAyCiAgICAgICAgICAgICBMMjczLjMsMjIzLjg1MDAwMDAwMDAwMDAyCiAgICAgICAgICAgICBDMzEyLjE1LDIxOC4zIDM1MS4wLDI0Ni4wNSAzNDUuNDUsNDQ0LjAgWiIKICAgICAgICAgIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTIiLz4KCiAgPHRleHQgeD0iMjQwLjAiIHk9IjU0Ny42IiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjQ2IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiPlBFUlNPTkFHR0lPPC90ZXh0PgogIDx0ZXh0IHg9IjI0MC4wIiB5PSI1NzEuNiIgZmlsbD0iI2U2MDAxMiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5tYWluIGNoYXJhY3RlcjwvdGV4dD4KCiAgPHJlY3QgeD0iMTY4LjAiIHk9IjU5Mi4wIiB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMjQwLjAiIHk9IjYxMS4wIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlBORyDCtyA0ODDDlzc0MDwvdGV4dD4KCiAgPHJlY3QgeD0iMTQ1LjAiIHk9IjY0My44IiB3aWR0aD0iMTkwIiBoZWlnaHQ9IjI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjI0MC4wIiB5PSI2NjAuOCIgZmlsbD0iI2U2MDAxMiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5FTlRSQSDihpEgREFMIEJBU1NPPC90ZXh0PgoKICA8cmVjdCB4PSIzIiB5PSIzIiB3aWR0aD0iNDc0IiBoZWlnaHQ9IjczNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTYwMDEyIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8cGF0aCBkPSJNMyw0MCBMMywzIEw0MCwzIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik00NDAsMyBMNDc3LDMgTDQ3Nyw0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMyw3MDAgTDMsNzM3IEw0MCw3MzciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTQ0MCw3MzcgTDQ3Nyw3MzcgTDQ3Nyw3MDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+Cjwvc3ZnPg=="
-        alt="Personaggio principale — placeholder"
-        width="480"
-        height="740"
-      />
-      <span class="hero__char-corner hero__char-corner--tl" aria-hidden="true"></span>
-      <span class="hero__char-corner hero__char-corner--tr" aria-hidden="true"></span>
-      <span class="hero__char-corner hero__char-corner--bl" aria-hidden="true"></span>
-      <span class="hero__char-corner hero__char-corner--br" aria-hidden="true"></span>
-      <div class="hero__char-tag">OC · Original Character</div>
-      <span class="hero__char-number" aria-hidden="true">01</span>
+    <!-- 3D wheel -->
+    <div class="art-wheel" role="region" aria-label="Opere in evidenza">
+
+      <!-- Ambient glow — outside stage, does not rotate -->
+      <div class="art-wheel__glow" aria-hidden="true"></div>
+
+      <div class="art-wheel__stage" id="artWheelStage">
+
+        <div class="art-wheel__card is-active" style="--item-i:0">
+          <span class="ph-flag">placeholder</span>
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNDgwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ2NDA0ODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc2NDA0ODAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0ODAiIGZpbGw9InVybCgjZzY0MDQ4MCkiLz4KICA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0idXJsKCNkNjQwNDgwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMTwvdGV4dD4KICAgIDx0ZXh0IHg9IjYyNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8cmVjdCB4PSIxMjguMCIgeT0iMTI0LjgwMDAwMDAwMDAwMDAxIiB3aWR0aD0iMzg0LjAiIGhlaWdodD0iMTUzLjYiIHJ4PSI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8Y2lyY2xlIGN4PSI0MDQuNDgiIGN5PSIxNjguMCIgcj0iMjguNzk5OTk5OTk5OTk5OTk3IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0xMzguMCwyNjguOCBMMjg4LjAsMTkyLjAgTDM0NS42LDIzNS4yIEw0ODYuMCwxNjMuMjAwMDAwMDAwMDAwMDIgTDUwMi4wLDI2OC44IFoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOSIvPgoKICA8dGV4dCB4PSIzMjAuMCIgeT0iMzU1LjIiIGZpbGw9IiNmZmYiIGZvbnQtc2l6ZT0iNDYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiI+QVJUV09SSyAwMTwvdGV4dD4KICA8dGV4dCB4PSIzMjAuMCIgeT0iMzc5LjIiIGZpbGw9IiNlNjAwMTIiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+b2M8L3RleHQ+CgogIDxyZWN0IHg9IjI0OC4wIiB5PSIzODQuMCIgd2lkdGg9IjE0NCIgaGVpZ2h0PSIyOCIgZmlsbD0iI2ZmZiIvPgogIDx0ZXh0IHg9IjMyMC4wIiB5PSI0MDMuMCIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj7igJQgw5cg4oCUPC90ZXh0PgoKICA8cmVjdCB4PSIyMjUuMCIgeT0iNDE3LjYiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2U2MDAxMiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMzIwLjAiIHk9IjQzNC42IiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkhPVkVSOiBvdmVybGF5IOKGkTwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjYzNCIgaGVpZ2h0PSI0NzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2U2MDAxMiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNNjAwLDMgTDYzNywzIEw2MzcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNDQwIEwzLDQ3NyBMNDAsNDc3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik02MDAsNDc3IEw2MzcsNDc3IEw2MzcsNDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4=" alt="Artwork 01"
+               width="320" height="480" loading="eager" />
+          <span class="art-wheel__num" aria-hidden="true">01</span>
+        </div>
+
+        <div class="art-wheel__card" style="--item-i:1">
+          <span class="ph-flag">placeholder</span>
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMTwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5QUk9UQUdPTklTVEE8L3RleHQ+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ2OC4wIiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPmNoYXJhY3RlciAwMTwvdGV4dD4KCiAgPHJlY3QgeD0iMTM4LjAiIHk9IjQ4MC4wIiB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ5OS4wIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlBORyDCtyA0MjDDlzYwMDwvdGV4dD4KCiAgPHJlY3QgeD0iMTE1LjAiIHk9IjUyMi4wIiB3aWR0aD0iMTkwIiBoZWlnaHQ9IjI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI1MzkuMCIgZmlsbD0iI2U2MDAxMiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5CT0lORyDihpAgU1g8L3RleHQ+CgogIDxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSI0MTQiIGhlaWdodD0iNTk0IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iNCIvPgogIDxwYXRoIGQ9Ik0zLDQwIEwzLDMgTDQwLDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTM4MCwzIEw0MTcsMyBMNDE3LDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zLDU2MCBMMyw1OTcgTDQwLDU5NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDU5NyBMNDE3LDU5NyBMNDE3LDU2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KPC9zdmc+" alt="Personaggio 01"
+               width="320" height="480" loading="lazy" />
+          <span class="art-wheel__num" aria-hidden="true">02</span>
+        </div>
+
+        <div class="art-wheel__card" style="--item-i:2">
+          <span class="ph-flag">placeholder</span>
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNDgwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ2NDA0ODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc2NDA0ODAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0ODAiIGZpbGw9InVybCgjZzY0MDQ4MCkiLz4KICA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0idXJsKCNkNjQwNDgwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwNDwvdGV4dD4KICAgIDx0ZXh0IHg9IjYyNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8cmVjdCB4PSIxMjguMCIgeT0iMTI0LjgwMDAwMDAwMDAwMDAxIiB3aWR0aD0iMzg0LjAiIGhlaWdodD0iMTUzLjYiIHJ4PSI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8Y2lyY2xlIGN4PSI0MDQuNDgiIGN5PSIxNjguMCIgcj0iMjguNzk5OTk5OTk5OTk5OTk3IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0xMzguMCwyNjguOCBMMjg4LjAsMTkyLjAgTDM0NS42LDIzNS4yIEw0ODYuMCwxNjMuMjAwMDAwMDAwMDAwMDIgTDUwMi4wLDI2OC44IFoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOSIvPgoKICA8dGV4dCB4PSIzMjAuMCIgeT0iMzU1LjIiIGZpbGw9IiNmZmYiIGZvbnQtc2l6ZT0iNDYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiI+QVJUV09SSyAwNDwvdGV4dD4KICA8dGV4dCB4PSIzMjAuMCIgeT0iMzc5LjIiIGZpbGw9IiNlNjAwMTIiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+b2M8L3RleHQ+CgogIDxyZWN0IHg9IjI0OC4wIiB5PSIzODQuMCIgd2lkdGg9IjE0NCIgaGVpZ2h0PSIyOCIgZmlsbD0iI2ZmZiIvPgogIDx0ZXh0IHg9IjMyMC4wIiB5PSI0MDMuMCIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj7igJQgw5cg4oCUPC90ZXh0PgoKICA8cmVjdCB4PSIyMjUuMCIgeT0iNDE3LjYiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2U2MDAxMiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMzIwLjAiIHk9IjQzNC42IiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkhPVkVSOiBvdmVybGF5IOKGkTwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjYzNCIgaGVpZ2h0PSI0NzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2U2MDAxMiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNNjAwLDMgTDYzNywzIEw2MzcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNDQwIEwzLDQ3NyBMNDAsNDc3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik02MDAsNDc3IEw2MzcsNDc3IEw2MzcsNDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4=" alt="Artwork 04"
+               width="320" height="480" loading="lazy" />
+          <span class="art-wheel__num" aria-hidden="true">03</span>
+        </div>
+
+        <div class="art-wheel__card" style="--item-i:3">
+          <span class="ph-flag">placeholder</span>
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjMWU5MGZmIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiMxZTkwZmYiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMjwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TVFJBVEVHQTwvdGV4dD4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDY4LjAiIGZpbGw9IiMxZTkwZmYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+Y2hhcmFjdGVyIDAyPC90ZXh0PgoKICA8cmVjdCB4PSIxMzguMCIgeT0iNDgwLjAiIHdpZHRoPSIxNDQiIGhlaWdodD0iMjgiIGZpbGw9IiNmZmYiLz4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDk5LjAiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+UE5HIMK3IDQyMMOXNjAwPC90ZXh0PgoKICA8cmVjdCB4PSIxMTUuMCIgeT0iNTIyLjAiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjUzOS4wIiBmaWxsPSIjMWU5MGZmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkJPSU5HIOKGkiBEWDwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjQxNCIgaGVpZ2h0PSI1OTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDMgTDQxNywzIEw0MTcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNTYwIEwzLDU5NyBMNDAsNTk3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zODAsNTk3IEw0MTcsNTk3IEw0MTcsNTYwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4=" alt="Personaggio 02"
+               width="320" height="480" loading="lazy" />
+          <span class="art-wheel__num" aria-hidden="true">04</span>
+        </div>
+
+      </div>
+
+      <!-- Diamond dot indicators -->
+      <div class="art-wheel__dots" aria-hidden="true">
+        <span class="art-wheel__dot is-active"></span>
+        <span class="art-wheel__dot"></span>
+        <span class="art-wheel__dot"></span>
+        <span class="art-wheel__dot"></span>
+      </div>
     </div>
 
-    <!-- stars around hero character -->
-    <span class="p-star" aria-hidden="true" style="--star-size:2.6rem; top:14%; left:8%; --sf-dur:3.6s;" data-r="star" data-rd="3"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.4rem; top:30%; right:10%; --sf-dur:2.8s; --sf-del:0.4s;" data-r="star" data-rd="4"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.8rem; bottom:18%; left:14%; --sf-dur:4s; --sf-del:0.8s;" data-r="star" data-rd="5"></span>
+    <!-- Floating stars -->
+    <span class="p-star" aria-hidden="true" style="--star-size:2.4rem; top:14%; left:8%; --sf-dur:3.6s;" data-r="star" data-rd="3"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.3rem; top:28%; right:9%; --sf-dur:2.8s; --sf-del:0.5s;" data-r="star" data-rd="4"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.8rem; bottom:20%; left:12%; --sf-dur:4s; --sf-del:0.9s;" data-r="star" data-rd="5"></span>
   </div>
 
 </section>
@@ -3694,8 +3840,7 @@ body.loaded .hero__scroll {
   </div>
 </section>
 
-<script>
-/* =========================================================
+<script>/* =========================================================
    RIO CHICO STUDIO — main.js
    ========================================================= */
 
@@ -3828,33 +3973,51 @@ const revealObs = new IntersectionObserver(entries => {
 revealEls.forEach(el => revealObs.observe(el));
 
 /* ── PARALLAX SCROLL ────────────────────────────────────── */
-const heroChar   = document.querySelector('.hero__char-wrap');
 const heroBgGlow = document.querySelector('.hero__bg-glow');
 const heroBgGrid = document.querySelector('.hero__bg-grid');
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
-  if (heroChar)   heroChar.style.transform   = `translateY(${y * 0.12}px)`;
   if (heroBgGlow) heroBgGlow.style.transform = `translateY(${y * 0.3}px)`;
   if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
 }, { passive: true });
 
-/* ── MOUSE PARALLAX (hero only) ─────────────────────────── */
-const heroSection = document.querySelector('.hero');
-let isInHero = true;
+/* ── ART WHEEL — ruota 3D con boing ────────────────────────
+   4 immagini verticali, rotazione antioraria -90° per step.
+   Il boing viene da cubic-bezier(0.34, 1.56, 0.64, 1).
+   Ogni immagine rimane visibile 3s dopo il settle (~920ms).
+   ========================================================= */
+const awStage = document.getElementById('artWheelStage');
+const awCards = awStage ? awStage.querySelectorAll('.art-wheel__card') : [];
+const awDots  = document.querySelectorAll('.art-wheel__dot');
 
-const heroVisObs = new IntersectionObserver(entries => {
-  isInHero = entries[0].isIntersecting;
-}, { threshold: 0.1 });
-if (heroSection) heroVisObs.observe(heroSection);
+if (awStage && awCards.length === 4) {
+  let step = 0;
 
-window.addEventListener('mousemove', e => {
-  if (!isInHero || !heroChar) return;
-  const { innerWidth: w, innerHeight: h } = window;
-  const xPct = (e.clientX / w - 0.5);
-  const yPct = (e.clientY / h - 0.5);
-  heroChar.style.transform = `translate(${xPct * -16}px, ${yPct * -10}px)`;
-}, { passive: true });
+  function wheelNext() {
+    step++;
+    // -90° per step → antiorario: il card a destra (item-i 1) arriva davanti
+    const angle = -(step * 90);
+    const activeIdx = step % 4;
+
+    // Rotate stage — boing via CSS transition
+    awStage.style.setProperty('--aw-angle', angle + 'deg');
+
+    // Update active card (immediately so filter transition starts)
+    awCards.forEach((card, i) => {
+      card.classList.toggle('is-active', i === activeIdx);
+    });
+    awDots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === activeIdx);
+    });
+
+    // Next rotation: 3s display + ~920ms animation = 3920ms total
+    setTimeout(wheelNext, 3920);
+  }
+
+  // First card already visible → wait 3s then start rotating
+  setTimeout(wheelNext, 3000);
+}
 
 /* ── GALLERY FILTERS ────────────────────────────────────── */
 const filterBtns = document.querySelectorAll('.gallery__filter-btn');
@@ -3983,7 +4146,6 @@ styleSheet.textContent = `
   }
 `;
 document.head.appendChild(styleSheet);
-
 </script>
 </body>
 </html>

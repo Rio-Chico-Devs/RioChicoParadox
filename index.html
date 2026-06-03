@@ -151,33 +151,60 @@
 
   </div>
 
-  <!-- RIGHT: CHARACTER ─────────────────── -->
+  <!-- RIGHT: ART WHEEL ─────────────────── -->
   <div class="hero__right">
-    <!-- comic burst behind character -->
-    <div class="burst burst--slow-spin" aria-hidden="true"
-         style="width:560px; height:560px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.9;"></div>
 
-    <div class="hero__char-wrap">
-      <span class="ph-flag">placeholder</span>
-      <img
-        class="hero__char-img is-placeholder"
-        src="assets/img/ph-hero.svg"
-        alt="Personaggio principale — placeholder"
-        width="480"
-        height="740"
-      />
-      <span class="hero__char-corner hero__char-corner--tl" aria-hidden="true"></span>
-      <span class="hero__char-corner hero__char-corner--tr" aria-hidden="true"></span>
-      <span class="hero__char-corner hero__char-corner--bl" aria-hidden="true"></span>
-      <span class="hero__char-corner hero__char-corner--br" aria-hidden="true"></span>
-      <div class="hero__char-tag">OC · Original Character</div>
-      <span class="hero__char-number" aria-hidden="true">01</span>
+    <!-- 3D wheel -->
+    <div class="art-wheel" role="region" aria-label="Opere in evidenza">
+
+      <!-- Ambient glow — outside stage, does not rotate -->
+      <div class="art-wheel__glow" aria-hidden="true"></div>
+
+      <div class="art-wheel__stage" id="artWheelStage">
+
+        <div class="art-wheel__card is-active" style="--item-i:0">
+          <span class="ph-flag">placeholder</span>
+          <img src="assets/img/ph-gallery-01.svg" alt="Artwork 01"
+               width="320" height="480" loading="eager" />
+          <span class="art-wheel__num" aria-hidden="true">01</span>
+        </div>
+
+        <div class="art-wheel__card" style="--item-i:1">
+          <span class="ph-flag">placeholder</span>
+          <img src="assets/img/ph-char-01.svg" alt="Personaggio 01"
+               width="320" height="480" loading="lazy" />
+          <span class="art-wheel__num" aria-hidden="true">02</span>
+        </div>
+
+        <div class="art-wheel__card" style="--item-i:2">
+          <span class="ph-flag">placeholder</span>
+          <img src="assets/img/ph-gallery-04.svg" alt="Artwork 04"
+               width="320" height="480" loading="lazy" />
+          <span class="art-wheel__num" aria-hidden="true">03</span>
+        </div>
+
+        <div class="art-wheel__card" style="--item-i:3">
+          <span class="ph-flag">placeholder</span>
+          <img src="assets/img/ph-char-02.svg" alt="Personaggio 02"
+               width="320" height="480" loading="lazy" />
+          <span class="art-wheel__num" aria-hidden="true">04</span>
+        </div>
+
+      </div>
+
+      <!-- Diamond dot indicators -->
+      <div class="art-wheel__dots" aria-hidden="true">
+        <span class="art-wheel__dot is-active"></span>
+        <span class="art-wheel__dot"></span>
+        <span class="art-wheel__dot"></span>
+        <span class="art-wheel__dot"></span>
+      </div>
     </div>
 
-    <!-- stars around hero character -->
-    <span class="p-star" aria-hidden="true" style="--star-size:2.6rem; top:14%; left:8%; --sf-dur:3.6s;" data-r="star" data-rd="3"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.4rem; top:30%; right:10%; --sf-dur:2.8s; --sf-del:0.4s;" data-r="star" data-rd="4"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.8rem; bottom:18%; left:14%; --sf-dur:4s; --sf-del:0.8s;" data-r="star" data-rd="5"></span>
+    <!-- Floating stars -->
+    <span class="p-star" aria-hidden="true" style="--star-size:2.4rem; top:14%; left:8%; --sf-dur:3.6s;" data-r="star" data-rd="3"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.3rem; top:28%; right:9%; --sf-dur:2.8s; --sf-del:0.5s;" data-r="star" data-rd="4"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.8rem; bottom:20%; left:12%; --sf-dur:4s; --sf-del:0.9s;" data-r="star" data-rd="5"></span>
   </div>
 
 </section>
