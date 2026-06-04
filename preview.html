@@ -2491,12 +2491,12 @@ body.loaded .hero__scroll {
   padding: 0.3rem 0.75rem;
 }
 
-/* ── RIGHT VISUAL ────────────────────────────────────────────
-   SUMMER reveal: the image is the layer UNDERNEATH; the giant
-   "RIO" text sits on TOP and the image is seen THROUGH the letters
-   (background-clip: text). Outside the letters the same image shows
-   dimmed, so the type "reveals" the vivid version.
-   Swap the artwork in ONE place: --profile-img below.
+/* ── RIGHT VISUAL — "SUMMER" poster ──────────────────────────
+   Like the reference: the IMAGE fills the panel (vivid, on top),
+   and the giant horizontal word "RIO" sits in a darkened band at
+   the BOTTOM where the SAME image flows seamlessly THROUGH the
+   letterforms (background-clip:text, identical positioning to the
+   base image). Swap the artwork in ONE place: --profile-img.
    ──────────────────────────────────────────────────────────── */
 .profile__visual {
   position: relative;
@@ -2504,59 +2504,83 @@ body.loaded .hero__scroll {
   --profile-img: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODAgNzIwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZ3AiIHgxPSIwIiB5MT0iMCIgeDI9IjAuMyIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMmEwODEwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNDUlIiBzdG9wLWNvbG9yPSIjZTYwMDEyIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE2MDMwNSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0ic3BvdCIgY3g9IjAuNSIgY3k9IjAuMzgiIHI9IjAuNiI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZjlhYTMiIHN0b3Atb3BhY2l0eT0iMC41NSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZjlhYTMiIHN0b3Atb3BhY2l0eT0iMCIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxwYXR0ZXJuIGlkPSJodCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPGNpcmNsZSBjeD0iMy41IiBjeT0iMy41IiByPSIyLjQiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMTYiLz4KICAgIDwvcGF0dGVybj4KICA8L2RlZnM+CgogIDwhLS0gZnVsbCBvcGFxdWUgaW1hZ2Ugc28gaXQgY2FuIGZpbGwgdGhlIHBhbmVsIEFORCBzaG93IHRocm91Z2ggdGhlIGxldHRlcnMgLS0+CiAgPHJlY3Qgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI3MjAiIGZpbGw9InVybCgjYmdwKSIvPgogIDxyZWN0IHdpZHRoPSI0ODAiIGhlaWdodD0iNzIwIiBmaWxsPSJ1cmwoI3Nwb3QpIi8+CiAgPHJlY3Qgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI3MjAiIGZpbGw9InVybCgjaHQpIi8+CgogIDwhLS0gZmlndXJlIC0tPgogIDxnIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTIiPgogICAgPGNpcmNsZSBjeD0iMjQwIiBjeT0iMjMyIiByPSI5MiIvPgogICAgPHBhdGggZD0iTTE1MCA3MjAgQzE1MCA0NzAgMTc4IDM5MiAyNDAgMzkyIEMzMDIgMzkyIDMzMCA0NzAgMzMwIDcyMCBaIi8+CiAgPC9nPgoKICA8IS0tIHRvcCBsYWJlbCAtLT4KICA8Zz4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0ODAiIGhlaWdodD0iNDAiIGZpbGw9IiMwYzBjMGUiLz4KICAgIDx0ZXh0IHg9IjE4IiB5PSIyNyIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSIxNyIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5GT1RPIEFSVElTVEE8L3RleHQ+CiAgICA8dGV4dCB4PSI0NjIiIHk9IjI3IiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iYm9sZCIgbGV0dGVyLXNwYWNpbmc9IjEiIHRleHQtYW5jaG9yPSJlbmQiPlNPU1RJVFVJU0NJIOKWujwvdGV4dD4KICA8L2c+CgogIDwhLS0gc3BlYyBjaGlwIC0tPgogIDxnPgogICAgPHJlY3QgeD0iMTU4IiB5PSI2NjQiIHdpZHRoPSIxNjQiIGhlaWdodD0iMzAiIGZpbGw9IiMwYzBjMGUiLz4KICAgIDx0ZXh0IHg9IjI0MCIgeT0iNjg1IiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlBORyDCtyA0ODDDlzcyMDwvdGV4dD4KICA8L2c+Cjwvc3ZnPgo=");
 }
 
-/* Base image — fills the panel, dimmed so the reveal pops */
+/* Base image — fills the panel, vivid (this is what you SEE) */
 .profile__img-base {
   position: absolute;
   inset: 0;
-  background: var(--profile-img) center / cover no-repeat;
-  filter: brightness(0.34) saturate(0.85) contrast(1.05);
+  background: var(--profile-img) center top / cover no-repeat;
   z-index: 1;
 }
-/* Dark vignette over the base for extra contrast against the type */
+/* Scrim: subtle at the top, solid-dark over the bottom band so the
+   word reads as windows cut into the same photo */
 .profile__img-base::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(8,8,10,0.85) 0%, rgba(8,8,10,0.25) 35%, transparent 70%),
-    radial-gradient(120% 100% at 60% 50%, transparent 40%, rgba(8,8,10,0.8) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(8,8,10,0.18) 0%,
+    transparent 22%,
+    transparent 42%,
+    rgba(8,8,10,0.55) 58%,
+    rgba(8,8,10,0.92) 76%,
+    rgba(8,8,10,0.99) 100%
+  );
 }
 
+/* Top headline over the image — mirrors the SUMMER reference caption */
+.profile__visual-cap {
+  position: absolute;
+  top: clamp(3.2rem, 9vh, 5rem);
+  left: clamp(1.5rem, 3.2vw, 2.6rem);
+  right: 28%;
+  z-index: 4;
+  font-family: var(--font-body);
+  font-size: clamp(0.8rem, 1.05vw, 1.02rem);
+  line-height: 1.55;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.7);
+}
+.profile__visual-cap span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  color: var(--clr-accent);
+  margin-bottom: 0.6rem;
+}
+.profile__visual-cap b { color: var(--clr-accent); font-weight: 700; }
+
 /*
-  "RIO" stacked vertically — R top, I middle, O bottom.
-  Fills the panel height; the SAME image is clipped to the glyphs so
-  the bright artwork shows THROUGH the text.
+  "RIO" — horizontal, huge, anchored to the BOTTOM band.
+  The element spans the whole panel (inset:0) so its background is
+  positioned IDENTICALLY to the base image; only the bottom-anchored
+  glyphs are painted, making the reveal seamless with the photo above.
 */
 .profile__letters {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  padding: 0 0.03em 0.04em;
   font-family: var(--font-heading);
-  font-size: clamp(15rem, 47vh, 40rem);
+  font-size: clamp(9rem, 31vw, 28rem);
   font-weight: 900;
-  line-height: 0.8;
-  letter-spacing: -0.04em;
+  line-height: 0.76;
+  letter-spacing: -0.03em;
   user-select: none;
   pointer-events: none;
 
-  /* the reveal: vivid image painted inside the letterforms */
-  background: var(--profile-img) center / cover no-repeat;
+  /* the reveal: same image, same positioning as the base */
+  background: var(--profile-img) center top / cover no-repeat;
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  /* faint edge so glyphs stay legible over dark image areas */
-  -webkit-text-stroke: 1.5px rgba(255,255,255,0.18);
-  text-shadow: 0 14px 40px rgba(0,0,0,0.5);
-}
-
-.profile__letters span {
-  display: block;
-  text-align: center;
 }
 
 /* Divider slash matching hero aesthetic */
@@ -3906,16 +3930,18 @@ body.loaded .hero__scroll {
   <!-- ── RIGHT: image revealed THROUGH the "RIO" type ───────── -->
   <div class="profile__visual">
 
-    <!-- Layer 1 (underneath): the image, dimmed, fills the panel -->
+    <!-- Layer 1 (underneath): the image, vivid, fills the panel -->
     <div class="profile__img-base" aria-hidden="true"></div>
 
-    <!-- Layer 2 (on top): R/I/O — the image is clipped to the glyphs
+    <!-- Top caption over the image (like the SUMMER headline) -->
+    <p class="profile__visual-cap">
+      <span>Self portrait</span>
+      Personaggi originali, fanart e illustrazioni — <b>ogni tratto è una scelta.</b>
+    </p>
+
+    <!-- Layer 2 (on top): "RIO" — the image is clipped to the glyphs
          so the vivid artwork is seen THROUGH the text -->
-    <div class="profile__letters" aria-hidden="true">
-      <span>R</span>
-      <span>I</span>
-      <span>O</span>
-    </div>
+    <div class="profile__letters" aria-hidden="true">RIO</div>
 
     <!-- Left edge divider accent line -->
     <div class="profile__slash" aria-hidden="true"></div>
