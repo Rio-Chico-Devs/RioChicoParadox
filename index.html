@@ -154,39 +154,43 @@
   <!-- RIGHT: ART WHEEL ─────────────────── -->
   <div class="hero__right">
 
-    <!-- 3D wheel -->
+    <!-- 2D ferris wheel: 4 cards at NSEW, active at west (left) -->
     <div class="art-wheel" role="region" aria-label="Opere in evidenza">
 
-      <!-- Ambient glow — outside stage, does not rotate -->
+      <!-- Ambient glow — fixed at left/active position, does not rotate -->
       <div class="art-wheel__glow" aria-hidden="true"></div>
 
       <div class="art-wheel__stage" id="artWheelStage">
 
-        <div class="art-wheel__card is-active" style="--item-i:0">
+        <!-- item-i:0 = east (right) -->
+        <div class="art-wheel__card" style="--item-i:0">
           <span class="ph-flag">placeholder</span>
           <img src="assets/img/ph-gallery-01.svg" alt="Artwork 01"
-               width="320" height="480" loading="eager" />
+               width="280" height="420" loading="eager" />
           <span class="art-wheel__num" aria-hidden="true">01</span>
         </div>
 
+        <!-- item-i:1 = north (top) -->
         <div class="art-wheel__card" style="--item-i:1">
           <span class="ph-flag">placeholder</span>
           <img src="assets/img/ph-char-01.svg" alt="Personaggio 01"
-               width="320" height="480" loading="lazy" />
+               width="280" height="420" loading="lazy" />
           <span class="art-wheel__num" aria-hidden="true">02</span>
         </div>
 
-        <div class="art-wheel__card" style="--item-i:2">
+        <!-- item-i:2 = west (left) — ACTIVE on load -->
+        <div class="art-wheel__card is-active" style="--item-i:2">
           <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-gallery-04.svg" alt="Artwork 04"
-               width="320" height="480" loading="lazy" />
+          <img src="assets/img/ph-gallery-04.svg" alt="Artwork 03"
+               width="280" height="420" loading="eager" />
           <span class="art-wheel__num" aria-hidden="true">03</span>
         </div>
 
+        <!-- item-i:3 = south (bottom) -->
         <div class="art-wheel__card" style="--item-i:3">
           <span class="ph-flag">placeholder</span>
           <img src="assets/img/ph-char-02.svg" alt="Personaggio 02"
-               width="320" height="480" loading="lazy" />
+               width="280" height="420" loading="lazy" />
           <span class="art-wheel__num" aria-hidden="true">04</span>
         </div>
 
@@ -194,9 +198,9 @@
 
       <!-- Diamond dot indicators -->
       <div class="art-wheel__dots" aria-hidden="true">
+        <span class="art-wheel__dot"></span>
+        <span class="art-wheel__dot"></span>
         <span class="art-wheel__dot is-active"></span>
-        <span class="art-wheel__dot"></span>
-        <span class="art-wheel__dot"></span>
         <span class="art-wheel__dot"></span>
       </div>
     </div>

@@ -68,8 +68,7 @@ body.loaded .hero__scroll {
   height: 75%;
   background: radial-gradient(ellipse at 60% 45%,
     var(--clr-accent-glow) 0%,
-    rgba(204,0,0,0.04) 55%,
-    transparent 75%);
+    transparent 70%);
   pointer-events: none;
 }
 
@@ -415,47 +414,97 @@ body.loaded .hero__scroll {
 @keyframes fadeIn { to { opacity: 1; } }
 
 /* ═══════════════════════════════════════════════════════════
-   ART WHEEL — ruota 3D con 4 immagini verticali
-   Boing: cubic-bezier(0.34, 1.56, 0.64, 1) overshoot + settle
+   ART WHEEL — 2D ferris-wheel, 4 cards at NSEW positions.
+   Cards arc counter-clockwise; active card at LEFT (west).
+   Uses @property so --slot-angle transitions as a true angle,
+   keeping each card upright while tracing a circular path.
    ═══════════════════════════════════════════════════════════ */
+
+@property --slot-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
 
 .art-wheel {
   position: relative;
   width: 100%;
   height: 100%;
   min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1100px;
-  perspective-origin: 50% 50%;
+  overflow: hidden;
 }
 
+/* Ambient glow fixed behind active (west) card position */
+.art-wheel__glow {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 65%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 38% 50%, var(--clr-accent-glow) 0%, transparent 62%);
+  filter: blur(48px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/*
+  Stage: zero-size pivot, offset right so that the west card
+  (radius=600px to the left) lands prominently in view.
+
+  Geometry @ desktop (hero__right ≈ 720px wide, 900px tall):
+    stage: left = calc(100% + 160px) = 880px from container-left, top = 50%
+    west  card center  (--slot-angle 180deg): (880-600, 450) = (280, 450)  ✓ in frame
+    north card center  (--slot-angle 270deg): (880, 450-600) = (880, -150) ✓ off-screen above
+    east  card center  (--slot-angle   0deg): (880+600, 450) = (1480, 450) ✓ off-screen right
+    south card center  (--slot-angle  90deg): (880, 450+600) = (880, 1050) ✓ off-screen below
+
+  Stage does NOT rotate. Each card's --slot-angle is animated via JS.
+*/
 .art-wheel__stage {
-  width: 320px;
-  height: 500px;
-  flex-shrink: 0;
-  position: relative;
-  transform-style: preserve-3d;
-  transform: rotateY(var(--aw-angle, 0deg));
-  transition: transform 0.92s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: absolute;
+  left: calc(100% + 160px);
+  top: 50%;
+  width: 0;
+  height: 0;
 }
 
-/* 4 cards arranged at 90° intervals on the Y axis */
+/*
+  Each card:
+  - transform = rotate(--slot-angle) translateX(600px) rotate(-slot-angle)
+    → positions card on circle at --slot-angle, keeps content upright
+  - @property transition on --slot-angle gives true circular arc animation
+  Initial --slot-angle set by JS (0=east, 90=south, 180=west, 270=north).
+*/
 .art-wheel__card {
   position: absolute;
-  inset: 0;
-  transform: rotateY(calc(var(--item-i, 0) * 90deg)) translateZ(260px);
-  backface-visibility: hidden;
-  filter: brightness(0.08) saturate(0.2);
-  /* dim quickly when leaving front */
-  transition: filter 0.3s ease;
+  width: 440px;
+  height: 620px;
+  margin-left: -220px;
+  margin-top: -310px;
+  --slot-angle: 0deg; /* overridden by JS on init */
+  transform:
+    rotate(var(--slot-angle))
+    translateX(600px)
+    rotate(calc(-1 * var(--slot-angle)));
+  opacity: 0.08;
+  filter: saturate(0.1) brightness(0.4);
+  transition:
+    --slot-angle 0.96s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.4s ease,
+    filter 0.4s ease;
+  z-index: 1;
 }
 
-/* Slow bright-in with delay so card is arriving as it brightens */
 .art-wheel__card.is-active {
-  filter: brightness(1) saturate(1);
-  transition: filter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.28s;
+  opacity: 1;
+  filter: saturate(1) brightness(1);
+  z-index: 10;
+  transition:
+    --slot-angle 0.96s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s,
+    filter  0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s;
 }
 
 .art-wheel__card img {
@@ -471,23 +520,33 @@ body.loaded .hero__scroll {
     drop-shadow(0 20px 60px rgba(0,0,0,0.85));
 }
 
-/* Fixed ambient glow behind the front card — does NOT rotate */
-.art-wheel__glow {
+/* Card number overlay */
+.art-wheel__num {
   position: absolute;
-  width: 380px;
-  height: 380px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--clr-accent-glow) 0%, transparent 68%);
-  filter: blur(28px);
+  bottom: -1.5rem;
+  right: -1rem;
+  font-family: var(--font-heading);
+  font-size: 8rem;
+  color: var(--clr-accent);
+  opacity: 0;
+  line-height: 1;
   pointer-events: none;
+  user-select: none;
   z-index: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.4s ease;
+  letter-spacing: -0.04em;
+}
+
+.art-wheel__card.is-active .art-wheel__num {
+  opacity: 0.07;
 }
 
 /* Diamond dot indicators */
 .art-wheel__dots {
   position: absolute;
   bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 0.6rem;
   z-index: 20;
@@ -505,27 +564,6 @@ body.loaded .hero__scroll {
   background: var(--clr-accent);
   transform: rotate(45deg) scale(1.45);
   box-shadow: 0 0 10px var(--clr-accent-glow);
-}
-
-/* Card number overlay on active card */
-.art-wheel__num {
-  position: absolute;
-  bottom: -1.5rem;
-  right: -1rem;
-  font-family: var(--font-heading);
-  font-size: 10rem;
-  color: var(--clr-accent);
-  opacity: 0;
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.4s ease;
-  letter-spacing: -0.04em;
-}
-
-.art-wheel__card.is-active .art-wheel__num {
-  opacity: 0.06;
 }
 
 /* ── RESPONSIVE ─────────────────────────────────────────── */
@@ -568,18 +606,25 @@ body.loaded .hero__scroll {
     margin-top: 2rem;
   }
 
+  /* ≤1024px: hero stacks, right panel is 55svh tall and full-width */
   .art-wheel {
     min-height: 55svh;
   }
 
+  /* Tablet: panel ≈ 768px × 500px, smaller cards */
   .art-wheel__stage {
-    width: 220px;
-    height: 360px;
+    left: calc(100% + 80px);
   }
 
-  .art-wheel__glow {
-    width: 260px;
-    height: 260px;
+  .art-wheel__card {
+    width: 280px;
+    height: 400px;
+    margin-left: -140px;
+    margin-top: -200px;
+    transform:
+      rotate(var(--slot-angle))
+      translateX(400px)
+      rotate(calc(-1 * var(--slot-angle)));
   }
 
   .art-wheel__num { display: none; }
@@ -593,8 +638,19 @@ body.loaded .hero__scroll {
     gap: 1.5rem;
   }
 
+  /* Mobile: panel ≈ 390px × 420px */
   .art-wheel__stage {
-    width: 180px;
+    left: calc(100% + 40px);
+  }
+
+  .art-wheel__card {
+    width: 200px;
     height: 300px;
+    margin-left: -100px;
+    margin-top: -150px;
+    transform:
+      rotate(var(--slot-angle))
+      translateX(280px)
+      rotate(calc(-1 * var(--slot-angle)));
   }
 }

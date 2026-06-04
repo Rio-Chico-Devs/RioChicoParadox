@@ -126,7 +126,7 @@ const revealObs = new IntersectionObserver(entries => {
       revealObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.08 });
+}, { threshold: 0 });
 
 revealEls.forEach(el => revealObs.observe(el));
 
@@ -140,40 +140,53 @@ window.addEventListener('scroll', () => {
   if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
 }, { passive: true });
 
-/* ── ART WHEEL — ruota 3D con boing ────────────────────────
-   4 immagini verticali, rotazione antioraria -90° per step.
-   Il boing viene da cubic-bezier(0.34, 1.56, 0.64, 1).
-   Ogni immagine rimane visibile 3s dopo il settle (~920ms).
+/* ── ART WHEEL — 2D ferris wheel, counter-clockwise ────────
+   Uses @property --slot-angle so each card animates on a
+   circular arc while staying upright.
+   Angles (CSS convention, Y-down): east=0, south=90, west=180, north=270
+   CCW step = each card's angle decreases by 90° → next card arrives from north.
    ========================================================= */
 const awStage = document.getElementById('artWheelStage');
-const awCards = awStage ? awStage.querySelectorAll('.art-wheel__card') : [];
-const awDots  = document.querySelectorAll('.art-wheel__dot');
+const awCards = awStage ? [...awStage.querySelectorAll('.art-wheel__card')] : [];
+const awDots  = [...document.querySelectorAll('.art-wheel__dot')];
 
 if (awStage && awCards.length === 4) {
-  let step = 0;
+  // Initial angles matching --item-i order: 0=east, 1=south, 2=west(active), 3=north
+  const angles = [0, 90, 180, 270];
+
+  function applyAngles() {
+    awCards.forEach((card, i) => {
+      card.style.setProperty('--slot-angle', angles[i] + 'deg');
+    });
+  }
+
+  function findActive() {
+    return angles.findIndex(a => ((a % 360) + 360) % 360 === 180);
+  }
+
+  function updateActive() {
+    const idx = findActive();
+    awCards.forEach((card, i) => card.classList.toggle('is-active', i === idx));
+    awDots.forEach((dot, i) => dot.classList.toggle('is-active', i === idx));
+  }
+
+  // Init without transition (set angles before paint)
+  awCards.forEach(card => card.style.transition = 'none');
+  applyAngles();
+  updateActive();
+  // Re-enable transitions on next frame
+  requestAnimationFrame(() => {
+    awCards.forEach(card => card.style.transition = '');
+  });
 
   function wheelNext() {
-    step++;
-    // -90° per step → antiorario: il card a destra (item-i 1) arriva davanti
-    const angle = -(step * 90);
-    const activeIdx = step % 4;
-
-    // Rotate stage — boing via CSS transition
-    awStage.style.setProperty('--aw-angle', angle + 'deg');
-
-    // Update active card (immediately so filter transition starts)
-    awCards.forEach((card, i) => {
-      card.classList.toggle('is-active', i === activeIdx);
-    });
-    awDots.forEach((dot, i) => {
-      dot.classList.toggle('is-active', i === activeIdx);
-    });
-
-    // Next rotation: 3s display + ~920ms animation = 3920ms total
+    // CCW: decrease each angle by 90°
+    angles.forEach((_, i) => { angles[i] -= 90; });
+    applyAngles();
+    updateActive();
     setTimeout(wheelNext, 3920);
   }
 
-  // First card already visible → wait 3s then start rotating
   setTimeout(wheelNext, 3000);
 }
 
