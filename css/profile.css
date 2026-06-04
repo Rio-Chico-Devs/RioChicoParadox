@@ -145,79 +145,72 @@
   padding: 0.3rem 0.75rem;
 }
 
-/* ── RIGHT VISUAL ────────────────────────────────────────── */
+/* ── RIGHT VISUAL ────────────────────────────────────────────
+   SUMMER reveal: the image is the layer UNDERNEATH; the giant
+   "RIO" text sits on TOP and the image is seen THROUGH the letters
+   (background-clip: text). Outside the letters the same image shows
+   dimmed, so the type "reveals" the vivid version.
+   Swap the artwork in ONE place: --profile-img below.
+   ──────────────────────────────────────────────────────────── */
 .profile__visual {
   position: relative;
   overflow: hidden;
+  --profile-img: url(../assets/img/ph-profile.svg);
+}
+
+/* Base image — fills the panel, dimmed so the reveal pops */
+.profile__img-base {
+  position: absolute;
+  inset: 0;
+  background: var(--profile-img) center / cover no-repeat;
+  filter: brightness(0.34) saturate(0.85) contrast(1.05);
+  z-index: 1;
+}
+/* Dark vignette over the base for extra contrast against the type */
+.profile__img-base::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8,8,10,0.85) 0%, rgba(8,8,10,0.25) 35%, transparent 70%),
+    radial-gradient(120% 100% at 60% 50%, transparent 40%, rgba(8,8,10,0.8) 100%);
 }
 
 /*
-  "RIO" stacked vertically — R on top, I middle, O bottom.
-  font-size chosen so 3 letters fill ~110% of panel height (bleeds top+bottom).
-  Right-aligned and bleeds off the right edge.
-  z-index: 1 — BEHIND the photo.
+  "RIO" stacked vertically — R top, I middle, O bottom.
+  Fills the panel height; the SAME image is clipped to the glyphs so
+  the bright artwork shows THROUGH the text.
 */
 .profile__letters {
   position: absolute;
-  right: -0.08em;
-  top: 50%;
-  transform: translateY(-50%);
+  inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-heading);
-  font-size: clamp(16rem, 27vw, 33rem);
-  line-height: 0.83;
-  letter-spacing: -0.03em;
-  color: var(--clr-text);
-  z-index: 1;
+  font-size: clamp(15rem, 47vh, 40rem);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
   user-select: none;
   pointer-events: none;
+
+  /* the reveal: vivid image painted inside the letterforms */
+  background: var(--profile-img) center / cover no-repeat;
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* faint edge so glyphs stay legible over dark image areas */
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.18);
+  text-shadow: 0 14px 40px rgba(0,0,0,0.5);
 }
 
 .profile__letters span {
   display: block;
-}
-
-/*
-  Photo sits ON TOP of the letters (z-index: 2).
-  Centered in the panel, leaving letters visible above, below, and at left edge.
-  Height ~85% of panel so top of "R" and bottom of "O" peek out.
-*/
-.profile__photo-col {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 8%;
-  bottom: 8%;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.profile__photo {
-  height: 100%;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  object-position: bottom center;
-  filter: drop-shadow(0 0 60px rgba(0,0,0,0.6));
-}
-
-/* Subtle accent glow behind photo */
-.profile__photo-glow {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 50%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, var(--clr-accent-glow) 0%, transparent 70%);
-  filter: blur(50px);
-  z-index: 1;
-  pointer-events: none;
+  text-align: center;
 }
 
 /* Divider slash matching hero aesthetic */

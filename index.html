@@ -727,24 +727,18 @@
 
   </div>
 
-  <!-- ── RIGHT: RIO letters + photo ───────────────────────── -->
+  <!-- ── RIGHT: image revealed THROUGH the "RIO" type ───────── -->
   <div class="profile__visual">
 
-    <!-- R, I, O stacked vertically — letterform backdrop -->
+    <!-- Layer 1 (underneath): the image, dimmed, fills the panel -->
+    <div class="profile__img-base" aria-hidden="true"></div>
+
+    <!-- Layer 2 (on top): R/I/O — the image is clipped to the glyphs
+         so the vivid artwork is seen THROUGH the text -->
     <div class="profile__letters" aria-hidden="true">
       <span>R</span>
       <span>I</span>
       <span>O</span>
-    </div>
-
-    <!-- Accent glow behind photo -->
-    <div class="profile__photo-glow" aria-hidden="true"></div>
-
-    <!-- Photo — z-index above letters -->
-    <div class="profile__photo-col">
-      <span class="ph-flag">placeholder</span>
-      <img class="profile__photo" src="assets/img/ph-profile.svg"
-           alt="Rio Chico — artista anime" width="480" height="720" loading="eager" />
     </div>
 
     <!-- Left edge divider accent line -->
