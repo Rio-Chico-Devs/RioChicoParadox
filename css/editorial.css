@@ -108,16 +108,18 @@
 .gallery__editorial-ghost {
   position: absolute;
   font-family: var(--font-heading);
-  font-size: clamp(6rem, 18vw, 16rem);
+  font-size: clamp(8rem, 24vw, 22rem);
   color: #ffffff;
-  opacity: 0.04;
-  line-height: 0.85;
-  letter-spacing: -0.03em;
-  top: 0;
-  left: -0.5rem;
+  opacity: 0.035;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  top: -1rem;
+  left: -0.75rem;
   pointer-events: none;
   user-select: none;
   text-transform: uppercase;
+  /* Outlined/ghost variant for Death Note feel */
+  -webkit-text-stroke: 1px rgba(255,255,255,0.12);
 }
 
 .gallery__editorial-meta {
