@@ -247,8 +247,7 @@ body.loaded .hero__scroll {
 
 .hero__title-line--red   { color: var(--clr-accent); }
 .hero__title-line--ghost {
-  -webkit-text-stroke: 1.5px rgba(255,255,255,0.5);
-  color: transparent;
+  color: rgba(255,255,255,0.55);
 }
 
 @keyframes lineUp { to { transform: translateY(0); } }
