@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 132" preserveAspectRatio="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 126" preserveAspectRatio="none">
   <!-- White R / I / O stacked. Used as a CSS mask (alpha): the artwork
        shows only through these shapes. preserveAspectRatio="none" lets
        mask-size:100% 100% stretch the glyphs FAT to fill the panel,
-       without touching the artwork behind. textLength widens each glyph. -->
+       without touching the artwork behind. textLength widens each glyph
+       so they nearly fill the panel — i.e. lots of image, little black. -->
   <g fill="#ffffff" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" text-anchor="middle">
-    <text x="50" y="41"  font-size="50" textLength="96" lengthAdjust="spacingAndGlyphs">R</text>
-    <text x="50" y="87"  font-size="50" textLength="96" lengthAdjust="spacingAndGlyphs">I</text>
-    <text x="50" y="129" font-size="50" textLength="96" lengthAdjust="spacingAndGlyphs">O</text>
+    <text x="50" y="39"  font-size="54" textLength="99" lengthAdjust="spacingAndGlyphs">R</text>
+    <text x="50" y="82"  font-size="54" textLength="99" lengthAdjust="spacingAndGlyphs">I</text>
+    <text x="50" y="124" font-size="54" textLength="99" lengthAdjust="spacingAndGlyphs">O</text>
   </g>
 </svg>
