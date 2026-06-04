@@ -145,96 +145,43 @@
   padding: 0.3rem 0.75rem;
 }
 
-/* ── RIGHT VISUAL — "SUMMER" poster ──────────────────────────
-   Like the reference: the IMAGE fills the panel (vivid, on top),
-   and the giant horizontal word "RIO" sits in a darkened band at
-   the BOTTOM where the SAME image flows seamlessly THROUGH the
-   letterforms (background-clip:text, identical positioning to the
-   base image). Swap the artwork in ONE place: --profile-img.
+/* ── RIGHT VISUAL — image revealed THROUGH stacked "RIO" ──────
+   Per the reference mock: pure BLACK panel; the artwork is the
+   layer underneath and is visible ONLY through the giant R-I-O
+   letters stacked vertically. One continuous image flows across
+   all three glyphs (head/umbrella → R, torso → I, legs → O).
+   The letters are widened (scaleX) to the fat proportions of the
+   mock; the image is counter-scaled so it is NOT distorted.
+   Swap the artwork in ONE place: --profile-img.
    ──────────────────────────────────────────────────────────── */
 .profile__visual {
   position: relative;
   overflow: hidden;
+  background: #000;
   --profile-img: url(../assets/img/ph-profile.svg);
 }
 
-/* Base image — fills the panel, vivid (this is what you SEE) */
-.profile__img-base {
-  position: absolute;
-  inset: 0;
-  background: var(--profile-img) center top / cover no-repeat;
-  z-index: 1;
-}
-/* Scrim: subtle at the top, solid-dark over the bottom band so the
-   word reads as windows cut into the same photo */
-.profile__img-base::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(8,8,10,0.18) 0%,
-    transparent 22%,
-    transparent 42%,
-    rgba(8,8,10,0.55) 58%,
-    rgba(8,8,10,0.92) 76%,
-    rgba(8,8,10,0.99) 100%
-  );
-}
-
-/* Top headline over the image — mirrors the SUMMER reference caption */
-.profile__visual-cap {
-  position: absolute;
-  top: clamp(3.2rem, 9vh, 5rem);
-  left: clamp(1.5rem, 3.2vw, 2.6rem);
-  right: 28%;
-  z-index: 4;
-  font-family: var(--font-body);
-  font-size: clamp(0.8rem, 1.05vw, 1.02rem);
-  line-height: 1.55;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: #fff;
-  text-shadow: 0 2px 14px rgba(0,0,0,0.7);
-}
-.profile__visual-cap span {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.28em;
-  color: var(--clr-accent);
-  margin-bottom: 0.6rem;
-}
-.profile__visual-cap b { color: var(--clr-accent); font-weight: 700; }
-
 /*
-  "RIO" — horizontal, huge, anchored to the BOTTOM band.
-  The element spans the whole panel (inset:0) so its background is
-  positioned IDENTICALLY to the base image; only the bottom-anchored
-  glyphs are painted, making the reveal seamless with the photo above.
+  Exactly your Procreate stack: a black panel with the word "RIO"
+  knocked out (transparent) and the artwork behind showing THROUGH
+  the letters. Implemented as a CSS mask so the artwork keeps its
+  true proportions (cover, undistorted) while the R/I/O glyphs are
+  stretched FAT to fill the panel. One image maps across all three:
+  head → R, torso → I, legs → O.
 */
 .profile__letters {
   position: absolute;
   inset: 0;
-  z-index: 3;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0 0.03em 0.04em;
-  font-family: var(--font-heading);
-  font-size: clamp(9rem, 31vw, 28rem);
-  font-weight: 900;
-  line-height: 0.76;
-  letter-spacing: -0.03em;
+  z-index: 2;
   user-select: none;
   pointer-events: none;
 
-  /* the reveal: same image, same positioning as the base */
+  /* the artwork — undistorted; top-aligned so the head lands in the "R" */
   background: var(--profile-img) center top / cover no-repeat;
-  -webkit-background-clip: text;
-          background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+
+  /* the RIO knockout — stretched to the panel */
+  -webkit-mask: url(../assets/img/rio-mask.svg) center / 100% 100% no-repeat;
+          mask: url(../assets/img/rio-mask.svg) center / 100% 100% no-repeat;
 }
 
 /* Divider slash matching hero aesthetic */
