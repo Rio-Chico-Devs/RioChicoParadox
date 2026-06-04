@@ -673,99 +673,85 @@
 <!-- ════════════════════════════════════════════════════════
      PROFILE
 ════════════════════════════════════════════════════════ -->
-<section class="section profile" id="profile" aria-labelledby="profile-title">
-  <div class="container">
+<section class="section profile" id="profile" aria-label="Profilo artista">
 
-    <header class="section-header">
-      <span class="section-label" data-r="up">04 / Artista</span>
-      <h2 class="section-title" data-r="wipe" id="profile-title">
-        IL MIO<br/><span>PROFILO</span>
-      </h2>
-      <span class="accent-bar" data-r="wipe" data-rd="2"></span>
-    </header>
+  <!-- ── LEFT: bio + metadata ──────────────────────────────── -->
+  <div class="profile__left">
 
-    <div class="profile__grid">
-      <div class="profile__visual" data-r="left">
-        <div class="profile__photo-wrap">
-          <span class="ph-flag">placeholder</span>
-          <div class="profile__photo-frame">
-            <img class="is-placeholder" src="assets/img/ph-profile.svg"
-                 alt="Foto artista — placeholder" width="440" height="440" />
-          </div>
-          <div class="profile__photo-border" aria-hidden="true"></div>
-        </div>
+    <span class="profile__eyebrow" data-r="up">04 / Artista</span>
 
-        <div class="profile__info-box" data-r="up" data-rd="3">
-          <div class="profile__info-item">
-            <div class="profile__info-item-label">Stile</div>
-            <div class="profile__info-item-value">Anime / Manga</div>
-          </div>
-          <div class="profile__info-item">
-            <div class="profile__info-item-label">Tipo</div>
-            <div class="profile__info-item-value">Digitale</div>
-          </div>
-        </div>
+    <!-- Metadata table — SUMMER-style labels -->
+    <div class="profile__meta" data-r="up" data-rd="1">
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">ARTISTA</span>
+        <span class="profile__meta-val">Rio Chico</span>
       </div>
-
-      <div class="profile__content" data-r="up" data-rd="2">
-        <!-- Editorial quote -->
-        <div class="profile__editorial" data-r="up">
-          <p class="profile__editorial-text">
-            Creo <span>personaggi</span><br>che vivono oltre<br>il foglio.
-          </p>
-          <p class="profile__editorial-sub">— Rio Chico · Artista Anime</p>
-        </div>
-        <div>
-          <h3 class="profile__name">
-            RIO<br/><span class="profile__name-accent">CHICO</span>
-          </h3>
-          <p class="profile__handle">@riochicostudio</p>
-        </div>
-
-        <div class="profile__bio-block">
-          <p class="profile__bio-text">
-            Ciao! Sono Rio Chico, artista anime appassionata di character design
-            e storytelling visivo. Creo personaggi originali e illustrazioni
-            ispirate al mondo dell'animazione giapponese.
-          </p>
-          <p class="profile__bio-text">
-            Ogni lavoro è pensato per trasmettere emozioni — che sia
-            la solitudine di un combattente solitario o la gioia di
-            un personaggio che trova il suo posto nel mondo.
-          </p>
-        </div>
-
-        <div class="profile__skills">
-          <p class="profile__skills-title">Strumenti & Stile</p>
-          <div class="profile__skill-list">
-            <span class="profile__skill-tag">Procreate</span>
-            <span class="profile__skill-tag">Clip Studio Paint</span>
-            <span class="profile__skill-tag">Character Design</span>
-            <span class="profile__skill-tag">OC Universe</span>
-            <span class="profile__skill-tag">Fanart</span>
-            <span class="profile__skill-tag">Sketch</span>
-            <span class="profile__skill-tag">Illustration</span>
-          </div>
-        </div>
-
-        <div class="profile__stats" data-r="up" data-rd="4">
-          <div class="profile__stat">
-            <div class="profile__stat-num" data-count="100" data-suffix="+">0+</div>
-            <div class="profile__stat-label">Opere</div>
-          </div>
-          <div class="profile__stat">
-            <div class="profile__stat-num" data-count="3" data-suffix="">0</div>
-            <div class="profile__stat-label">Personaggi OC</div>
-          </div>
-          <div class="profile__stat">
-            <div class="profile__stat-num" data-count="5" data-suffix="">0</div>
-            <div class="profile__stat-label">Anni</div>
-          </div>
-        </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">STILE</span>
+        <span class="profile__meta-val">Anime · Manga</span>
+      </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">TECNICA</span>
+        <span class="profile__meta-val">Digitale</span>
+      </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">OPERE</span>
+        <span class="profile__meta-val">100+</span>
+      </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">OC</span>
+        <span class="profile__meta-val">3 Personaggi</span>
       </div>
     </div>
 
+    <!-- Bio quote -->
+    <blockquote class="profile__quote" data-r="up" data-rd="2">
+      "Creo personaggi originali e illustrazioni ispirate all'animazione giapponese.
+      Ogni disegno racconta una storia — la mia."
+    </blockquote>
+
+    <!-- Name + handle -->
+    <div class="profile__byline" data-r="up" data-rd="3">
+      <p class="profile__byline-name">RIO CHICO STUDIO</p>
+      <p class="profile__byline-handle">Artista Anime &amp; Illustratore · @riochicostudio</p>
+    </div>
+
+    <!-- Skill tags -->
+    <div class="profile__tags" data-r="up" data-rd="4">
+      <span class="profile__tag">Procreate</span>
+      <span class="profile__tag">Clip Studio Paint</span>
+      <span class="profile__tag">Character Design</span>
+      <span class="profile__tag">OC Universe</span>
+      <span class="profile__tag">Fanart</span>
+    </div>
+
   </div>
+
+  <!-- ── RIGHT: RIO letters + photo ───────────────────────── -->
+  <div class="profile__visual">
+
+    <!-- R, I, O stacked vertically — letterform backdrop -->
+    <div class="profile__letters" aria-hidden="true">
+      <span>R</span>
+      <span>I</span>
+      <span>O</span>
+    </div>
+
+    <!-- Accent glow behind photo -->
+    <div class="profile__photo-glow" aria-hidden="true"></div>
+
+    <!-- Photo — z-index above letters -->
+    <div class="profile__photo-col">
+      <span class="ph-flag">placeholder</span>
+      <img class="profile__photo" src="assets/img/ph-profile.svg"
+           alt="Rio Chico — artista anime" width="480" height="720" loading="eager" />
+    </div>
+
+    <!-- Left edge divider accent line -->
+    <div class="profile__slash" aria-hidden="true"></div>
+
+  </div>
+
 </section>
 
 

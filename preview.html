@@ -2345,238 +2345,275 @@ body.loaded .hero__scroll {
 /* ───────────────────────────────── */
 
 /* =========================================================
-   PROFILE — sezione artista
+   PROFILE — editorial "SUMMER" style
+   Letters R-I-O stacked tall on the right; photo sits on top.
+   Left column: metadata labels + bio.
    ========================================================= */
 
 .profile {
+  position: relative;
+  min-height: 100svh;
   background: var(--clr-bg);
-}
-
-.profile__grid {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 5rem;
-  align-items: start;
-}
-
-/* Visual / Photo */
-.profile__visual {
-  position: relative;
-}
-
-.profile__photo-wrap {
-  position: relative;
-  max-width: 380px;
-}
-
-.profile__photo-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
   overflow: hidden;
-  clip-path: var(--clip-slash-l);
-  background: var(--clr-surface);
-}
-
-.profile__photo-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.profile__photo-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(160deg, var(--clr-surface) 0%, var(--clr-surface-2) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.profile__photo-placeholder-icon {
-  font-size: 5rem;
-  opacity: 0.12;
-}
-
-.profile__photo-placeholder-text {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--clr-text-dim);
-  letter-spacing: var(--tracking-wider);
-}
-
-/* Decorative border frame */
-.profile__photo-border {
-  position: absolute;
-  inset: 0.75rem -0.75rem -0.75rem 0.75rem;
-  border: 1px solid var(--clr-border-accent);
-  clip-path: var(--clip-slash-l);
-  z-index: -1;
-}
-
-/* Info box under photo */
-.profile__info-box {
-  margin-top: 1.5rem;
-  padding: 1.25rem 1.5rem;
-  background: var(--clr-surface);
-  border-left: 3px solid var(--clr-accent);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  /* 42% left content  |  58% visual */
+  grid-template-columns: 5fr 7fr;
+  align-items: stretch;
+  padding-top: var(--nav-height);
+  /* remove .section padding from grid layout */
+  padding-bottom: 0;
 }
 
-.profile__info-item-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-muted);
-  text-transform: uppercase;
-  margin-bottom: 0.25rem;
+/* Remove the generic .section top padding */
+.profile.section {
+  padding-top: var(--nav-height);
 }
 
-.profile__info-item-value {
-  font-family: var(--font-heading);
-  font-size: var(--text-lg);
-  color: var(--clr-text);
-  letter-spacing: var(--tracking-wide);
-}
-
-/* Content side */
-.profile__content {
+/* ── LEFT COLUMN ─────────────────────────────────────────── */
+.profile__left {
+  position: relative;
+  z-index: 5;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 2.5rem;
+  padding: 6rem 3rem 6rem var(--section-pad-x);
+  border-right: 1px solid var(--clr-border);
 }
 
-.profile__name {
-  font-family: var(--font-heading);
-  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+/* Top eyebrow label */
+.profile__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  line-height: 0.95;
-}
-
-.profile__name-accent {
   color: var(--clr-accent);
-}
-
-.profile__handle {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--clr-text-muted);
-  margin-top: 0.5rem;
-}
-
-.profile__bio-block {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.profile__bio-text {
-  font-size: var(--text-base);
-  color: var(--clr-text-muted);
-  line-height: var(--leading-loose);
-}
-
-/* Skills / tools */
-.profile__skills {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.profile__skills-title {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-muted);
-  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
-
-.profile__skills-title::after {
+.profile__eyebrow::before {
   content: '';
-  flex: 1;
+  display: block;
+  width: 2rem;
   height: 1px;
-  background: var(--clr-border);
+  background: var(--clr-accent);
+  flex-shrink: 0;
 }
 
-.profile__skill-list {
+/* Metadata table — like SUMMER's rotated labels */
+.profile__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.profile__meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.profile__meta-row:first-child {
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.profile__meta-key {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+  flex-shrink: 0;
+  width: 5.5rem;
+}
+
+.profile__meta-val {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 1.8vw, 1.5rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-text);
+  line-height: 1;
+}
+
+/* Bio quote — matches SUMMER's italic left quote */
+.profile__quote {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  font-style: italic;
+  color: var(--clr-text-muted);
+  line-height: 1.8;
+  max-width: 38ch;
+  border-left: 2px solid var(--clr-accent);
+  padding-left: 1.25rem;
+}
+
+/* Name + handle */
+.profile__byline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.profile__byline-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-text);
+  line-height: 1;
+}
+
+.profile__byline-handle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+}
+
+/* Skill tags */
+.profile__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.profile__skill-tag {
+.profile__tag {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  color: var(--clr-text-muted);
-  border: 1px solid var(--clr-border);
-  padding: 0.3rem 0.875rem;
-  clip-path: var(--clip-diagonal);
-  transition:
-    color var(--dur-fast),
-    border-color var(--dur-fast),
-    background var(--dur-fast);
-}
-
-.profile__skill-tag:hover {
-  color: var(--clr-accent);
-  border-color: var(--clr-accent);
-  background: var(--clr-accent-subtle);
-}
-
-/* Stats bar */
-.profile__stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  border: 1px solid var(--clr-border);
-}
-
-.profile__stat {
-  padding: 1.25rem;
-  background: var(--clr-surface);
-  text-align: center;
-}
-
-.profile__stat-num {
-  font-family: var(--font-heading);
-  font-size: var(--text-3xl);
-  color: var(--clr-accent);
-  letter-spacing: var(--tracking-wide);
-  line-height: 1;
-}
-
-.profile__stat-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: var(--tracking-widest);
-  color: var(--clr-text-muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-top: 0.3rem;
+  color: var(--clr-text-muted);
+  border: 1px solid var(--clr-border);
+  padding: 0.3rem 0.75rem;
 }
 
-/* ---- RESPONSIVE ---- */
-@media (max-width: 900px) {
-  .profile__grid {
+/* ── RIGHT VISUAL ────────────────────────────────────────── */
+.profile__visual {
+  position: relative;
+  overflow: hidden;
+}
+
+/*
+  "RIO" stacked vertically — R on top, I middle, O bottom.
+  font-size chosen so 3 letters fill ~110% of panel height (bleeds top+bottom).
+  Right-aligned and bleeds off the right edge.
+  z-index: 1 — BEHIND the photo.
+*/
+.profile__letters {
+  position: absolute;
+  right: -0.08em;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-heading);
+  font-size: clamp(16rem, 27vw, 33rem);
+  line-height: 0.83;
+  letter-spacing: -0.03em;
+  color: var(--clr-text);
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.profile__letters span {
+  display: block;
+}
+
+/*
+  Photo sits ON TOP of the letters (z-index: 2).
+  Centered in the panel, leaving letters visible above, below, and at left edge.
+  Height ~85% of panel so top of "R" and bottom of "O" peek out.
+*/
+.profile__photo-col {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8%;
+  bottom: 8%;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.profile__photo {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 0 60px rgba(0,0,0,0.6));
+}
+
+/* Subtle accent glow behind photo */
+.profile__photo-glow {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 50%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, var(--clr-accent-glow) 0%, transparent 70%);
+  filter: blur(50px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Divider slash matching hero aesthetic */
+.profile__slash {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--clr-accent) 20%, var(--clr-accent) 80%, transparent);
+  z-index: 3;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .profile {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    grid-template-rows: auto auto;
+    min-height: auto;
+    padding-top: var(--nav-height);
   }
 
-  .profile__photo-wrap {
-    max-width: 280px;
-    margin: 0 auto;
+  .profile__left {
+    border-right: none;
+    border-bottom: 1px solid var(--clr-border);
+    padding: 4rem var(--section-pad-x);
+    gap: 2rem;
   }
 
-  .profile__stats {
-    grid-template-columns: repeat(3, 1fr);
+  .profile__visual {
+    min-height: 70svh;
+  }
+
+  .profile__letters {
+    font-size: clamp(10rem, 35vw, 20rem);
+  }
+
+  .profile__photo-col {
+    top: 5%;
+    bottom: 5%;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile__letters {
+    font-size: clamp(8rem, 40vw, 16rem);
+  }
+
+  .profile__meta-val {
+    font-size: 1rem;
   }
 }
 
@@ -3819,99 +3856,85 @@ body.loaded .hero__scroll {
 <!-- ════════════════════════════════════════════════════════
      PROFILE
 ════════════════════════════════════════════════════════ -->
-<section class="section profile" id="profile" aria-labelledby="profile-title">
-  <div class="container">
+<section class="section profile" id="profile" aria-label="Profilo artista">
 
-    <header class="section-header">
-      <span class="section-label" data-r="up">04 / Artista</span>
-      <h2 class="section-title" data-r="wipe" id="profile-title">
-        IL MIO<br/><span>PROFILO</span>
-      </h2>
-      <span class="accent-bar" data-r="wipe" data-rd="2"></span>
-    </header>
+  <!-- ── LEFT: bio + metadata ──────────────────────────────── -->
+  <div class="profile__left">
 
-    <div class="profile__grid">
-      <div class="profile__visual" data-r="left">
-        <div class="profile__photo-wrap">
-          <span class="ph-flag">placeholder</span>
-          <div class="profile__photo-frame">
-            <img class="is-placeholder" src="assets/img/ph-profile.svg"
-                 alt="Foto artista — placeholder" width="440" height="440" />
-          </div>
-          <div class="profile__photo-border" aria-hidden="true"></div>
-        </div>
+    <span class="profile__eyebrow" data-r="up">04 / Artista</span>
 
-        <div class="profile__info-box" data-r="up" data-rd="3">
-          <div class="profile__info-item">
-            <div class="profile__info-item-label">Stile</div>
-            <div class="profile__info-item-value">Anime / Manga</div>
-          </div>
-          <div class="profile__info-item">
-            <div class="profile__info-item-label">Tipo</div>
-            <div class="profile__info-item-value">Digitale</div>
-          </div>
-        </div>
+    <!-- Metadata table — SUMMER-style labels -->
+    <div class="profile__meta" data-r="up" data-rd="1">
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">ARTISTA</span>
+        <span class="profile__meta-val">Rio Chico</span>
       </div>
-
-      <div class="profile__content" data-r="up" data-rd="2">
-        <!-- Editorial quote -->
-        <div class="profile__editorial" data-r="up">
-          <p class="profile__editorial-text">
-            Creo <span>personaggi</span><br>che vivono oltre<br>il foglio.
-          </p>
-          <p class="profile__editorial-sub">— Rio Chico · Artista Anime</p>
-        </div>
-        <div>
-          <h3 class="profile__name">
-            RIO<br/><span class="profile__name-accent">CHICO</span>
-          </h3>
-          <p class="profile__handle">@riochicostudio</p>
-        </div>
-
-        <div class="profile__bio-block">
-          <p class="profile__bio-text">
-            Ciao! Sono Rio Chico, artista anime appassionata di character design
-            e storytelling visivo. Creo personaggi originali e illustrazioni
-            ispirate al mondo dell'animazione giapponese.
-          </p>
-          <p class="profile__bio-text">
-            Ogni lavoro è pensato per trasmettere emozioni — che sia
-            la solitudine di un combattente solitario o la gioia di
-            un personaggio che trova il suo posto nel mondo.
-          </p>
-        </div>
-
-        <div class="profile__skills">
-          <p class="profile__skills-title">Strumenti & Stile</p>
-          <div class="profile__skill-list">
-            <span class="profile__skill-tag">Procreate</span>
-            <span class="profile__skill-tag">Clip Studio Paint</span>
-            <span class="profile__skill-tag">Character Design</span>
-            <span class="profile__skill-tag">OC Universe</span>
-            <span class="profile__skill-tag">Fanart</span>
-            <span class="profile__skill-tag">Sketch</span>
-            <span class="profile__skill-tag">Illustration</span>
-          </div>
-        </div>
-
-        <div class="profile__stats" data-r="up" data-rd="4">
-          <div class="profile__stat">
-            <div class="profile__stat-num" data-count="100" data-suffix="+">0+</div>
-            <div class="profile__stat-label">Opere</div>
-          </div>
-          <div class="profile__stat">
-            <div class="profile__stat-num" data-count="3" data-suffix="">0</div>
-            <div class="profile__stat-label">Personaggi OC</div>
-          </div>
-          <div class="profile__stat">
-            <div class="profile__stat-num" data-count="5" data-suffix="">0</div>
-            <div class="profile__stat-label">Anni</div>
-          </div>
-        </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">STILE</span>
+        <span class="profile__meta-val">Anime · Manga</span>
+      </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">TECNICA</span>
+        <span class="profile__meta-val">Digitale</span>
+      </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">OPERE</span>
+        <span class="profile__meta-val">100+</span>
+      </div>
+      <div class="profile__meta-row">
+        <span class="profile__meta-key">OC</span>
+        <span class="profile__meta-val">3 Personaggi</span>
       </div>
     </div>
 
+    <!-- Bio quote -->
+    <blockquote class="profile__quote" data-r="up" data-rd="2">
+      "Creo personaggi originali e illustrazioni ispirate all'animazione giapponese.
+      Ogni disegno racconta una storia — la mia."
+    </blockquote>
+
+    <!-- Name + handle -->
+    <div class="profile__byline" data-r="up" data-rd="3">
+      <p class="profile__byline-name">RIO CHICO STUDIO</p>
+      <p class="profile__byline-handle">Artista Anime &amp; Illustratore · @riochicostudio</p>
+    </div>
+
+    <!-- Skill tags -->
+    <div class="profile__tags" data-r="up" data-rd="4">
+      <span class="profile__tag">Procreate</span>
+      <span class="profile__tag">Clip Studio Paint</span>
+      <span class="profile__tag">Character Design</span>
+      <span class="profile__tag">OC Universe</span>
+      <span class="profile__tag">Fanart</span>
+    </div>
+
   </div>
+
+  <!-- ── RIGHT: RIO letters + photo ───────────────────────── -->
+  <div class="profile__visual">
+
+    <!-- R, I, O stacked vertically — letterform backdrop -->
+    <div class="profile__letters" aria-hidden="true">
+      <span>R</span>
+      <span>I</span>
+      <span>O</span>
+    </div>
+
+    <!-- Accent glow behind photo -->
+    <div class="profile__photo-glow" aria-hidden="true"></div>
+
+    <!-- Photo — z-index above letters -->
+    <div class="profile__photo-col">
+      <span class="ph-flag">placeholder</span>
+      <img class="profile__photo" src="assets/img/ph-profile.svg"
+           alt="Rio Chico — artista anime" width="480" height="720" loading="eager" />
+    </div>
+
+    <!-- Left edge divider accent line -->
+    <div class="profile__slash" aria-hidden="true"></div>
+
+  </div>
+
 </section>
 
 <!-- ════════════════════════════════════════════════════════
