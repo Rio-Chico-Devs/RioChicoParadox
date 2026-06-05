@@ -1,17 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" preserveAspectRatio="none">
-  <!-- "RIO" Impact, rotated 90° CCW so the base of each letter faces LEFT.
-       R top / I middle / O bottom. white = image shows through. -->
-  <text x="50" y="22" fill="white"
-        font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="139" textLength="42" lengthAdjust="spacingAndGlyphs"
-        text-anchor="middle" dominant-baseline="middle"
-        transform="rotate(90,50,22)">R</text>
+  <!-- "RIO" Impact, rotated 90° CW so the base of each letter faces LEFT.
+       Vertical extents follow Impact's natural proportions (R≈40%, I≈17%, O≈43%)
+       and stack tight (no gaps) to fill the panel from top to bottom. -->
 
-  <rect x="0" y="44" width="100" height="42" fill="white"/>
-
-  <text x="50" y="108" fill="white"
+  <!-- R: y_center=26, textLength=52 → spans y=0..52 -->
+  <text x="50" y="26" fill="white"
         font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="139" textLength="42" lengthAdjust="spacingAndGlyphs"
+        font-size="139" textLength="52" lengthAdjust="spacingAndGlyphs"
         text-anchor="middle" dominant-baseline="middle"
-        transform="rotate(90,50,108)">O</text>
+        transform="rotate(90,50,26)">R</text>
+
+  <!-- I: thin slab in the middle, spans y=52..74 -->
+  <rect x="0" y="52" width="100" height="22" fill="white"/>
+
+  <!-- O: y_center=102, textLength=56 → spans y=74..130 -->
+  <text x="50" y="102" fill="white"
+        font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
+        font-size="139" textLength="56" lengthAdjust="spacingAndGlyphs"
+        text-anchor="middle" dominant-baseline="middle"
+        transform="rotate(90,50,102)">O</text>
 </svg>
