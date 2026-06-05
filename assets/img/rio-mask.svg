@@ -13,7 +13,7 @@
         text-anchor="middle" dominant-baseline="middle"
         transform="rotate(90,50,21)">R</text>
 
-  <rect x="0" y="57" width="100" height="18" fill="white"/>
+  <rect x="14" y="57" width="76" height="20" fill="white"/>
 
   <text x="50" y="112" fill="white"
         font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
