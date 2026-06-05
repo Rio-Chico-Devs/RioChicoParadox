@@ -1,24 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" preserveAspectRatio="none">
   <!--
-    rotate(90,50,cy) — base faces LEFT (confirmed ✓)
-    font-size 139 fills full panel width.
-    R  : touches TOP border  y=0..46   cy=23  textLength=46
-    gap: y=46..59  (13 units)
-    I  : y=59..71  height=12
-    gap: y=71..84  (13 units)
-    O  : touches BOT border  y=84..130 cy=107 textLength=46
+    Pixel-measured offsets for Impact font-size=130 with dominant-baseline="middle":
+    R glyph: +4u top offset, -1u bottom → need cy=21, textLength=50 to land y=0..45
+    O glyph: +2u top offset, -2u bottom → need cy=108, textLength=48 to land y=86..130
+    Layout: R y=0..45 | gap 13u | I y=58..74 h=16 | gap 12u | O y=86..130
   -->
-  <text x="50" y="23" fill="white"
+  <text x="50" y="21" fill="white"
         font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="139" textLength="46" lengthAdjust="spacingAndGlyphs"
+        font-size="130" textLength="50" lengthAdjust="spacingAndGlyphs"
         text-anchor="middle" dominant-baseline="middle"
-        transform="rotate(90,50,23)">R</text>
+        transform="rotate(90,50,21)">R</text>
 
-  <rect x="0" y="59" width="100" height="12" fill="white"/>
+  <rect x="0" y="58" width="100" height="16" fill="white"/>
 
-  <text x="50" y="107" fill="white"
+  <text x="50" y="108" fill="white"
         font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="139" textLength="46" lengthAdjust="spacingAndGlyphs"
+        font-size="130" textLength="48" lengthAdjust="spacingAndGlyphs"
         text-anchor="middle" dominant-baseline="middle"
-        transform="rotate(90,50,107)">O</text>
+        transform="rotate(90,50,108)">O</text>
 </svg>
