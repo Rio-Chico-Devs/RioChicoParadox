@@ -1,0 +1,120 @@
+/* =========================================================
+   BUTTONS — stili pulsanti riutilizzabili
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color var(--dur-fast),
+    transform var(--dur-fast),
+    box-shadow var(--dur-med);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Variant: Primary (filled accent) */
+.btn--primary {
+  background: var(--clr-accent);
+  color: var(--clr-text);
+  clip-path: var(--clip-diagonal);
+}
+
+.btn--primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--clr-accent-light);
+  transform: translateX(-100%) skewX(-8deg);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.btn--primary:hover::before {
+  transform: translateX(0) skewX(-8deg);
+}
+
+.btn--primary:hover {
+  box-shadow: var(--shadow-accent);
+}
+
+/* Variant: Ghost (outline) */
+.btn--ghost {
+  background: transparent;
+  color: var(--clr-text);
+  border: 1px solid var(--clr-border);
+  clip-path: var(--clip-diagonal);
+}
+
+.btn--ghost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--clr-accent-subtle);
+  transform: translateX(-100%) skewX(-8deg);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.btn--ghost:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+}
+
+.btn--ghost:hover::before {
+  transform: translateX(0) skewX(-8deg);
+}
+
+/* Variant: Text link */
+.btn--link {
+  background: transparent;
+  color: var(--clr-accent);
+  padding: 0.25rem 0;
+  gap: 0.5rem;
+}
+
+.btn--link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--clr-accent);
+  transition: width var(--dur-med) var(--ease-out-quart);
+}
+
+.btn--link:hover::after {
+  width: 100%;
+}
+
+/* Arrow icon */
+.btn__arrow {
+  display: inline-block;
+  transition: transform var(--dur-fast);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+/* Size variants */
+.btn--sm {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.65rem;
+}
+
+.btn--lg {
+  padding: 1.125rem 2.5rem;
+  font-size: var(--text-sm);
+}

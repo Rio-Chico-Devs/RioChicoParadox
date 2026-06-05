@@ -1,0 +1,236 @@
+/* =========================================================
+   PROFILE — editorial "SUMMER" style
+   Letters R-I-O stacked tall on the right; photo sits on top.
+   Left column: metadata labels + bio.
+   ========================================================= */
+
+.profile {
+  position: relative;
+  min-height: 100svh;
+  background: var(--clr-bg);
+  overflow: hidden;
+  display: grid;
+  /* 42% left content  |  58% visual */
+  grid-template-columns: 5fr 7fr;
+  align-items: stretch;
+  padding-top: var(--nav-height);
+  /* remove .section padding from grid layout */
+  padding-bottom: 0;
+}
+
+/* Remove the generic .section top padding */
+.profile.section {
+  padding-top: var(--nav-height);
+}
+
+/* ── LEFT COLUMN ─────────────────────────────────────────── */
+.profile__left {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 6rem 3rem 6rem var(--section-pad-x);
+  border-right: 1px solid var(--clr-border);
+}
+
+/* Top eyebrow label */
+.profile__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.profile__eyebrow::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--clr-accent);
+  flex-shrink: 0;
+}
+
+/* Metadata table — like SUMMER's rotated labels */
+.profile__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.profile__meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.profile__meta-row:first-child {
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.profile__meta-key {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+  flex-shrink: 0;
+  width: 5.5rem;
+}
+
+.profile__meta-val {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 1.8vw, 1.5rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-text);
+  line-height: 1;
+}
+
+/* Bio quote — matches SUMMER's italic left quote */
+.profile__quote {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  font-style: italic;
+  color: var(--clr-text-muted);
+  line-height: 1.8;
+  max-width: 38ch;
+  border-left: 2px solid var(--clr-accent);
+  padding-left: 1.25rem;
+}
+
+/* Name + handle */
+.profile__byline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.profile__byline-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-text);
+  line-height: 1;
+}
+
+.profile__byline-handle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+}
+
+/* Skill tags */
+.profile__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.profile__tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  border: 1px solid var(--clr-border);
+  padding: 0.3rem 0.75rem;
+}
+
+/* ── RIGHT VISUAL — image revealed THROUGH stacked "RIO" ──────
+   Per the reference mock: pure BLACK panel; the artwork is the
+   layer underneath and is visible ONLY through the giant R-I-O
+   letters stacked vertically. One continuous image flows across
+   all three glyphs (head/umbrella → R, torso → I, legs → O).
+   The letters are widened (scaleX) to the fat proportions of the
+   mock; the image is counter-scaled so it is NOT distorted.
+   Swap the artwork in ONE place: --profile-img.
+   ──────────────────────────────────────────────────────────── */
+.profile__visual {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  --profile-img: url(../assets/img/ph-profile.svg);
+}
+
+/*
+  Exactly your Procreate stack: a black panel with the word "RIO"
+  knocked out (transparent) and the artwork behind showing THROUGH
+  the letters. Implemented as a CSS mask so the artwork keeps its
+  true proportions (cover, undistorted) while the R/I/O glyphs are
+  stretched FAT to fill the panel. One image maps across all three:
+  head → R, torso → I, legs → O.
+*/
+.profile__letters {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  user-select: none;
+  pointer-events: none;
+
+  /* the artwork — undistorted; top-aligned so the head lands in the "R" */
+  background: var(--profile-img) center top / cover no-repeat;
+
+  /* the RIO knockout — stretched to the panel */
+  -webkit-mask: url(../assets/img/rio-mask.svg) center / 100% 100% no-repeat;
+          mask: url(../assets/img/rio-mask.svg) center / 100% 100% no-repeat;
+}
+
+/* Divider slash matching hero aesthetic */
+.profile__slash {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--clr-accent) 20%, var(--clr-accent) 80%, transparent);
+  z-index: 3;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .profile {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: auto;
+    padding-top: var(--nav-height);
+  }
+
+  .profile__left {
+    border-right: none;
+    border-bottom: 1px solid var(--clr-border);
+    padding: 4rem var(--section-pad-x);
+    gap: 2rem;
+  }
+
+  .profile__visual {
+    min-height: 70svh;
+  }
+
+  .profile__letters {
+    font-size: clamp(10rem, 35vw, 20rem);
+  }
+
+  .profile__photo-col {
+    top: 5%;
+    bottom: 5%;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile__letters {
+    font-size: clamp(8rem, 40vw, 16rem);
+  }
+
+  .profile__meta-val {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,220 @@
+/* =========================================================
+   GALLERY — griglia artwork con immagini reali
+   ========================================================= */
+
+.gallery {
+  background: var(--clr-bg);
+}
+
+/* Filter bar */
+.gallery__filters {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.gallery__filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  padding: 0.875rem 1.375rem;
+  background: transparent;
+  position: relative;
+  transition: color var(--dur-fast);
+  border: none;
+}
+
+.gallery__filter-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--clr-accent);
+  transform: scaleX(0);
+  transition: transform var(--dur-med) var(--ease-out-quart);
+}
+
+.gallery__filter-btn:hover { color: var(--clr-text-muted); }
+
+.gallery__filter-btn.is-active {
+  color: var(--clr-accent);
+}
+.gallery__filter-btn.is-active::after {
+  transform: scaleX(1);
+}
+
+/* ── GRID ───────────────────────────────────────────────── */
+/*
+   object-fit: contain con padding — funziona sia per artwork quadrati
+   che per personaggi verticali senza sfondo (WebP/PNG trasparenti).
+   Il --clr-surface del card fa da "mat" neutro dietro l'immagine.
+*/
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 300px;
+  gap: 3px;
+}
+
+/* Layout mapping — different card sizes */
+.gallery__card:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+.gallery__card:nth-child(2) { grid-column: span 5; }
+.gallery__card:nth-child(3) { grid-column: span 5; }
+.gallery__card:nth-child(4) { grid-column: span 4; }
+.gallery__card:nth-child(5) { grid-column: span 4; }
+.gallery__card:nth-child(6) { grid-column: span 4; }
+.gallery__card:nth-child(7) { grid-column: span 6; }
+.gallery__card:nth-child(8) { grid-column: span 6; }
+
+/* ── CARD ───────────────────────────────────────────────── */
+/* griglia sottile visible dietro PNG/WebP trasparenti come mat neutro */
+.gallery__card {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--clr-surface);
+  background-image:
+    linear-gradient(var(--clr-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--clr-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Image — contain per supportare caratteri trasparenti verticali */
+.gallery__card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.5rem;
+  transition: transform 0.8s var(--ease-out-quart);
+}
+
+.gallery__card:hover .gallery__card-img {
+  transform: scale(1.05);
+}
+
+/* Overlay — usa l'accent color del sito, non rosso hardcoded */
+.gallery__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.96) 55%
+  );
+  border-top: 2px solid var(--clr-accent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.5s var(--ease-out-quart);
+}
+
+.gallery__card:hover .gallery__card-overlay {
+  clip-path: inset(0% 0 0 0);
+}
+
+.gallery__card-category {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-widest);
+  color: rgba(255,255,255,0.8);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.gallery__card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* Number badge */
+.gallery__card-num {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wider);
+  color: var(--clr-accent);
+  background: rgba(0,0,0,0.75);
+  padding: 0.25rem 0.6rem;
+  z-index: 2;
+}
+
+/* Category badge (top-right) */
+.gallery__card-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--clr-accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wider);
+  padding: 0.35rem 0.85rem;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0.75rem 100%);
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* Arrow hint on hover */
+.gallery__card-arrow {
+  position: absolute;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  font-size: var(--text-xl);
+  color: rgba(255,255,255,0.8);
+  transform: translate(-6px, 6px);
+  transition: transform 0.4s var(--ease-out-quart) 0.1s;
+  z-index: 2;
+  pointer-events: none;
+}
+.gallery__card:hover .gallery__card-arrow {
+  transform: translate(0, 0);
+}
+
+/* Hidden filter state */
+.gallery__card[data-hidden="true"] {
+  display: none;
+}
+
+/* Load more */
+.gallery__more {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 240px;
+  }
+  .gallery__card:nth-child(n) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .gallery__card:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 500px) {
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 280px;
+  }
+  .gallery__card:nth-child(n) { grid-column: span 1; }
+}

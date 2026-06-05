@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" preserveAspectRatio="none">
+  <!-- The word "RIO" written horizontally and ROTATED 90° clockwise so it
+       reads top→bottom (R, I, O) with the letters lying on their side —
+       exactly like the Procreate layer. Used as a CSS alpha mask: the
+       artwork shows ONLY through these shapes. preserveAspectRatio="none"
+       + mask-size:100% 100% stretches it to fill the panel. -->
+  <g fill="#ffffff" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
+     text-anchor="middle" transform="rotate(90 50 65)">
+    <text x="12" y="65" font-size="140" textLength="34" lengthAdjust="spacingAndGlyphs" dominant-baseline="middle">R</text>
+    <text x="50" y="65" font-size="140" textLength="34" lengthAdjust="spacingAndGlyphs" dominant-baseline="middle">I</text>
+    <text x="88" y="65" font-size="140" textLength="34" lengthAdjust="spacingAndGlyphs" dominant-baseline="middle">O</text>
+  </g>
+</svg>

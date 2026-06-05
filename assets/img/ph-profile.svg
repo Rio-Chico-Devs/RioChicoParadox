@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 860" font-family="'Arial Narrow',Impact,sans-serif">
+  <defs>
+    <linearGradient id="bgp" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0%" stop-color="#ff3142"/>
+      <stop offset="50%" stop-color="#e60012"/>
+      <stop offset="100%" stop-color="#1a0306"/>
+    </linearGradient>
+    <pattern id="ht" width="15" height="15" patternUnits="userSpaceOnUse">
+      <circle cx="3.5" cy="3.5" r="2.4" fill="#000" opacity="0.14"/>
+    </pattern>
+  </defs>
+
+  <!-- full opaque portrait so it maps across R (head) / I (torso) / O (legs) -->
+  <rect width="480" height="860" fill="url(#bgp)"/>
+  <rect width="480" height="860" fill="url(#ht)"/>
+
+  <!-- standing figure (your full-body artwork goes here) -->
+  <g fill="#fff" opacity="0.94">
+    <!-- head -->
+    <circle cx="240" cy="120" r="74"/>
+    <!-- body + flowing dress to the hem -->
+    <path d="M205 196
+             C198 220 176 226 172 250
+             C150 330 196 360 200 384
+             C150 540 140 700 128 824
+             L352 824
+             C340 700 330 540 280 384
+             C284 360 330 330 308 250
+             C304 226 282 220 275 196
+             C264 214 216 214 205 196 Z"/>
+  </g>
+
+  <!-- top label -->
+  <g>
+    <rect x="0" y="0" width="480" height="42" fill="#0c0c0e"/>
+    <text x="18" y="29" fill="#fff" font-size="18" font-weight="bold" letter-spacing="3">FOTO ARTISTA</text>
+    <text x="462" y="29" fill="#e60012" font-size="15" font-weight="bold" letter-spacing="1" text-anchor="end">SOSTITUISCI ►</text>
+  </g>
+
+  <!-- spec chip -->
+  <g>
+    <rect x="150" y="792" width="180" height="30" fill="#0c0c0e"/>
+    <text x="240" y="813" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle" letter-spacing="1" font-family="monospace">PNG · VERTICALE</text>
+  </g>
+</svg>

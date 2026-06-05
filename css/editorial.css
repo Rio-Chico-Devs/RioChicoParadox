@@ -1,0 +1,331 @@
+/* =========================================================
+   RIO CHICO STUDIO — EDITORIAL ELEMENTS
+   Marquee strips, floating data cards, gallery editorial,
+   profile quote — Persona 5 "graphic artifact" style
+   ========================================================= */
+
+
+/* ═══════════════════════════════════════════════════════════
+   A. MARQUEE STRIP
+   ═══════════════════════════════════════════════════════════ */
+
+.marquee-strip {
+  width: 100%;
+  overflow: hidden;
+  padding: 0.55rem 0;
+  display: flex;
+  user-select: none;
+}
+
+.marquee-strip--accent {
+  background: var(--clr-accent);
+}
+
+.marquee-strip--surface {
+  background: var(--clr-surface);
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 2.5rem;
+  white-space: nowrap;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-strip:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-25%); }
+}
+
+.marquee-item {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marquee-strip--accent .marquee-item {
+  color: #ffffff;
+}
+
+.marquee-strip--surface .marquee-item {
+  color: var(--clr-text-muted);
+}
+
+.marquee-sep {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  white-space: nowrap;
+}
+
+.marquee-strip--accent .marquee-sep {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.marquee-strip--surface .marquee-sep {
+  color: var(--clr-accent);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    overflow: hidden;
+  }
+  .marquee-item:not(:first-child),
+  .marquee-sep:not(:first-of-type) {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .marquee-item {
+    font-size: 0.58rem;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   B. GALLERY EDITORIAL INTRO PANEL
+   ═══════════════════════════════════════════════════════════ */
+
+.gallery__editorial {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.gallery__editorial-ghost {
+  position: absolute;
+  font-family: var(--font-heading);
+  font-size: clamp(8rem, 24vw, 22rem);
+  color: #ffffff;
+  opacity: 0.035;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  top: -1rem;
+  left: -0.75rem;
+  pointer-events: none;
+  user-select: none;
+  text-transform: uppercase;
+  /* Outlined/ghost variant for Death Note feel */
+  -webkit-text-stroke: 1px rgba(255,255,255,0.12);
+}
+
+.gallery__editorial-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.gallery__editorial-count {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  color: var(--clr-accent);
+  line-height: 1;
+}
+
+.gallery__editorial-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .gallery__editorial-ghost {
+    font-size: clamp(4rem, 20vw, 8rem);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   C. CHARACTER FLOATING DATA CARD
+   ═══════════════════════════════════════════════════════════ */
+
+.char-float-card {
+  position: absolute;
+  z-index: 20;
+  width: 220px;
+  background: rgba(8, 8, 18, 0.92);
+  border: 1px solid var(--char-accent, var(--clr-accent));
+  border-left: 3px solid var(--char-accent, var(--clr-accent));
+  transform: rotate(-1deg);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 0.75rem), calc(100% - 0.75rem) 100%, 0 100%);
+  backdrop-filter: blur(8px);
+  /* Positioning: bottom-right for odd, bottom-left for even */
+  bottom: 6rem;
+  right: 2rem;
+}
+
+/* Even char-blocks use direction:rtl, so "right" becomes visually "left" */
+.char-block--even .char-float-card {
+  right: auto;
+  left: 2rem;
+}
+
+.char-float-card__header {
+  padding: 0.5rem 0.75rem;
+  background: var(--char-accent, var(--clr-accent));
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--clr-bg);
+}
+
+.char-float-card__body {
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.char-float-card__row {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+}
+
+.char-float-card__row span:first-child {
+  color: var(--char-accent, var(--clr-accent));
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.char-float-card__row span:last-child {
+  color: var(--clr-text);
+  text-transform: uppercase;
+}
+
+.char-float-card__scan {
+  height: 2px;
+  background: linear-gradient(to right, var(--char-accent, var(--clr-accent)), transparent);
+  margin: 0.4rem 0.75rem 0.5rem;
+  animation: scanPulse 2s ease-in-out infinite;
+  transform-origin: left;
+}
+
+@keyframes scanPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(0.7);
+  }
+}
+
+/* Hide on small screens — too cluttered */
+@media (max-width: 900px) {
+  .char-float-card {
+    display: none;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   D. SECTION VISUAL DIVIDER
+   ═══════════════════════════════════════════════════════════ */
+
+.section-slash-divider {
+  width: 100%;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+  background: var(--clr-bg-2);
+}
+
+.section-slash-divider svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   E. PROFILE EDITORIAL QUOTE
+   ═══════════════════════════════════════════════════════════ */
+
+.profile__editorial {
+  position: relative;
+  padding: 2rem 0 2rem 2rem;
+  margin-bottom: 2.5rem;
+  border-left: 4px solid var(--clr-accent);
+}
+
+.profile__editorial-text {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--clr-text);
+  margin: 0;
+}
+
+.profile__editorial-text span {
+  color: var(--clr-accent);
+}
+
+.profile__editorial-sub {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .profile__editorial-text {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   F. SECTION COUNT BADGE (big decorative number)
+   ═══════════════════════════════════════════════════════════ */
+
+.section-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--clr-accent);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.section-count-badge::before {
+  content: attr(data-num);
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 8vw, 7rem);
+  color: var(--clr-accent);
+  opacity: 0.12;
+  line-height: 1;
+  margin-right: 0.5rem;
+}
