@@ -1,23 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" preserveAspectRatio="none">
-  <!-- Each letter individually rotated 90° CW around its own centre.
-       font-size=139 → cap-height ≈ 100 units → fills full panel width.
-       textLength=40  → each letter is 40 units tall in the panel (≈ 1/3 of 130).
-       Centers at y=22 / 65 / 108 → thin gaps + tiny margins top & bottom. -->
-  <text x="50" y="22"  fill="white"
+  <!-- R top third: centre y=22, textLength=42 → spans y=1 to y=43 -->
+  <text x="50" y="22" fill="white"
         font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="139" textLength="40" lengthAdjust="spacingAndGlyphs"
+        font-size="139" textLength="42" lengthAdjust="spacingAndGlyphs"
         text-anchor="middle" dominant-baseline="middle"
         transform="rotate(90,50,22)">R</text>
 
-  <text x="50" y="65"  fill="white"
-        font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="139" textLength="40" lengthAdjust="spacingAndGlyphs"
-        text-anchor="middle" dominant-baseline="middle"
-        transform="rotate(90,50,65)">I</text>
+  <!-- I middle third: pure rect — avoids textLength rendering quirks for I -->
+  <rect x="0" y="44" width="100" height="42" fill="white"/>
 
+  <!-- O bottom third: centre y=108, textLength=42 → spans y=87 to y=129 -->
   <text x="50" y="108" fill="white"
         font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="139" textLength="40" lengthAdjust="spacingAndGlyphs"
+        font-size="139" textLength="42" lengthAdjust="spacingAndGlyphs"
         text-anchor="middle" dominant-baseline="middle"
         transform="rotate(90,50,108)">O</text>
 </svg>
