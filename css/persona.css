@@ -165,8 +165,9 @@
   50%       { filter: drop-shadow(0 0 18px var(--clr-accent-glow)); }
 }
 
-/* badge "PLACEHOLDER" che fluttua sopra ogni immagine segnaposto */
+/* badge "PLACEHOLDER" — visibile solo in development */
 .ph-flag {
+  display: none;
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;

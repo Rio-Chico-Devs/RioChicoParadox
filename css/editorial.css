@@ -41,6 +41,15 @@
   to   { transform: translateX(-25%); }
 }
 
+@keyframes marquee-rev {
+  from { transform: translateX(-25%); }
+  to   { transform: translateX(0); }
+}
+
+.marquee-strip--reverse .marquee-track {
+  animation-name: marquee-rev;
+}
+
 .marquee-item {
   font-family: var(--font-mono);
   font-size: 0.62rem;
