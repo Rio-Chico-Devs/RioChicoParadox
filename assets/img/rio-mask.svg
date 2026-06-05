@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" preserveAspectRatio="none">
   <g fill="#ffffff" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-     text-anchor="middle" transform="rotate(-90 50 65)">
-    <text x="12" y="65" font-size="140" textLength="34" lengthAdjust="spacingAndGlyphs" dominant-baseline="middle">R</text>
-    <text x="50" y="65" font-size="140" textLength="34" lengthAdjust="spacingAndGlyphs" dominant-baseline="middle">I</text>
-    <text x="88" y="65" font-size="140" textLength="34" lengthAdjust="spacingAndGlyphs" dominant-baseline="middle">O</text>
+     text-anchor="middle" dominant-baseline="middle" transform="rotate(90 50 65)">
+    <text x="12" y="65" font-size="140" textLength="36" lengthAdjust="spacingAndGlyphs">R</text>
+    <text x="50" y="65" font-size="140" textLength="36" lengthAdjust="spacingAndGlyphs">I</text>
+    <text x="88" y="65" font-size="140" textLength="36" lengthAdjust="spacingAndGlyphs">O</text>
   </g>
 </svg>
