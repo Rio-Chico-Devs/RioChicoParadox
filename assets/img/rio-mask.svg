@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" preserveAspectRatio="none">
   <!--
-    Pixel-measured offsets for Impact font-size=130 with dominant-baseline="middle":
-    R glyph: +4u top offset, -1u bottom → need cy=21, textLength=50 to land y=0..45
-    O glyph: +2u top offset, -2u bottom → need cy=108, textLength=48 to land y=86..130
-    Layout: R y=0..45 | gap 13u | I y=58..74 h=16 | gap 12u | O y=86..130
+    R : cy=21 tL=50  → actual y≈0..44   (touches top border)
+    gap: y=44..57  (13u)
+    I : y=57..75   h=18  (leggermente più larga)
+    gap: y=75..88  (13u)
+    O : cy=112 tL=52 → specified y=86..138 overflows bottom → clipped at y=130
+        (ensures O visually fills to bottom border regardless of browser metrics)
   -->
   <text x="50" y="21" fill="white"
         font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
@@ -11,11 +13,11 @@
         text-anchor="middle" dominant-baseline="middle"
         transform="rotate(90,50,21)">R</text>
 
-  <rect x="0" y="58" width="100" height="16" fill="white"/>
+  <rect x="0" y="57" width="100" height="18" fill="white"/>
 
-  <text x="50" y="108" fill="white"
+  <text x="50" y="112" fill="white"
         font-family="Impact,'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900"
-        font-size="130" textLength="48" lengthAdjust="spacingAndGlyphs"
+        font-size="130" textLength="52" lengthAdjust="spacingAndGlyphs"
         text-anchor="middle" dominant-baseline="middle"
-        transform="rotate(90,50,108)">O</text>
+        transform="rotate(90,50,112)">O</text>
 </svg>
