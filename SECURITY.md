@@ -1,5 +1,19 @@
 # SECURITY — Rio Chico Studio
 
+> ## Principio
+> **La massima sicurezza non si scala in base al cliente.** Muratore o Amazon,
+> ogni sito merita lo stesso standard. Non è solo etica: è threat-modeling
+> corretto. Sul web moderno l'attacco è **automatizzato e indiscriminato** —
+> gli scanner colpiscono tutto, e i siti "piccoli" sono spesso il bersaglio
+> *più facile*, dirottati per ospitare phishing, malware o spam SEO. "Piccolo"
+> non significa "a basso rischio". E poiché questa baseline, una volta costruita,
+> ha **costo marginale ~zero** (è riutilizzabile, zero dipendenze), non esiste
+> ragione economica per offrirne una versione ridotta a chiunque.
+>
+> Questo repository **è** quella baseline portabile: `_headers`,
+> `security-audit.js`, `integrity-scan.js`, `THREAT-MODEL.md` si trapiantano in
+> qualsiasi sito statico.
+
 Threat model, difese attive e — soprattutto — **come verificare la sicurezza
 senza doverti fidare di nessuno** (incluso l'assistente AI che ha scritto questo
 codice).
