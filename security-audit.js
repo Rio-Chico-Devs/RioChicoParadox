@@ -274,6 +274,57 @@ const gitignore = read('.gitignore');
 });
 
 /* ═══════════════════════════════════════════════════════════
+   4b. ASSET — SVG-XSS, source map, segreti, file pericolosi
+   ═══════════════════════════════════════════════════════════ */
+const walk = dir => {
+  let out = [];
+  for (const e of fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })) {
+    if (e.name === '.git' || e.name === 'node_modules') continue;
+    const rel = path.join(dir, e.name);
+    if (e.isDirectory()) out = out.concat(walk(rel));
+    else out.push(rel);
+  }
+  return out;
+};
+const allFiles = walk('.');
+
+// SVG-XSS nei NOSTRI asset (script, handler on*, foreignObject, href esterni, <animate> con javascript)
+const svgFiles = allFiles.filter(f => f.endsWith('.svg'));
+const dirtySvg = svgFiles.filter(f => {
+  const c = read(f);
+  return /<script|\son\w+\s*=|<foreignObject|xlink:href\s*=\s*["']https?:|href\s*=\s*["']https?:|javascript:/i.test(c);
+});
+dirtySvg.length
+  ? fail(`SVG-XSS: ${dirtySvg.length} SVG con contenuto attivo → ${dirtySvg.join(', ')}`)
+  : pass(`SVG-XSS: tutti i ${svgFiles.length} SVG sono statici (no script/on*/foreignObject/href esterni)`);
+
+// Source map esposti (leak del codice sorgente)
+const maps = allFiles.filter(f => f.endsWith('.map'));
+maps.length
+  ? fail(`Source map: ${maps.length} file .map presenti → leak del sorgente`)
+  : pass('Source map: nessun file .map → nessun leak del sorgente');
+
+// Segreti hardcoded
+const secretRe = /(api[_-]?key|secret|passwd|password|BEGIN (RSA|OPENSSH|EC|DSA|PRIVATE)|aws_secret|xox[baprs]-|ghp_[A-Za-z0-9]{20})/i;
+const codeFiles = allFiles.filter(f => /\.(js|json|html|css|svg|txt|md)$/.test(f)
+  && !/security-audit|SECURITY\.md|THREAT-MODEL\.md/.test(f));
+const leaky = codeFiles.filter(f => secretRe.test(read(f)));
+leaky.length
+  ? fail(`Segreti: pattern sospetto in → ${leaky.join(', ')}`)
+  : pass('Segreti: nessuna credenziale hardcoded negli asset');
+
+// Responsible disclosure
+allFiles.some(f => f.endsWith('.well-known/security.txt') || f.endsWith('.well-known\\security.txt'))
+  ? pass('Disclosure: /.well-known/security.txt presente (RFC 9116)')
+  : warn('Disclosure: manca /.well-known/security.txt');
+
+// File potenzialmente pericolosi serviti
+const dangerous = allFiles.filter(f => /\.(php|asp|aspx|jsp|cgi|sh|exe|env)$/i.test(f));
+dangerous.length
+  ? fail(`File pericolosi nel repo servito → ${dangerous.join(', ')}`)
+  : pass('File: nessun eseguibile/script server-side nel repo');
+
+/* ═══════════════════════════════════════════════════════════
    5. Superficie d'attacco complessiva
    ═══════════════════════════════════════════════════════════ */
 pass('Superficie: nessun backend → nessuna SQL injection, nessun RCE server-side');

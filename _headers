@@ -25,6 +25,9 @@
   # Forza HTTPS per 2 anni, incluse sotto-pagine; preload per HSTS preload list
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 
+  # Isola il contesto di navigazione (anti cross-origin leaks / Spectre-class)
+  Cross-Origin-Opener-Policy: same-origin
+
   # ── Content Security Policy ──────────────────────────────
   # Ogni origine è esplicita. Nessun wildcard (*).
   #
@@ -38,3 +41,20 @@
   # form-action 'none'         → nessun <form> nel sito
   # upgrade-insecure-requests  → il browser upgrada automaticamente http→https
   Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+# ── Cache-Control ────────────────────────────────────────────
+# HTML: sempre rivalidato → gli aggiornamenti si vedono subito
+# (anti web-cache-poisoning: nessuna risposta "dinamica" cache-abile)
+/
+  Cache-Control: public, max-age=0, must-revalidate
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Asset statici: cache 1 giorno (Cloudflare Pages purga la sua cache a ogni deploy).
+# Quando aggiungeremo l'hash nel nome file (es. main.abc123.js) → immutable 1 anno.
+/css/*
+  Cache-Control: public, max-age=86400
+/js/*
+  Cache-Control: public, max-age=86400
+/assets/*
+  Cache-Control: public, max-age=86400

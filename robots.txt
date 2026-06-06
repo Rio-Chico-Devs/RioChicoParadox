@@ -1,0 +1,8 @@
+# Rio Chico Studio
+# I crawler legittimi possono indicizzare il sito.
+User-agent: *
+Allow: /
+Disallow: /.well-known/
+
+# Indica la sitemap quando la aggiungeremo (dominio reale richiesto)
+# Sitemap: https://tuodominio.com/sitemap.xml

@@ -4,7 +4,10 @@ Threat model, difese attive e — soprattutto — **come verificare la sicurezza
 senza doverti fidare di nessuno** (incluso l'assistente AI che ha scritto questo
 codice).
 
-Ultimo audit: vedi `node security-audit.js` · Punteggio attuale: 50 PASS / 0 FAIL.
+📖 **Catalogo completo dei vettori d'attacco e contromisure → [THREAT-MODEL.md](./THREAT-MODEL.md)**
+(40+ vettori 2025-2026 mappati sul nostro stack, con stato e azione per ciascuno).
+
+Ultimo audit: vedi `node security-audit.js` · Punteggio attuale: 56 PASS / 0 FAIL.
 
 ---
 
