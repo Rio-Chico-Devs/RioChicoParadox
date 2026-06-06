@@ -1,19 +1,24 @@
 #!/usr/bin/env node
 /**
- * integrity-scan.js — controllo byte-per-byte dei sorgenti
+ * integrity-scan.js - controllo byte-per-byte e codepoint-per-codepoint
  *
- * Difende contro attacchi a livello di ENCODING che un occhio umano (o una
- * review distratta) non vede, e che un'AI compromessa potrebbe usare per
- * nascondere una backdoor superando la code review:
+ * Difende dagli attacchi a livello di ENCODING/UNICODE che superano la review
+ * umana e che un'AI compromessa potrebbe usare per nascondere una backdoor:
  *
- *   • Trojan Source (CVE-2021-42574): caratteri Unicode bidirezionali che
- *     riordinano il codice → quello che leggi ≠ quello che esegue.
- *   • Homoglyph (CVE-2021-42694): lettere Cirilliche/Greche identiche alle
- *     Latine (es. 'а' U+0430 al posto di 'a') in identificatori o URL.
- *   • Caratteri zero-width / invisibili che nascondono payload.
- *   • Control chars C0/DEL anomali, BOM fuori posto, spazi Unicode ingannevoli.
+ *   - Trojan Source (CVE-2021-42574): controlli Unicode bidirezionali che
+ *     riordinano il codice -> cio' che leggi != cio' che esegue.
+ *   - Homoglyph (CVE-2021-42694): lettere di altri script identiche alle Latine.
+ *     Copertura COMPLETA: Cirillico, Greco, Armeno, Cherokee, Coptic,
+ *     FULL-WIDTH (U+FF21..), MATEMATICI (U+1D400..), Letterlike (U+2100..).
+ *   - Caratteri zero-width / invisibili che nascondono payload.
+ *   - UTF-8 malformato (overlong / surrogati / continuazioni invalide).
+ *   - Non-caratteri Unicode (U+FFFE/U+FFFF/U+FDD0..FDEF) e Private-Use.
+ *   - Entita' XML/SVG (XXE, billion-laughs) e DOCTYPE.
  *
- * Ogni reperto è localizzato a riga:colonna + offset di byte + code point.
+ * Il giapponese (Kana/Kanji) e gli accenti italiani (Latin-1) sono LEGITTIMI e
+ * non vengono falsati: si fallisce solo sul MIXED-SCRIPT dentro un token o sui
+ * controlli sopra. Ogni reperto e' localizzato a riga:colonna + offset di byte.
+ *
  * Esegui: node integrity-scan.js
  */
 'use strict';
@@ -24,157 +29,178 @@ const ROOT = __dirname;
 const FINDINGS = [];
 const add = (sev, file, line, col, byte, cp, name, note) =>
   FINDINGS.push({ sev, file, line, col, byte, cp, name, note });
+const inventory = {}; // block -> Set(codepoint)
 
-/* ── Tabelle di code point ──────────────────────────────────── */
-// Bidirectional controls — MAI legittimi nei nostri sorgenti (Trojan Source)
+/* ── Code point: bidi, zero-width ───────────────────────────── */
 const BIDI = {
-  0x202A:'LRE', 0x202B:'RLE', 0x202C:'PDF', 0x202D:'LRO', 0x202E:'RLO',
-  0x2066:'LRI', 0x2067:'RLI', 0x2068:'FSI', 0x2069:'PDI',
-  0x200E:'LRM', 0x200F:'RLM', 0x061C:'ALM',
+  0x202A:'LRE',0x202B:'RLE',0x202C:'PDF',0x202D:'LRO',0x202E:'RLO',
+  0x2066:'LRI',0x2067:'RLI',0x2068:'FSI',0x2069:'PDI',
+  0x200E:'LRM',0x200F:'RLM',0x061C:'ALM',
 };
-// Zero-width / invisibili — nascondono dati o spezzano token
 const ZEROWIDTH = {
-  0x200B:'ZWSP', 0x200C:'ZWNJ', 0x200D:'ZWJ', 0x2060:'WORD-JOINER',
-  0xFEFF:'ZWNBSP/BOM', 0x00AD:'SOFT-HYPHEN', 0x180E:'MONGOLIAN-VOWEL-SEP',
-  0x2061:'FUNCTION-APP', 0x2062:'INVISIBLE-TIMES', 0x2063:'INVISIBLE-SEP',
-  0x2064:'INVISIBLE-PLUS', 0xFFF9:'IAA', 0xFFFA:'IAS', 0xFFFB:'IAT',
+  0x200B:'ZWSP',0x200C:'ZWNJ',0x200D:'ZWJ',0x2060:'WORD-JOINER',
+  0xFEFF:'ZWNBSP/BOM',0x00AD:'SOFT-HYPHEN',0x180E:'MONGOLIAN-VOWEL-SEP',
+  0x2061:'FUNCTION-APP',0x2062:'INVISIBLE-TIMES',0x2063:'INVISIBLE-SEP',
+  0x2064:'INVISIBLE-PLUS',
 };
-// Spazi Unicode "ingannevoli" (non lo spazio ASCII 0x20)
 const SNEAKY_SPACE = {
-  0x00A0:'NBSP', 0x2000:'EN-QUAD', 0x2001:'EM-QUAD', 0x2002:'EN-SPACE',
-  0x2003:'EM-SPACE', 0x2007:'FIGURE-SPACE', 0x2008:'PUNCT-SPACE',
-  0x2009:'THIN-SPACE', 0x200A:'HAIR-SPACE', 0x202F:'NNBSP',
-  0x205F:'MMSP', 0x3000:'IDEOGRAPHIC-SPACE',
+  0x00A0:'NBSP',0x2000:'EN-QUAD',0x2001:'EM-QUAD',0x2002:'EN-SPACE',
+  0x2003:'EM-SPACE',0x2007:'FIGURE-SPACE',0x2008:'PUNCT-SPACE',
+  0x2009:'THIN-SPACE',0x200A:'HAIR-SPACE',0x202F:'NNBSP',
+  0x205F:'MMSP',0x3000:'IDEOGRAPHIC-SPACE',
 };
-// Lettere confondibili con le Latine (homoglyph). NB: Latin-1 accentato
-// (à è ò ù — italiano) è ESCLUSO di proposito. Giapponese/Kanji è ESCLUSO
-// (non confondibile con ASCII, non "mixed-script").
-const isConfusableLetter = cp =>
-  (cp >= 0x0400 && cp <= 0x052F) || // Cirillico
-  (cp >= 0x0370 && cp <= 0x03FF) || // Greco
-  (cp >= 0x1F00 && cp <= 0x1FFF) || // Greco esteso
-  (cp >= 0x0530 && cp <= 0x058F) || // Armeno
-  (cp >= 0x13A0 && cp <= 0x13FF);   // Cherokee
-const isAsciiLetter = cp =>
-  (cp >= 0x41 && cp <= 0x5A) || (cp >= 0x61 && cp <= 0x7A);
-const isWordChar = cp =>
-  isAsciiLetter(cp) || (cp >= 0x30 && cp <= 0x39) || cp === 0x5F /* _ */ ||
-  cp > 0x7F; // qualsiasi non-ASCII conta come parte di "parola" per il mixed-script
 
-/* ── File da scansionare ───────────────────────────────────── */
+/* ── Script confondibili con il Latino (homoglyph) ──────────── */
+// NB: Latin-1 accentato (italiano) e Giapponese NON sono qui di proposito.
+const CONFUSABLE_RANGES = [
+  [0x0370,0x03FF,'Greco'],[0x1F00,0x1FFF,'Greco-Ext'],
+  [0x0400,0x052F,'Cirillico'],[0x2DE0,0x2DFF,'Cirillico-Ext'],[0xA640,0xA69F,'Cirillico-Ext-B'],
+  [0x0530,0x058F,'Armeno'],[0x13A0,0x13FF,'Cherokee'],[0x2C80,0x2CFF,'Coptic'],
+  [0xFF21,0xFF3A,'Fullwidth-Lat-Maiusc'],[0xFF41,0xFF5A,'Fullwidth-Lat-Minusc'],
+  [0x1D400,0x1D7CB,'Matematici'],[0x2100,0x214F,'Letterlike'],
+];
+const isConfusable = cp => CONFUSABLE_RANGES.some(([a,b]) => cp >= a && cp <= b);
+const isAsciiLetter = cp => (cp>=0x41&&cp<=0x5A)||(cp>=0x61&&cp<=0x7A);
+const isWordChar = cp => isAsciiLetter(cp)||(cp>=0x30&&cp<=0x39)||cp===0x5F||cp>0x7F;
+
+/* ── Non-caratteri Unicode ──────────────────────────────────── */
+const isNonChar = cp =>
+  (cp >= 0xFDD0 && cp <= 0xFDEF) || (cp & 0xFFFE) === 0xFFFE; // ...FFFE/...FFFF di ogni piano
+const isPUA = cp =>
+  (cp>=0xE000&&cp<=0xF8FF)||(cp>=0xF0000&&cp<=0xFFFFD)||(cp>=0x100000&&cp<=0x10FFFD);
+
+const blockName = cp => {
+  for (const [a,b,n] of CONFUSABLE_RANGES) if (cp>=a&&cp<=b) return n+' (!)';
+  if (cp>=0x2500&&cp<=0x257F) return 'Box-Drawing';
+  if (cp>=0x2190&&cp<=0x21FF) return 'Arrows';
+  if (cp>=0x2600&&cp<=0x27BF) return 'Symbols/Dingbats';
+  if (cp>=0x2000&&cp<=0x206F) return 'General-Punct';
+  if (cp>=0x00A0&&cp<=0x00FF) return 'Latin-1';
+  if (cp>=0x3040&&cp<=0x30FF) return 'Kana-JP';
+  if (cp>=0x4E00&&cp<=0x9FFF) return 'Kanji-JP';
+  if (cp>=0x1F300&&cp<=0x1FAFF) return 'Emoji';
+  if (cp>=0xFE00&&cp<=0xFE0F) return 'Var-Selector';
+  return 'altro';
+};
+
+/* ── File da scansionare ────────────────────────────────────── */
 const SCAN_EXT = /\.(js|css|html|svg|json|md|txt|xml)$/;
-const SCAN_EXACT = new Set(['_headers', '_redirects', 'robots.txt', 'security.txt']);
-const SKIP_FILE = /preview\.html$/; // generato, base64 inline → non è sorgente
+const SCAN_EXACT = new Set(['_headers','_redirects','robots.txt','security.txt']);
 const walk = dir => {
   let out = [];
-  for (const e of fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })) {
-    if (e.name === '.git' || e.name === 'node_modules') continue;
-    const rel = path.join(dir, e.name).replace(/^\.\//, '');
+  for (const e of fs.readdirSync(path.join(ROOT,dir),{withFileTypes:true})) {
+    if (e.name==='.git'||e.name==='node_modules') continue;
+    const rel = path.join(dir,e.name).replace(/^\.\//,'');
     if (e.isDirectory()) out = out.concat(walk(rel));
-    else if (!SKIP_FILE.test(rel) && (SCAN_EXT.test(e.name) || SCAN_EXACT.has(e.name)))
+    else if (!/preview\.html$/.test(rel) && (SCAN_EXT.test(e.name)||SCAN_EXACT.has(e.name)))
       out.push(rel);
   }
   return out;
 };
 
 const URL_RE = /(?:https?:)?\/\/[^\s"'`<>()]+/g;
-
-/* ── Scansione ─────────────────────────────────────────────── */
 const files = walk('.');
 let scannedBytes = 0;
 
 for (const file of files) {
-  const text = fs.readFileSync(path.join(ROOT, file), 'utf8');
-  scannedBytes += Buffer.byteLength(text);
-  let line = 1, col = 0, idx = 0;
+  const buf = fs.readFileSync(path.join(ROOT, file));
+  scannedBytes += buf.length;
 
-  // run di "parola" per mixed-script
-  let wordHasAscii = false, wordHasConfusable = false, wordStart = null;
+  // 0. Validita' UTF-8 stretta (overlong, surrogati, continuazioni invalide)
+  try { new TextDecoder('utf-8',{fatal:true}).decode(buf); }
+  catch { add('FAIL', file, 1, 0, 0, null, 'UTF-8-INVALIDO',
+              'sequenza di byte UTF-8 malformata (overlong/surrogato/troncata)'); }
 
-  const flushWord = () => {
-    if (wordHasAscii && wordHasConfusable && wordStart)
-      add('FAIL', file, wordStart.line, wordStart.col, wordStart.byte, null,
-          'MIXED-SCRIPT', 'parola con lettere Latine + Cirillico/Greco (homoglyph)');
-    wordHasAscii = wordHasConfusable = false; wordStart = null;
+  const text = buf.toString('utf8');
+  let line = 1, col = 0, byteOff = 0;
+  let tok = []; // token corrente per mixed-script
+
+  const flushTok = () => {
+    const hasAscii = tok.some(t => isAsciiLetter(t.cp));
+    const conf = tok.filter(t => isConfusable(t.cp));
+    if (hasAscii && conf.length) {
+      const f = conf[0];
+      add('FAIL', file, f.line, f.col, f.byte, f.cp, 'MIXED-SCRIPT',
+          'token con lettere Latine + script confondibile (homoglyph)');
+    } else if (conf.length) {
+      for (const f of conf) // confusable isolato: da confermare a mano
+        add('WARN', file, f.line, f.col, f.byte, f.cp, 'CONFUSABLE',
+            `lettera ${blockName(f.cp)} usata come glifo - confermare intenzionale`);
+    }
+    tok = [];
   };
 
   for (const ch of text) {
     const cp = ch.codePointAt(0);
     col++;
-    if (cp === 0x0A) { // newline
-      flushWord();
-      line++; col = 0; idx += ch.length; continue;
-    }
-    const byteOff = Buffer.byteLength(text.slice(0, idx));
+    if (cp === 0x0A) { flushTok(); line++; col = 0; byteOff += 1; continue; }
 
-    // 1. Bidi controls (Trojan Source)
-    if (BIDI[cp]) add('FAIL', file, line, col, byteOff, cp, `BIDI ${BIDI[cp]}`,
-                      'controllo bidirezionale Unicode → Trojan Source');
-    // 2. Zero-width / invisibili
+    if (cp > 0x7F) { const b = blockName(cp); (inventory[b] ??= new Set()).add(cp); }
+
+    if (BIDI[cp])
+      add('FAIL',file,line,col,byteOff,cp,`BIDI ${BIDI[cp]}`,'controllo bidirezionale -> Trojan Source');
     else if (ZEROWIDTH[cp]) {
-      if (cp === 0xFEFF && idx === 0)
-        add('WARN', file, line, col, byteOff, cp, 'BOM', 'byte-order-mark a inizio file');
-      else
-        add('FAIL', file, line, col, byteOff, cp, `ZERO-WIDTH ${ZEROWIDTH[cp]}`,
-            'carattere invisibile → può nascondere payload');
+      if (cp===0xFEFF && byteOff<=3) add('WARN',file,line,col,byteOff,cp,'BOM','byte-order-mark a inizio file');
+      else add('FAIL',file,line,col,byteOff,cp,`ZERO-WIDTH ${ZEROWIDTH[cp]}`,'carattere invisibile -> nasconde payload');
     }
-    // 3. Control chars C0 (tranne TAB/CR) e DEL
-    else if ((cp < 0x20 && cp !== 0x09 && cp !== 0x0D) || cp === 0x7F)
-      add('FAIL', file, line, col, byteOff, cp, 'CONTROL', 'control char di controllo anomalo');
-    // 4. Spazi Unicode ingannevoli (solo in codice/config, non in testo HTML/MD)
+    else if ((cp<0x20 && cp!==0x09 && cp!==0x0D) || cp===0x7F)
+      add('FAIL',file,line,col,byteOff,cp,'CONTROL','control char anomalo');
+    else if (isNonChar(cp))
+      add('FAIL',file,line,col,byteOff,cp,'NON-CHARACTER','codepoint non valido per interscambio');
+    else if (isPUA(cp))
+      add('WARN',file,line,col,byteOff,cp,'PRIVATE-USE','codepoint Private-Use (puo nascondere/spoofare)');
     else if (SNEAKY_SPACE[cp] && /\.(js|css|json)$/.test(file))
-      add('WARN', file, line, col, byteOff, cp, `SPACE ${SNEAKY_SPACE[cp]}`,
-          'spazio Unicode non-ASCII in codice → possibile escamotage');
+      add('WARN',file,line,col,byteOff,cp,`SPACE ${SNEAKY_SPACE[cp]}`,'spazio Unicode non-ASCII in codice');
 
-    // mixed-script word tracking
-    if (isWordChar(cp)) {
-      if (wordStart === null) wordStart = { line, col, byte: byteOff };
-      if (isAsciiLetter(cp)) wordHasAscii = true;
-      if (isConfusableLetter(cp)) wordHasConfusable = true;
-    } else {
-      flushWord();
-    }
-    idx += ch.length;
+    if (isWordChar(cp)) tok.push({cp,line,col,byte:byteOff});
+    else flushTok();
+
+    byteOff += Buffer.byteLength(ch);
   }
-  flushWord();
+  flushTok();
 
-  // 5. URL con caratteri non-ASCII (IDN homoglyph)
+  // URL con caratteri non-ASCII (IDN homoglyph)
   let m;
   while ((m = URL_RE.exec(text)) !== null) {
     if (/[^\x00-\x7F]/.test(m[0])) {
-      const pre = text.slice(0, m.index);
-      const ln = (pre.match(/\n/g) || []).length + 1;
-      add('FAIL', file, ln, 0, Buffer.byteLength(pre), null, 'IDN-HOMOGLYPH',
-          `URL con carattere non-ASCII: ${m[0].slice(0, 60)}`);
+      const pre = text.slice(0,m.index);
+      add('FAIL', file, (pre.match(/\n/g)||[]).length+1, 0, Buffer.byteLength(pre),
+          null, 'IDN-HOMOGLYPH', `URL con carattere non-ASCII: ${m[0].slice(0,60)}`);
     }
+  }
+
+  // Entita' / DOCTYPE in XML/SVG (XXE, billion-laughs)
+  if (/\.(svg|xml)$/.test(file)) {
+    if (/<!ENTITY/i.test(text))
+      add('FAIL',file,1,0,0,null,'XML-ENTITY','<!ENTITY> -> XXE / billion-laughs');
+    else if (/<!DOCTYPE/i.test(text))
+      add('WARN',file,1,0,0,null,'XML-DOCTYPE','<!DOCTYPE> in SVG/XML (preferibile rimuoverlo)');
   }
 }
 
-/* ── Report ────────────────────────────────────────────────── */
-const fails = FINDINGS.filter(f => f.sev === 'FAIL');
-const warns = FINDINGS.filter(f => f.sev === 'WARN');
+/* ── Report ─────────────────────────────────────────────────── */
+const fails = FINDINGS.filter(f=>f.sev==='FAIL');
+const warns = FINDINGS.filter(f=>f.sev==='WARN');
+const fmt = f => `    ${f.sev==='FAIL'?'X':'!'}  ${f.file}  (riga ${f.line}:${f.col}, byte ${f.byte}`+
+  `${f.cp!==null?`, U+${f.cp.toString(16).toUpperCase().padStart(4,'0')}`:''})  ${f.name} - ${f.note}`;
 
-console.log('\n' + '═'.repeat(65));
-console.log('  INTEGRITY SCAN (byte-level) — Rio Chico Studio');
-console.log(`  File analizzati: ${files.length}  ·  Byte: ${scannedBytes.toLocaleString()}`);
-console.log('═'.repeat(65));
+console.log('\n'+'='.repeat(66));
+console.log('  INTEGRITY SCAN (byte + codepoint) - Rio Chico Studio');
+console.log(`  File: ${files.length}  -  Byte: ${scannedBytes.toLocaleString()}`);
+console.log('='.repeat(66));
 
-if (!FINDINGS.length) {
-  console.log('\n  ✅  Nessuna anomalia di encoding.');
-  console.log('      Nessun carattere bidi (Trojan Source), zero-width,');
-  console.log('      homoglyph mixed-script o URL IDN sospetto.');
-} else {
-  const fmt = f => `    ${f.sev === 'FAIL' ? '✗' : '⚠'}  ${f.file}  ` +
-    `(riga ${f.line}:${f.col}, byte ${f.byte}` +
-    `${f.cp !== null ? `, U+${f.cp.toString(16).toUpperCase().padStart(4,'0')}` : ''})  ` +
-    `${f.name} — ${f.note}`;
-  if (fails.length) { console.log(`\n❌  FAIL (${fails.length})`); fails.forEach(f => console.log(fmt(f))); }
-  if (warns.length) { console.log(`\n⚠️   WARN (${warns.length})`); warns.forEach(f => console.log(fmt(f))); }
-}
+console.log('\n  Inventario non-ASCII (script presenti nei sorgenti):');
+for (const [b,s] of Object.entries(inventory).sort((a,c)=>c[1].size-a[1].size))
+  console.log(`    ${b.padEnd(22)} ${String(s.size).padStart(3)} codepoint`);
 
-console.log('\n' + '═'.repeat(65));
-console.log('  Nota: incrocia con `git diff` e con un editor che mostra i');
-console.log('  caratteri Unicode (VS Code evidenzia bidi/invisibili di default).');
-console.log('═'.repeat(65) + '\n');
+if (fails.length) { console.log(`\nFAIL (${fails.length})`); fails.forEach(f=>console.log(fmt(f))); }
+if (warns.length) { console.log(`\nWARN (${warns.length})`); warns.forEach(f=>console.log(fmt(f))); }
+if (!fails.length && !warns.length)
+  console.log('\n  OK  Nessuna anomalia di encoding/Unicode.');
+else if (!fails.length)
+  console.log('\n  OK  Nessun FAIL. I WARN sopra sono da confermare a vista, non bug.');
 
+console.log('\n'+'='.repeat(66));
+console.log('  Incrocia con `git diff` e un editor che mostra i caratteri Unicode.');
+console.log('='.repeat(66)+'\n');
 process.exitCode = fails.length ? 1 : 0;

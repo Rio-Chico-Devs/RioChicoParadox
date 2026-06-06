@@ -192,20 +192,49 @@ Per ogni opera, prima di committare in `assets/img/`:
 | H5 | **Harvest-Now-Decrypt-Later / quantistico** | ✅⚙️ | Cloudflare fa **già** key-exchange ibrido post-quantistico **X25519MLKEM768** in automatico (>60% del traffico umano nel 2026). **Onestà:** il contenuto del sito è *pubblico*, quindi registrarlo cifrato oggi è inutile. HNDL conta per il **control plane** (login GitHub/Cloudflare, **la tua email** con i dettagli di pagamento): lì la protezione dipende dal browser + dai provider, non da noi. |
 | H6 | **Side-channel** (timing, CRIME/BREACH, Spectre) | ✅ N/A | CRIME/BREACH richiedono un *segreto riflesso* nella risposta: noi non abbiamo segreti né riflessione. Spectre/cross-origin: `Cross-Origin-Opener-Policy: same-origin` isola il contesto. Nessun dato sensibile in pagina = niente da esfiltrare via timing. |
 
-## I. Integrità byte-level / encoding  🔧 (`node integrity-scan.js`)
+## I. Integrità byte-level / Unicode / encoding  🔧 (`node integrity-scan.js`)
 
 | # | Vettore | Stato | Contromisura |
 |---|---|---|---|
-| I1 | **Trojan Source** — Unicode bidi che riordina il codice (CVE-2021-42574) | 🔧 | Scanner byte-level: FAIL su qualsiasi carattere bidi (LRE/RLO/LRI…) |
-| I2 | **Homoglyph** in identificatori/URL — Cirillico/Greco (CVE-2021-42694) | 🔧 | Scanner: rileva parole mixed-script e URL con caratteri non-ASCII (IDN) |
-| I3 | **Caratteri invisibili / zero-width** che nascondono payload | 🔧 | Scanner: FAIL su ZWSP/ZWNJ/word-joiner/soft-hyphen ecc. |
-| I4 | **Encoding confusion** (UTF-16/overlong/BOM ingannano i tool) | 🔧✅ | Scanner trova i null-byte. *Già successo:* `README.md` era UTF-16 → convertito a UTF-8 |
-| I5 | **Integrità dei commit** (chi ha scritto davvero questo?) | ⚙️ | Firma i commit (SSH/GPG), GitHub mostra "Verified". Difende dalla falsificazione dell'autore |
+| I1 | **Trojan Source** — Unicode bidi che riordina il codice (CVE-2021-42574) | 🔧 | FAIL su qualsiasi controllo bidi (LRE/RLE/PDF/LRO/RLO/LRI/RLI/FSI/PDI/LRM/RLM/ALM) |
+| I2 | **Homoglyph** — lettere di altri script identiche alle Latine (CVE-2021-42694) | 🔧 | **Copertura completa**: Cirillico, Greco, Armeno, Cherokee, Coptic, Full-width (U+FF21…), Matematici (U+1D400…), Letterlike (U+2100…). FAIL su mixed-script in un token; WARN sul confusable isolato |
+| I3 | **Caratteri invisibili / zero-width** | 🔧 | FAIL su ZWSP/ZWNJ/ZWJ/word-joiner/soft-hyphen/invisible-times… |
+| I4 | **UTF-8 malformato** (overlong, surrogati, continuazioni invalide) | 🔧 | Decodifica **fatal** byte-per-byte: FAIL su ogni sequenza non valida |
+| I5 | **Encoding confusion** (UTF-16/BOM ingannano i tool che assumono UTF-8) | 🔧✅ | Trova i null-byte. *Già successo:* `README.md` era UTF-16 → convertito |
+| I6 | **Non-caratteri / Private-Use** (U+FFFE, U+FDD0–FDEF, PUA) | 🔧 | FAIL sui non-caratteri, WARN sul Private-Use (può spoofare via icon-font) |
+| I7 | **IDN homoglyph negli URL** (dominio sosia in `href`/`src`) | 🔧 | FAIL su qualsiasi URL con carattere non-ASCII |
+| I8 | **Entità XML/SVG** (XXE, billion-laughs) | 🔧 | FAIL su `<!ENTITY>`, WARN su `<!DOCTYPE>` nei file `.svg`/`.xml` |
+| I9 | **Integrità dei commit** (chi ha scritto davvero?) | ⚙️ | Firma i commit (SSH/GPG) → GitHub "Verified" |
 
-> Questo è il livello "bit per bit / shifting / escamotage" che chiedevi: un'AI
-> compromessa potrebbe nascondere una backdoor con caratteri invisibili che
-> passano la review umana. `integrity-scan.js` scandisce **ogni byte** e li
-> stana, con riga:colonna + offset.
+Lo scanner stampa anche un **inventario trasparente** di ogni script non-ASCII
+presente (Kana giapponese, Latin-1 italiano, frecce, box-drawing…), così
+**nessun carattere resta inspiegato**. Il giapponese e gli accenti italiani sono
+riconosciuti come legittimi; fallisce solo su ciò che è oggettivamente anomalo.
+
+> Questo è il livello "bit per bit / shifting / codifica lingue" che chiedevi.
+> *Prova sul campo:* l'inventario ha scovato un Cirillico `U+0430` rimasto vivo
+> in un commento — invisibile alla review, preso dal controllo codepoint.
+
+## L. Fondamenta del runtime — la "natura madre"
+
+I linguaggi in cui sono scritti gli strumenti, i parser e i protocolli sono lo
+strato più profondo. Onestà: **non possiamo patcharli**, ma le nostre scelte
+determinano quanto ci esponiamo.
+
+| # | Vettore | Stato | Analisi onesta |
+|---|---|---|---|
+| L1 | **Memory-unsafety C/C++** sotto i decoder immagine (libwebp **CVE-2023-4863**, heap overflow → RCE da un'immagine), font-rasterizer (FreeType), zlib | 🟡 | Un'immagine malevola può sfruttare il decoder del **visitatore** (fuori dal nostro controllo: dipende dalle patch del suo browser) **e** il nostro tool di conversione. Mitigazione: **ri-encodiamo** l'arte (rompe i payload), formati mainstream, tool aggiornati, idealmente conversione in sandbox |
+| L2 | **Parser XML/SVG** (espansione entità, namespace confusion) | ✅🔧 | SVG solo raster per l'arte + `integrity-scan` blocca `<!ENTITY>`/`<!DOCTYPE>` |
+| L3 | **Charset sniffing** del browser (storico UTF-7 XSS) | ✅ | `<meta charset="UTF-8">` nei primi byte + `X-Content-Type-Options: nosniff`; Cloudflare serve `charset=utf-8` |
+| L4 | **Normalizzazione Unicode** (NFC vs NFD: stessa stringa, byte diversi) | ✅ | Nomi file e path **solo ASCII** → nessun mismatch NFC/NFD (problema tipico macOS) né ambiguità nei confronti |
+| L5 | **Parsing dei protocolli** (HTTP/1.1 vs 2 vs 3, CRLF/header injection, desync) | ✅⚙️ | Nessun valore di header deriva da input (niente CRLF-injection); HTTP/2-3 e anti-desync sono gestiti dall'edge Cloudflare; nessun origin nostro da desincronizzare |
+| L6 | **Runtime dei nostri tool** (Node/V8 per audit e build) | ✅ | Gli script leggono solo i nostri file del repo; `build-preview` fa base64 (non *decodifica* immagini) → nessuna superficie di parsing su input ostile |
+
+> In sintesi sulla "natura madre": il rischio non azzerabile è **L1** (un bug
+> 0-day in un decoder C/C++ del browser del visitatore). Non è nostro da
+> patchare, ma lo riduciamo ri-encodando ogni immagine e non servendo mai
+> formati esotici o SVG non fidati. Tutto il resto a questo strato è chiuso
+> dalle nostre scelte (solo-ASCII nei path, niente input riflesso, statico).
 
 ## J. Privacy del visitatore / data-mining  (dovere etico + GDPR)
 

@@ -263,6 +263,12 @@ httpRefs.length
   ? warn(`HTML: ${httpRefs.length} riferimento HTTP non-sicuro (upgrade-insecure-requests mitiga, ma meglio aggiornare a https://)`)
   : pass('HTML: nessun riferimento HTTP in chiaro — tutto HTTPS o relativo');
 
+// Charset dichiarato presto (anti charset-sniffing / UTF-7 XSS storico)
+const charsetPos = html.search(/<meta\s+charset\s*=\s*["']?utf-8/i);
+(charsetPos >= 0 && charsetPos < 1024)
+  ? pass('HTML: <meta charset="UTF-8"> nei primi byte → nessun charset-sniffing')
+  : fail('HTML: <meta charset utf-8> mancante o oltre i 1024 byte → rischio charset-sniffing');
+
 /* ═══════════════════════════════════════════════════════════
    4. .gitignore — evitare commit accidentali di segreti
    ═══════════════════════════════════════════════════════════ */
