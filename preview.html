@@ -3941,7 +3941,7 @@ body.loaded .hero__scroll {
         <div class="social__cta-text">Commissioni Aperte</div>
         <div class="social__cta-sub">DM su Instagram o email per info e prezzi</div>
       </div>
-      <a class="btn btn--ghost btn--lg" href="mailto:tua@email.com">
+      <a class="btn btn--ghost btn--lg js-mailto" data-u="tua" data-d="email.com">
         Scrivimi <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
@@ -3998,8 +3998,8 @@ body.loaded .hero__scroll {
 
     <div class="social__email" data-r="up" data-rd="2">
       <span class="social__email-label">Oppure scrivimi direttamente</span>
-      <a class="social__email-address" href="mailto:tua@email.com">tua@email.com</a>
-      <a class="btn btn--primary btn--lg" href="mailto:tua@email.com">
+      <a class="social__email-address js-mailto" data-u="tua" data-d="email.com">tua[at]email.com</a>
+      <a class="btn btn--primary btn--lg js-mailto" data-u="tua" data-d="email.com">
         Invia Email <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
@@ -4273,6 +4273,13 @@ function animateCount(el) {
   }
   requestAnimationFrame(step);
 }
+
+/* ── EMAIL OBFUSCATION ──────────────────────────────────── */
+document.querySelectorAll('.js-mailto').forEach(el => {
+  const addr = el.dataset.u + '@' + el.dataset.d;
+  el.href = 'mailto:' + addr;
+  if (el.classList.contains('social__email-address')) el.textContent = addr;
+});
 
 /* ── KEYBOARD ───────────────────────────────────────────── */
 document.addEventListener('keydown', e => {

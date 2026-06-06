@@ -4,3 +4,9 @@ dist-single
 .vite
 *.local
 .DS_Store
+.env
+.env.*
+*.key
+*.pem
+*.p12
+secrets/

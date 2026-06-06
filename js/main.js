@@ -256,6 +256,13 @@ function animateCount(el) {
   requestAnimationFrame(step);
 }
 
+/* ── EMAIL OBFUSCATION ──────────────────────────────────── */
+document.querySelectorAll('.js-mailto').forEach(el => {
+  const addr = el.dataset.u + '@' + el.dataset.d;
+  el.href = 'mailto:' + addr;
+  if (el.classList.contains('social__email-address')) el.textContent = addr;
+});
+
 /* ── KEYBOARD ───────────────────────────────────────────── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
