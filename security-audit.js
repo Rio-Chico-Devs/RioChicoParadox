@@ -89,6 +89,52 @@ if (csp.match(/img-src[^;]*data:/))
 else
   pass("CSP img-src: nessun data: URI ammesso");
 
+/* ── CSS EXFILTRATION CHANNELS ─────────────────────────────
+   Attacco reale 2025 (@font-face + unicode-range / "Fontleak" /
+   "CSS Data Exfiltration to Steal OAuth Token"): con style-src
+   'unsafe-inline' un attaccante che inietta CSS può rubare dati
+   carattere-per-carattere SENZA JavaScript. Il canale di fuga NON
+   è connect-src (CSS non fa fetch) ma:
+     • background-image: url(evil)  → governato da img-src
+     • @font-face { src: url(evil) } → governato da font-src
+     • cursor / list-style url(evil) → governato da img-src
+   Difesa: img-src e font-src NON devono contenere un'origine
+   controllabile dall'attaccante (no wildcard, no https: generico).
+   ──────────────────────────────────────────────────────────── */
+const extractOrigins = dir => {
+  const m = csp.match(new RegExp(dir + "\\s+([^;]+)"));
+  if (!m) return [];
+  return m[1].trim().split(/\s+/);
+};
+// Origini considerate NON sfruttabili come canale di fuga:
+//  'self','none','data:' + i domini Google Fonts (i cui log l'attaccante non legge)
+const SAFE_ORIGINS = /^('self'|'none'|data:|https:\/\/fonts\.gstatic\.com|https:\/\/fonts\.googleapis\.com)$/;
+const exfilDirs = ['img-src', 'font-src', 'connect-src'];
+let exfilOpen = false;
+exfilDirs.forEach(dir => {
+  const origins = extractOrigins(dir);
+  const attackerUsable = origins.filter(o => {
+    if (SAFE_ORIGINS.test(o)) return false;
+    if (o === "'unsafe-inline'" || o === "'unsafe-eval'") return false; // non sono origini di rete
+    if (o === '*' ) return true;
+    if (/^https?:$/.test(o)) return true;       // schema generico = qualsiasi host
+    if (/^https?:\/\//.test(o)) return true;     // host esterno arbitrario
+    return false;
+  });
+  if (attackerUsable.length) {
+    exfilOpen = true;
+    fail(`CSP ${dir}: origine sfruttabile per CSS-exfiltration → ${attackerUsable.join(', ')}`);
+  }
+});
+if (!exfilOpen)
+  pass("CSP: canali CSS-exfiltration chiusi (img-src/font-src/connect-src senza origini attaccabili) → @font-face/Fontleak neutralizzato");
+
+// Nota: fonts.gstatic.com resta un'origine font ammessa. Non è
+// sfruttabile (Google, log non leggibili) ma self-hostare i font
+// e portare font-src a 'self' eliminerebbe anche il canale teorico.
+if (csp.includes('fonts.gstatic.com') || csp.includes('fonts.googleapis.com'))
+  warn("CSP: dipendenza esterna Google Fonts attiva. Self-hosting → font-src 'self' → superficie CSS-exfil = zero assoluto.");
+
 // Altri header
 headers.includes('X-Frame-Options: DENY')
   ? pass("X-Frame-Options: DENY — doppia protezione clickjacking (vecchi browser)")
@@ -264,6 +310,22 @@ if (R.FAIL.length) {
 
 const bar = '█'.repeat(Math.round(score / 5)) + '░'.repeat(20 - Math.round(score / 5));
 console.log(`\n  Punteggio: ${score}/100  [${bar}]`);
+console.log('═'.repeat(65));
+
+/* ── AVVERTENZA DI AUTO-ONESTÀ ───────────────────────────────
+   Questo script potrebbe essere stato scritto/modificato da una
+   AI compromessa: di per sé NON è una prova di sicurezza.
+   Va SEMPRE incrociato con validatori indipendenti di terze parti
+   (vedi SECURITY.md → "Verifica senza fidarti dell'AI"). */
+console.log(`
+  ⚠  NOTA: questo audit è uno strumento INTERNO. Non fidarti solo
+     di lui. Verifica gli header con validatori indipendenti che
+     nessuno qui controlla:
+       • https://securityheaders.com         (header HTTP)
+       • https://observatory.mozilla.org      (scan completo)
+       • https://csp-evaluator.withgoogle.com (analisi CSP)
+     E leggi ogni diff con:  git diff --staged
+`);
 console.log('═'.repeat(65) + '\n');
 
 process.exitCode = R.FAIL.length > 0 ? 1 : 0;
