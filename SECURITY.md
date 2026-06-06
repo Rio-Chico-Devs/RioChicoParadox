@@ -112,13 +112,26 @@ la CSP (`script-src 'self'`, `img-src 'self' data:`, `connect-src 'none'`)
 lo **bloccherebbe nel browser**. La sicurezza non dipende dalla buona fede di
 chi scrive il codice.
 
-### f) Checklist rapida prima di ogni merge
+### g) Scansione byte-level contro il codice "invisibile"
+Un'AI compromessa potrebbe nascondere una backdoor con caratteri Unicode
+invisibili o homoglyph (Cirillico che sembra Latino) che superano la review
+umana — è l'attacco *Trojan Source* (CVE-2021-42574). Difesa:
+```bash
+node integrity-scan.js      # scandisce OGNI byte: bidi, zero-width, homoglyph, IDN
+```
+Deve dare 0 FAIL. (Ha già scovato un `README.md` in UTF-16 e va eseguito a ogni
+modifica.) In più, VS Code evidenzia i caratteri bidi/invisibili di default.
+
+### h) Checklist rapida prima di ogni merge
 - [ ] Ho letto `git diff --staged` per intero?
 - [ ] Le modifiche riguardano SOLO ciò che ho chiesto?
 - [ ] Nessun nuovo `<script src=...>` esterno, `fetch`, `eval`, `innerHTML`?
 - [ ] Nessuna nuova dipendenza in `package.json`?
 - [ ] Nessun URL sconosciuto (esfiltrazione)?
-- [ ] `node security-audit.js` → 0 FAIL **e** securityheaders.com → A+?
+- [ ] `node security-audit.js` → 0 FAIL
+- [ ] `node integrity-scan.js` → 0 FAIL
+- [ ] securityheaders.com → A+ (validatore indipendente)
+- [ ] (opzionale) commit firmati "Verified" su GitHub
 
 ---
 

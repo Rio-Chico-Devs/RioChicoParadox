@@ -59,7 +59,7 @@ scriviamo noi e che l'audit verifica. Se mai serve un SVG esterno, va sanitizzat
 | C1 | DNS hijacking / cache poisoning (CVE-2025-40778 BIND) | ⚙️ | **DNSSEC** attivo sul dominio |
 | C2 | Domain hijacking (furto del dominio) | ⚙️ | **Registry/Registrar Lock** + 2FA sul registrar + WHOIS privacy |
 | C3 | Subdomain takeover / dangling DNS | ⚙️📋 | Rimuovere i record DNS *prima* di dismettere un servizio; mai il contrario |
-| C4 | Typosquatting / homograph (riochіco con la "і" cirillica) | ⚙️📋 | Monitoraggio lookalike + DMARC + (opz.) registrazione difensiva |
+| C4 | Typosquatting / homograph (dominio sosia con una lettera Cirillica/Greca che sembra Latina) | ⚙️📋 | Monitoraggio lookalike + DMARC + (opz.) registrazione difensiva |
 | **C5** | **Email spoofing → phishing dei tuoi clienti** | 🔧⚙️ | **SPF + DKIM + DMARC `p=reject`** (record pronti sotto) |
 
 **C5 è critico per te:** raccogli commissioni via email. Senza protezione,
@@ -166,6 +166,83 @@ Per ogni opera, prima di committare in `assets/img/`:
 | G1 | DDoS | ⚙️ | Cloudflare (vedi D7) |
 | G2 | Defacement via account compromesso | ⚙️ | 2FA ovunque (registrar, Cloudflare, GitHub) + branch protection |
 | G3 | Nessun canale di segnalazione vulnerabilità | 🔧 | `/.well-known/security.txt` (RFC 9116) |
+
+---
+
+---
+
+# TIER 2 — Analisi avanzata (rete, crittografia, byte-level, OPSEC)
+
+> A questo livello la verità è scomoda ma fondamentale: **i byte statici del
+> sito sono la parte MENO attaccabile** (pubblici, serviti da CDN, integri grazie
+> a TLS). Un attaccante professionale lo sa e **smette di attaccare l'HTML**.
+> Si sposta su: il *control plane* (chi può cambiare il sito), il *livello di
+> rete/crypto*, e *te*. Qui sotto, ogni voce con un giudizio **onesto** di
+> applicabilità — incluso "non si applica, ed ecco il motivo tecnico preciso",
+> perché fingere thoroughness è il contrario della sicurezza.
+
+## H. Rete / Trasporto / Crittografia
+
+| # | Vettore | Stato | Analisi onesta |
+|---|---|---|---|
+| H1 | **IP spoofing** (IP falsi) | ✅ N/A | Per *leggere* il sito serve l'handshake TCP + TLS: un IP sorgente falsificato non completa il 3-way handshake. Rilevante solo come amplificazione DDoS → assorbito da Cloudflare (anycast). A livello nostro: non sfruttabile. |
+| H2 | **Packet injection** (invio pacchetti on-path) | ✅ | TLS 1.3 usa cifratura **AEAD**: un pacchetto iniettato ha il MAC errato e viene scartato. Un on-path non può forgiare/alterare contenuto. Può solo tentare un RST (DoS) → Cloudflare. |
+| H3 | **BGP hijacking / route leak** | ⚙️ ereditato | Non possediamo IP/ASN: la rotta è l'anycast di Cloudflare, coperto dai loro **RPKI ROA**. Noi ereditiamo quella protezione + **DNSSEC** sul nome. Residuo: i *route leak* (RPKI non li copre) e il dirottamento via social-engineering del registrar → **Registry Lock**. |
+| H4 | **TLS downgrade / cipher debole** | ⚙️ | Cloudflare: **Full (Strict)**, **Min TLS 1.2**, TLS 1.3 ON, cifrari forward-secret. HSTS impedisce il downgrade a HTTP. |
+| H5 | **Harvest-Now-Decrypt-Later / quantistico** | ✅⚙️ | Cloudflare fa **già** key-exchange ibrido post-quantistico **X25519MLKEM768** in automatico (>60% del traffico umano nel 2026). **Onestà:** il contenuto del sito è *pubblico*, quindi registrarlo cifrato oggi è inutile. HNDL conta per il **control plane** (login GitHub/Cloudflare, **la tua email** con i dettagli di pagamento): lì la protezione dipende dal browser + dai provider, non da noi. |
+| H6 | **Side-channel** (timing, CRIME/BREACH, Spectre) | ✅ N/A | CRIME/BREACH richiedono un *segreto riflesso* nella risposta: noi non abbiamo segreti né riflessione. Spectre/cross-origin: `Cross-Origin-Opener-Policy: same-origin` isola il contesto. Nessun dato sensibile in pagina = niente da esfiltrare via timing. |
+
+## I. Integrità byte-level / encoding  🔧 (`node integrity-scan.js`)
+
+| # | Vettore | Stato | Contromisura |
+|---|---|---|---|
+| I1 | **Trojan Source** — Unicode bidi che riordina il codice (CVE-2021-42574) | 🔧 | Scanner byte-level: FAIL su qualsiasi carattere bidi (LRE/RLO/LRI…) |
+| I2 | **Homoglyph** in identificatori/URL — Cirillico/Greco (CVE-2021-42694) | 🔧 | Scanner: rileva parole mixed-script e URL con caratteri non-ASCII (IDN) |
+| I3 | **Caratteri invisibili / zero-width** che nascondono payload | 🔧 | Scanner: FAIL su ZWSP/ZWNJ/word-joiner/soft-hyphen ecc. |
+| I4 | **Encoding confusion** (UTF-16/overlong/BOM ingannano i tool) | 🔧✅ | Scanner trova i null-byte. *Già successo:* `README.md` era UTF-16 → convertito a UTF-8 |
+| I5 | **Integrità dei commit** (chi ha scritto davvero questo?) | ⚙️ | Firma i commit (SSH/GPG), GitHub mostra "Verified". Difende dalla falsificazione dell'autore |
+
+> Questo è il livello "bit per bit / shifting / escamotage" che chiedevi: un'AI
+> compromessa potrebbe nascondere una backdoor con caratteri invisibili che
+> passano la review umana. `integrity-scan.js` scandisce **ogni byte** e li
+> stana, con riga:colonna + offset.
+
+## J. Privacy del visitatore / data-mining  (dovere etico + GDPR)
+
+| # | Vettore | Stato | Contromisura |
+|---|---|---|---|
+| J1 | **Google Fonts → leak IP visitatore** (multa GDPR reale in Germania) | 🔧📋 | **Self-hostare i font** = priorità #1. Rimuove l'IP-leak, la dipendenza esterna e il canale CSS-exfil teorico (3 problemi, 1 mossa) |
+| J2 | **Browser fingerprinting** | ✅ | Non profiliamo: zero analytics, zero tracker, zero cookie. Non raccogliamo nulla del visitatore |
+| J3 | Referrer leakage | ✅ | `Referrer-Policy: strict-origin-when-cross-origin` |
+| J4 | Script/cookie di terze parti | ✅ | Zero. L'unica risorsa esterna sono i font (vedi J1) |
+| J5 | Bot tracking/scraping dei visitatori | ✅ N/A | Non tracciamo: non c'è nulla da rubare. Il nostro dovere è *non abilitare* il tracking altrui → J1 |
+
+## K. Control plane / OPSEC  ⚙️ (il vero bersaglio a questo livello)
+
+A questo punto l'attaccante non "buca l'HTML": prova a **diventare te**. Questo è
+il rischio reale residuo, ed è quasi tutto fuori dal codice.
+
+| # | Vettore | Stato | Contromisura |
+|---|---|---|---|
+| K1 | Account takeover (Cloudflare / GitHub / registrar / email) | ⚙️ | **2FA con passkey/security-key hardware** ovunque (non SMS), password uniche, email dedicata e protetta |
+| K2 | Compromissione del **tuo dispositivo** (dove vivono le chiavi) | ⚙️📋 | Disco cifrato, OS aggiornato, niente software pirata/crackato, attenzione agli allegati |
+| K3 | Furto di sessione/token della dashboard | ⚙️ | Sessioni brevi, logout, hardware key che lega la sessione |
+| K4 | Social engineering del supporto registrar | ⚙️ | **Registry Lock** (sblocco solo out-of-band) + PIN telefonico |
+| K5 | Supply chain dei *tuoi* strumenti (export Procreate, editor) | 📋 | Tienili aggiornati; esporta arte in raster e fai strip EXIF |
+
+## Rischio residuo — onestà finale
+
+Nessun sistema è sicuro al 100%, e chi te lo dice mente. Restano fuori dal nostro
+controllo, con probabilità bassa ma non nulla:
+
+- **0-day nel browser del visitatore** o nell'edge di Cloudflare (mitigato: patch continue del vendor, ma non azzerabile da noi).
+- **Stato-nazione** che combina BGP + coercizione di una CA (mitigato da CAA + Certificate Transparency logs + DNSSEC, **non eliminato**).
+- **Compulsione fisica/legale** sui tuoi account (mitigato da Registry Lock + 2FA, ma è un limite umano, non tecnico).
+
+La strategia corretta non è "rendere impossibile l'attacco" (irraggiungibile) ma
+**alzare il costo finché supera di molto il valore del bersaglio** — per un
+portfolio d'arte, il costo che abbiamo imposto è già sproporzionato rispetto a
+qualsiasi incentivo realistico.
 
 ---
 
