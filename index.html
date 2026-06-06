@@ -173,7 +173,7 @@
         <div class="art-wheel__card" style="--item-i:0">
           <span class="ph-flag">placeholder</span>
           <img src="assets/img/ph-gallery-01.svg" alt="Artwork 01"
-               width="280" height="420" loading="eager" />
+               width="280" height="420" loading="lazy" decoding="async" />
           <span class="art-wheel__num" aria-hidden="true">01</span>
         </div>
 
@@ -181,7 +181,7 @@
         <div class="art-wheel__card" style="--item-i:1">
           <span class="ph-flag">placeholder</span>
           <img src="assets/img/ph-char-01.svg" alt="Personaggio 01"
-               width="280" height="420" loading="lazy" />
+               width="280" height="420"  loading="lazy" decoding="async" />
           <span class="art-wheel__num" aria-hidden="true">02</span>
         </div>
 
@@ -189,7 +189,7 @@
         <div class="art-wheel__card is-active" style="--item-i:2">
           <span class="ph-flag">placeholder</span>
           <img src="assets/img/ph-gallery-04.svg" alt="Artwork 03"
-               width="280" height="420" loading="eager" />
+               width="280" height="420" loading="eager" fetchpriority="high" decoding="sync" />
           <span class="art-wheel__num" aria-hidden="true">03</span>
         </div>
 
@@ -197,7 +197,7 @@
         <div class="art-wheel__card" style="--item-i:3">
           <span class="ph-flag">placeholder</span>
           <img src="assets/img/ph-char-02.svg" alt="Personaggio 02"
-               width="280" height="420" loading="lazy" />
+               width="280" height="420"  loading="lazy" decoding="async" />
           <span class="art-wheel__num" aria-hidden="true">04</span>
         </div>
 
@@ -282,7 +282,7 @@
     <div class="gallery__strips" aria-label="Opere in evidenza">
 
       <a class="gallery__strip" href="#gallery" data-r="up">
-        <img class="gallery__strip-img" src="assets/img/ph-gallery-01.svg" alt="" aria-hidden="true" />
+        <img class="gallery__strip-img" src="assets/img/ph-gallery-01.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="gallery__strip-info">
           <span class="gallery__strip-title">Personaggio Originale</span>
           <span class="gallery__strip-cat">OC · Character Design · 2024</span>
@@ -292,7 +292,7 @@
       </a>
 
       <a class="gallery__strip" href="#gallery" data-r="up" data-rd="1">
-        <img class="gallery__strip-img" src="assets/img/ph-gallery-03.svg" alt="" aria-hidden="true" />
+        <img class="gallery__strip-img" src="assets/img/ph-gallery-03.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="gallery__strip-info">
           <span class="gallery__strip-title">Studio di Carattere</span>
           <span class="gallery__strip-cat">Fanart · Illustrazione · 2024</span>
@@ -302,7 +302,7 @@
       </a>
 
       <a class="gallery__strip" href="#gallery" data-r="up" data-rd="2">
-        <img class="gallery__strip-img" src="assets/img/ph-gallery-07.svg" alt="" aria-hidden="true" />
+        <img class="gallery__strip-img" src="assets/img/ph-gallery-07.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="gallery__strip-info">
           <span class="gallery__strip-title">Serie Illustrata</span>
           <span class="gallery__strip-cat">Artwork · Sketch · 2024</span>
@@ -324,7 +324,7 @@
     <div class="gallery__grid">
 
       <article class="gallery__card" data-category="oc" data-r="clip-up">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-01.svg" alt="Artwork 01 — OC protagonist" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-01.svg" alt="Artwork 01 — OC protagonist"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">01</span>
         <span class="gallery__card-badge">Featured</span>
         <div class="gallery__card-overlay">
@@ -335,7 +335,7 @@
       </article>
 
       <article class="gallery__card" data-category="character" data-r="clip-up" data-rd="1">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-02.svg" alt="Artwork 02 — Character Design" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-02.svg" alt="Artwork 02 — Character Design"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">02</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Character Design</span>
@@ -345,7 +345,7 @@
       </article>
 
       <article class="gallery__card" data-category="fanart" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-03.svg" alt="Artwork 03 — Fanart" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-03.svg" alt="Artwork 03 — Fanart"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">03</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Fanart</span>
@@ -355,7 +355,7 @@
       </article>
 
       <article class="gallery__card" data-category="oc" data-r="clip-up" data-rd="1">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-04.svg" alt="Artwork 04 — OC" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-04.svg" alt="Artwork 04 — OC"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">04</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">OC</span>
@@ -365,7 +365,7 @@
       </article>
 
       <article class="gallery__card" data-category="sketch" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-05.svg" alt="Artwork 05 — Sketch" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-05.svg" alt="Artwork 05 — Sketch"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">05</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Sketch</span>
@@ -375,7 +375,7 @@
       </article>
 
       <article class="gallery__card" data-category="character" data-r="clip-up" data-rd="3">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-06.svg" alt="Artwork 06 — Character Design" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-06.svg" alt="Artwork 06 — Character Design"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">06</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Character Design</span>
@@ -385,7 +385,7 @@
       </article>
 
       <article class="gallery__card" data-category="fanart" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-07.svg" alt="Artwork 07 — Fanart" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-07.svg" alt="Artwork 07 — Fanart"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">07</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Fanart</span>
@@ -395,7 +395,7 @@
       </article>
 
       <article class="gallery__card" data-category="oc" data-r="clip-up" data-rd="3">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-08.svg" alt="Artwork 08 — OC" loading="lazy" />
+        <img class="gallery__card-img" src="assets/img/ph-gallery-08.svg" alt="Artwork 08 — OC"  loading="lazy" decoding="async" />
         <span class="gallery__card-num">08</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">OC</span>
@@ -496,6 +496,7 @@
       <img class="char-block__img" src="assets/img/ph-char-01.svg"
            alt="Personaggio OC 01 — Protagonista"
            width="420" height="600"
+           loading="lazy" decoding="async"
            data-r="boing-l" data-rd="1" />
       <!-- Float card personaggio -->
       <div class="char-float-card" data-r="boing" data-rd="3">
@@ -570,6 +571,7 @@
       <img class="char-block__img" src="assets/img/ph-char-02.svg"
            alt="Personaggio OC 02 — Stratega"
            width="420" height="600"
+           loading="lazy" decoding="async"
            data-r="boing-r" data-rd="1" />
       <div class="char-float-card" data-r="boing" data-rd="3">
         <div class="char-float-card__header">FILE · 002 · STRATEGA</div>
@@ -642,6 +644,7 @@
       <img class="char-block__img" src="assets/img/ph-char-03.svg"
            alt="Personaggio OC 03 — Antagonista"
            width="420" height="600"
+           loading="lazy" decoding="async"
            data-r="boing-l" data-rd="1" />
       <div class="char-float-card" data-r="boing" data-rd="3">
         <div class="char-float-card__header">FILE · 003 · ANTAGONISTA</div>

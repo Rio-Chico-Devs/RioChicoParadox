@@ -1,0 +1,40 @@
+/*
+  # ─────────────────────────────────────────────────────────
+  # Cloudflare Pages — HTTP Security Headers
+  # Deploy: commit this file at repo root, Cloudflare lo
+  # applica automaticamente a ogni risposta.
+  #
+  # TODO (sicurezza futura):
+  #   • Self-hostare i font (Bebas Neue, Inter) in assets/fonts/
+  #     → rimuovere fonts.googleapis.com e fonts.gstatic.com dalla CSP
+  #   • Aggiungere DNSSEC sul dominio via registrar
+  # ─────────────────────────────────────────────────────────
+
+  # Impedisce clickjacking (iframe embedding da altri siti)
+  X-Frame-Options: DENY
+
+  # Blocca MIME-type sniffing (protezione da upload malevoli se si aggiunge un backend)
+  X-Content-Type-Options: nosniff
+
+  # Limita le informazioni inviate nel Referer quando si clicca su link esterni
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Disabilita le API hardware non necessarie (microfono, camera, GPS ecc.)
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=()
+
+  # Forza HTTPS per 2 anni, incluse sotto-pagine; preload per HSTS preload list
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+  # ── Content Security Policy ──────────────────────────────
+  # Ogni origine è esplicita. Nessun wildcard (*).
+  #
+  # script-src 'self'          → solo js/main.js, zero JS inline o da CDN
+  # style-src  'unsafe-inline' → necessario per gli attributi style="" nell'HTML
+  #                              (custom properties --item-i, --char-accent, ecc.)
+  #                              + <noscript><style> fallback
+  #                              TODO: rimuovere spostando gli inline style in classi CSS
+  # img-src    data:           → SVG data-URI nel noise overlay (base.css)
+  # frame-ancestors 'none'     → moderno equivalente di X-Frame-Options (doppia protezione)
+  # form-action 'none'         → nessun <form> nel sito
+  # upgrade-insecure-requests  → il browser upgrada automaticamente http→https
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests

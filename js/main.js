@@ -264,12 +264,3 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ── CARD ANIMATION KEYFRAME ────────────────────────────── */
-const styleSheet = document.createElement('style');
-styleSheet.textContent = `
-  @keyframes cardIn {
-    from { opacity: 0; clip-path: inset(0 100% 0 0); }
-    to   { opacity: 1; clip-path: inset(0 0% 0 0); }
-  }
-`;
-document.head.appendChild(styleSheet);
