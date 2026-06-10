@@ -239,6 +239,24 @@
   color: var(--clr-accent);
 }
 
+.social__footer-legal {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.social__footer-legal a {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wide);
+  text-decoration: none;
+  transition: color var(--dur-fast);
+}
+
+.social__footer-legal a:hover {
+  color: var(--clr-accent-light);
+}
+
 /* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
   .social__cta-banner {

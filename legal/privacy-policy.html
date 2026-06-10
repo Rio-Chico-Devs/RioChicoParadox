@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informativa sulla Privacy — Rio Chico Studio</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/fonts.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-loose);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--clr-accent-light); }
+    a:hover { color: var(--clr-text); }
+
+    .legal-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .legal-back {
+      display: inline-block;
+      margin-bottom: 3rem;
+      color: var(--clr-text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+    }
+    .legal-back:hover { color: var(--clr-accent-light); }
+    .legal-back::before { content: '\2190\00A0'; }
+
+    .legal-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      letter-spacing: var(--tracking-wide);
+      color: var(--clr-text);
+      margin-bottom: 0.25rem;
+    }
+    .legal-subtitle {
+      color: var(--clr-text-muted);
+      font-size: var(--text-sm);
+      margin-bottom: 3rem;
+    }
+    .legal-updated {
+      display: inline-block;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border-accent);
+      border-radius: var(--radius-md);
+      padding: 0.4rem 0.9rem;
+      font-size: var(--text-sm);
+      color: var(--clr-accent-light);
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      letter-spacing: var(--tracking-wide);
+      color: var(--clr-accent-light);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--clr-border);
+    }
+    h3 {
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--clr-text);
+      margin: 1.5rem 0 0.5rem;
+      letter-spacing: 0.03em;
+    }
+    p { margin-bottom: 1rem; color: var(--clr-text-muted); }
+    p strong { color: var(--clr-text); }
+    ul, ol {
+      margin: 0.5rem 0 1rem 1.5rem;
+      color: var(--clr-text-muted);
+    }
+    li { margin-bottom: 0.4rem; }
+
+    .placeholder {
+      background: rgba(68, 102, 255, 0.12);
+      border: 1px dashed var(--clr-accent);
+      border-radius: var(--radius-sm);
+      padding: 0.1rem 0.4rem;
+      color: var(--clr-accent-light);
+      font-size: 0.9em;
+    }
+
+    .legal-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+      font-size: var(--text-sm);
+    }
+    .legal-table th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      background: var(--clr-surface);
+      color: var(--clr-text);
+      font-weight: 500;
+      border-bottom: 1px solid var(--clr-border-accent);
+    }
+    .legal-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--clr-border);
+      color: var(--clr-text-muted);
+      vertical-align: top;
+    }
+
+    .rights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0 2rem;
+    }
+    .right-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+    }
+    .right-card strong {
+      display: block;
+      color: var(--clr-accent-light);
+      font-size: var(--text-sm);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .right-card p {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--clr-text-muted);
+    }
+
+    .legal-footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--clr-border);
+      text-align: center;
+      color: var(--clr-text-dim);
+      font-size: var(--text-sm);
+    }
+  </style>
+</head>
+<body>
+<main class="legal-wrap">
+
+  <a class="legal-back" href="../index.html">Torna al sito</a>
+
+  <h1 class="legal-title">PRIVACY POLICY</h1>
+  <p class="legal-subtitle">Informativa sul trattamento dei dati personali<br>
+    ai sensi dell'art. 13 del Regolamento UE 2016/679 (GDPR)<br>
+    e del D.Lgs. 196/2003 come modificato dal D.Lgs. 101/2018</p>
+
+  <span class="legal-updated">Ultimo aggiornamento: <span class="placeholder">[DATA]</span></span>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>1. Titolare del trattamento</h2>
+
+  <p>
+    <strong><span class="placeholder">[NOME COGNOME]</span></strong><br>
+    Libero professionista / Artista<br>
+    Codice fiscale / P.IVA: <span class="placeholder">[CODICE FISCALE / P.IVA]</span><br>
+    Email: <span class="placeholder">[EMAIL DI CONTATTO]</span>
+  </p>
+  <p>Per qualsiasi richiesta relativa al trattamento dei tuoi dati personali,
+    puoi scrivere all'indirizzo email indicato sopra.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>2. Dati trattati e finalità</h2>
+
+  <h3>2.1 Dati di navigazione (log del server)</h3>
+  <p>I sistemi informatici e le procedure software del sito acquisiscono,
+    nel corso del loro normale esercizio, alcuni dati la cui trasmissione è
+    implicita nell'uso dei protocolli di comunicazione Internet:</p>
+  <ul>
+    <li>Indirizzo IP del dispositivo</li>
+    <li>Data e ora della richiesta</li>
+    <li>URL richiesto</li>
+    <li>Codice di stato HTTP restituito</li>
+    <li>User-Agent (tipo di browser e sistema operativo)</li>
+  </ul>
+  <p>Questi dati sono raccolti e conservati da <strong>Cloudflare, Inc.</strong>,
+    provider del servizio di hosting e CDN (Content Delivery Network), e non
+    vengono trasmessi al Titolare in forma identificativa.
+    Finalità: erogazione del servizio web, sicurezza informatica, prevenzione
+    di abusi e attacchi. Base giuridica: <strong>art. 6(1)(f) GDPR</strong> —
+    legittimo interesse del Titolare e di Cloudflare alla sicurezza dei sistemi.
+    Periodo di conservazione: secondo le politiche di Cloudflare
+    (<a href="https://www.cloudflare.com/privacypolicy/" rel="noopener noreferrer" target="_blank">cloudflare.com/privacypolicy</a>),
+    normalmente non superiore a 72 ore per i log di traffico.</p>
+
+  <h3>2.2 Comunicazioni email</h3>
+  <p>Chi sceglie di contattare il Titolare tramite l'indirizzo email indicato
+    sul sito comunica volontariamente i propri dati personali (nome, indirizzo
+    email, e qualsiasi altra informazione inclusa nel messaggio).</p>
+  <ul>
+    <li><strong>Finalità:</strong> rispondere alle richieste di informazioni,
+      gestire richieste di commissioni artistiche o collaborazioni.</li>
+    <li><strong>Base giuridica:</strong> art. 6(1)(b) GDPR — esecuzione di
+      misure precontrattuali su richiesta dell'interessato.</li>
+    <li><strong>Periodo di conservazione:</strong> per il tempo necessario
+      a gestire la richiesta e, in caso di commissione, fino alla conclusione
+      del rapporto contrattuale e per il successivo periodo previsto dalla
+      legge per la tutela di eventuali diritti (max 10 anni, D.Lgs. 231/2002).</li>
+    <li><strong>Comunicazione a terzi:</strong> i dati non vengono ceduti,
+      venduti o comunicati a terzi, salvo obbligo di legge.</li>
+  </ul>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>3. Cookie e tecnologie di tracciamento</h2>
+
+  <p>Questo sito <strong>non utilizza cookie di profilazione, cookie analitici
+    di terze parti, pixel di tracciamento o qualsiasi altro strumento di
+    monitoraggio del comportamento degli utenti.</strong></p>
+  <p>Possono essere presenti esclusivamente cookie tecnici strettamente
+    necessari al funzionamento del sito (es. preferenze di visualizzazione),
+    per i quali non è richiesto il consenso ai sensi delle Linee guida del
+    Garante del 10 giugno 2021 e dell'art. 122 del Codice Privacy.</p>
+  <p>Non è pertanto necessario il banner di consenso ai cookie.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>4. Risorse esterne e link a piattaforme terze</h2>
+
+  <p>Il sito non carica risorse da server esterni (font, script, immagini
+    di terze parti): tutti i file sono ospitati direttamente sul server
+    del Titolare tramite Cloudflare Pages. Nessun dato del visitatore viene
+    trasmesso a terzi durante la semplice navigazione del sito.</p>
+
+  <p>Il sito contiene link verso le seguenti piattaforme esterne, gestite da
+    titolari del trattamento indipendenti. Cliccando su tali link si viene
+    reindirizzati a siti soggetti alle rispettive politiche della privacy:</p>
+
+  <table class="legal-table">
+    <thead>
+      <tr>
+        <th>Piattaforma</th>
+        <th>Titolare</th>
+        <th>Informativa privacy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Instagram</td>
+        <td>Meta Platforms Ireland Ltd.</td>
+        <td><a href="https://privacycenter.instagram.com/policy" rel="noopener noreferrer" target="_blank">privacycenter.instagram.com</a></td>
+      </tr>
+      <tr>
+        <td>Fiverr</td>
+        <td>Fiverr International Ltd.</td>
+        <td><a href="https://www.fiverr.com/privacy-policy" rel="noopener noreferrer" target="_blank">fiverr.com/privacy-policy</a></td>
+      </tr>
+      <tr>
+        <td>Ko-fi</td>
+        <td>Ko-fi Labs Limited</td>
+        <td><a href="https://ko-fi.com/privacy" rel="noopener noreferrer" target="_blank">ko-fi.com/privacy</a></td>
+      </tr>
+      <tr>
+        <td>Patreon</td>
+        <td>Patreon, Inc.</td>
+        <td><a href="https://www.patreon.com/policy/privacy" rel="noopener noreferrer" target="_blank">patreon.com/policy/privacy</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Il Titolare non è responsabile delle pratiche di trattamento dei dati
+    adottate da tali piattaforme.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>5. Trasferimenti di dati verso paesi terzi</h2>
+
+  <p><strong>Cloudflare, Inc.</strong> ha sede negli Stati Uniti e tratta dati
+    personali nell'ambito della propria infrastruttura globale. Il trasferimento
+    è legittimato dall'adesione di Cloudflare all'<strong>EU–US Data Privacy
+    Framework</strong> (decisione di adeguatezza della Commissione europea del
+    10 luglio 2023), che garantisce un livello di protezione equivalente a quello
+    assicurato nel territorio dell'Unione europea.</p>
+  <p>Le piattaforme esterne elencate nella sezione 4 hanno sede negli USA e
+    operano ciascuna con le proprie garanzie di trasferimento (clausole
+    contrattuali standard o adesione al DPF). Per i dettagli si rimanda alle
+    rispettive informative privacy.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>6. Diritti dell'interessato</h2>
+
+  <p>Ai sensi degli artt. 15–22 del GDPR e del Codice Privacy, hai il diritto di:</p>
+
+  <div class="rights-grid">
+    <div class="right-card">
+      <strong>Accesso — Art. 15</strong>
+      <p>Ottenere conferma dell'esistenza di dati che ti riguardano e riceverne copia.</p>
+    </div>
+    <div class="right-card">
+      <strong>Rettifica — Art. 16</strong>
+      <p>Richiedere la correzione di dati inesatti o incompleti.</p>
+    </div>
+    <div class="right-card">
+      <strong>Cancellazione — Art. 17</strong>
+      <p>Ottenere la cancellazione dei tuoi dati ("diritto all'oblio"), ove applicabile.</p>
+    </div>
+    <div class="right-card">
+      <strong>Limitazione — Art. 18</strong>
+      <p>Richiedere la limitazione del trattamento in determinati casi.</p>
+    </div>
+    <div class="right-card">
+      <strong>Portabilità — Art. 20</strong>
+      <p>Ricevere i tuoi dati in formato strutturato e leggibile da macchina.</p>
+    </div>
+    <div class="right-card">
+      <strong>Opposizione — Art. 21</strong>
+      <p>Opporti al trattamento basato sul legittimo interesse del Titolare.</p>
+    </div>
+  </div>
+
+  <p>Per esercitare i tuoi diritti, scrivi a:
+    <strong><span class="placeholder">[EMAIL DI CONTATTO]</span></strong>.<br>
+    Il Titolare risponderà entro 30 giorni dalla ricezione della richiesta
+    (art. 12 GDPR), con possibilità di proroga di ulteriori 60 giorni in caso
+    di richieste complesse o numerose.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>7. Diritto di reclamo al Garante</h2>
+
+  <p>Se ritieni che il trattamento dei tuoi dati personali violi il GDPR o il
+    Codice Privacy, hai il diritto di proporre reclamo al
+    <strong>Garante per la Protezione dei Dati Personali</strong>:</p>
+  <ul>
+    <li>Sito web: <a href="https://www.gpdp.it" rel="noopener noreferrer" target="_blank">www.gpdp.it</a></li>
+    <li>Email: <a href="mailto:garante@gpdp.it">garante@gpdp.it</a></li>
+    <li>PEC: <a href="mailto:protocollo@pec.gpdp.it">protocollo@pec.gpdp.it</a></li>
+  </ul>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>8. Aggiornamenti a questa informativa</h2>
+
+  <p>Il Titolare si riserva di aggiornare la presente informativa per adeguarla
+    a modifiche normative, giurisprudenziali o operative. La data dell'ultimo
+    aggiornamento è indicata in cima alla pagina. Si raccomanda di consultare
+    periodicamente questa pagina.</p>
+
+  <div class="legal-footer">
+    <p>&copy; <span class="placeholder">[ANNO]</span> <span class="placeholder">[NOME COGNOME]</span> — Rio Chico Studio</p>
+    <p style="margin-top:0.5rem;">
+      <a href="../index.html">Home</a>
+    </p>
+  </div>
+
+</main>
+</body>
+</html>
