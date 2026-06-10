@@ -7,9 +7,18 @@
  *
  * Poi committare:
  *   git add assets/fonts/ css/fonts.css
- *   git commit -m "feat: self-host fonts"
+ *   git commit -m "feat: add self-hosted font files"
  *
- * Richiede: Node.js 18+ (fetch nativo) e accesso a fonts.googleapis.com.
+ * Richiede: Node.js 16+ (solo moduli built-in, zero npm install)
+ * e accesso a fonts.googleapis.com / fonts.gstatic.com.
+ *
+ * Cosa fa:
+ *   - Scarica Bebas Neue, Inter (300/400/500 + italic), Noto Serif JP
+ *   - Per Inter/Bebas tiene SOLO i subset latin + latin-ext
+ *     (accenti italiani inclusi, scarta cyrillic/greek/vietnamese)
+ *   - Per Noto Serif JP scarica solo i katakana effettivamente usati
+ *     nel sito (legge index.html) -> file minuscolo invece dei MB del CJK
+ *   - Rigenera css/fonts.css con i nomi file reali e gli unicode-range
  */
 
 'use strict';
@@ -21,26 +30,37 @@ const path  = require('path');
 const ROOT      = path.resolve(__dirname, '..');
 const FONTS_DIR = path.join(ROOT, 'assets', 'fonts');
 const CSS_OUT   = path.join(ROOT, 'css', 'fonts.css');
+const INDEX     = path.join(ROOT, 'index.html');
 
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+/* User-Agent moderno: Google serve woff2 solo a browser recenti.
+   Senza questo header risponde con formati legacy (ttf) o 403. */
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+          '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
-/* Solo i katakana effettivamente presenti nel sito (deduplicate).
-   Google Fonts risponde con un subset minuscolo invece dell'intero font CJK. */
-const KATAKANA_CHARS = [...new Set('プロタゴニストラテジアン')].join('');
+/* Subset da tenere per i font latini. Tutto il resto (cyrillic, greek,
+   vietnamese...) viene scartato: non serve a un sito in italiano. */
+const KEEP = /^(latin|latin-ext|\[\d+\])$/;
 
-const REQUESTS = [
-  {
-    url: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap',
-    tag: 'bebas'
-  },
-  {
-    url: 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;1,300&display=swap',
-    tag: 'inter'
-  },
-  {
-    url: `https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap&text=${encodeURIComponent(KATAKANA_CHARS)}`,
-    tag: 'noto'
+/* ── Katakana usati nel sito ──────────────────────────────────────────
+   Letti da index.html (range U+30A0-30FF). Cosi se cambi i nomi dei
+   personaggi, il subset si aggiorna da solo. Fallback: set hardcoded. */
+function katakanaFromSite() {
+  let text = '';
+  try { text = fs.readFileSync(INDEX, 'utf8'); } catch (_) {}
+  const chars = new Set();
+  for (const ch of text) {
+    const cp = ch.codePointAt(0);
+    if (cp >= 0x30A0 && cp <= 0x30FF) chars.add(ch);
   }
+  if (chars.size === 0) return [...new Set('プロタゴニストラテジアン')].join('');
+  return [...chars].join('');
+}
+
+const FONTS = [
+  { tag: 'bebas', url: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap' },
+  { tag: 'inter', url: 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;1,300&display=swap' },
+  { tag: 'noto',  url: () => 'https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap&text=' +
+                              encodeURIComponent(katakanaFromSite()) }
 ];
 
 /* ── helpers ──────────────────────────────────────────────────────── */
@@ -48,10 +68,10 @@ const REQUESTS = [
 function get(url) {
   return new Promise((resolve, reject) => {
     https.get(url, { headers: { 'User-Agent': UA } }, (res) => {
-      if (res.statusCode === 301 || res.statusCode === 302)
-        return get(res.headers.location).then(resolve).catch(reject);
+      if ([301, 302, 303, 307, 308].includes(res.statusCode))
+        return get(new URL(res.headers.location, url).href).then(resolve).catch(reject);
       if (res.statusCode !== 200)
-        return reject(new Error(`HTTP ${res.statusCode} — ${url}`));
+        return reject(new Error(`HTTP ${res.statusCode} su ${url}`));
       const chunks = [];
       res.on('data', c => chunks.push(c));
       res.on('end', () => resolve(Buffer.concat(chunks)));
@@ -59,14 +79,20 @@ function get(url) {
   });
 }
 
+/* Estrae ogni @font-face con la sua etichetta-subset (il commento
+   /* latin *​/ che Google mette prima di ogni blocco). */
 function parseFaces(css) {
   const faces = [];
-  for (const block of css.matchAll(/@font-face\s*\{([^}]+)\}/g)) {
-    const b    = block[1];
-    const prop = (k) => { const m = b.match(new RegExp(k + '\\s*:\\s*([^;]+)')); return m ? m[1].trim() : null; };
-    const src  = b.match(/url\(["']?([^"')]+\.woff2)["']?\)/);
+  const re = /\/\*\s*([^*]+?)\s*\*\/\s*@font-face\s*\{([^}]+)\}/g;
+  let m;
+  while ((m = re.exec(css)) !== null) {
+    const label = m[1].trim();
+    const body  = m[2];
+    const prop  = (k) => { const x = body.match(new RegExp(k + '\\s*:\\s*([^;]+)')); return x ? x[1].trim() : null; };
+    const src   = body.match(/url\(["']?([^"')]+\.woff2)["']?\)/);
     if (!src) continue;
     faces.push({
+      label,
       family:       (prop('font-family') || '').replace(/['"]/g, ''),
       style:        prop('font-style')  || 'normal',
       weight:       prop('font-weight') || '400',
@@ -77,22 +103,24 @@ function parseFaces(css) {
   return faces;
 }
 
-function filename(face, idx) {
-  const fam = face.family.toLowerCase().replace(/\s+/g, '-');
-  const suf = face.style === 'italic' ? 'i' : '';
-  return `${fam}-${face.weight}${suf}-${String(idx).padStart(2,'0')}.woff2`;
+function slug(s) { return s.replace(/[^a-z0-9]+/gi, '').toLowerCase() || 'x'; }
+
+function filename(face) {
+  const fam = slug(face.family);
+  const ital = face.style === 'italic' ? 'i' : '';
+  return `${fam}-${face.weight}${ital}-${slug(face.label)}.woff2`;
 }
 
 function faceCSS(face, file) {
   const ur = face.unicodeRange ? `\n  unicode-range: ${face.unicodeRange};` : '';
   return [
-    '@font-face {',
+    `@font-face {`,
     `  font-family: '${face.family}';`,
     `  font-style: ${face.style};`,
     `  font-weight: ${face.weight};`,
     `  font-display: swap;`,
     `  src: url('../assets/fonts/${file}') format('woff2');${ur}`,
-    '}'
+    `}`
   ].join('\n');
 }
 
@@ -101,52 +129,50 @@ function faceCSS(face, file) {
 async function main() {
   fs.mkdirSync(FONTS_DIR, { recursive: true });
 
-  const allFaces = [];
+  const kept = [];
 
-  for (const { url, tag } of REQUESTS) {
-    process.stdout.write(`Fetching CSS [${tag}]... `);
-    const css = (await get(url)).toString('utf8');
-    const faces = parseFaces(css);
-    console.log(`${faces.length} face(s)`);
-    allFaces.push(...faces);
+  for (const f of FONTS) {
+    const url = typeof f.url === 'function' ? f.url() : f.url;
+    process.stdout.write(`Fetching CSS [${f.tag}] ... `);
+    const css   = (await get(url)).toString('utf8');
+    const faces = parseFaces(css).filter(x => KEEP.test(x.label));
+    console.log(`${faces.length} face(s) tenute`);
+    kept.push(...faces);
   }
 
-  /* Deduplicate by family+style+weight (keep first occurrence = smallest/latin subset) */
-  const seen = new Set();
-  const unique = allFaces.filter(f => {
-    const k = `${f.family}|${f.style}|${f.weight}`;
-    if (seen.has(k)) return false;
-    seen.add(k);
-    return true;
-  });
+  if (kept.length === 0)
+    throw new Error('Nessun @font-face estratto. Google ha cambiato formato o la rete blocca la richiesta.');
 
-  console.log(`\nDownloading ${unique.length} file(s) to assets/fonts/ ...`);
+  console.log(`\nScarico ${kept.length} file in assets/fonts/ ...`);
 
-  const cssParts = [
+  const out = [
     '/* =================================================================',
     '   FONT SELF-HOSTED — generato da scripts/setup-fonts.js',
-    '   Non modificare manualmente. Rieseguire lo script per aggiornare.',
+    '   NON modificare a mano: rieseguire lo script per rigenerare.',
     '   ================================================================= */',
     ''
   ];
 
-  for (const [i, face] of unique.entries()) {
-    const file = filename(face, i + 1);
+  let total = 0;
+  for (const face of kept) {
+    const file = filename(face);
     process.stdout.write(`  ${file} ... `);
     const buf = await get(face.woff2);
     fs.writeFileSync(path.join(FONTS_DIR, file), buf);
+    total += buf.length;
     console.log(`${(buf.length / 1024).toFixed(1)} KB`);
-    cssParts.push(faceCSS(face, file), '');
+    out.push(faceCSS(face, file), '');
   }
 
-  fs.writeFileSync(CSS_OUT, cssParts.join('\n'));
+  fs.writeFileSync(CSS_OUT, out.join('\n'));
 
-  console.log(`\nDone.`);
-  console.log(`  ${unique.length} .woff2 in assets/fonts/`);
-  console.log(`  css/fonts.css aggiornato`);
+  console.log(`\nFatto.`);
+  console.log(`  ${kept.length} file .woff2 (${(total / 1024).toFixed(0)} KB totali) in assets/fonts/`);
+  console.log(`  css/fonts.css rigenerato`);
   console.log(`\nProssimo passo:`);
   console.log(`  git add assets/fonts/ css/fonts.css`);
-  console.log(`  git commit -m "feat: self-host fonts (GDPR + zero external requests)"`);
+  console.log(`  git commit -m "feat: add self-hosted font files"`);
+  console.log(`  git push`);
 }
 
 main().catch(e => { console.error('\nERRORE:', e.message); process.exit(1); });
