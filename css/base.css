@@ -12,6 +12,21 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-height);
   font-size: 16px;
+  /* Firefox scrollbar coerente col brand */
+  scrollbar-color: var(--clr-accent) var(--clr-bg);
+  scrollbar-width: thin;
+}
+
+/* Selezione testo — firma duotone */
+::selection {
+  background: var(--clr-accent);
+  color: #ffffff;
+}
+
+/* Focus visibile coerente (tastiera) — non tocca il focus da mouse */
+:focus-visible {
+  outline: 2px solid var(--clr-accent-light);
+  outline-offset: 3px;
 }
 
 body {
@@ -30,7 +45,21 @@ body {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--clr-bg); }
-::-webkit-scrollbar-thumb { background: var(--clr-accent); }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--clr-accent), var(--clr-accent-2)); }
+
+/* ── SCROLL PROGRESS — barra sottile in cima, scaleX via JS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: calc(var(--z-nav) + 1);
+  background: var(--grad-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
 
 /* ── TIPOGRAFIA ────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
@@ -38,8 +67,13 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-wide);
   color: var(--clr-text);
+  text-wrap: balance;
 }
-p { line-height: var(--leading-loose); color: var(--clr-text-muted); }
+p {
+  line-height: var(--leading-loose);
+  color: var(--clr-text-muted);
+  text-wrap: pretty;
+}
 a { color: inherit; text-decoration: none; }
 img, svg { max-width: 100%; display: block; }
 ul, ol { list-style: none; }
@@ -86,7 +120,17 @@ button { border: none; background: none; font-family: inherit; }
   text-transform: uppercase;
   line-height: 0.88;
 }
+
+/* Lo span accentato porta il gradiente firma (fallback: cobalt) */
 .section-title span { color: var(--clr-accent); }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .section-title span {
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
 
 .section-subtitle {
   margin-top: 1rem;
@@ -100,7 +144,7 @@ button { border: none; background: none; font-family: inherit; }
   display: block;
   width: 3rem;
   height: 3px;
-  background: var(--clr-accent);
+  background: var(--grad-accent);
   margin-top: 1.5rem;
 }
 
@@ -327,5 +371,31 @@ button { border: none; background: none; font-family: inherit; }
   :root {
     --section-pad-y: 4rem;
     --section-pad-x: 1.25rem;
+  }
+}
+
+/* ── PERFORMANCE — content-visibility ────────────────────────
+   Le sezioni sotto la prima viewport non vengono renderizzate
+   finche' non servono. contain-intrinsic-size "auto X" ricorda
+   l'altezza reale dopo il primo render (niente salti scrollbar). */
+#gallery    { content-visibility: auto; contain-intrinsic-size: auto 1600px; }
+#characters { content-visibility: auto; contain-intrinsic-size: auto 2900px; }
+#profile    { content-visibility: auto; contain-intrinsic-size: auto 1000px; }
+#social     { content-visibility: auto; contain-intrinsic-size: auto 1100px; }
+
+/* ── REDUCED MOTION — accessibilita' globale ─────────────────
+   Chi chiede meno animazioni vede tutto subito, senza effetti.
+   Stessa garanzia del fallback <noscript>. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  [data-r] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
   }
 }

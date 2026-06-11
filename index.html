@@ -49,10 +49,14 @@
 
 <body>
 
+<!-- ── SCROLL PROGRESS ─────────────────────────────────── -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
 <!-- ── LOADING SCREEN ──────────────────────────────────── -->
 <div class="loader" id="loader">
   <div class="loader__burst" aria-hidden="true"></div>
   <div class="loader__logo"><span>RIO</span> CHICO STUDIO</div>
+  <div class="loader__jp" aria-hidden="true">ローディング</div>
   <div class="loader__bar"><div class="loader__bar-fill" id="loader-fill"></div></div>
   <div class="loader__count">NOW LOADING... <b><span id="loader-count">0</span>%</b></div>
 </div>
@@ -161,6 +165,9 @@
 
   <!-- RIGHT: ART WHEEL ─────────────────── -->
   <div class="hero__right">
+
+    <!-- Vertical katakana tag — editorial accent -->
+    <span class="hero__jp" aria-hidden="true">リオ・チコ・スタジオ</span>
 
     <!-- 2D ferris wheel: 4 cards at NSEW, active at west (left) -->
     <div class="art-wheel" role="region" aria-label="Featured artworks">

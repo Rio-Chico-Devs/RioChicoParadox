@@ -2,6 +2,9 @@
    RIO CHICO STUDIO — main.js
    ========================================================= */
 
+/* Rispetta la preferenza di sistema: meno animazioni per chi la chiede */
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* ── LOADING SCREEN — "NOW LOADING X%" ────────────────────
    Conta da 0 a 100% poi rivela il sito (stile Persona)
    ======================================================== */
@@ -10,38 +13,57 @@ const loaderFill  = document.getElementById('loader-fill');
 const loaderCount = document.getElementById('loader-count');
 
 if (loader) {
-  let pct = 0;
-  const tick = () => {
-    // avanza a scatti irregolari per sembrare "vero" caricamento
-    pct += Math.random() * 18 + 4;
-    if (pct >= 100) pct = 100;
-    if (loaderFill)  loaderFill.style.width = pct + '%';
-    if (loaderCount) loaderCount.textContent = Math.floor(pct);
-    if (pct < 100) {
-      setTimeout(tick, 90 + Math.random() * 120);
-    } else {
-      setTimeout(() => {
-        loader.classList.add('is-done');
-        // trigger hero animations only after loader gone
-        document.body.classList.add('loaded');
-        setTimeout(() => loader.remove(), 700);
-      }, 350);
-    }
+  const finish = () => {
+    loader.classList.add('is-done');
+    // trigger hero animations only after loader gone
+    document.body.classList.add('loaded');
+    setTimeout(() => loader.remove(), 700);
   };
-  // start after a tiny delay
-  setTimeout(tick, 200);
+
+  if (REDUCED_MOTION) {
+    // niente conteggio teatrale: completa subito
+    if (loaderFill)  loaderFill.style.width = '100%';
+    if (loaderCount) loaderCount.textContent = '100';
+    setTimeout(finish, 150);
+  } else {
+    let pct = 0;
+    const tick = () => {
+      // avanza a scatti irregolari per sembrare "vero" caricamento
+      pct += Math.random() * 18 + 4;
+      if (pct >= 100) pct = 100;
+      if (loaderFill)  loaderFill.style.width = pct + '%';
+      if (loaderCount) loaderCount.textContent = Math.floor(pct);
+      if (pct < 100) {
+        setTimeout(tick, 90 + Math.random() * 120);
+      } else {
+        setTimeout(finish, 350);
+      }
+    };
+    // start after a tiny delay
+    setTimeout(tick, 200);
+  }
 }
 
 
-/* ── NAV ────────────────────────────────────────────────── */
-const nav       = document.querySelector('.nav');
-const navToggle = document.querySelector('.nav__toggle');
-const navLinks  = document.querySelector('.nav__links');
-const navItems  = document.querySelectorAll('.nav__link');
+/* ── NAV + SCROLL PROGRESS ──────────────────────────────── */
+const nav            = document.querySelector('.nav');
+const navToggle      = document.querySelector('.nav__toggle');
+const navLinks       = document.querySelector('.nav__links');
+const navItems       = document.querySelectorAll('.nav__link');
+const scrollProgress = document.querySelector('.scroll-progress');
 
-window.addEventListener('scroll', () => {
-  nav?.classList.toggle('is-scrolled', window.scrollY > 60);
-}, { passive: true });
+function onScrollUpdate() {
+  const y = window.scrollY;
+  nav?.classList.toggle('is-scrolled', y > 60);
+  if (scrollProgress) {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
+  }
+}
+
+window.addEventListener('scroll', onScrollUpdate, { passive: true });
+window.addEventListener('resize', onScrollUpdate, { passive: true });
+onScrollUpdate();
 
 navToggle?.addEventListener('click', () => {
   const open = navToggle.classList.toggle('is-open');
@@ -90,11 +112,13 @@ revealEls.forEach(el => revealObs.observe(el));
 const heroBgGlow = document.querySelector('.hero__bg-glow');
 const heroBgGrid = document.querySelector('.hero__bg-grid');
 
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  if (heroBgGlow) heroBgGlow.style.transform = `translateY(${y * 0.3}px)`;
-  if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
-}, { passive: true });
+if (!REDUCED_MOTION) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (heroBgGlow) heroBgGlow.style.transform = `translateY(${y * 0.3}px)`;
+    if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
+  }, { passive: true });
+}
 
 /* ── ART WHEEL — 2D ferris wheel, counter-clockwise ────────
    Uses @property --slot-angle so each card animates on a
@@ -143,7 +167,8 @@ if (awStage && awCards.length === 4) {
     setTimeout(wheelNext, 3920);
   }
 
-  setTimeout(wheelNext, 3000);
+  // autoplay solo se l'utente non chiede meno animazioni
+  if (!REDUCED_MOTION) setTimeout(wheelNext, 3000);
 }
 
 /* ── GALLERY FILTERS ────────────────────────────────────── */
@@ -245,6 +270,10 @@ counters.forEach(el => countObs.observe(el));
 function animateCount(el) {
   const target = parseInt(el.dataset.count, 10);
   const suffix = el.dataset.suffix || '';
+  if (REDUCED_MOTION) {
+    el.textContent = target + suffix;
+    return;
+  }
   const dur = 1400;
   const start = performance.now();
   function step(now) {

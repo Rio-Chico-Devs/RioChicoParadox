@@ -153,7 +153,7 @@
   transition: transform var(--dur-med) var(--ease-out-quart);
 }
 
-.gallery__filter-btn:hover { color: var(--clr-text-muted); }
+.gallery__filter-btn:hover { color: var(--clr-text); }
 
 .gallery__filter-btn.is-active { color: var(--clr-accent); }
 .gallery__filter-btn.is-active::after { transform: scaleX(1); }
@@ -186,6 +186,13 @@
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 32px 32px;
+  transition: box-shadow 0.45s ease;
+}
+
+.gallery__card:hover {
+  box-shadow:
+    0 0 0 1px var(--clr-border-accent),
+    0 14px 44px -14px var(--clr-accent-glow);
 }
 
 /* Top-left registration mark */

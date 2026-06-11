@@ -23,6 +23,16 @@
   --clr-accent-glow:  rgba(68, 102, 255, 0.30);
   --clr-accent-subtle:rgba(68, 102, 255, 0.08);
 
+  /* Secondo accento — magenta caldo. Usato CON PARSIMONIA:
+     gradiente firma, separatori marquee, selezione testo.
+     Il duotone cobalt->magenta e' la firma cromatica del sito. */
+  --clr-accent-2:      #ff3d7f;
+  --clr-accent-2-glow: rgba(255, 61, 127, 0.25);
+  --grad-accent: linear-gradient(135deg,
+    var(--clr-accent) 0%,
+    #7d5cff 52%,
+    var(--clr-accent-2) 100%);
+
   --clr-text:         #f0eeff;      /* bianco caldo con tocco viola */
   --clr-text-muted:   #8888b8;      /* muted indigo-grigio */
   --clr-text-dim:     #3e3e68;      /* testo disabilitato */

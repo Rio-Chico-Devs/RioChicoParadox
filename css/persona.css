@@ -50,6 +50,17 @@
 }
 .loader__logo span { color: var(--clr-accent); }
 
+/* Katakana sotto il logo — micro-dettaglio anime */
+.loader__jp {
+  position: relative;
+  font-family: var(--font-jp);
+  font-size: var(--text-xs);
+  letter-spacing: 0.7em;
+  color: var(--clr-accent-light);
+  opacity: 0.75;
+  margin-top: -0.5rem;
+}
+
 .loader__bar {
   position: relative;
   width: min(360px, 70vw);
@@ -61,7 +72,7 @@
   position: absolute;
   inset: 0;
   width: 0%;
-  background: var(--clr-accent);
+  background: var(--grad-accent);
   box-shadow: 0 0 12px var(--clr-accent);
 }
 

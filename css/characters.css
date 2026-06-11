@@ -240,6 +240,26 @@
   width: 0%;
   transition: width 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
   box-shadow: 0 0 8px var(--char-glow, var(--clr-accent-glow));
+  position: relative;
+  overflow: hidden;
+}
+
+/* Lampo bianco che attraversa la barra appena riempita */
+.char-stat__fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg,
+    transparent, rgba(255,255,255,0.55), transparent);
+}
+
+.char-block__info.in-view .char-stat__fill::after {
+  animation: statShine 1s ease 1.7s both;
+}
+
+@keyframes statShine {
+  to { transform: translateX(100%); }
 }
 
 .in-view ~ .char-block__info .char-stat__fill,
