@@ -1,0 +1,81 @@
+# ─────────────────────────────────────────────────────────────────
+# Rio Chico Studio — .htaccess
+# Apache / LiteSpeed (Hostinger hPanel e hosting compatibili)
+#
+# Questo file sostituisce _headers (dialetto Cloudflare Pages).
+# Su Hostinger: carica questo file nella root di public_html.
+# ─────────────────────────────────────────────────────────────────
+
+# ── Forza HTTPS ───────────────────────────────────────────────────
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ── Disabilita directory listing ──────────────────────────────────
+Options -Indexes
+
+# ── Blocca file interni (non devono mai essere leggibili online) ──
+# Anche se li carichi per sbaglio, il server nega l'accesso.
+<FilesMatch "^(\.gitignore|package\.json|_headers|security-audit\.js|integrity-scan\.js|SECURITY\.md|THREAT-MODEL\.md|README\.md|CLAUDE\.md|preview\.html)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Blocca la cartella scripts/ (font downloader, tool di sviluppo)
+RewriteRule ^scripts(/.*)?$ - [F,L]
+
+# Blocca eventuali file .git (non dovrebbero esserci, ma per sicurezza)
+RewriteRule ^\.git(/.*)?$ - [F,L]
+
+# ── Header di sicurezza ───────────────────────────────────────────
+<IfModule mod_headers.c>
+
+    # Blocca il clickjacking (il tuo sito non puo' essere messo in un iframe)
+    Header always set X-Frame-Options "DENY"
+
+    # Il browser non deve indovinare il tipo di file (MIME confusion)
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Limita le info inviate quando clicchi su link esterni
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Disabilita API hardware non necessarie
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=()"
+
+    # Forza HTTPS per 2 anni anche dopo la prima visita
+    Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
+    # Isola il contesto di navigazione (anti Spectre/cross-origin)
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+
+    # Content Security Policy:
+    #   script-src 'self'     = solo js/main.js, zero script inline o da CDN
+    #   style-src 'unsafe-inline' = necessario per style="" nell'HTML
+    #   font-src 'self'       = font self-hostati (dopo setup-fonts.js)
+    #   img-src data:         = data-URI nel CSS (noise overlay)
+    #   connect-src 'none'    = zero richieste di rete dal browser
+    Header always set Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+
+</IfModule>
+
+# ── Cache ─────────────────────────────────────────────────────────
+# HTML: sempre rivalidato (gli aggiornamenti si vedono subito)
+<FilesMatch "\.html$">
+    <IfModule mod_headers.c>
+        Header always set Cache-Control "public, max-age=0, must-revalidate"
+    </IfModule>
+</FilesMatch>
+
+# CSS, JS, font: cache 1 giorno
+<FilesMatch "\.(css|js|woff2|woff|ttf)$">
+    <IfModule mod_headers.c>
+        Header always set Cache-Control "public, max-age=86400"
+    </IfModule>
+</FilesMatch>
+
+# Immagini: cache 1 giorno
+<FilesMatch "\.(svg|png|webp|avif|jpg|jpeg|gif)$">
+    <IfModule mod_headers.c>
+        Header always set Cache-Control "public, max-age=86400"
+    </IfModule>
+</FilesMatch>

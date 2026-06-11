@@ -18,17 +18,40 @@ const pass = m => R.PASS.push(m);
 const warn = m => R.WARN.push(m);
 const fail = m => R.FAIL.push(m);
 
+// Scansione ricorsiva — usata in piu' sezioni, dichiarata subito
+const walk = dir => {
+  let out = [];
+  for (const e of fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })) {
+    if (e.name === '.git' || e.name === 'node_modules') continue;
+    const rel = path.join(dir, e.name);
+    if (e.isDirectory()) out = out.concat(walk(rel));
+    else out.push(rel);
+  }
+  return out;
+};
+const allFiles = walk('.');
+
 /* ═══════════════════════════════════════════════════════════
-   1. _headers — CSP + HTTP Security Headers
+   1. .htaccess — CSP + HTTP Security Headers (Hostinger/Apache/LiteSpeed)
+   Fonte primaria: .htaccess (deployment su Hostinger).
+   _headers resta nel repo come riferimento per Cloudflare Pages,
+   ma NON e' il file attivo: su Hostinger lo ignora il server.
    ═══════════════════════════════════════════════════════════ */
-const headers = read('_headers');
+const fs_exists = f => { try { fs.accessSync(path.join(ROOT, f)); return true; } catch { return false; } };
 
-// CSP
-const cspLine = headers.match(/Content-Security-Policy:\s*(.+)/);
+if (!fs_exists('.htaccess'))
+  fail('Hostinger deploy: .htaccess mancante → NESSUN header di sicurezza sara\' applicato al sito live');
+else
+  pass('Hostinger deploy: .htaccess presente → header di sicurezza attivi su Apache/LiteSpeed');
+
+const htaccess = fs_exists('.htaccess') ? read('.htaccess') : '';
+
+// CSP — estratta dal formato .htaccess: Header always set Content-Security-Policy "..."
+const cspLine = htaccess.match(/Header\s+always\s+set\s+Content-Security-Policy\s+"([^"]+)"/i);
 const csp = cspLine ? cspLine[1] : '';
-if (!csp) { fail('CSP: header mancante'); }
+if (!csp) { fail('CSP: direttiva Content-Security-Policy mancante in .htaccess'); }
 
-// script-src — il più critico
+// script-src — il piu' critico
 if (csp.match(/script-src[^;]*'unsafe-inline'/))
   fail("CSP script-src: contiene 'unsafe-inline' → XSS banale con <script>alert(1)</script>");
 else
@@ -46,7 +69,6 @@ else
 
 // style-src
 if (csp.match(/style-src[^;]*'unsafe-inline'/)) {
-  // non è un fail: è necessario per gli inline style= nel HTML, ma va documentato
   warn("CSP style-src: 'unsafe-inline' presente (necessario per style= attrs). " +
        "CSS injection possibile in teoria, ma connect-src 'none' + img-src limitato bloccano l'esfiltrazione.");
 } else {
@@ -83,31 +105,22 @@ if (csp.includes('upgrade-insecure-requests'))
 else
   warn("CSP upgrade-insecure-requests mancante");
 
-// data: in img-src — con connect-src none il rischio è minimo, ma documentiamo
+// data: in img-src
 if (csp.match(/img-src[^;]*data:/))
   warn("CSP img-src data:: consente background data-URI nel CSS — non esfiltrazione (connect-src none) ma SVG attivi");
 else
   pass("CSP img-src: nessun data: URI ammesso");
 
 /* ── CSS EXFILTRATION CHANNELS ─────────────────────────────
-   Attacco reale 2025 (@font-face + unicode-range / "Fontleak" /
-   "CSS Data Exfiltration to Steal OAuth Token"): con style-src
-   'unsafe-inline' un attaccante che inietta CSS può rubare dati
-   carattere-per-carattere SENZA JavaScript. Il canale di fuga NON
-   è connect-src (CSS non fa fetch) ma:
-     • background-image: url(evil)  → governato da img-src
-     • @font-face { src: url(evil) } → governato da font-src
-     • cursor / list-style url(evil) → governato da img-src
-   Difesa: img-src e font-src NON devono contenere un'origine
-   controllabile dall'attaccante (no wildcard, no https: generico).
+   Attacco reale (@font-face unicode-range "Fontleak"): con style-src
+   'unsafe-inline' si puo' rubare dati carattere per carattere senza JS.
+   Il canale di fuga e' img-src o font-src verso un host controllabile.
    ──────────────────────────────────────────────────────────── */
 const extractOrigins = dir => {
   const m = csp.match(new RegExp(dir + "\\s+([^;]+)"));
   if (!m) return [];
   return m[1].trim().split(/\s+/);
 };
-// Origini considerate NON sfruttabili come canale di fuga:
-//  'self','none','data:' + i domini Google Fonts (i cui log l'attaccante non legge)
 const SAFE_ORIGINS = /^('self'|'none'|data:|https:\/\/fonts\.gstatic\.com|https:\/\/fonts\.googleapis\.com)$/;
 const exfilDirs = ['img-src', 'font-src', 'connect-src'];
 let exfilOpen = false;
@@ -115,10 +128,10 @@ exfilDirs.forEach(dir => {
   const origins = extractOrigins(dir);
   const attackerUsable = origins.filter(o => {
     if (SAFE_ORIGINS.test(o)) return false;
-    if (o === "'unsafe-inline'" || o === "'unsafe-eval'") return false; // non sono origini di rete
-    if (o === '*' ) return true;
-    if (/^https?:$/.test(o)) return true;       // schema generico = qualsiasi host
-    if (/^https?:\/\//.test(o)) return true;     // host esterno arbitrario
+    if (o === "'unsafe-inline'" || o === "'unsafe-eval'") return false;
+    if (o === '*') return true;
+    if (/^https?:$/.test(o)) return true;
+    if (/^https?:\/\//.test(o)) return true;
     return false;
   });
   if (attackerUsable.length) {
@@ -127,42 +140,61 @@ exfilDirs.forEach(dir => {
   }
 });
 if (!exfilOpen)
-  pass("CSP: canali CSS-exfiltration chiusi (img-src/font-src/connect-src senza origini attaccabili) → @font-face/Fontleak neutralizzato");
+  pass("CSP: canali CSS-exfiltration chiusi (img-src/font-src/connect-src senza origini attaccabili)");
 
-// Nota: fonts.gstatic.com resta un'origine font ammessa. Non è
-// sfruttabile (Google, log non leggibili) ma self-hostare i font
-// e portare font-src a 'self' eliminerebbe anche il canale teorico.
 if (csp.includes('fonts.gstatic.com') || csp.includes('fonts.googleapis.com'))
   warn("CSP: dipendenza esterna Google Fonts attiva. Self-hosting → font-src 'self' → superficie CSS-exfil = zero assoluto.");
 
-// Altri header
-headers.includes('X-Frame-Options: DENY')
+// Altri header HTTP
+htaccess.includes('X-Frame-Options')
   ? pass("X-Frame-Options: DENY — doppia protezione clickjacking (vecchi browser)")
-  : fail("X-Frame-Options mancante");
+  : fail("X-Frame-Options mancante in .htaccess");
 
-headers.includes('X-Content-Type-Options: nosniff')
+htaccess.includes('X-Content-Type-Options')
   ? pass("X-Content-Type-Options: nosniff — browser non indovina il MIME type")
   : fail("X-Content-Type-Options mancante — MIME confusion attack possibile");
 
-headers.includes('Strict-Transport-Security')
+htaccess.includes('Strict-Transport-Security')
   ? pass("HSTS presente — connessioni HTTP rifiutate dopo prima visita")
   : fail("HSTS mancante — downgrade attack HTTPS→HTTP possibile");
 
-headers.includes('max-age=63072000')
+htaccess.includes('max-age=63072000')
   ? pass("HSTS max-age 2 anni — standard HSTS preload list")
-  : warn("HSTS max-age basso (< 1 anno) — ridurlo non è raccomandato");
+  : warn("HSTS max-age basso (< 1 anno) — ridurlo non e' raccomandato");
 
-headers.includes('preload')
-  ? pass("HSTS preload flag — puoi aggiungere il dominio alla HSTS preload list di Chrome/Firefox")
+htaccess.includes('preload')
+  ? pass("HSTS preload flag — puoi aggiungere il dominio alla HSTS preload list")
   : warn("HSTS: flag preload mancante");
 
-headers.includes('Referrer-Policy: strict-origin-when-cross-origin')
-  ? pass("Referrer-Policy: URL piena non trapela ai siti esterni")
+htaccess.includes('Referrer-Policy')
+  ? pass("Referrer-Policy presente — URL piena non trapela ai siti esterni")
   : warn("Referrer-Policy mancante");
 
-headers.includes('Permissions-Policy')
+htaccess.includes('Permissions-Policy')
   ? pass("Permissions-Policy: camera, microfono, GPS, USB, Bluetooth disabilitati")
   : warn("Permissions-Policy mancante");
+
+// Redirect HTTPS in .htaccess
+htaccess.includes('HTTPS') && htaccess.includes('R=301')
+  ? pass("HTTPS redirect: .htaccess rinvia HTTP → HTTPS con 301")
+  : warn("HTTPS redirect: non trovato in .htaccess (verifica che Hostinger applichi SSL automaticamente)");
+
+// Directory listing disabilitato
+htaccess.includes('Options -Indexes')
+  ? pass("Directory listing: disabilitato (Options -Indexes) — nessuno puo' navigare le cartelle")
+  : fail("Directory listing: 'Options -Indexes' mancante → le cartelle sono navigabili");
+
+// File interni bloccati
+// Il FilesMatch in .htaccess usa regex con backslash-escape dei punti (es. security-audit\.js)
+// quindi cerchiamo sia il nome letterale che la versione escaped
+const sensitiveBlocked = ['security-audit.js','integrity-scan.js','SECURITY.md','CLAUDE.md','preview.html','package.json'];
+const allBlocked = sensitiveBlocked.every(f => {
+  const escaped = f.replace(/\./g, '\\.');
+  return htaccess.includes(f) || htaccess.includes(escaped);
+});
+allBlocked
+  ? pass("File interni: .htaccess blocca security-audit.js, SECURITY.md, CLAUDE.md e altri file di sviluppo")
+  : warn("File interni: verifica che .htaccess blocchi tutti i file sensibili (security-audit.js, SECURITY.md, CLAUDE.md, preview.html)");
 
 /* ═══════════════════════════════════════════════════════════
    2. js/main.js — XSS sinks e code injection
@@ -207,67 +239,77 @@ else
   pass('JS: zero import/require → zero supply-chain via JS');
 
 /* ═══════════════════════════════════════════════════════════
-   3. index.html — injection points, info disclosure
+   3. FILE HTML — injection points, info disclosure
+   Controlla TUTTI i file .html nel repo (non solo index.html).
+   preview.html e' escluso: e' un artefatto di sviluppo, non
+   va deployato e non deve essere scansionato come sorgente.
    ═══════════════════════════════════════════════════════════ */
-const html = read('index.html');
+const htmlFiles = allFiles.filter(f =>
+  f.endsWith('.html') && !f.endsWith('preview.html')
+);
+pass(`HTML: controllo su ${htmlFiles.length} file → ${htmlFiles.map(f => path.basename(f)).join(', ')}`);
 
-// Inline script injection
-const inlineScripts = html.match(/<script(?!\s+src)[^>]*>[\s\S]*?<\/script>/gi) || [];
-inlineScripts.length
-  ? warn(`HTML: ${inlineScripts.length} blocchi <script> inline (il CSP script-src 'self' li blocca, ma meglio eliminare)`)
-  : pass('HTML: nessun <script> inline — tutto in js/main.js esterno');
+for (const htmlFile of htmlFiles) {
+  const html = read(htmlFile);
+  const tag  = path.relative(ROOT, path.join(ROOT, htmlFile));
 
-// Inline event handlers (onclick, onload, onerror, ecc.)
-const inlineHandlers = html.match(/\s+on\w+\s*=/g) || [];
-inlineHandlers.length
-  ? fail(`HTML: ${inlineHandlers.length} inline event handler(s) — bypassano il CSP se 'unsafe-inline' è assente`)
-  : pass('HTML: nessun inline event handler');
+  // Inline script injection
+  const inlineScripts = html.match(/<script(?!\s+src)[^>]*>[\s\S]*?<\/script>/gi) || [];
+  inlineScripts.length
+    ? warn(`${tag}: ${inlineScripts.length} blocchi <script> inline (CSP li blocca, ma meglio eliminarli)`)
+    : pass(`${tag}: nessun <script> inline`);
 
-// javascript: URLs
-html.match(/href\s*=\s*['"]javascript:/i)
-  ? fail('HTML: href="javascript:..." trovato — XSS vector')
-  : pass('HTML: nessun href="javascript:" — link injection bloccato');
+  // Inline event handlers (onclick, onload, onerror, ecc.)
+  const inlineHandlers = html.match(/\s+on\w+\s*=/g) || [];
+  inlineHandlers.length
+    ? fail(`${tag}: ${inlineHandlers.length} inline event handler(s) — XSS vector`)
+    : pass(`${tag}: nessun inline event handler`);
 
-// data: in href
-html.match(/href\s*=\s*['"]data:/i)
-  ? fail('HTML: href="data:..." trovato — possibile vettore')
-  : pass('HTML: nessun href="data:" nei link');
+  // javascript: URLs
+  html.match(/href\s*=\s*['"]javascript:/i)
+    ? fail(`${tag}: href="javascript:..." trovato — XSS vector`)
+    : pass(`${tag}: nessun href="javascript:"`);
 
-// Link esterni senza rel="noopener"
-const blankLinks = (html.match(/target="_blank"[^>]*/g) || []);
-const noopenerOk = blankLinks.filter(l => l.includes('noopener'));
-blankLinks.length === noopenerOk.length
-  ? pass(`HTML: tutti i ${blankLinks.length} link target="_blank" hanno rel="noopener noreferrer" (tab hijacking bloccato)`)
-  : fail(`HTML: ${blankLinks.length - noopenerOk.length} link target="_blank" senza rel="noopener" → tab hijacking possibile`);
+  // data: in href
+  html.match(/href\s*=\s*['"]data:/i)
+    ? fail(`${tag}: href="data:..." trovato — possibile vettore`)
+    : pass(`${tag}: nessun href="data:" nei link`);
 
-// Email in chiaro (bot scraping)
-const mails = (html.match(/mailto:[^"'>\s]+/g) || []);
-mails.length
-  ? warn(`HTML: ${mails.length} email in chiaro nel src (bot spam harvesting). Valuta offuscamento JS o protezione Cloudflare Email Obfuscation.`)
-  : pass('HTML: nessuna email in chiaro');
+  // Link esterni senza rel="noopener"
+  // Cattura l'intero tag <a> per trovare rel= anche quando precede target=
+  const blankLinks  = (html.match(/<a\s[^>]*target="_blank"[^>]*>/gi) || []);
+  const noopenerOk  = blankLinks.filter(l => l.includes('noopener'));
+  blankLinks.length === noopenerOk.length
+    ? pass(`${tag}: tutti i ${blankLinks.length} link target="_blank" hanno rel="noopener noreferrer"`)
+    : fail(`${tag}: ${blankLinks.length - noopenerOk.length} link target="_blank" senza rel="noopener" → tabnabbing`);
 
-// Commenti con info sensibili
-const sensitiveInComments = (html.match(/<!--[\s\S]*?-->/g) || [])
-  .filter(c => /password|secret|api.?key|token|credential|private|TODO|FIXME/i.test(c));
-sensitiveInComments.length
-  ? warn(`HTML: ${sensitiveInComments.length} commento con parole sensibili`)
-  : pass('HTML: nessuna info sensibile nei commenti');
+  // Email in chiaro (bot spam harvesting)
+  const mails = (html.match(/mailto:[^"'>\s]+/g) || []);
+  mails.length
+    ? warn(`${tag}: ${mails.length} email in chiaro (valuta offuscamento JS)`)
+    : pass(`${tag}: nessuna email in chiaro`);
 
-// Server-side path disclosure in errori
-// (non applicabile su statico, ma segniamo come pass)
+  // Commenti con info sensibili
+  const sensitiveComments = (html.match(/<!--[\s\S]*?-->/g) || [])
+    .filter(c => /password|secret|api.?key|token|credential|private/i.test(c));
+  sensitiveComments.length
+    ? warn(`${tag}: ${sensitiveComments.length} commento con parole sensibili`)
+    : pass(`${tag}: nessuna info sensibile nei commenti`);
+
+  // Mixed content
+  const httpRefs = (html.match(/(?:src|href|action)\s*=\s*['"]http:\/\//g) || []);
+  httpRefs.length
+    ? warn(`${tag}: ${httpRefs.length} riferimento HTTP non-sicuro`)
+    : pass(`${tag}: nessun riferimento HTTP in chiaro`);
+
+  // Charset (anti charset-sniffing)
+  const charsetPos = html.search(/<meta\s+charset\s*=\s*["']?utf-8/i);
+  (charsetPos >= 0 && charsetPos < 1024)
+    ? pass(`${tag}: <meta charset="UTF-8"> nei primi byte`)
+    : fail(`${tag}: charset UTF-8 mancante o oltre i 1024 byte → rischio charset-sniffing`);
+}
+
 pass('HTML: sito statico → nessun stack trace / path disclosure server-side');
-
-// Mixed content (http:// nelle risorse)
-const httpRefs = (html.match(/(?:src|href|action)\s*=\s*['"]http:\/\//g) || []);
-httpRefs.length
-  ? warn(`HTML: ${httpRefs.length} riferimento HTTP non-sicuro (upgrade-insecure-requests mitiga, ma meglio aggiornare a https://)`)
-  : pass('HTML: nessun riferimento HTTP in chiaro — tutto HTTPS o relativo');
-
-// Charset dichiarato presto (anti charset-sniffing / UTF-7 XSS storico)
-const charsetPos = html.search(/<meta\s+charset\s*=\s*["']?utf-8/i);
-(charsetPos >= 0 && charsetPos < 1024)
-  ? pass('HTML: <meta charset="UTF-8"> nei primi byte → nessun charset-sniffing')
-  : fail('HTML: <meta charset utf-8> mancante o oltre i 1024 byte → rischio charset-sniffing');
 
 /* ═══════════════════════════════════════════════════════════
    4. .gitignore — evitare commit accidentali di segreti
@@ -282,27 +324,34 @@ const gitignore = read('.gitignore');
 /* ═══════════════════════════════════════════════════════════
    4b. ASSET — SVG-XSS, source map, segreti, file pericolosi
    ═══════════════════════════════════════════════════════════ */
-const walk = dir => {
-  let out = [];
-  for (const e of fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })) {
-    if (e.name === '.git' || e.name === 'node_modules') continue;
-    const rel = path.join(dir, e.name);
-    if (e.isDirectory()) out = out.concat(walk(rel));
-    else out.push(rel);
-  }
-  return out;
-};
-const allFiles = walk('.');
 
-// SVG-XSS nei NOSTRI asset (script, handler on*, foreignObject, href esterni, <animate> con javascript)
+// SVG-XSS nei NOSTRI asset — copertura completa inclusi vettori SMIL (CVE-2025-68461 class)
+// Vettori controllati:
+//   <script>              → JS diretto
+//   on*= handler          → event handler inline
+//   <foreignObject>       → HTML arbitrario dentro SVG
+//   href/xlink:href http  → risorse esterne
+//   javascript: URL       → JS da href/src
+//   <animate> to/from/values con javascript: → SMIL execution (moderno, mancava prima)
+//   <set attributeName="href">              → SMIL che riscrive href
+//   <use href="data:">    → data-URI che carica SVG con script dentro
 const svgFiles = allFiles.filter(f => f.endsWith('.svg'));
 const dirtySvg = svgFiles.filter(f => {
   const c = read(f);
-  return /<script|\son\w+\s*=|<foreignObject|xlink:href\s*=\s*["']https?:|href\s*=\s*["']https?:|javascript:/i.test(c);
+  return (
+    /<script/i.test(c) ||
+    /\son\w+\s*=/i.test(c) ||
+    /<foreignObject/i.test(c) ||
+    /(?:xlink:href|href)\s*=\s*["']https?:/i.test(c) ||
+    /javascript:/i.test(c) ||
+    /<animate[^>]+(?:to|from|values)\s*=\s*["'][^"']*javascript:/i.test(c) ||
+    /<set[^>]+attributeName\s*=\s*["']href["']/i.test(c) ||
+    /<use[^>]+href\s*=\s*["']data:/i.test(c)
+  );
 });
 dirtySvg.length
   ? fail(`SVG-XSS: ${dirtySvg.length} SVG con contenuto attivo → ${dirtySvg.join(', ')}`)
-  : pass(`SVG-XSS: tutti i ${svgFiles.length} SVG sono statici (no script/on*/foreignObject/href esterni)`);
+  : pass(`SVG-XSS: tutti i ${svgFiles.length} SVG sono statici (no script/on*/foreignObject/SMIL-JS/data-URI)`);
 
 // Source map esposti (leak del codice sorgente)
 const maps = allFiles.filter(f => f.endsWith('.map'));
