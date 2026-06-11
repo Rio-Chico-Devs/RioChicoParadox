@@ -79,8 +79,8 @@ function get(url) {
   });
 }
 
-/* Estrae ogni @font-face con la sua etichetta-subset (il commento
-   /* latin *​/ che Google mette prima di ogni blocco). */
+// Estrae ogni @font-face con la sua etichetta-subset.
+// Google mette un commento con il nome del subset prima di ogni blocco.
 function parseFaces(css) {
   const faces = [];
   const re = /\/\*\s*([^*]+?)\s*\*\/\s*@font-face\s*\{([^}]+)\}/g;
