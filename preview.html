@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Rio Chico Studio — Artista anime, illustrazioni, personaggi originali." />
+  <meta name="description" content="Rio Chico Studio — Anime artist, original illustrations and character design." />
   <title>RIO CHICO STUDIO</title>
 
-  <!-- Canonical: scommenta e inserisci il dominio reale per evitare che
-       i preview *.pages.dev o domini lookalike vengano indicizzati al posto tuo -->
-  <!-- <link rel="canonical" href="https://tuodominio.com/" /> -->
+  <!-- Canonical: uncomment and insert the real domain to prevent
+       *.pages.dev previews or lookalike domains from being indexed -->
+  <!-- <link rel="canonical" href="https://yourdomain.com/" /> -->
 
   <!-- Open Graph / Social sharing -->
   <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="Rio Chico Studio — Artista Anime &amp; Illustratore" />
-  <meta property="og:description" content="Illustrazioni originali, personaggi OC e character design in stile anime. Ogni disegno racconta una storia." />
+  <meta property="og:title"       content="Rio Chico Studio — Anime Artist &amp; Illustrator" />
+  <meta property="og:description" content="Original illustrations, OC characters and anime-style character design. Every drawing tells a story." />
   <meta property="og:image"       content="assets/img/og-cover.png" />
-  <meta property="og:locale"      content="it_IT" />
+  <meta property="og:locale"      content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@riochicostudio" />
-  <meta name="twitter:title"       content="Rio Chico Studio — Artista Anime" />
-  <meta name="twitter:description" content="Illustrazioni originali, personaggi OC e character design in stile anime." />
+  <meta name="twitter:title"       content="Rio Chico Studio — Anime Artist" />
+  <meta name="twitter:description" content="Original illustrations, OC characters and anime-style character design." />
   <meta name="twitter:image"       content="assets/img/og-cover.png" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet" />
 
   <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
   <noscript><style>
@@ -37,6 +33,100 @@
     [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
   </style></noscript>
   <style>
+/* =================================================================
+   FONT SELF-HOSTED — Rio Chico Studio
+   Generato da: node scripts/setup-fonts.js
+
+   PRIMA DEL DEPLOY: eseguire scripts/setup-fonts.js per scaricare
+   i file .woff2 in assets/fonts/ e committarli nel repo.
+   Senza quei file il sito usa i font di fallback (variables.css).
+   ================================================================= */
+
+/* ---- Bebas Neue — Regular (display headings) ---- */
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/bebas-neue-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---- Inter — 300 (light body) ---- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../assets/fonts/inter-300.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---- Inter — 300 italic ---- */
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../assets/fonts/inter-300i.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---- Inter — 400 (regular body) ---- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/inter-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---- Inter — 500 (medium, UI labels) ---- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/inter-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---- Noto Serif JP — 400 (katakana subset) ---- */
+/* Solo i caratteri katakana usati nel sito (U+30A0-30FF). */
+/* File < 20 KB grazie al subset. */
+@font-face {
+  font-family: 'Noto Serif JP';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/noto-serif-jp-400.woff2') format('woff2');
+  unicode-range: U+30A0-30FF;
+}
+
+/* ---- Noto Serif JP — 700 (katakana subset) ---- */
+@font-face {
+  font-family: 'Noto Serif JP';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/noto-serif-jp-700.woff2') format('woff2');
+  unicode-range: U+30A0-30FF;
+}
+
+
+/* ───────────────────────────────── */
+
 /* =========================================================
    RIO CHICO STUDIO — CSS VARIABLES
    Cambia qui per personalizzare l'intero sito istantaneamente
@@ -61,6 +151,16 @@
   --clr-accent-dark:  #2244cc;      /* cobalt scuro */
   --clr-accent-glow:  rgba(68, 102, 255, 0.30);
   --clr-accent-subtle:rgba(68, 102, 255, 0.08);
+
+  /* Secondo accento — magenta caldo. Usato CON PARSIMONIA:
+     gradiente firma, separatori marquee, selezione testo.
+     Il duotone cobalt->magenta e' la firma cromatica del sito. */
+  --clr-accent-2:      #ff3d7f;
+  --clr-accent-2-glow: rgba(255, 61, 127, 0.25);
+  --grad-accent: linear-gradient(135deg,
+    var(--clr-accent) 0%,
+    #7d5cff 52%,
+    var(--clr-accent-2) 100%);
 
   --clr-text:         #f0eeff;      /* bianco caldo con tocco viola */
   --clr-text-muted:   #8888b8;      /* muted indigo-grigio */
@@ -167,6 +267,21 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-height);
   font-size: 16px;
+  /* Firefox scrollbar coerente col brand */
+  scrollbar-color: var(--clr-accent) var(--clr-bg);
+  scrollbar-width: thin;
+}
+
+/* Selezione testo — firma duotone */
+::selection {
+  background: var(--clr-accent);
+  color: #ffffff;
+}
+
+/* Focus visibile coerente (tastiera) — non tocca il focus da mouse */
+:focus-visible {
+  outline: 2px solid var(--clr-accent-light);
+  outline-offset: 3px;
 }
 
 body {
@@ -185,7 +300,21 @@ body {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--clr-bg); }
-::-webkit-scrollbar-thumb { background: var(--clr-accent); }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--clr-accent), var(--clr-accent-2)); }
+
+/* ── SCROLL PROGRESS — barra sottile in cima, scaleX via JS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: calc(var(--z-nav) + 1);
+  background: var(--grad-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
 
 /* ── TIPOGRAFIA ────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
@@ -193,8 +322,13 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-wide);
   color: var(--clr-text);
+  text-wrap: balance;
 }
-p { line-height: var(--leading-loose); color: var(--clr-text-muted); }
+p {
+  line-height: var(--leading-loose);
+  color: var(--clr-text-muted);
+  text-wrap: pretty;
+}
 a { color: inherit; text-decoration: none; }
 img, svg { max-width: 100%; display: block; }
 ul, ol { list-style: none; }
@@ -241,7 +375,17 @@ button { border: none; background: none; font-family: inherit; }
   text-transform: uppercase;
   line-height: 0.88;
 }
+
+/* Lo span accentato porta il gradiente firma (fallback: cobalt) */
 .section-title span { color: var(--clr-accent); }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .section-title span {
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
 
 .section-subtitle {
   margin-top: 1rem;
@@ -255,7 +399,7 @@ button { border: none; background: none; font-family: inherit; }
   display: block;
   width: 3rem;
   height: 3px;
-  background: var(--clr-accent);
+  background: var(--grad-accent);
   margin-top: 1.5rem;
 }
 
@@ -482,6 +626,32 @@ button { border: none; background: none; font-family: inherit; }
   :root {
     --section-pad-y: 4rem;
     --section-pad-x: 1.25rem;
+  }
+}
+
+/* ── PERFORMANCE — content-visibility ────────────────────────
+   Le sezioni sotto la prima viewport non vengono renderizzate
+   finche' non servono. contain-intrinsic-size "auto X" ricorda
+   l'altezza reale dopo il primo render (niente salti scrollbar). */
+#gallery    { content-visibility: auto; contain-intrinsic-size: auto 1600px; }
+#characters { content-visibility: auto; contain-intrinsic-size: auto 2900px; }
+#profile    { content-visibility: auto; contain-intrinsic-size: auto 1000px; }
+#social     { content-visibility: auto; contain-intrinsic-size: auto 1100px; }
+
+/* ── REDUCED MOTION — accessibilita' globale ─────────────────
+   Chi chiede meno animazioni vede tutto subito, senza effetti.
+   Stessa garanzia del fallback <noscript>. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  [data-r] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
   }
 }
 
@@ -1051,9 +1221,26 @@ body.loaded .hero__scroll {
 .hero__title-line:nth-child(2) { animation-delay: 0.45s; }
 .hero__title-line:nth-child(3) { animation-delay: 0.6s; }
 
-.hero__title-line--red   { color: var(--clr-accent); }
+/* CHICO — gradiente firma cobalt->magenta (fallback: cobalt pieno) */
+.hero__title-line--red { color: var(--clr-accent); }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .hero__title-line--red {
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* STUDIO — solo contorno, stile editoriale manga (fallback: bianco velato) */
 .hero__title-line--ghost {
   color: rgba(255,255,255,0.55);
+}
+@supports (-webkit-text-stroke: 1px white) {
+  .hero__title-line--ghost {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(240, 238, 255, 0.45);
+  }
 }
 
 @keyframes lineUp { to { transform: translateY(0); } }
@@ -1113,6 +1300,32 @@ body.loaded .hero__scroll {
   justify-content: center;
   min-height: 100svh;
   overflow: hidden;
+}
+
+/* Katakana verticale sul bordo destro — tocco editoriale anime */
+.hero__jp {
+  position: absolute;
+  top: 16%;
+  right: 1.5rem;
+  z-index: 15;
+  writing-mode: vertical-rl;
+  font-family: var(--font-jp);
+  font-size: var(--text-sm);
+  letter-spacing: 0.55em;
+  color: var(--clr-text-muted);
+  opacity: 0;
+  animation: fadeIn 0.8s ease 1.7s forwards;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__jp::before {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, var(--clr-accent), transparent);
+  margin-bottom: 0.9rem;
 }
 
 .hero__char-wrap {
@@ -1275,6 +1488,29 @@ body.loaded .hero__scroll {
   height: 0;
 }
 
+/* Orbita visibile — cerchio tratteggiato sul percorso delle card
+   (raggio = 600px come il translateX delle card). Ruota lentamente:
+   rende leggibile il concetto di "ruota" ed e' la cornice
+   meccanica dell'animazione. */
+.art-wheel__stage::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1200px;
+  height: 1200px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgba(120, 153, 255, 0.13);
+  animation: orbitSpin 90s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes orbitSpin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 /*
   Each card:
   - transform = rotate(--slot-angle) translateX(600px) rotate(-slot-angle)
@@ -1432,6 +1668,11 @@ body.loaded .hero__scroll {
       rotate(calc(-1 * var(--slot-angle)));
   }
 
+  .art-wheel__stage::before {
+    width: 800px;
+    height: 800px;
+  }
+
   .art-wheel__num { display: none; }
 }
 
@@ -1458,6 +1699,13 @@ body.loaded .hero__scroll {
       translateX(280px)
       rotate(calc(-1 * var(--slot-angle)));
   }
+
+  .art-wheel__stage::before {
+    width: 560px;
+    height: 560px;
+  }
+
+  .hero__jp { display: none; }
 }
 
 
@@ -1618,7 +1866,7 @@ body.loaded .hero__scroll {
   transition: transform var(--dur-med) var(--ease-out-quart);
 }
 
-.gallery__filter-btn:hover { color: var(--clr-text-muted); }
+.gallery__filter-btn:hover { color: var(--clr-text); }
 
 .gallery__filter-btn.is-active { color: var(--clr-accent); }
 .gallery__filter-btn.is-active::after { transform: scaleX(1); }
@@ -1651,6 +1899,13 @@ body.loaded .hero__scroll {
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 32px 32px;
+  transition: box-shadow 0.45s ease;
+}
+
+.gallery__card:hover {
+  box-shadow:
+    0 0 0 1px var(--clr-border-accent),
+    0 14px 44px -14px var(--clr-accent-glow);
 }
 
 /* Top-left registration mark */
@@ -2073,6 +2328,26 @@ body.loaded .hero__scroll {
   width: 0%;
   transition: width 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
   box-shadow: 0 0 8px var(--char-glow, var(--clr-accent-glow));
+  position: relative;
+  overflow: hidden;
+}
+
+/* Lampo bianco che attraversa la barra appena riempita */
+.char-stat__fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg,
+    transparent, rgba(255,255,255,0.55), transparent);
+}
+
+.char-block__info.in-view .char-stat__fill::after {
+  animation: statShine 1s ease 1.7s both;
+}
+
+@keyframes statShine {
+  to { transform: translateX(100%); }
 }
 
 .in-view ~ .char-block__info .char-stat__fill,
@@ -2221,6 +2496,17 @@ body.loaded .hero__scroll {
 }
 .loader__logo span { color: var(--clr-accent); }
 
+/* Katakana sotto il logo — micro-dettaglio anime */
+.loader__jp {
+  position: relative;
+  font-family: var(--font-jp);
+  font-size: var(--text-xs);
+  letter-spacing: 0.7em;
+  color: var(--clr-accent-light);
+  opacity: 0.75;
+  margin-top: -0.5rem;
+}
+
 .loader__bar {
   position: relative;
   width: min(360px, 70vw);
@@ -2232,7 +2518,7 @@ body.loaded .hero__scroll {
   position: absolute;
   inset: 0;
   width: 0%;
-  background: var(--clr-accent);
+  background: var(--grad-accent);
   box-shadow: 0 0 12px var(--clr-accent);
 }
 
@@ -2849,6 +3135,24 @@ body.loaded .hero__scroll {
   color: var(--clr-accent);
 }
 
+.social__footer-legal {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.social__footer-legal a {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: var(--tracking-wide);
+  text-decoration: none;
+  transition: color var(--dur-fast);
+}
+
+.social__footer-legal a:hover {
+  color: var(--clr-accent-light);
+}
+
 /* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
   .social__cta-banner {
@@ -2887,19 +3191,26 @@ body.loaded .hero__scroll {
    ═══════════════════════════════════════════════════════════ */
 
 .marquee-strip {
+  /* Leggermente inclinata e piu' larga del viewport: effetto
+     "nastro adesivo" manga. scale copre i gap agli angoli. */
   width: 100%;
   overflow: hidden;
   padding: 0.55rem 0;
   display: flex;
   user-select: none;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
 }
 
 .marquee-strip--accent {
-  background: var(--clr-accent);
+  background: var(--grad-accent);
+  transform: rotate(-1.1deg) scale(1.03);
 }
 
 .marquee-strip--surface {
   background: var(--clr-surface);
+  transform: rotate(1.1deg) scale(1.03);
 }
 
 .marquee-track {
@@ -2954,7 +3265,7 @@ body.loaded .hero__scroll {
 }
 
 .marquee-strip--surface .marquee-sep {
-  color: var(--clr-accent);
+  color: var(--clr-accent-2);
 }
 
 /* Reduced motion */
@@ -3221,10 +3532,14 @@ body.loaded .hero__scroll {
 
 <body>
 
+<!-- ── SCROLL PROGRESS ─────────────────────────────────── -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
 <!-- ── LOADING SCREEN ──────────────────────────────────── -->
 <div class="loader" id="loader">
   <div class="loader__burst" aria-hidden="true"></div>
   <div class="loader__logo"><span>RIO</span> CHICO STUDIO</div>
+  <div class="loader__jp" aria-hidden="true">ローディング</div>
   <div class="loader__bar"><div class="loader__bar-fill" id="loader-fill"></div></div>
   <div class="loader__count">NOW LOADING... <b><span id="loader-count">0</span>%</b></div>
 </div>
@@ -3235,7 +3550,7 @@ body.loaded .hero__scroll {
 <!-- ════════════════════════════════════════════════════════
      NAV
 ════════════════════════════════════════════════════════ -->
-<nav class="nav" role="navigation" aria-label="Navigazione principale">
+<nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav__inner">
     <a class="nav__logo" href="#hero" aria-label="Rio Chico Studio — Home">
       <span class="nav__logo-accent">RIO</span>&nbsp;CHICO
@@ -3251,10 +3566,10 @@ body.loaded .hero__scroll {
 
     <ul class="nav__links" id="nav-links" role="list">
       <li><a class="nav__link is-active" href="#hero"><span class="nav__link-num">01</span>Home</a></li>
-      <li><a class="nav__link" href="#gallery"><span class="nav__link-num">02</span>Galleria</a></li>
-      <li><a class="nav__link" href="#characters"><span class="nav__link-num">03</span>Personaggi</a></li>
-      <li><a class="nav__link" href="#profile"><span class="nav__link-num">04</span>Profilo</a></li>
-      <li><a class="nav__link" href="#social"><span class="nav__link-num">05</span>Contatti</a></li>
+      <li><a class="nav__link" href="#gallery"><span class="nav__link-num">02</span>Gallery</a></li>
+      <li><a class="nav__link" href="#characters"><span class="nav__link-num">03</span>Characters</a></li>
+      <li><a class="nav__link" href="#profile"><span class="nav__link-num">04</span>Profile</a></li>
+      <li><a class="nav__link" href="#social"><span class="nav__link-num">05</span>Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -3262,7 +3577,7 @@ body.loaded .hero__scroll {
 <!-- ════════════════════════════════════════════════════════
      HERO
 ════════════════════════════════════════════════════════ -->
-<section class="hero" id="hero" aria-label="Benvenuto">
+<section class="hero" id="hero" aria-label="Welcome">
 
   <div class="hero__bg" aria-hidden="true">
     <div class="hero__bg-base"></div>
@@ -3284,7 +3599,7 @@ body.loaded .hero__scroll {
   <div class="hero__left">
 
     <p class="hero__eyebrow">
-      <span>Artista Anime &amp; Illustratore</span>
+      <span>Anime Artist &amp; Illustrator</span>
     </p>
 
     <h1 class="hero__title" aria-label="Rio Chico Studio">
@@ -3294,31 +3609,31 @@ body.loaded .hero__scroll {
     </h1>
 
     <p class="hero__desc">
-      Illustrazioni originali, personaggi OC e character design
-      in stile anime. Ogni disegno racconta una storia — la mia.
+      Original illustrations, OC characters and anime-style
+      character design. Every drawing tells a story — mine.
     </p>
 
     <div class="hero__cta">
       <a class="btn btn--primary btn--lg" href="#gallery">
-        Vedi Galleria <span class="btn__arrow" aria-hidden="true">→</span>
+        View Gallery <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
       <a class="btn btn--ghost btn--lg" href="#social">
-        Commissioni
+        Commissions
       </a>
     </div>
 
     <div class="hero__stats">
       <div>
         <div class="hero__stat-num" data-count="100" data-suffix="+">100+</div>
-        <div class="hero__stat-label">Opere</div>
+        <div class="hero__stat-label">Artworks</div>
       </div>
       <div>
         <div class="hero__stat-num" data-count="3" data-suffix="">3</div>
-        <div class="hero__stat-label">Personaggi OC</div>
+        <div class="hero__stat-label">OC Characters</div>
       </div>
       <div>
         <div class="hero__stat-num" data-count="5" data-suffix="">5</div>
-        <div class="hero__stat-label">Anni di pratica</div>
+        <div class="hero__stat-label">Years of Practice</div>
       </div>
     </div>
 
@@ -3332,8 +3647,11 @@ body.loaded .hero__scroll {
   <!-- RIGHT: ART WHEEL ─────────────────── -->
   <div class="hero__right">
 
+    <!-- Vertical katakana tag — editorial accent -->
+    <span class="hero__jp" aria-hidden="true">リオ・チコ・スタジオ</span>
+
     <!-- 2D ferris wheel: 4 cards at NSEW, active at west (left) -->
-    <div class="art-wheel" role="region" aria-label="Opere in evidenza">
+    <div class="art-wheel" role="region" aria-label="Featured artworks">
 
       <!-- Ambient glow — fixed at left/active position, does not rotate -->
       <div class="art-wheel__glow" aria-hidden="true"></div>
@@ -3351,7 +3669,7 @@ body.loaded .hero__scroll {
         <!-- item-i:1 = north (top) -->
         <div class="art-wheel__card" style="--item-i:1">
           <span class="ph-flag">placeholder</span>
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMTwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5QUk9UQUdPTklTVEE8L3RleHQ+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ2OC4wIiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPmNoYXJhY3RlciAwMTwvdGV4dD4KCiAgPHJlY3QgeD0iMTM4LjAiIHk9IjQ4MC4wIiB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ5OS4wIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlBORyDCtyA0MjDDlzYwMDwvdGV4dD4KCiAgPHJlY3QgeD0iMTE1LjAiIHk9IjUyMi4wIiB3aWR0aD0iMTkwIiBoZWlnaHQ9IjI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI1MzkuMCIgZmlsbD0iI2U2MDAxMiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5CT0lORyDihpAgU1g8L3RleHQ+CgogIDxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSI0MTQiIGhlaWdodD0iNTk0IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iNCIvPgogIDxwYXRoIGQ9Ik0zLDQwIEwzLDMgTDQwLDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTM4MCwzIEw0MTcsMyBMNDE3LDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zLDU2MCBMMyw1OTcgTDQwLDU5NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDU5NyBMNDE3LDU5NyBMNDE3LDU2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KPC9zdmc+" alt="Personaggio 01"
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMTwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5QUk9UQUdPTklTVEE8L3RleHQ+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ2OC4wIiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPmNoYXJhY3RlciAwMTwvdGV4dD4KCiAgPHJlY3QgeD0iMTM4LjAiIHk9IjQ4MC4wIiB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ5OS4wIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlBORyDCtyA0MjDDlzYwMDwvdGV4dD4KCiAgPHJlY3QgeD0iMTE1LjAiIHk9IjUyMi4wIiB3aWR0aD0iMTkwIiBoZWlnaHQ9IjI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI1MzkuMCIgZmlsbD0iI2U2MDAxMiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5CT0lORyDihpAgU1g8L3RleHQ+CgogIDxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSI0MTQiIGhlaWdodD0iNTk0IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iNCIvPgogIDxwYXRoIGQ9Ik0zLDQwIEwzLDMgTDQwLDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTM4MCwzIEw0MTcsMyBMNDE3LDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zLDU2MCBMMyw1OTcgTDQwLDU5NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDU5NyBMNDE3LDU5NyBMNDE3LDU2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KPC9zdmc+" alt="Character 01"
                width="280" height="420"  loading="lazy" decoding="async" />
           <span class="art-wheel__num" aria-hidden="true">02</span>
         </div>
@@ -3367,7 +3685,7 @@ body.loaded .hero__scroll {
         <!-- item-i:3 = south (bottom) -->
         <div class="art-wheel__card" style="--item-i:3">
           <span class="ph-flag">placeholder</span>
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjMWU5MGZmIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiMxZTkwZmYiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMjwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TVFJBVEVHQTwvdGV4dD4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDY4LjAiIGZpbGw9IiMxZTkwZmYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+Y2hhcmFjdGVyIDAyPC90ZXh0PgoKICA8cmVjdCB4PSIxMzguMCIgeT0iNDgwLjAiIHdpZHRoPSIxNDQiIGhlaWdodD0iMjgiIGZpbGw9IiNmZmYiLz4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDk5LjAiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+UE5HIMK3IDQyMMOXNjAwPC90ZXh0PgoKICA8cmVjdCB4PSIxMTUuMCIgeT0iNTIyLjAiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjUzOS4wIiBmaWxsPSIjMWU5MGZmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkJPSU5HIOKGkiBEWDwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjQxNCIgaGVpZ2h0PSI1OTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDMgTDQxNywzIEw0MTcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNTYwIEwzLDU5NyBMNDAsNTk3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zODAsNTk3IEw0MTcsNTk3IEw0MTcsNTYwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4=" alt="Personaggio 02"
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjMWU5MGZmIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiMxZTkwZmYiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMjwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TVFJBVEVHQTwvdGV4dD4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDY4LjAiIGZpbGw9IiMxZTkwZmYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+Y2hhcmFjdGVyIDAyPC90ZXh0PgoKICA8cmVjdCB4PSIxMzguMCIgeT0iNDgwLjAiIHdpZHRoPSIxNDQiIGhlaWdodD0iMjgiIGZpbGw9IiNmZmYiLz4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDk5LjAiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+UE5HIMK3IDQyMMOXNjAwPC90ZXh0PgoKICA8cmVjdCB4PSIxMTUuMCIgeT0iNTIyLjAiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjUzOS4wIiBmaWxsPSIjMWU5MGZmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkJPSU5HIOKGkiBEWDwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjQxNCIgaGVpZ2h0PSI1OTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDMgTDQxNywzIEw0MTcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNTYwIEwzLDU5NyBMNDAsNTk3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zODAsNTk3IEw0MTcsNTk3IEw0MTcsNTYwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4=" alt="Character 02"
                width="280" height="420"  loading="lazy" decoding="async" />
           <span class="art-wheel__num" aria-hidden="true">04</span>
         </div>
@@ -3397,25 +3715,25 @@ body.loaded .hero__scroll {
     <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Illustrazioni Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Illustrazioni Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Illustrazioni Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Illustrazioni Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
   </div>
@@ -3430,10 +3748,10 @@ body.loaded .hero__scroll {
     <header class="section-header">
       <span class="section-label" data-r="up">02 / Artwork</span>
       <h2 class="section-title" data-r="wipe" id="gallery-title">
-        GALLE<span>RIA</span>
+        GALLE<span>RY</span>
       </h2>
       <p class="section-subtitle" data-r="up" data-rd="2">
-        Illustrazioni originali, fanart e character design.
+        Original illustrations, fanart and character design.
       </p>
       <span class="accent-bar" data-r="wipe" data-rd="3"></span>
     </header>
@@ -3443,17 +3761,17 @@ body.loaded .hero__scroll {
       <div class="gallery__editorial-ghost">GALLERY</div>
       <div class="gallery__editorial-meta">
         <div class="gallery__editorial-count">08</div>
-        <div class="gallery__editorial-label">Opere in mostra · 2024</div>
+        <div class="gallery__editorial-label">Works on display · 2024</div>
       </div>
     </div>
 
-    <!-- Manga panel strips — featured works, stile MAZEBON/Death Note -->
-    <div class="gallery__strips" aria-label="Opere in evidenza">
+    <!-- Manga panel strips — featured works, MAZEBON/Death Note style -->
+    <div class="gallery__strips" aria-label="Featured works">
 
       <a class="gallery__strip" href="#gallery" data-r="up">
         <img class="gallery__strip-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNDgwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ2NDA0ODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc2NDA0ODAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0ODAiIGZpbGw9InVybCgjZzY0MDQ4MCkiLz4KICA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0idXJsKCNkNjQwNDgwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMTwvdGV4dD4KICAgIDx0ZXh0IHg9IjYyNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8cmVjdCB4PSIxMjguMCIgeT0iMTI0LjgwMDAwMDAwMDAwMDAxIiB3aWR0aD0iMzg0LjAiIGhlaWdodD0iMTUzLjYiIHJ4PSI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8Y2lyY2xlIGN4PSI0MDQuNDgiIGN5PSIxNjguMCIgcj0iMjguNzk5OTk5OTk5OTk5OTk3IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0xMzguMCwyNjguOCBMMjg4LjAsMTkyLjAgTDM0NS42LDIzNS4yIEw0ODYuMCwxNjMuMjAwMDAwMDAwMDAwMDIgTDUwMi4wLDI2OC44IFoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOSIvPgoKICA8dGV4dCB4PSIzMjAuMCIgeT0iMzU1LjIiIGZpbGw9IiNmZmYiIGZvbnQtc2l6ZT0iNDYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiI+QVJUV09SSyAwMTwvdGV4dD4KICA8dGV4dCB4PSIzMjAuMCIgeT0iMzc5LjIiIGZpbGw9IiNlNjAwMTIiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+b2M8L3RleHQ+CgogIDxyZWN0IHg9IjI0OC4wIiB5PSIzODQuMCIgd2lkdGg9IjE0NCIgaGVpZ2h0PSIyOCIgZmlsbD0iI2ZmZiIvPgogIDx0ZXh0IHg9IjMyMC4wIiB5PSI0MDMuMCIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj7igJQgw5cg4oCUPC90ZXh0PgoKICA8cmVjdCB4PSIyMjUuMCIgeT0iNDE3LjYiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2U2MDAxMiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMzIwLjAiIHk9IjQzNC42IiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkhPVkVSOiBvdmVybGF5IOKGkTwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjYzNCIgaGVpZ2h0PSI0NzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2U2MDAxMiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNNjAwLDMgTDYzNywzIEw2MzcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNDQwIEwzLDQ3NyBMNDAsNDc3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik02MDAsNDc3IEw2MzcsNDc3IEw2MzcsNDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4=" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="gallery__strip-info">
-          <span class="gallery__strip-title">Personaggio Originale</span>
+          <span class="gallery__strip-title">Original Character</span>
           <span class="gallery__strip-cat">OC · Character Design · 2024</span>
         </div>
         <span class="gallery__strip-num" aria-hidden="true">01</span>
@@ -3463,8 +3781,8 @@ body.loaded .hero__scroll {
       <a class="gallery__strip" href="#gallery" data-r="up" data-rd="1">
         <img class="gallery__strip-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNDgwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ2NDA0ODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc2NDA0ODAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0ODAiIGZpbGw9InVybCgjZzY0MDQ4MCkiLz4KICA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0idXJsKCNkNjQwNDgwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5GQU5BUlQgwrcgMDM8L3RleHQ+CiAgICA8dGV4dCB4PSI2MjYiIHk9IjIzIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgbGV0dGVyLXNwYWNpbmc9IjEiIHRleHQtYW5jaG9yPSJlbmQiPlNPU1RJVFVJU0NJIOKWujwvdGV4dD4KICA8L2c+CgogIAogICAgPHJlY3QgeD0iMTI4LjAiIHk9IjEyNC44MDAwMDAwMDAwMDAwMSIgd2lkdGg9IjM4NC4wIiBoZWlnaHQ9IjE1My42IiByeD0iNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiIG9wYWNpdHk9IjAuOSIvPgogICAgPGNpcmNsZSBjeD0iNDA0LjQ4IiBjeT0iMTY4LjAiIHI9IjI4Ljc5OTk5OTk5OTk5OTk5NyIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNMTM4LjAsMjY4LjggTDI4OC4wLDE5Mi4wIEwzNDUuNiwyMzUuMiBMNDg2LjAsMTYzLjIwMDAwMDAwMDAwMDAyIEw1MDIuMCwyNjguOCBaIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiLz4KCiAgPHRleHQgeD0iMzIwLjAiIHk9IjM1NS4yIiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjQ2IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiPkFSVFdPUksgMDM8L3RleHQ+CiAgPHRleHQgeD0iMzIwLjAiIHk9IjM3OS4yIiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPmZhbmFydDwvdGV4dD4KCiAgPHJlY3QgeD0iMjQ4LjAiIHk9IjM4NC4wIiB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMzIwLjAiIHk9IjQwMy4wIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPuKAlCDDlyDigJQ8L3RleHQ+CgogIDxyZWN0IHg9IjIyNS4wIiB5PSI0MTcuNiIgd2lkdGg9IjE5MCIgaGVpZ2h0PSIyNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTYwMDEyIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIzMjAuMCIgeT0iNDM0LjYiIGZpbGw9IiNlNjAwMTIiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+SE9WRVI6IG92ZXJsYXkg4oaRPC90ZXh0PgoKICA8cmVjdCB4PSIzIiB5PSIzIiB3aWR0aD0iNjM0IiBoZWlnaHQ9IjQ3NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTYwMDEyIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8cGF0aCBkPSJNMyw0MCBMMywzIEw0MCwzIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik02MDAsMyBMNjM3LDMgTDYzNyw0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMyw0NDAgTDMsNDc3IEw0MCw0NzciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTYwMCw0NzcgTDYzNyw0NzcgTDYzNyw0NDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+Cjwvc3ZnPg==" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="gallery__strip-info">
-          <span class="gallery__strip-title">Studio di Carattere</span>
-          <span class="gallery__strip-cat">Fanart · Illustrazione · 2024</span>
+          <span class="gallery__strip-title">Character Study</span>
+          <span class="gallery__strip-cat">Fanart · Illustration · 2024</span>
         </div>
         <span class="gallery__strip-num" aria-hidden="true">02</span>
         <span class="gallery__strip-cta" aria-hidden="true">↗</span>
@@ -3473,7 +3791,7 @@ body.loaded .hero__scroll {
       <a class="gallery__strip" href="#gallery" data-r="up" data-rd="2">
         <img class="gallery__strip-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNDgwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ2NDA0ODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc2NDA0ODAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0ODAiIGZpbGw9InVybCgjZzY0MDQ4MCkiLz4KICA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0idXJsKCNkNjQwNDgwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5GQU5BUlQgwrcgMDc8L3RleHQ+CiAgICA8dGV4dCB4PSI2MjYiIHk9IjIzIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgbGV0dGVyLXNwYWNpbmc9IjEiIHRleHQtYW5jaG9yPSJlbmQiPlNPU1RJVFVJU0NJIOKWujwvdGV4dD4KICA8L2c+CgogIAogICAgPHJlY3QgeD0iMTI4LjAiIHk9IjEyNC44MDAwMDAwMDAwMDAwMSIgd2lkdGg9IjM4NC4wIiBoZWlnaHQ9IjE1My42IiByeD0iNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiIG9wYWNpdHk9IjAuOSIvPgogICAgPGNpcmNsZSBjeD0iNDA0LjQ4IiBjeT0iMTY4LjAiIHI9IjI4Ljc5OTk5OTk5OTk5OTk5NyIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNMTM4LjAsMjY4LjggTDI4OC4wLDE5Mi4wIEwzNDUuNiwyMzUuMiBMNDg2LjAsMTYzLjIwMDAwMDAwMDAwMDAyIEw1MDIuMCwyNjguOCBaIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiLz4KCiAgPHRleHQgeD0iMzIwLjAiIHk9IjM1NS4yIiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjQ2IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiPkFSVFdPUksgMDc8L3RleHQ+CiAgPHRleHQgeD0iMzIwLjAiIHk9IjM3OS4yIiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPmZhbmFydDwvdGV4dD4KCiAgPHJlY3QgeD0iMjQ4LjAiIHk9IjM4NC4wIiB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMzIwLjAiIHk9IjQwMy4wIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPuKAlCDDlyDigJQ8L3RleHQ+CgogIDxyZWN0IHg9IjIyNS4wIiB5PSI0MTcuNiIgd2lkdGg9IjE5MCIgaGVpZ2h0PSIyNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTYwMDEyIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIzMjAuMCIgeT0iNDM0LjYiIGZpbGw9IiNlNjAwMTIiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+SE9WRVI6IG92ZXJsYXkg4oaRPC90ZXh0PgoKICA8cmVjdCB4PSIzIiB5PSIzIiB3aWR0aD0iNjM0IiBoZWlnaHQ9IjQ3NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTYwMDEyIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8cGF0aCBkPSJNMyw0MCBMMywzIEw0MCwzIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik02MDAsMyBMNjM3LDMgTDYzNyw0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMyw0NDAgTDMsNDc3IEw0MCw0NzciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTYwMCw0NzcgTDYzNyw0NzcgTDYzNyw0NDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+Cjwvc3ZnPg==" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="gallery__strip-info">
-          <span class="gallery__strip-title">Serie Illustrata</span>
+          <span class="gallery__strip-title">Illustrated Series</span>
           <span class="gallery__strip-cat">Artwork · Sketch · 2024</span>
         </div>
         <span class="gallery__strip-num" aria-hidden="true">03</span>
@@ -3482,8 +3800,8 @@ body.loaded .hero__scroll {
 
     </div>
 
-    <div class="gallery__filters" data-r="up" data-rd="3" role="group" aria-label="Filtra per categoria">
-      <button class="gallery__filter-btn is-active" data-filter="all">Tutti</button>
+    <div class="gallery__filters" data-r="up" data-rd="3" role="group" aria-label="Filter by category">
+      <button class="gallery__filter-btn is-active" data-filter="all">All</button>
       <button class="gallery__filter-btn" data-filter="oc">OC</button>
       <button class="gallery__filter-btn" data-filter="fanart">Fanart</button>
       <button class="gallery__filter-btn" data-filter="character">Character Design</button>
@@ -3498,7 +3816,7 @@ body.loaded .hero__scroll {
         <span class="gallery__card-badge">Featured</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">OC</span>
-          <h3 class="gallery__card-title">Primo Sguardo</h3>
+          <h3 class="gallery__card-title">First Look</h3>
         </div>
         <span class="gallery__card-arrow" aria-hidden="true">↗</span>
       </article>
@@ -3518,7 +3836,7 @@ body.loaded .hero__scroll {
         <span class="gallery__card-num">03</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Fanart</span>
-          <h3 class="gallery__card-title">Tributo</h3>
+          <h3 class="gallery__card-title">Tribute</h3>
         </div>
         <span class="gallery__card-arrow" aria-hidden="true">↗</span>
       </article>
@@ -3538,7 +3856,7 @@ body.loaded .hero__scroll {
         <span class="gallery__card-num">05</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Sketch</span>
-          <h3 class="gallery__card-title">Studio Linee</h3>
+          <h3 class="gallery__card-title">Line Study</h3>
         </div>
         <span class="gallery__card-arrow" aria-hidden="true">↗</span>
       </article>
@@ -3548,7 +3866,7 @@ body.loaded .hero__scroll {
         <span class="gallery__card-num">06</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Character Design</span>
-          <h3 class="gallery__card-title">Espressioni</h3>
+          <h3 class="gallery__card-title">Expressions</h3>
         </div>
         <span class="gallery__card-arrow" aria-hidden="true">↗</span>
       </article>
@@ -3558,7 +3876,7 @@ body.loaded .hero__scroll {
         <span class="gallery__card-num">07</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">Fanart</span>
-          <h3 class="gallery__card-title">Omaggio</h3>
+          <h3 class="gallery__card-title">Homage</h3>
         </div>
         <span class="gallery__card-arrow" aria-hidden="true">↗</span>
       </article>
@@ -3568,7 +3886,7 @@ body.loaded .hero__scroll {
         <span class="gallery__card-num">08</span>
         <div class="gallery__card-overlay">
           <span class="gallery__card-category">OC</span>
-          <h3 class="gallery__card-title">Luce Finale</h3>
+          <h3 class="gallery__card-title">Final Light</h3>
         </div>
         <span class="gallery__card-arrow" aria-hidden="true">↗</span>
       </article>
@@ -3577,7 +3895,7 @@ body.loaded .hero__scroll {
 
     <div class="gallery__more" data-r="up" data-rd="2">
       <a class="btn btn--ghost btn--lg" href="#social">
-        Vedi tutto su Instagram <span class="btn__arrow" aria-hidden="true">→</span>
+        View all on Instagram <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
 
@@ -3587,29 +3905,29 @@ body.loaded .hero__scroll {
 <!-- ── MARQUEE 02 ─────────────────────────────────────── -->
 <div class="marquee-strip marquee-strip--surface marquee-strip--reverse" aria-hidden="true">
   <div class="marquee-track">
-    <span class="marquee-item">Personaggi Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonista</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Stratega</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonista</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Personaggi Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonista</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Stratega</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonista</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Personaggi Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonista</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Stratega</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonista</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Personaggi Originali</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonista</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Stratega</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonista</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
     <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
   </div>
 </div>
@@ -3622,9 +3940,9 @@ body.loaded .hero__scroll {
   <!-- Section intro -->
   <div style="padding: 5rem 0 3rem; text-align:center; position:relative; overflow:hidden;">
     <div style="max-width:var(--max-width); margin:0 auto; padding:0 var(--section-pad-x); position:relative; z-index:1;">
-      <span class="section-label" data-r="up" style="justify-content:center;">03 / Personaggi</span>
+      <span class="section-label" data-r="up" style="justify-content:center;">03 / Characters</span>
       <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center;">
-        PERSON<span>AGGI</span>
+        CHAR<span>ACTERS</span>
       </h2>
     </div>
     <!-- big bg stars -->
@@ -3661,18 +3979,18 @@ body.loaded .hero__scroll {
     <div class="char-block__art">
       <span class="char-block__number" aria-hidden="true">01</span>
       <img class="char-block__img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjZTYwMDEyIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiNlNjAwMTIiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMTwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5QUk9UQUdPTklTVEE8L3RleHQ+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ2OC4wIiBmaWxsPSIjZTYwMDEyIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPmNoYXJhY3RlciAwMTwvdGV4dD4KCiAgPHJlY3QgeD0iMTM4LjAiIHk9IjQ4MC4wIiB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjQ5OS4wIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlBORyDCtyA0MjDDlzYwMDwvdGV4dD4KCiAgPHJlY3QgeD0iMTE1LjAiIHk9IjUyMi4wIiB3aWR0aD0iMTkwIiBoZWlnaHQ9IjI2IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI1MzkuMCIgZmlsbD0iI2U2MDAxMiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5CT0lORyDihpAgU1g8L3RleHQ+CgogIDxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSI0MTQiIGhlaWdodD0iNTk0IiBmaWxsPSJub25lIiBzdHJva2U9IiNlNjAwMTIiIHN0cm9rZS13aWR0aD0iNCIvPgogIDxwYXRoIGQ9Ik0zLDQwIEwzLDMgTDQwLDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTM4MCwzIEw0MTcsMyBMNDE3LDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zLDU2MCBMMyw1OTcgTDQwLDU5NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDU5NyBMNDE3LDU5NyBMNDE3LDU2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KPC9zdmc+"
-           alt="Personaggio OC 01 — Protagonista"
+           alt="OC Character 01 — Protagonist"
            width="420" height="600"
            loading="lazy" decoding="async"
            data-r="boing-l" data-rd="1" />
       <!-- Float card personaggio -->
       <div class="char-float-card" data-r="boing" data-rd="3">
-        <div class="char-float-card__header">FILE · 001 · PROTAGONISTA</div>
+        <div class="char-float-card__header">FILE · 001 · PROTAGONIST</div>
         <div class="char-float-card__body">
-          <div class="char-float-card__row"><span>RUOLO</span><span>Protagonista</span></div>
-          <div class="char-float-card__row"><span>TIPO</span><span>Combattente</span></div>
-          <div class="char-float-card__row"><span>SQUADRA</span><span>????</span></div>
-          <div class="char-float-card__row"><span>STATO</span><span>Attivo ●</span></div>
+          <div class="char-float-card__row"><span>ROLE</span><span>Protagonist</span></div>
+          <div class="char-float-card__row"><span>TYPE</span><span>Fighter</span></div>
+          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
+          <div class="char-float-card__row"><span>STATUS</span><span>Active ●</span></div>
         </div>
         <div class="char-float-card__scan"></div>
       </div>
@@ -3680,27 +3998,27 @@ body.loaded .hero__scroll {
 
     <!-- Info -->
     <div class="char-block__info" data-r="boing-r" data-rd="2">
-      <span class="char-block__code">01 · Protagonista</span>
+      <span class="char-block__code">01 · Protagonist</span>
       <div>
         <span class="char-block__name-jp">プロタゴニスト</span>
-        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
+        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
       </div>
       <p class="char-block__bio">
-        Descrizione del personaggio — la sua storia, personalità, motivazioni.
-        Cosa lo rende unico nel tuo universo creativo.
-        Ogni parola racconta chi è davvero.
+        Character description — their backstory, personality, motivations.
+        What makes them unique in your creative universe.
+        Every word reveals who they truly are.
       </p>
       <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:85%"></div></div><span class="char-stat__val">85</span></div>
-        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:72%"></div></div><span class="char-stat__val">72</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:60%"></div></div><span class="char-stat__val">60</span></div>
-        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:90%"></div></div><span class="char-stat__val">90</span></div>
+        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:85%"></div></div><span class="char-stat__val">85</span></div>
+        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:72%"></div></div><span class="char-stat__val">72</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:60%"></div></div><span class="char-stat__val">60</span></div>
+        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:90%"></div></div><span class="char-stat__val">90</span></div>
       </div>
       <div class="char-block__tags">
-        <span class="char-block__tag">Coraggioso</span>
-        <span class="char-block__tag">Combattente</span>
-        <span class="char-block__tag">Leale</span>
-        <span class="char-block__tag">Solitario</span>
+        <span class="char-block__tag">Brave</span>
+        <span class="char-block__tag">Fighter</span>
+        <span class="char-block__tag">Loyal</span>
+        <span class="char-block__tag">Lone Wolf</span>
       </div>
     </div>
   </div>
@@ -3736,44 +4054,44 @@ body.loaded .hero__scroll {
     <div class="char-block__art">
       <span class="char-block__number" aria-hidden="true">02</span>
       <img class="char-block__img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjMWU5MGZmIiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiMxZTkwZmYiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMjwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5TVFJBVEVHQTwvdGV4dD4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDY4LjAiIGZpbGw9IiMxZTkwZmYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+Y2hhcmFjdGVyIDAyPC90ZXh0PgoKICA8cmVjdCB4PSIxMzguMCIgeT0iNDgwLjAiIHdpZHRoPSIxNDQiIGhlaWdodD0iMjgiIGZpbGw9IiNmZmYiLz4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDk5LjAiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+UE5HIMK3IDQyMMOXNjAwPC90ZXh0PgoKICA8cmVjdCB4PSIxMTUuMCIgeT0iNTIyLjAiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjUzOS4wIiBmaWxsPSIjMWU5MGZmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkJPSU5HIOKGkiBEWDwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjQxNCIgaGVpZ2h0PSI1OTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlOTBmZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDMgTDQxNywzIEw0MTcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNTYwIEwzLDU5NyBMNDAsNTk3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zODAsNTk3IEw0MTcsNTk3IEw0MTcsNTYwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4="
-           alt="Personaggio OC 02 — Stratega"
+           alt="OC Character 02 — Strategist"
            width="420" height="600"
            loading="lazy" decoding="async"
            data-r="boing-r" data-rd="1" />
       <div class="char-float-card" data-r="boing" data-rd="3">
-        <div class="char-float-card__header">FILE · 002 · STRATEGA</div>
+        <div class="char-float-card__header">FILE · 002 · STRATEGIST</div>
         <div class="char-float-card__body">
-          <div class="char-float-card__row"><span>RUOLO</span><span>Stratega</span></div>
-          <div class="char-float-card__row"><span>TIPO</span><span>Supporto</span></div>
-          <div class="char-float-card__row"><span>SQUADRA</span><span>????</span></div>
-          <div class="char-float-card__row"><span>STATO</span><span>Attivo ●</span></div>
+          <div class="char-float-card__row"><span>ROLE</span><span>Strategist</span></div>
+          <div class="char-float-card__row"><span>TYPE</span><span>Support</span></div>
+          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
+          <div class="char-float-card__row"><span>STATUS</span><span>Active ●</span></div>
         </div>
         <div class="char-float-card__scan"></div>
       </div>
     </div>
 
     <div class="char-block__info" data-r="boing-l" data-rd="2">
-      <span class="char-block__code">02 · Stratega</span>
+      <span class="char-block__code">02 · Strategist</span>
       <div>
         <span class="char-block__name-jp">ストラテジスト</span>
-        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
+        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
       </div>
       <p class="char-block__bio">
-        Descrizione del secondo personaggio. La sua backstory,
-        il suo rapporto con gli altri personaggi e il suo ruolo
-        nella narrativa del tuo universo creativo.
+        The second character's description. Their backstory,
+        their relationship with the other characters and their role
+        in the narrative of your creative universe.
       </p>
       <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%"></div></div><span class="char-stat__val">45</span></div>
-        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%"></div></div><span class="char-stat__val">68</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%"></div></div><span class="char-stat__val">95</span></div>
-        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%"></div></div><span class="char-stat__val">55</span></div>
+        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%"></div></div><span class="char-stat__val">45</span></div>
+        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%"></div></div><span class="char-stat__val">68</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%"></div></div><span class="char-stat__val">95</span></div>
+        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%"></div></div><span class="char-stat__val">55</span></div>
       </div>
       <div class="char-block__tags">
-        <span class="char-block__tag">Misterioso</span>
-        <span class="char-block__tag">Strategico</span>
-        <span class="char-block__tag">Freddo</span>
-        <span class="char-block__tag">Brillante</span>
+        <span class="char-block__tag">Mysterious</span>
+        <span class="char-block__tag">Strategic</span>
+        <span class="char-block__tag">Cold</span>
+        <span class="char-block__tag">Brilliant</span>
       </div>
     </div>
   </div>
@@ -3809,44 +4127,44 @@ body.loaded .hero__scroll {
     <div class="char-block__art">
       <span class="char-block__number" aria-hidden="true">03</span>
       <img class="char-block__img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjAgNjAwIiBmb250LWZhbWlseT0iJ0FyaWFsIE5hcnJvdycsSW1wYWN0LHNhbnMtc2VyaWYiPgogIDxkZWZzPgogICAgPHBhdHRlcm4gaWQ9ImQ0MjA2MDAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSIjYjA2YmQ2IiBvcGFjaXR5PSIwLjIyIi8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imc0MjA2MDAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFjMDMwNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDgwYSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZzQyMDYwMCkiLz4KICA8cmVjdCB3aWR0aD0iNDIwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNkNDIwNjAwKSIvPgoKICA8ZyBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI0MjAiIGhlaWdodD0iMzQiIGZpbGw9IiNiMDZiZDYiLz4KICAgIDx0ZXh0IHg9IjE0IiB5PSIyMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxldHRlci1zcGFjaW5nPSIzIj5PQyDCtyAwMzwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwNiIgeT0iMjMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZXR0ZXItc3BhY2luZz0iMSIgdGV4dC1hbmNob3I9ImVuZCI+U09TVElUVUlTQ0kg4pa6PC90ZXh0PgogIDwvZz4KCiAgCiAgICA8ZWxsaXBzZSBjeD0iMjEwLjAiIGN5PSIxMzIuMCIgcng9IjQ1LjAiIHJ5PSI1MS43NDk5OTk5OTk5OTk5OSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC45MiIvPgogICAgPHBhdGggZD0iTTEyNC41LDM2MC4wCiAgICAgICAgICAgICBDMTIwLjAsMTk5LjUgMTUxLjUsMTc3LjAgMTgzLjAsMTgxLjUKICAgICAgICAgICAgIEwyMzcuMCwxODEuNQogICAgICAgICAgICAgQzI2OC41LDE3Ny4wIDMwMC4wLDE5OS41IDI5NS41LDM2MC4wIFoiCiAgICAgICAgICBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkyIi8+CgogIDx0ZXh0IHg9IjIxMC4wIiB5PSI0NDQuMCIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIyIj5BTlRBR09OSVNUQTwvdGV4dD4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDY4LjAiIGZpbGw9IiNiMDZiZDYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+Y2hhcmFjdGVyIDAzPC90ZXh0PgoKICA8cmVjdCB4PSIxMzguMCIgeT0iNDgwLjAiIHdpZHRoPSIxNDQiIGhlaWdodD0iMjgiIGZpbGw9IiNmZmYiLz4KICA8dGV4dCB4PSIyMTAuMCIgeT0iNDk5LjAiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+UE5HIMK3IDQyMMOXNjAwPC90ZXh0PgoKICA8cmVjdCB4PSIxMTUuMCIgeT0iNTIyLjAiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2IwNmJkNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMjEwLjAiIHk9IjUzOS4wIiBmaWxsPSIjYjA2YmQ2IiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPkJPSU5HIOKGkCBTWDwvdGV4dD4KCiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjQxNCIgaGVpZ2h0PSI1OTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2IwNmJkNiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTMsNDAgTDMsMyBMNDAsMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cGF0aCBkPSJNMzgwLDMgTDQxNywzIEw0MTcsNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBhdGggZD0iTTMsNTYwIEwzLDU5NyBMNDAsNTk3IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zODAsNTk3IEw0MTcsNTk3IEw0MTcsNTYwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNSIvPgo8L3N2Zz4="
-           alt="Personaggio OC 03 — Antagonista"
+           alt="OC Character 03 — Antagonist"
            width="420" height="600"
            loading="lazy" decoding="async"
            data-r="boing-l" data-rd="1" />
       <div class="char-float-card" data-r="boing" data-rd="3">
-        <div class="char-float-card__header">FILE · 003 · ANTAGONISTA</div>
+        <div class="char-float-card__header">FILE · 003 · ANTAGONIST</div>
         <div class="char-float-card__body">
-          <div class="char-float-card__row"><span>RUOLO</span><span>Antagonista</span></div>
-          <div class="char-float-card__row"><span>TIPO</span><span>Oscuro</span></div>
-          <div class="char-float-card__row"><span>SQUADRA</span><span>????</span></div>
-          <div class="char-float-card__row"><span>STATO</span><span>Ignoto ●</span></div>
+          <div class="char-float-card__row"><span>ROLE</span><span>Antagonist</span></div>
+          <div class="char-float-card__row"><span>TYPE</span><span>Dark</span></div>
+          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
+          <div class="char-float-card__row"><span>STATUS</span><span>Unknown ●</span></div>
         </div>
         <div class="char-float-card__scan"></div>
       </div>
     </div>
 
     <div class="char-block__info" data-r="boing-r" data-rd="2">
-      <span class="char-block__code">03 · Antagonista</span>
+      <span class="char-block__code">03 · Antagonist</span>
       <div>
         <span class="char-block__name-jp">アンタゴニスト</span>
-        <h3 class="char-block__name">NOME<span>PERSONAGGIO</span></h3>
+        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
       </div>
       <p class="char-block__bio">
-        Il terzo personaggio. Antagonista, alleato ambiguo o
-        personaggio di supporto — racconta chi è e perché
-        esiste nel tuo universo creativo.
+        The third character. Antagonist, ambiguous ally or
+        supporting role — tell who they are and why they
+        exist in your creative universe.
       </p>
       <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Forza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%"></div></div><span class="char-stat__val">78</span></div>
-        <div class="char-stat"><span class="char-stat__label">Velocità</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%"></div></div><span class="char-stat__val">82</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magia</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%"></div></div><span class="char-stat__val">88</span></div>
-        <div class="char-stat"><span class="char-stat__label">Resistenza</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%"></div></div><span class="char-stat__val">70</span></div>
+        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%"></div></div><span class="char-stat__val">78</span></div>
+        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%"></div></div><span class="char-stat__val">82</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%"></div></div><span class="char-stat__val">88</span></div>
+        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%"></div></div><span class="char-stat__val">70</span></div>
       </div>
       <div class="char-block__tags">
-        <span class="char-block__tag">Oscuro</span>
-        <span class="char-block__tag">Ambizioso</span>
-        <span class="char-block__tag">Spietato</span>
-        <span class="char-block__tag">Complesso</span>
+        <span class="char-block__tag">Dark</span>
+        <span class="char-block__tag">Ambitious</span>
+        <span class="char-block__tag">Ruthless</span>
+        <span class="char-block__tag">Complex</span>
       </div>
     </div>
   </div>
@@ -3856,47 +4174,47 @@ body.loaded .hero__scroll {
 <!-- ════════════════════════════════════════════════════════
      PROFILE
 ════════════════════════════════════════════════════════ -->
-<section class="section profile" id="profile" aria-label="Profilo artista">
+<section class="section profile" id="profile" aria-label="Artist profile">
 
   <!-- ── LEFT: bio + metadata ──────────────────────────────── -->
   <div class="profile__left">
 
-    <span class="profile__eyebrow" data-r="up">04 / Artista</span>
+    <span class="profile__eyebrow" data-r="up">04 / Artist</span>
 
     <!-- Metadata table — SUMMER-style labels -->
     <div class="profile__meta" data-r="up" data-rd="1">
       <div class="profile__meta-row">
-        <span class="profile__meta-key">ARTISTA</span>
+        <span class="profile__meta-key">ARTIST</span>
         <span class="profile__meta-val">Rio Chico</span>
       </div>
       <div class="profile__meta-row">
-        <span class="profile__meta-key">STILE</span>
+        <span class="profile__meta-key">STYLE</span>
         <span class="profile__meta-val">Anime · Manga</span>
       </div>
       <div class="profile__meta-row">
-        <span class="profile__meta-key">TECNICA</span>
-        <span class="profile__meta-val">Digitale</span>
+        <span class="profile__meta-key">MEDIUM</span>
+        <span class="profile__meta-val">Digital</span>
       </div>
       <div class="profile__meta-row">
-        <span class="profile__meta-key">OPERE</span>
+        <span class="profile__meta-key">ARTWORKS</span>
         <span class="profile__meta-val">100+</span>
       </div>
       <div class="profile__meta-row">
         <span class="profile__meta-key">OC</span>
-        <span class="profile__meta-val">3 Personaggi</span>
+        <span class="profile__meta-val">3 Characters</span>
       </div>
     </div>
 
     <!-- Bio quote -->
     <blockquote class="profile__quote" data-r="up" data-rd="2">
-      "Creo personaggi originali e illustrazioni ispirate all'animazione giapponese.
-      Ogni disegno racconta una storia — la mia."
+      "I create original characters and illustrations inspired by Japanese animation.
+      Every drawing tells a story — mine."
     </blockquote>
 
     <!-- Name + handle -->
     <div class="profile__byline" data-r="up" data-rd="3">
       <p class="profile__byline-name">RIO CHICO STUDIO</p>
-      <p class="profile__byline-handle">Artista Anime &amp; Illustratore · @riochicostudio</p>
+      <p class="profile__byline-handle">Anime Artist &amp; Illustrator · @riochicostudio</p>
     </div>
 
     <!-- Skill tags -->
@@ -3933,20 +4251,20 @@ body.loaded .hero__scroll {
   <div class="container social__inner">
 
     <header class="section-header">
-      <span class="section-label" data-r="up">05 / Contatti</span>
+      <span class="section-label" data-r="up">05 / Contact</span>
       <h2 class="section-title" data-r="wipe" id="social-title">
-        TROVA<span>MI</span>
+        FIND<span> ME</span>
       </h2>
       <span class="accent-bar" data-r="wipe" data-rd="2"></span>
     </header>
 
     <div class="social__cta-banner" data-r="wipe">
       <div>
-        <div class="social__cta-text">Commissioni Aperte</div>
-        <div class="social__cta-sub">DM su Instagram o email per info e prezzi</div>
+        <div class="social__cta-text">Commissions Open</div>
+        <div class="social__cta-sub">DM on Instagram or email for info &amp; pricing</div>
       </div>
       <a class="btn btn--ghost btn--lg js-mailto" data-u="tua" data-d="email.com">
-        Scrivimi <span class="btn__arrow" aria-hidden="true">→</span>
+        Message Me <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
 
@@ -3960,7 +4278,7 @@ body.loaded .hero__scroll {
           <div class="social__card-platform">Instagram</div>
           <div class="social__card-name">@riochicostudio</div>
         </div>
-        <div class="social__card-handle">Artwork, WIPs, Storie</div>
+        <div class="social__card-handle">Artwork, WIPs, Stories</div>
       </a>
 
       <a class="social__card" href="https://twitter.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="1" aria-label="Twitter / X">
@@ -3972,7 +4290,7 @@ body.loaded .hero__scroll {
           <div class="social__card-platform">Twitter / X</div>
           <div class="social__card-name">@riochicostudio</div>
         </div>
-        <div class="social__card-handle">Pensieri, aggiornamenti</div>
+        <div class="social__card-handle">Thoughts, updates</div>
       </a>
 
       <a class="social__card" href="https://www.pixiv.net/" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="2" aria-label="Pixiv">
@@ -3984,7 +4302,7 @@ body.loaded .hero__scroll {
           <div class="social__card-platform">Pixiv</div>
           <div class="social__card-name">Rio Chico Studio</div>
         </div>
-        <div class="social__card-handle">Portfolio completo</div>
+        <div class="social__card-handle">Full portfolio</div>
       </a>
 
       <a class="social__card" href="https://ko-fi.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="3" aria-label="Ko-fi">
@@ -3996,20 +4314,23 @@ body.loaded .hero__scroll {
           <div class="social__card-platform">Ko-fi</div>
           <div class="social__card-name">Rio Chico Studio</div>
         </div>
-        <div class="social__card-handle">Supporta il mio lavoro</div>
+        <div class="social__card-handle">Support my work</div>
       </a>
     </div>
 
     <div class="social__email" data-r="up" data-rd="2">
-      <span class="social__email-label">Oppure scrivimi direttamente</span>
+      <span class="social__email-label">Or reach me directly</span>
       <a class="social__email-address js-mailto" data-u="tua" data-d="email.com">tua[at]email.com</a>
       <a class="btn btn--primary btn--lg js-mailto" data-u="tua" data-d="email.com">
-        Invia Email <span class="btn__arrow" aria-hidden="true">→</span>
+        Send Email <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
 
     <footer class="social__footer" role="contentinfo">
-      <p class="social__footer-copy">&copy; 2025 Rio Chico Studio — Tutti i diritti riservati</p>
+      <p class="social__footer-copy">&copy; 2026 Rio Chico Studio — All rights reserved</p>
+      <nav class="social__footer-legal" aria-label="Legal">
+        <a href="legal/privacy-policy.html">Privacy Policy</a>
+      </nav>
       <div class="social__footer-logo">
         <span>RIO</span>&nbsp;CHICO&nbsp;<span>STUDIO</span>
       </div>
@@ -4024,6 +4345,9 @@ body.loaded .hero__scroll {
    RIO CHICO STUDIO — main.js
    ========================================================= */
 
+/* Rispetta la preferenza di sistema: meno animazioni per chi la chiede */
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* ── LOADING SCREEN — "NOW LOADING X%" ────────────────────
    Conta da 0 a 100% poi rivela il sito (stile Persona)
    ======================================================== */
@@ -4032,38 +4356,57 @@ const loaderFill  = document.getElementById('loader-fill');
 const loaderCount = document.getElementById('loader-count');
 
 if (loader) {
-  let pct = 0;
-  const tick = () => {
-    // avanza a scatti irregolari per sembrare "vero" caricamento
-    pct += Math.random() * 18 + 4;
-    if (pct >= 100) pct = 100;
-    if (loaderFill)  loaderFill.style.width = pct + '%';
-    if (loaderCount) loaderCount.textContent = Math.floor(pct);
-    if (pct < 100) {
-      setTimeout(tick, 90 + Math.random() * 120);
-    } else {
-      setTimeout(() => {
-        loader.classList.add('is-done');
-        // trigger hero animations only after loader gone
-        document.body.classList.add('loaded');
-        setTimeout(() => loader.remove(), 700);
-      }, 350);
-    }
+  const finish = () => {
+    loader.classList.add('is-done');
+    // trigger hero animations only after loader gone
+    document.body.classList.add('loaded');
+    setTimeout(() => loader.remove(), 700);
   };
-  // start after a tiny delay
-  setTimeout(tick, 200);
+
+  if (REDUCED_MOTION) {
+    // niente conteggio teatrale: completa subito
+    if (loaderFill)  loaderFill.style.width = '100%';
+    if (loaderCount) loaderCount.textContent = '100';
+    setTimeout(finish, 150);
+  } else {
+    let pct = 0;
+    const tick = () => {
+      // avanza a scatti irregolari per sembrare "vero" caricamento
+      pct += Math.random() * 18 + 4;
+      if (pct >= 100) pct = 100;
+      if (loaderFill)  loaderFill.style.width = pct + '%';
+      if (loaderCount) loaderCount.textContent = Math.floor(pct);
+      if (pct < 100) {
+        setTimeout(tick, 90 + Math.random() * 120);
+      } else {
+        setTimeout(finish, 350);
+      }
+    };
+    // start after a tiny delay
+    setTimeout(tick, 200);
+  }
 }
 
 
-/* ── NAV ────────────────────────────────────────────────── */
-const nav       = document.querySelector('.nav');
-const navToggle = document.querySelector('.nav__toggle');
-const navLinks  = document.querySelector('.nav__links');
-const navItems  = document.querySelectorAll('.nav__link');
+/* ── NAV + SCROLL PROGRESS ──────────────────────────────── */
+const nav            = document.querySelector('.nav');
+const navToggle      = document.querySelector('.nav__toggle');
+const navLinks       = document.querySelector('.nav__links');
+const navItems       = document.querySelectorAll('.nav__link');
+const scrollProgress = document.querySelector('.scroll-progress');
 
-window.addEventListener('scroll', () => {
-  nav?.classList.toggle('is-scrolled', window.scrollY > 60);
-}, { passive: true });
+function onScrollUpdate() {
+  const y = window.scrollY;
+  nav?.classList.toggle('is-scrolled', y > 60);
+  if (scrollProgress) {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
+  }
+}
+
+window.addEventListener('scroll', onScrollUpdate, { passive: true });
+window.addEventListener('resize', onScrollUpdate, { passive: true });
+onScrollUpdate();
 
 navToggle?.addEventListener('click', () => {
   const open = navToggle.classList.toggle('is-open');
@@ -4112,11 +4455,13 @@ revealEls.forEach(el => revealObs.observe(el));
 const heroBgGlow = document.querySelector('.hero__bg-glow');
 const heroBgGrid = document.querySelector('.hero__bg-grid');
 
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  if (heroBgGlow) heroBgGlow.style.transform = `translateY(${y * 0.3}px)`;
-  if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
-}, { passive: true });
+if (!REDUCED_MOTION) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (heroBgGlow) heroBgGlow.style.transform = `translateY(${y * 0.3}px)`;
+    if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
+  }, { passive: true });
+}
 
 /* ── ART WHEEL — 2D ferris wheel, counter-clockwise ────────
    Uses @property --slot-angle so each card animates on a
@@ -4165,7 +4510,8 @@ if (awStage && awCards.length === 4) {
     setTimeout(wheelNext, 3920);
   }
 
-  setTimeout(wheelNext, 3000);
+  // autoplay solo se l'utente non chiede meno animazioni
+  if (!REDUCED_MOTION) setTimeout(wheelNext, 3000);
 }
 
 /* ── GALLERY FILTERS ────────────────────────────────────── */
@@ -4267,6 +4613,10 @@ counters.forEach(el => countObs.observe(el));
 function animateCount(el) {
   const target = parseInt(el.dataset.count, 10);
   const suffix = el.dataset.suffix || '';
+  if (REDUCED_MOTION) {
+    el.textContent = target + suffix;
+    return;
+  }
   const dur = 1400;
   const start = performance.now();
   function step(now) {
