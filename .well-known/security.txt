@@ -1,7 +1,7 @@
 # Responsible disclosure — Rio Chico Studio (RFC 9116)
 # Se trovi una vulnerabilità, scrivimi prima di divulgarla. Grazie.
 
-Contact: mailto:tua@email.com
-Expires: 2027-06-06T00:00:00.000Z
+Contact: mailto:avbsierra@gmail.com
+Expires: 2027-06-12T00:00:00.000Z
 Preferred-Languages: it, en
-# Canonical: https://tuodominio.com/.well-known/security.txt
+# Canonical: aggiorna con il tuo dominio reale dopo il deploy
