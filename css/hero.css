@@ -11,7 +11,8 @@
 .hero__desc,
 .hero__cta,
 .hero__stats,
-.hero__scroll {
+.hero__scroll,
+.hero__jp {
   animation-play-state: paused;
 }
 body.loaded .hero__slash,
@@ -21,7 +22,8 @@ body.loaded .hero__title-line,
 body.loaded .hero__desc,
 body.loaded .hero__cta,
 body.loaded .hero__stats,
-body.loaded .hero__scroll {
+body.loaded .hero__scroll,
+body.loaded .hero__jp {
   animation-play-state: running;
 }
 

@@ -16,6 +16,12 @@ const safeSession = {
    Conta da 0 a 100% poi rivela il sito (stile Persona).
    Gira per intero solo alla prima visita della sessione: da un
    refresh o da un'altra pagina in poi salta subito al 100%.
+
+   revealHero() e' l'UNICO segnale "l'hero puo' partire": lo emette
+   sia il ramo con loader che quello senza (pagine future senza
+   #loader), cosi' tutto cio' che deve comparire dopo (katakana,
+   prima rotazione della ruota) dipende da un solo orologio condiviso
+   invece che da un proprio timer indipendente slegato dal loader.
    ======================================================== */
 const loader      = document.getElementById('loader');
 const loaderFill  = document.getElementById('loader-fill');
@@ -23,11 +29,15 @@ const loaderCount = document.getElementById('loader-count');
 const LOADER_SEEN_KEY = 'rcs-loader-seen';
 const SKIP_COUNT_UP   = REDUCED_MOTION || safeSession.get(LOADER_SEEN_KEY) === '1';
 
+function revealHero() {
+  document.body.classList.add('loaded');
+  document.dispatchEvent(new CustomEvent('rcs:hero-ready'));
+}
+
 if (loader) {
   const finish = () => {
     loader.classList.add('is-done');
-    // trigger hero animations only after loader gone
-    document.body.classList.add('loaded');
+    revealHero();
     safeSession.set(LOADER_SEEN_KEY, '1');
     setTimeout(() => loader.remove(), 450);
   };
@@ -55,6 +65,9 @@ if (loader) {
     // start after a tiny delay
     setTimeout(tick, 100);
   }
+} else {
+  // pagina senza loader: l'hero e' pronto subito, nessuna attesa finta
+  revealHero();
 }
 
 
@@ -78,6 +91,12 @@ window.addEventListener('scroll', onScrollUpdate, { passive: true });
 window.addEventListener('resize', onScrollUpdate, { passive: true });
 onScrollUpdate();
 
+function closeMenu() {
+  navToggle?.classList.remove('is-open');
+  navLinks?.classList.remove('is-open');
+  navToggle?.setAttribute('aria-expanded', 'false');
+}
+
 navToggle?.addEventListener('click', () => {
   const open = navToggle.classList.toggle('is-open');
   navLinks?.classList.toggle('is-open', open);
@@ -85,10 +104,7 @@ navToggle?.addEventListener('click', () => {
 });
 
 navItems.forEach(link => {
-  link.addEventListener('click', () => {
-    navToggle?.classList.remove('is-open');
-    navLinks?.classList.remove('is-open');
-  });
+  link.addEventListener('click', closeMenu);
 });
 
 // Active nav section
@@ -180,8 +196,13 @@ if (awStage && awCards.length === 4) {
     setTimeout(wheelNext, 3920);
   }
 
-  // autoplay solo se l'utente non chiede meno animazioni
-  if (!REDUCED_MOTION) setTimeout(wheelNext, 3000);
+  // autoplay solo se l'utente non chiede meno animazioni. Parte dallo
+  // stesso segnale del resto dell'hero (rcs:hero-ready) invece che da
+  // un timer fisso slegato dal loader — cosi' la prima rotazione non
+  // capita mai per caso mentre l'hero sta ancora comparendo.
+  if (!REDUCED_MOTION) {
+    document.addEventListener('rcs:hero-ready', () => setTimeout(wheelNext, 1800), { once: true });
+  }
 }
 
 /* ── MARQUEE TAP-TO-PAUSE ────────────────────────────────
@@ -215,66 +236,6 @@ filterBtns.forEach(btn => {
     });
   });
 });
-
-/* ── CHARACTER SELECTOR ─────────────────────────────────── */
-const charBtns    = document.querySelectorAll('.chars__selector-btn');
-const charPanels  = document.querySelectorAll('.chars__panel');
-const indicator   = document.querySelector('.chars__selector-indicator');
-
-function updateIndicator(btn) {
-  if (!indicator) return;
-  const { offsetLeft, offsetWidth } = btn;
-  indicator.style.left  = offsetLeft + 'px';
-  indicator.style.width = offsetWidth + 'px';
-}
-
-// Init indicator position
-if (charBtns.length > 0) {
-  const activeBtn = document.querySelector('.chars__selector-btn.is-active') || charBtns[0];
-  setTimeout(() => updateIndicator(activeBtn), 100);
-}
-
-charBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = btn.dataset.char;
-
-    charBtns.forEach(b => {
-      b.classList.remove('is-active');
-      b.setAttribute('aria-selected', 'false');
-    });
-    btn.classList.add('is-active');
-    btn.setAttribute('aria-selected', 'true');
-
-    charPanels.forEach(panel => {
-      panel.classList.toggle('is-active', panel.dataset.char === target);
-    });
-
-    updateIndicator(btn);
-  });
-});
-
-/* ── STAT BARS ANIMATION ────────────────────────────────── */
-// Trigger when character panel becomes active
-const barObs = new MutationObserver(() => {
-  document.querySelectorAll('.chars__panel.is-active .chars__stat-bar-fill').forEach(bar => {
-    const w = bar.style.getPropertyValue('--bar-w') || bar.getAttribute('data-w');
-    if (w) {
-      bar.style.width = '0%';
-      requestAnimationFrame(() => {
-        setTimeout(() => { bar.style.width = w; }, 50);
-      });
-    }
-  });
-});
-document.querySelectorAll('.chars__panel').forEach(p => barObs.observe(p, { attributes: true, attributeFilter: ['class'] }));
-
-// Also on initial load
-setTimeout(() => {
-  document.querySelectorAll('.chars__panel.is-active .chars__stat-bar-fill').forEach(bar => {
-    const w = bar.dataset.w || '70%';
-    bar.style.width = w;
-  });
-}, 600);
 
 /* ── COUNTER ANIMATION ──────────────────────────────────── */
 const counters = document.querySelectorAll('[data-count]');
@@ -317,9 +278,6 @@ document.querySelectorAll('.js-mailto').forEach(el => {
 
 /* ── KEYBOARD ───────────────────────────────────────────── */
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    navToggle?.classList.remove('is-open');
-    navLinks?.classList.remove('is-open');
-  }
+  if (e.key === 'Escape') closeMenu();
 });
 
