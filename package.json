@@ -4,6 +4,6 @@
   "version": "1.0.0",
   "description": "Rio Chico Studio — portfolio anime artist. Vanilla HTML/CSS/JS, zero runtime dependencies.",
   "scripts": {
-    "preview": "node /tmp/build-preview.cjs"
+    "preview": "node scripts/build-preview.js"
   }
 }
