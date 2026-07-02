@@ -14,7 +14,7 @@
      "nastro adesivo" manga. scale copre i gap agli angoli. */
   width: 100%;
   overflow: hidden;
-  padding: 0.55rem 0;
+  padding: 0.75rem 0;
   display: flex;
   user-select: none;
   position: relative;
@@ -39,7 +39,8 @@
   animation: marquee 28s linear infinite;
 }
 
-.marquee-strip:hover .marquee-track {
+.marquee-strip:hover .marquee-track,
+.marquee-strip.is-paused .marquee-track {
   animation-play-state: paused;
 }
 
@@ -58,9 +59,10 @@
 }
 
 .marquee-item {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.25em;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -75,7 +77,7 @@
 
 .marquee-sep {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.8rem;
   white-space: nowrap;
 }
 
@@ -98,14 +100,6 @@
     display: none;
   }
 }
-
-/* Mobile */
-@media (max-width: 768px) {
-  .marquee-item {
-    font-size: 0.58rem;
-  }
-}
-
 
 /* ═══════════════════════════════════════════════════════════
    B. GALLERY EDITORIAL INTRO PANEL

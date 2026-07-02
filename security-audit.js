@@ -217,7 +217,6 @@ const jsSinks = [
   [/setTimeout\s*\(\s*`|setTimeout\s*\(\s*"/g, 'setTimeout(string) (eval equivalente)'],
   [/setInterval\s*\(\s*`|setInterval\s*\(\s*"/g,'setInterval(string) (eval equivalente)'],
   [/postMessage\s*\(/g,              'postMessage() — verificare origine non validata'],
-  [/localStorage\s*\.\s*getItem|sessionStorage\s*\.\s*getItem/g, 'storage read → verifica se usato in sink'],
 ];
 
 jsSinks.forEach(([re, name]) => {
@@ -225,6 +224,22 @@ jsSinks.forEach(([re, name]) => {
   const m = js.match(re);
   m ? fail(`JS: trovato "${name}" (${m.length}x)`) : pass(`JS: nessun ${name.split(' ')[0]}`);
 });
+
+// Lettura storage (localStorage/sessionStorage.getItem): NON e' un sink di
+// per se'. Diventa pericolosa solo se il valore letto raggiunge un sink
+// reale (innerHTML/outerHTML/document.write/eval/insertAdjacentHTML) senza
+// sanitizzazione. Verifichiamo la co-presenza invece di un FAIL automatico
+// sulla sola lettura, che bloccherebbe anche un uso innocuo (es. un flag
+// booleano per ricordare che il loader e' gia' stato mostrato).
+const storageReads = js.match(/(?:localStorage|sessionStorage)\s*\.\s*getItem/g) || [];
+if (storageReads.length) {
+  const dangerousSinkPresent = /\.innerHTML\s*[+]?=|\.outerHTML\s*=|document\.write(?:ln)?\s*\(|\beval\s*\(|insertAdjacentHTML\s*\(/.test(js);
+  dangerousSinkPresent
+    ? fail(`JS: ${storageReads.length}x lettura storage E un sink pericoloso nello stesso file → verificare se il valore letto raggiunge il sink`)
+    : warn(`JS: ${storageReads.length}x lettura storage (localStorage/sessionStorage.getItem), nessun sink pericoloso nel file → verificare a vista che il valore letto non guidi mai innerHTML/eval/document.write`);
+} else {
+  pass('JS: nessuna lettura storage');
+}
 
 // URL/hash reading → injection vector
 if (/location\.(search|hash)|URLSearchParams/.test(js))

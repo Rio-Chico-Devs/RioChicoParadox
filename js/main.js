@@ -5,42 +5,55 @@
 /* Rispetta la preferenza di sistema: meno animazioni per chi la chiede */
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Lettura/scrittura storage che non rompe mai il loader anche se il
+   browser blocca sessionStorage (modalita' privacy strette) */
+const safeSession = {
+  get(key)      { try { return sessionStorage.getItem(key); } catch { return null; } },
+  set(key, val) { try { sessionStorage.setItem(key, val); } catch {} },
+};
+
 /* ── LOADING SCREEN — "NOW LOADING X%" ────────────────────
-   Conta da 0 a 100% poi rivela il sito (stile Persona)
+   Conta da 0 a 100% poi rivela il sito (stile Persona).
+   Gira per intero solo alla prima visita della sessione: da un
+   refresh o da un'altra pagina in poi salta subito al 100%.
    ======================================================== */
 const loader      = document.getElementById('loader');
 const loaderFill  = document.getElementById('loader-fill');
 const loaderCount = document.getElementById('loader-count');
+const LOADER_SEEN_KEY = 'rcs-loader-seen';
+const SKIP_COUNT_UP   = REDUCED_MOTION || safeSession.get(LOADER_SEEN_KEY) === '1';
 
 if (loader) {
   const finish = () => {
     loader.classList.add('is-done');
     // trigger hero animations only after loader gone
     document.body.classList.add('loaded');
-    setTimeout(() => loader.remove(), 700);
+    safeSession.set(LOADER_SEEN_KEY, '1');
+    setTimeout(() => loader.remove(), 450);
   };
 
-  if (REDUCED_MOTION) {
+  if (SKIP_COUNT_UP) {
     // niente conteggio teatrale: completa subito
     if (loaderFill)  loaderFill.style.width = '100%';
     if (loaderCount) loaderCount.textContent = '100';
-    setTimeout(finish, 150);
+    setTimeout(finish, 120);
   } else {
     let pct = 0;
     const tick = () => {
-      // avanza a scatti irregolari per sembrare "vero" caricamento
-      pct += Math.random() * 18 + 4;
+      // avanza a scatti irregolari per sembrare "vero" caricamento,
+      // ma con un incremento minimo alto: mai troppo lungo
+      pct += Math.random() * 30 + 22;
       if (pct >= 100) pct = 100;
       if (loaderFill)  loaderFill.style.width = pct + '%';
       if (loaderCount) loaderCount.textContent = Math.floor(pct);
       if (pct < 100) {
-        setTimeout(tick, 90 + Math.random() * 120);
+        setTimeout(tick, 60 + Math.random() * 90);
       } else {
-        setTimeout(finish, 350);
+        setTimeout(finish, 150);
       }
     };
     // start after a tiny delay
-    setTimeout(tick, 200);
+    setTimeout(tick, 100);
   }
 }
 
@@ -170,6 +183,16 @@ if (awStage && awCards.length === 4) {
   // autoplay solo se l'utente non chiede meno animazioni
   if (!REDUCED_MOTION) setTimeout(wheelNext, 3000);
 }
+
+/* ── MARQUEE TAP-TO-PAUSE ────────────────────────────────
+   :hover non esiste sul touch: senza questo, su mobile il
+   testo scorre per sempre e non si puo' mai fermare per leggerlo.
+   ======================================================== */
+document.querySelectorAll('.marquee-strip').forEach(strip => {
+  strip.addEventListener('click', () => {
+    strip.classList.toggle('is-paused');
+  });
+});
 
 /* ── GALLERY FILTERS ────────────────────────────────────── */
 const filterBtns = document.querySelectorAll('.gallery__filter-btn');
