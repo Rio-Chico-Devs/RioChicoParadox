@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meet the original characters (OCs) of Rio Chico Studio's creative universe — Protagonist, Strategist, Antagonist and their stories." />
+  <title>Characters — Rio Chico Studio</title>
+
+  <!-- Canonical: uncomment and insert the real domain -->
+  <!-- <link rel="canonical" href="https://yourdomain.com/characters.html" /> -->
+
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="Characters — Rio Chico Studio" />
+  <meta property="og:description" content="Original characters and their lore — a growing OC universe by Rio Chico Studio." />
+  <meta property="og:image"       content="assets/img/og-cover.png" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@riochicostudio" />
+  <meta name="twitter:title"       content="Characters — Rio Chico Studio" />
+  <meta name="twitter:description" content="Original characters and their lore — a growing OC universe." />
+  <meta name="twitter:image"       content="assets/img/og-cover.png" />
+
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/nav.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/gallery.css" />
+  <link rel="stylesheet" href="css/characters.css" />
+  <link rel="stylesheet" href="css/persona.css" />
+  <link rel="stylesheet" href="css/profile.css" />
+  <link rel="stylesheet" href="css/social.css" />
+  <link rel="stylesheet" href="css/editorial.css" />
+
+  <!-- Fallback senza JavaScript: tutto visibile -->
+  <noscript><style>
+    [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
+  </style></noscript>
+</head>
+
+<body data-page="characters">
+
+<!-- ── SCROLL PROGRESS ─────────────────────────────────── -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ── NOISE OVERLAY ───────────────────────────────────── -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════ -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a class="nav__logo" href="index.html" aria-label="Rio Chico Studio — Home">
+      <span class="nav__logo-accent">RIO</span>&nbsp;CHICO
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      STUDIO
+    </a>
+
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <ul class="nav__links" id="nav-links" role="list">
+      <li><a class="nav__link" href="index.html" data-nav="home"><span class="nav__link-num">01</span>Home</a></li>
+      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span>Gallery</a></li>
+      <li><a class="nav__link is-active" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span>Characters</a></li>
+      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span>Profile</a></li>
+      <li><a class="nav__link" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span>Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════════════
+     CHARACTERS
+════════════════════════════════════════════════════════ -->
+<section class="characters" id="characters" aria-labelledby="chars-title">
+
+  <!-- Section intro — its 5rem top padding also clears the fixed nav,
+       since this is the first element on the page (no hero above it) -->
+  <div style="padding: 5rem 0 3rem; text-align:center; position:relative; overflow:hidden;">
+    <div style="max-width:var(--max-width); margin:0 auto; padding:0 var(--section-pad-x); position:relative; z-index:1;">
+      <span class="section-label" data-r="up" style="justify-content:center;">03 / Characters</span>
+      <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center;">
+        CHAR<span>ACTERS</span>
+      </h2>
+    </div>
+    <!-- big bg stars -->
+    <span class="p-star" aria-hidden="true" style="--star-size:3rem; top:20%; left:8%; --sf-dur:4s;" data-r="star" data-rd="2"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:1.5rem; top:30%; right:10%; --sf-dur:3.2s; --sf-del:0.5s;" data-r="star" data-rd="3"></span>
+    <span class="p-star" aria-hidden="true" style="--star-size:2rem; bottom:10%; left:20%; --sf-dur:3.8s; --sf-del:1s;" data-r="star" data-rd="4"></span>
+  </div>
+
+  <!-- ── PERSONAGGIO 01 ──────────────────────────────────── -->
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #200000 0%, #090909 70%); --char-glow: rgba(204,0,0,0.4); --char-accent: #dd2211;">
+
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <!-- Splash SVG — fill esplicito rosso (colore del protagonista) -->
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="0,0 500,0 380,900 0,900" fill="#cc1100" opacity="0.18"/>
+        <polygon points="600,0 900,0 760,900 460,900" fill="#cc1100" opacity="0.08"/>
+        <polygon points="1100,200 1440,0 1440,400 1200,450" fill="#cc1100" opacity="0.12"/>
+      </svg>
+    </div>
+
+    <!-- Stars -->
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="--star-size:2.5rem; top:12%; right:30%; --sf-dur:3.5s;" data-r="star" data-rd="3"></span>
+      <span class="p-star" style="--star-size:1rem; top:65%; right:52%; --sf-dur:2.8s; --sf-del:0.8s;" data-r="star" data-rd="5"></span>
+      <span class="p-star" style="--star-size:3.5rem; bottom:15%; left:5%; --sf-dur:4.2s; --sf-del:0.3s;" data-r="star" data-rd="4"></span>
+      <span class="p-star" style="--star-size:1.2rem; top:30%; left:45%; --sf-dur:3s;" data-r="star" data-rd="6"></span>
+    </div>
+
+    <!-- Character art -->
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">01</span>
+      <img class="char-block__img" src="assets/img/ph-char-01.svg"
+           alt="OC Character 01 — Protagonist"
+           width="420" height="600"
+           loading="lazy" decoding="async"
+           data-r="boing-l" data-rd="1" />
+      <!-- Float card personaggio -->
+      <div class="char-float-card" data-r="boing" data-rd="3">
+        <div class="char-float-card__header">FILE · 001 · PROTAGONIST</div>
+        <div class="char-float-card__body">
+          <div class="char-float-card__row"><span>ROLE</span><span>Protagonist</span></div>
+          <div class="char-float-card__row"><span>TYPE</span><span>Fighter</span></div>
+          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
+          <div class="char-float-card__row"><span>STATUS</span><span>Active ●</span></div>
+        </div>
+        <div class="char-float-card__scan"></div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="char-block__info" data-r="boing-r" data-rd="2">
+      <span class="char-block__code">01 · Protagonist</span>
+      <div>
+        <span class="char-block__name-jp">プロタゴニスト</span>
+        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
+      </div>
+      <p class="char-block__bio">
+        Character description — their backstory, personality, motivations.
+        What makes them unique in your creative universe.
+        Every word reveals who they truly are.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:85%"></div></div><span class="char-stat__val">85</span></div>
+        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:72%"></div></div><span class="char-stat__val">72</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:60%"></div></div><span class="char-stat__val">60</span></div>
+        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:90%"></div></div><span class="char-stat__val">90</span></div>
+      </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Brave</span>
+        <span class="char-block__tag">Fighter</span>
+        <span class="char-block__tag">Loyal</span>
+        <span class="char-block__tag">Lone Wolf</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Separatore -->
+  <div class="char-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
+    </svg>
+  </div>
+
+  <!-- ── PERSONAGGIO 02 ──────────────────────────────────── -->
+  <div class="char-block char-block--even" style="--char-grad: linear-gradient(135deg, #001525 0%, #06090d 70%); --char-glow: rgba(0,100,200,0.35); --char-accent: #0077cc;">
+
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="940,0 1440,0 1440,900 1060,900" opacity="0.12" fill="#0077cc"/>
+        <polygon points="540,0 840,0 680,900 380,900" opacity="0.05" fill="#0077cc"/>
+        <polygon points="0,500 300,300 200,900 0,900" opacity="0.08" fill="#0077cc"/>
+      </svg>
+    </div>
+
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="--star-size:2rem; top:15%; left:32%; --sf-dur:3.8s; --sf-del:0.2s;" data-r="star" data-rd="3" ></span>
+      <span class="p-star" style="--star-size:3rem; bottom:20%; right:6%; --sf-dur:4s; --sf-del:0.6s;" data-r="star" data-rd="4"></span>
+      <span class="p-star" style="--star-size:1rem; top:55%; left:8%; --sf-dur:2.6s; --sf-del:1s;" data-r="star" data-rd="6"></span>
+    </div>
+
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">02</span>
+      <img class="char-block__img" src="assets/img/ph-char-02.svg"
+           alt="OC Character 02 — Strategist"
+           width="420" height="600"
+           loading="lazy" decoding="async"
+           data-r="boing-r" data-rd="1" />
+      <div class="char-float-card" data-r="boing" data-rd="3">
+        <div class="char-float-card__header">FILE · 002 · STRATEGIST</div>
+        <div class="char-float-card__body">
+          <div class="char-float-card__row"><span>ROLE</span><span>Strategist</span></div>
+          <div class="char-float-card__row"><span>TYPE</span><span>Support</span></div>
+          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
+          <div class="char-float-card__row"><span>STATUS</span><span>Active ●</span></div>
+        </div>
+        <div class="char-float-card__scan"></div>
+      </div>
+    </div>
+
+    <div class="char-block__info" data-r="boing-l" data-rd="2">
+      <span class="char-block__code">02 · Strategist</span>
+      <div>
+        <span class="char-block__name-jp">ストラテジスト</span>
+        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
+      </div>
+      <p class="char-block__bio">
+        The second character's description. Their backstory,
+        their relationship with the other characters and their role
+        in the narrative of your creative universe.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%"></div></div><span class="char-stat__val">45</span></div>
+        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%"></div></div><span class="char-stat__val">68</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%"></div></div><span class="char-stat__val">95</span></div>
+        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%"></div></div><span class="char-stat__val">55</span></div>
+      </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Mysterious</span>
+        <span class="char-block__tag">Strategic</span>
+        <span class="char-block__tag">Cold</span>
+        <span class="char-block__tag">Brilliant</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Separatore -->
+  <div class="char-divider" aria-hidden="true" style="transform:scaleX(-1);">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
+    </svg>
+  </div>
+
+  <!-- ── PERSONAGGIO 03 ──────────────────────────────────── -->
+  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #14001e 0%, #070609 70%); --char-glow: rgba(130,60,180,0.4); --char-accent: #9933cc;">
+
+    <div class="char-block__bg" aria-hidden="true">
+      <div class="char-block__bg-grad"></div>
+      <div class="char-block__lines"></div>
+      <span class="char-block__bg-star">☆</span>
+
+      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <polygon points="0,0 440,0 320,900 0,900" opacity="0.12" fill="#8e44ad"/>
+        <polygon points="1000,0 1440,0 1440,600 1100,900 900,900 1020,200" opacity="0.08" fill="#8e44ad"/>
+        <polygon points="500,0 800,0 680,500 380,400" opacity="0.05" fill="#8e44ad"/>
+      </svg>
+    </div>
+
+    <div class="char-block__stars" aria-hidden="true">
+      <span class="p-star" style="--star-size:4rem; top:10%; right:28%; --sf-dur:5s; --sf-del:0.4s;" data-r="star" data-rd="2"></span>
+      <span class="p-star" style="--star-size:1.5rem; bottom:25%; right:48%; --sf-dur:3s; --sf-del:0.9s;" data-r="star" data-rd="5"></span>
+      <span class="p-star" style="--star-size:2rem; top:50%; left:3%; --sf-dur:3.6s;" data-r="star" data-rd="4"></span>
+    </div>
+
+    <div class="char-block__art">
+      <span class="char-block__number" aria-hidden="true">03</span>
+      <img class="char-block__img" src="assets/img/ph-char-03.svg"
+           alt="OC Character 03 — Antagonist"
+           width="420" height="600"
+           loading="lazy" decoding="async"
+           data-r="boing-l" data-rd="1" />
+      <div class="char-float-card" data-r="boing" data-rd="3">
+        <div class="char-float-card__header">FILE · 003 · ANTAGONIST</div>
+        <div class="char-float-card__body">
+          <div class="char-float-card__row"><span>ROLE</span><span>Antagonist</span></div>
+          <div class="char-float-card__row"><span>TYPE</span><span>Dark</span></div>
+          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
+          <div class="char-float-card__row"><span>STATUS</span><span>Unknown ●</span></div>
+        </div>
+        <div class="char-float-card__scan"></div>
+      </div>
+    </div>
+
+    <div class="char-block__info" data-r="boing-r" data-rd="2">
+      <span class="char-block__code">03 · Antagonist</span>
+      <div>
+        <span class="char-block__name-jp">アンタゴニスト</span>
+        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
+      </div>
+      <p class="char-block__bio">
+        The third character. Antagonist, ambiguous ally or
+        supporting role — tell who they are and why they
+        exist in your creative universe.
+      </p>
+      <div class="char-block__stats">
+        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%"></div></div><span class="char-stat__val">78</span></div>
+        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%"></div></div><span class="char-stat__val">82</span></div>
+        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%"></div></div><span class="char-stat__val">88</span></div>
+        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%"></div></div><span class="char-stat__val">70</span></div>
+      </div>
+      <div class="char-block__tags">
+        <span class="char-block__tag">Dark</span>
+        <span class="char-block__tag">Ambitious</span>
+        <span class="char-block__tag">Ruthless</span>
+        <span class="char-block__tag">Complex</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ── MARQUEE ────────────────────────────────────────── -->
+<div class="marquee-strip marquee-strip--surface marquee-strip--reverse" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+<div class="container">
+  <footer class="social__footer" role="contentinfo">
+    <p class="social__footer-copy">&copy; 2026 Rio Chico Studio — All rights reserved</p>
+    <nav class="social__footer-legal" aria-label="Legal">
+      <a href="legal/privacy-policy.html">Privacy Policy</a>
+    </nav>
+    <div class="social__footer-logo">
+      <span>RIO</span>&nbsp;CHICO&nbsp;<span>STUDIO</span>
+    </div>
+  </footer>
+</div>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

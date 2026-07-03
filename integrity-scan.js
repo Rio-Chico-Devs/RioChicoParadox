@@ -92,7 +92,7 @@ const walk = dir => {
     if (e.name==='.git'||e.name==='node_modules') continue;
     const rel = path.join(dir,e.name).replace(/^\.\//,'');
     if (e.isDirectory()) out = out.concat(walk(rel));
-    else if (!/preview\.html$/.test(rel) && (SCAN_EXT.test(e.name)||SCAN_EXACT.has(e.name)))
+    else if (!/^preview(-[a-z]+)?\.html$/.test(rel) && (SCAN_EXT.test(e.name)||SCAN_EXACT.has(e.name)))
       out.push(rel);
   }
   return out;

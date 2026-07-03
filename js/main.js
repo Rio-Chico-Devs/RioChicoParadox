@@ -107,18 +107,16 @@ navItems.forEach(link => {
   link.addEventListener('click', closeMenu);
 });
 
-// Active nav section
-const sections = document.querySelectorAll('section[id]');
-const navObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navItems.forEach(link => {
-        link.classList.toggle('is-active', link.getAttribute('href') === `#${e.target.id}`);
-      });
-    }
+// Link attivo = pagina corrente (ogni pagina ha una sola sezione,
+// quindi non ha piu' senso dedurlo dallo scroll: ogni HTML gia'
+// marca staticamente il link giusto con is-active, questo e' solo
+// una rete di sicurezza nel caso il markup vada fuori sync)
+const currentPage = document.body.dataset.page;
+if (currentPage) {
+  navItems.forEach(link => {
+    link.classList.toggle('is-active', link.dataset.nav === currentPage);
   });
-}, { rootMargin: '-45% 0px -50% 0px' });
-sections.forEach(s => navObs.observe(s));
+}
 
 /* ── SCROLL REVEAL (clip-path system) ─────────────────────
    Tutti gli elementi con [data-r] vengono rivelati

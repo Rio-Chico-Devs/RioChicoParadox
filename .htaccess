@@ -16,7 +16,7 @@ Options -Indexes
 
 # ── Blocca file interni (non devono mai essere leggibili online) ──
 # Anche se li carichi per sbaglio, il server nega l'accesso.
-<FilesMatch "^(\.gitignore|package\.json|_headers|security-audit\.js|integrity-scan\.js|SECURITY\.md|THREAT-MODEL\.md|README\.md|CLAUDE\.md|preview\.html)$">
+<FilesMatch "^(\.gitignore|package\.json|_headers|security-audit\.js|integrity-scan\.js|SECURITY\.md|THREAT-MODEL\.md|README\.md|CLAUDE\.md|preview(-[a-z]+)?\.html)$">
     Order allow,deny
     Deny from all
 </FilesMatch>

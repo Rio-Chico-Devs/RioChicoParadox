@@ -187,14 +187,17 @@ htaccess.includes('Options -Indexes')
 // File interni bloccati
 // Il FilesMatch in .htaccess usa regex con backslash-escape dei punti (es. security-audit\.js)
 // quindi cerchiamo sia il nome letterale che la versione escaped
-const sensitiveBlocked = ['security-audit.js','integrity-scan.js','SECURITY.md','CLAUDE.md','preview.html','package.json'];
-const allBlocked = sensitiveBlocked.every(f => {
+const sensitiveBlocked = ['security-audit.js','integrity-scan.js','SECURITY.md','CLAUDE.md','package.json'];
+const allLiteralBlocked = sensitiveBlocked.every(f => {
   const escaped = f.replace(/\./g, '\\.');
   return htaccess.includes(f) || htaccess.includes(escaped);
 });
-allBlocked
-  ? pass("File interni: .htaccess blocca security-audit.js, SECURITY.md, CLAUDE.md e altri file di sviluppo")
-  : warn("File interni: verifica che .htaccess blocchi tutti i file sensibili (security-audit.js, SECURITY.md, CLAUDE.md, preview.html)");
+// preview*.html usa un pattern (preview(-[a-z]+)?\.html), non un nome letterale:
+// verifichiamo solo che una regola "preview" + "html" esista nel FilesMatch
+const previewBlocked = /preview/.test(htaccess) && /\\?\.html/.test(htaccess);
+(allLiteralBlocked && previewBlocked)
+  ? pass("File interni: .htaccess blocca security-audit.js, SECURITY.md, CLAUDE.md, preview*.html e altri file di sviluppo")
+  : warn("File interni: verifica che .htaccess blocchi tutti i file sensibili (security-audit.js, SECURITY.md, CLAUDE.md, preview*.html)");
 
 /* ═══════════════════════════════════════════════════════════
    2. js/main.js — XSS sinks e code injection
@@ -256,11 +259,12 @@ else
 /* ═══════════════════════════════════════════════════════════
    3. FILE HTML — injection points, info disclosure
    Controlla TUTTI i file .html nel repo (non solo index.html).
-   preview.html e' escluso: e' un artefatto di sviluppo, non
-   va deployato e non deve essere scansionato come sorgente.
+   preview*.html sono esclusi: sono artefatti generati da
+   scripts/build-preview.js (uno per pagina), non vanno deployati
+   e non devono essere scansionati come sorgente.
    ═══════════════════════════════════════════════════════════ */
 const htmlFiles = allFiles.filter(f =>
-  f.endsWith('.html') && !f.endsWith('preview.html')
+  f.endsWith('.html') && !/^preview(-[a-z]+)?\.html$/.test(f)
 );
 pass(`HTML: controllo su ${htmlFiles.length} file → ${htmlFiles.map(f => path.basename(f)).join(', ')}`);
 
