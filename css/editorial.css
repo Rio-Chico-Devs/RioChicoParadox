@@ -22,13 +22,19 @@
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
 }
 
+/* Nastro "carta" — timbro manga: sfondo chiaro, testo quasi-nero,
+   separatore rosso. Le due varianti condividono la stessa palette,
+   cambia solo l'inclinazione per l'effetto "due strisce di nastro". */
+.marquee-strip--accent,
+.marquee-strip--surface {
+  background: var(--clr-text);
+}
+
 .marquee-strip--accent {
-  background: var(--grad-accent);
   transform: rotate(-1.1deg) scale(1.03);
 }
 
 .marquee-strip--surface {
-  background: var(--clr-surface);
   transform: rotate(1.1deg) scale(1.03);
 }
 
@@ -59,20 +65,16 @@
 }
 
 .marquee-item {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.9rem;
-  letter-spacing: 0.08em;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-.marquee-strip--accent .marquee-item {
-  color: #ffffff;
-}
-
+.marquee-strip--accent .marquee-item,
 .marquee-strip--surface .marquee-item {
-  color: var(--clr-text-muted);
+  color: var(--clr-bg);
 }
 
 .marquee-sep {
@@ -81,12 +83,9 @@
   white-space: nowrap;
 }
 
-.marquee-strip--accent .marquee-sep {
-  color: rgba(255, 255, 255, 0.4);
-}
-
+.marquee-strip--accent .marquee-sep,
 .marquee-strip--surface .marquee-sep {
-  color: var(--clr-accent-2);
+  color: var(--clr-accent);
 }
 
 /* Reduced motion */

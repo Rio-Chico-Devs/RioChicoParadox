@@ -13,10 +13,11 @@
  * e accesso a fonts.googleapis.com / fonts.gstatic.com.
  *
  * Cosa fa:
- *   - Scarica Bebas Neue, Inter (300/400/500 + italic), Noto Serif JP
- *   - Per Inter/Bebas tiene SOLO i subset latin + latin-ext
+ *   - Scarica Anton, Instrument Sans (400/500/600 + italic 400),
+ *     IBM Plex Mono (400/500/600), Noto Sans JP
+ *   - Per i font latini tiene SOLO i subset latin + latin-ext
  *     (accenti italiani inclusi, scarta cyrillic/greek/vietnamese)
- *   - Per Noto Serif JP scarica solo i katakana effettivamente usati
+ *   - Per Noto Sans JP scarica solo i katakana effettivamente usati
  *     nel sito (legge index.html) -> file minuscolo invece dei MB del CJK
  *   - Rigenera css/fonts.css con i nomi file reali e gli unicode-range
  */
@@ -39,7 +40,7 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
 
 /* Subset da tenere per i font latini. Tutto il resto (cyrillic, greek,
    vietnamese...) viene scartato: non serve a un sito in italiano. */
-const KEEP = /^(latin|latin-ext|\[\d+\])$/;
+const KEEP = /^(latin|latin-ext|\[\d+\]|unlabeled)$/;
 
 /* ── Katakana usati nel sito ──────────────────────────────────────────
    Letti da index.html (range U+30A0-30FF). Cosi se cambi i nomi dei
@@ -57,10 +58,11 @@ function katakanaFromSite() {
 }
 
 const FONTS = [
-  { tag: 'bebas', url: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap' },
-  { tag: 'inter', url: 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;1,300&display=swap' },
-  { tag: 'noto',  url: () => 'https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap&text=' +
-                              encodeURIComponent(katakanaFromSite()) }
+  { tag: 'anton',    url: 'https://fonts.googleapis.com/css2?family=Anton&display=swap' },
+  { tag: 'instrument', url: 'https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap' },
+  { tag: 'plexmono', url: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap' },
+  { tag: 'noto',     url: () => 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap&text=' +
+                                 encodeURIComponent(katakanaFromSite()) }
 ];
 
 /* ── helpers ──────────────────────────────────────────────────────── */
@@ -80,13 +82,17 @@ function get(url) {
 }
 
 // Estrae ogni @font-face con la sua etichetta-subset.
-// Google mette un commento con il nome del subset prima di ogni blocco.
+// Google di solito mette un commento con il nome del subset prima di ogni
+// blocco (/* latin */), ma NON per le richieste ristrette con &text=
+// (es. il nostro katakana JP): li' il blocco non ha commento, e senza
+// questo fallback veniva scartato in silenzio -> zero file scaricati,
+// nessun errore visibile. 'unlabeled' viene sempre tenuto (vedi KEEP).
 function parseFaces(css) {
   const faces = [];
-  const re = /\/\*\s*([^*]+?)\s*\*\/\s*@font-face\s*\{([^}]+)\}/g;
+  const re = /(?:\/\*\s*([^*]+?)\s*\*\/\s*)?@font-face\s*\{([^}]+)\}/g;
   let m;
   while ((m = re.exec(css)) !== null) {
-    const label = m[1].trim();
+    const label = m[1] ? m[1].trim() : 'unlabeled';
     const body  = m[2];
     const prop  = (k) => { const x = body.match(new RegExp(k + '\\s*:\\s*([^;]+)')); return x ? x[1].trim() : null; };
     const src   = body.match(/url\(["']?([^"')]+\.woff2)["']?\)/);

@@ -7,43 +7,43 @@
 
   /* ---- COLORI PRINCIPALI ---- */
   /*
-     Palette: midnight indigo × cobalt elettrico
-     Pensata per showcasare arte anime vibrante su sfondo neutro-scuro.
+     Palette: inchiostro manga × timbro rosso
+     Nero quasi puro, carta calda, un solo accento rosso — niente duotone.
      Ogni personaggio ha la sua palette in index.html (--char-grad, --char-glow).
      Cambia --clr-accent per ridefinire l'identità del sito in un colpo solo.
   */
-  --clr-bg:           #09090f;      /* midnight — quasi-nero, profondità blu-viola */
-  --clr-bg-2:         #0e0e1a;      /* sezioni alternate */
-  --clr-surface:      #141428;      /* card, panel */
-  --clr-surface-2:    #1c1c3a;      /* card hover, bordi */
+  --clr-bg:           #0c0c0e;      /* inchiostro — quasi-nero neutro */
+  --clr-bg-2:         #0f0f11;      /* sezioni alternate */
+  --clr-surface:      #141417;      /* card, panel */
+  --clr-surface-2:    #1c1c1f;      /* card hover, bordi */
 
-  --clr-accent:       #4466ff;      /* cobalt elettrico — identità brand */
-  --clr-accent-light: #7899ff;      /* cobalt chiaro */
-  --clr-accent-dark:  #2244cc;      /* cobalt scuro */
-  --clr-accent-glow:  rgba(68, 102, 255, 0.30);
-  --clr-accent-subtle:rgba(68, 102, 255, 0.08);
+  --clr-accent:       #e63424;      /* rosso timbro — identità brand */
+  --clr-accent-light: #ff5a46;      /* rosso chiaro */
+  --clr-accent-dark:  #b82818;      /* rosso scuro */
+  --clr-accent-glow:  rgba(230, 52, 36, 0.30);
+  --clr-accent-subtle:rgba(230, 52, 36, 0.08);
 
-  /* Secondo accento — magenta caldo. Usato CON PARSIMONIA:
-     gradiente firma, separatori marquee, selezione testo.
-     Il duotone cobalt->magenta e' la firma cromatica del sito. */
-  --clr-accent-2:      #ff3d7f;
-  --clr-accent-2-glow: rgba(255, 61, 127, 0.25);
+  /* Accento unico: niente secondo colore, niente gradiente duotone.
+     --grad-accent resta come variabile (usata da piu' file) ma e' un
+     "gradiente" a un solo colore: appare piatto, non serve toccare
+     ogni file che lo consuma. */
+  --clr-accent-2:      var(--clr-accent);
+  --clr-accent-2-glow: var(--clr-accent-glow);
   --grad-accent: linear-gradient(135deg,
     var(--clr-accent) 0%,
-    #7d5cff 52%,
-    var(--clr-accent-2) 100%);
+    var(--clr-accent) 100%);
 
-  --clr-text:         #f0eeff;      /* bianco caldo con tocco viola */
-  --clr-text-muted:   #8888b8;      /* muted indigo-grigio */
-  --clr-text-dim:     #3e3e68;      /* testo disabilitato */
-  --clr-border:       rgba(120, 120, 200, 0.09);
-  --clr-border-accent:rgba(68, 102, 255, 0.40);
+  --clr-text:         #f4f1ea;      /* carta calda */
+  --clr-text-muted:   #b9b5ad;      /* testo di corpo */
+  --clr-text-dim:     #8e8b85;      /* etichette mono, testo minore */
+  --clr-border:       rgba(244, 241, 234, 0.12);
+  --clr-border-accent:rgba(230, 52, 36, 0.40);
 
   /* ---- TIPOGRAFIA ---- */
-  --font-heading: 'Bebas Neue', 'Impact', 'Arial Narrow', sans-serif;
-  --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-mono:    'Courier New', 'Consolas', monospace;
-  --font-jp:      'Noto Serif JP', serif;
+  --font-heading: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --font-body:    'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Courier New', 'Consolas', monospace;
+  --font-jp:      'Noto Sans JP', sans-serif;
 
   --text-xs:   0.75rem;
   --text-sm:   0.875rem;

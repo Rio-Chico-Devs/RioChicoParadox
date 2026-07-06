@@ -346,6 +346,31 @@ button { border: none; background: none; font-family: inherit; }
 }
 
 
+/* ── HALFTONE CARD SHADOW ─────────────────────────────────
+   Ombra a puntini (retino da stampa) sfalsata dietro una card
+   bordata — il "timbro" manga. Non tocca `position`: presuppone che
+   l'elemento sia GIA' relative/absolute/fixed per conto suo (vero per
+   ogni nostra card — overlay, badge o rotazione ne hanno gia' bisogno).
+   Impostare qui position:relative romperebbe .art-wheel__card, che deve
+   restare absolute per il meccanismo della ruota. */
+.halftone-card::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: -16px;
+  bottom: -16px;
+  background-image: radial-gradient(var(--clr-accent) 1.2px, transparent 1.2px);
+  background-size: 10px 10px;
+  opacity: 0.32;
+  z-index: 0;
+  pointer-events: none;
+}
+.halftone-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* ── NOISE OVERLAY ──────────────────────────────────────── */
 .noise-overlay {
   position: fixed;
