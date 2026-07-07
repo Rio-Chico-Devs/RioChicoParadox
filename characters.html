@@ -57,9 +57,8 @@
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav__inner">
     <a class="nav__logo" href="index.html" aria-label="Rio Chico Studio — Home">
-      <span class="nav__logo-accent">RIO</span>&nbsp;CHICO
-      <span class="nav__logo-dot" aria-hidden="true"></span>
-      STUDIO
+      <span>RIO CHICO</span>
+      <span class="nav__logo-accent">STUDIO</span>
     </a>
 
     <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
@@ -68,13 +67,16 @@
       <span class="nav__toggle-bar"></span>
     </button>
 
-    <ul class="nav__links" id="nav-links" role="list">
-      <li><a class="nav__link" href="index.html" data-nav="home"><span class="nav__link-num">01</span>Home</a></li>
-      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span>Gallery</a></li>
-      <li><a class="nav__link is-active" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span>Characters</a></li>
-      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span>Profile</a></li>
-      <li><a class="nav__link" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span>Contact</a></li>
+    <div class="nav__right">
+      <ul class="nav__links" id="nav-links" role="list">
+      <li><a class="nav__link" href="index.html" data-nav="home"><span class="nav__link-num">01</span><span class="nav__link-label">Home</span></a></li>
+      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span><span class="nav__link-label">Gallery</span></a></li>
+      <li><a class="nav__link is-active" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span><span class="nav__link-label">Characters</span></a></li>
+      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span><span class="nav__link-label">Profile</span></a></li>
+      <li><a class="nav__link" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span><span class="nav__link-label">Contact</span></a></li>
     </ul>
+      <a class="nav__commissions" href="contact.html">Commissions Open</a>
+    </div>
   </div>
 </nav>
 
@@ -88,9 +90,9 @@
        since this is the first element on the page (no hero above it) -->
   <div style="padding: 5rem 0 3rem; text-align:center; position:relative; overflow:hidden;">
     <div style="max-width:var(--max-width); margin:0 auto; padding:0 var(--section-pad-x); position:relative; z-index:1;">
-      <span class="section-label" data-r="up" style="justify-content:center;">03 / Characters</span>
-      <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center;">
-        CHAR<span>ACTERS</span>
+      <span class="section-label" data-r="up" style="justify-content:center;">03 / Original Characters</span>
+      <h2 class="section-title section-title--outline" data-r="boing" id="chars-title" style="text-align:center;">
+        CHARAC<span>TERS</span>
       </h2>
     </div>
     <!-- big bg stars -->
@@ -317,6 +319,26 @@
     </div>
   </div>
 
+  <!-- ── MADE WITH LOVE ──────────────────────────────────── -->
+  <div class="made-with-love container">
+    <div class="made-with-love__text">
+      <span class="section-label" data-r="up">ハンドメイド / By Hand</span>
+      <h3 class="made-with-love__title" data-r="up" data-rd="1">MADE WITH <span>LOVE</span></h3>
+      <p class="made-with-love__desc" data-r="up" data-rd="2">
+        Every character begins on paper — drawn by hand, line by line. I believe hand-made animation is worth preserving: with the advent of new technologies, the creative mind is what we risk losing.
+      </p>
+      <p class="made-with-love__highlight" data-r="up" data-rd="3">
+        I'm what's in the middle — <span>tradition + technology.</span>
+      </p>
+    </div>
+
+    <div class="made-with-love__art halftone-card" data-r="clip-up" data-rd="2">
+      <img class="made-with-love__img" src="assets/img/ph-madewithlove.svg" alt="Hand-drawn character sketch" loading="lazy" decoding="async" />
+      <div class="made-with-love__knockout" aria-hidden="true">RIO</div>
+      <span class="made-with-love__caption">Drawn by Hand · 手描き</span>
+    </div>
+  </div>
+
 </section>
 
 
@@ -361,7 +383,7 @@
       <a href="legal/privacy-policy.html">Privacy Policy</a>
     </nav>
     <div class="social__footer-logo">
-      <span>RIO</span>&nbsp;CHICO&nbsp;<span>STUDIO</span>
+      RIO CHICO <span class="nav__logo-accent">STUDIO</span>
     </div>
   </footer>
 </div>

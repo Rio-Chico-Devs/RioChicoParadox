@@ -54,7 +54,7 @@
   --text-3xl:  3rem;
   --text-4xl:  4rem;
   --text-5xl:  6rem;
-  --text-6xl:  8rem;
+  --text-6xl:  6.875rem;
 
   --leading-tight:  1.1;
   --leading-normal: 1.5;
@@ -64,10 +64,10 @@
   --tracking-widest:0.3em;
 
   /* ---- LAYOUT & SPAZIATURA ---- */
-  --nav-height:      4rem;
-  --max-width:       1400px;
-  --section-pad-y:   7rem;
-  --section-pad-x:   2rem;
+  --nav-height:      66px;
+  --max-width:       1320px;
+  --section-pad-y:   4rem;
+  --section-pad-x:   40px;
   --gap-sm:          1rem;
   --gap-md:          2rem;
   --gap-lg:          4rem;

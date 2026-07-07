@@ -11,17 +11,8 @@
   height: var(--nav-height);
   display: flex;
   align-items: center;
-  transition:
-    background var(--dur-med) var(--ease-out-quart),
-    backdrop-filter var(--dur-med) var(--ease-out-quart),
-    border-color var(--dur-med) var(--ease-out-quart);
-  border-bottom: 1px solid transparent;
-}
-
-.nav.is-scrolled {
-  background: rgba(10, 10, 10, 0.88);
-  backdrop-filter: blur(16px) saturate(180%);
-  border-bottom-color: var(--clr-border);
+  background: rgba(12, 12, 14, 0.94);
+  border-bottom: 1px solid var(--clr-border);
 }
 
 .nav__inner {
@@ -34,86 +25,86 @@
   justify-content: space-between;
 }
 
-/* Logo */
+/* Logo — "RIO CHICO" in carta, "STUDIO" in rosso */
 .nav__logo {
   font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  letter-spacing: var(--tracking-wider);
+  font-size: 20px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--clr-text);
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color var(--dur-fast);
-}
-
-.nav__logo:hover {
-  color: var(--clr-accent);
+  align-items: baseline;
+  gap: 10px;
+  white-space: nowrap;
 }
 
 .nav__logo-accent {
   color: var(--clr-accent);
 }
 
-.nav__logo-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--clr-accent);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-  box-shadow: 0 0 8px var(--clr-accent);
-}
-
 /* Links */
 .nav__links {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 2px;
+  flex-wrap: wrap;
 }
 
 .nav__link {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
   position: relative;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--clr-text-muted);
-  padding: 0.5rem 0.875rem;
-  transition: color var(--dur-fast);
-  clip-path: var(--clip-diagonal);
+  padding: 6px 14px 4px;
+  border-bottom: 2px solid transparent;
+  color: var(--clr-text-dim);
+  transition: color var(--dur-fast), background var(--dur-fast);
 }
 
-.nav__link::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--clr-accent-subtle);
-  clip-path: var(--clip-diagonal);
-  opacity: 0;
-  transition: opacity var(--dur-fast);
+.nav__link:hover {
+  background: rgba(244, 241, 234, 0.06);
 }
 
-.nav__link:hover,
 .nav__link.is-active {
   color: var(--clr-text);
-}
-
-.nav__link:hover::before,
-.nav__link.is-active::before {
-  opacity: 1;
-}
-
-.nav__link.is-active {
-  color: var(--clr-accent-light);
+  border-bottom-color: var(--clr-accent);
 }
 
 /* Numero decorativo */
 .nav__link-num {
-  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--clr-accent);
-  margin-right: 0.3rem;
-  opacity: 0.8;
+  opacity: 1;
+}
+
+.nav__link-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+/* Pillola "Commissions open" */
+.nav__commissions {
+  margin-left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: var(--clr-accent);
+  clip-path: polygon(9px 0, 100% 0, calc(100% - 9px) 100%, 0 100%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--clr-bg);
+  transition: background var(--dur-fast);
+}
+
+.nav__commissions:hover {
+  background: var(--clr-text);
 }
 
 /* Mobile hamburger */
@@ -181,13 +172,11 @@
   }
 
   .nav__link {
-    clip-path: none;
     padding: 1rem var(--section-pad-x);
     border-bottom: 1px solid var(--clr-border);
-    font-size: var(--text-sm);
   }
 
-  .nav__link::before {
-    clip-path: none;
+  .nav__commissions {
+    display: none;
   }
 }

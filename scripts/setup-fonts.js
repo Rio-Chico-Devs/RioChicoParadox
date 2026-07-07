@@ -31,7 +31,6 @@ const path  = require('path');
 const ROOT      = path.resolve(__dirname, '..');
 const FONTS_DIR = path.join(ROOT, 'assets', 'fonts');
 const CSS_OUT   = path.join(ROOT, 'css', 'fonts.css');
-const INDEX     = path.join(ROOT, 'index.html');
 
 /* User-Agent moderno: Google serve woff2 solo a browser recenti.
    Senza questo header risponde con formati legacy (ttf) o 403. */
@@ -46,12 +45,19 @@ const KEEP = /^(latin|latin-ext|\[\d+\]|unlabeled)$/;
    Letti da index.html (range U+30A0-30FF). Cosi se cambi i nomi dei
    personaggi, il subset si aggiorna da solo. Fallback: set hardcoded. */
 function katakanaFromSite() {
-  let text = '';
-  try { text = fs.readFileSync(INDEX, 'utf8'); } catch (_) {}
+  // Scansiona TUTTE le pagine html in root (non solo index.html): il
+  // giapponese puo' comparire su qualunque pagina (es. characters.html).
+  const htmlFiles = fs.readdirSync(ROOT).filter(f => f.endsWith('.html') && f !== 'preview.html');
   const chars = new Set();
-  for (const ch of text) {
-    const cp = ch.codePointAt(0);
-    if (cp >= 0x30A0 && cp <= 0x30FF) chars.add(ch);
+  for (const file of htmlFiles) {
+    let text = '';
+    try { text = fs.readFileSync(path.join(ROOT, file), 'utf8'); } catch (_) { continue; }
+    for (const ch of text) {
+      const cp = ch.codePointAt(0);
+      // Hiragana + Katakana + CJK comuni: prendiamo solo i caratteri
+      // REALMENTE usati, il file resta piccolo (&text= filtra a monte).
+      if ((cp >= 0x3040 && cp <= 0x30FF) || (cp >= 0x4E00 && cp <= 0x9FFF)) chars.add(ch);
+    }
   }
   if (chars.size === 0) return [...new Set('プロタゴニストラテジアン')].join('');
   return [...chars].join('');

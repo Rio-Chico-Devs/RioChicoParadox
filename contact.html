@@ -57,9 +57,8 @@
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav__inner">
     <a class="nav__logo" href="index.html" aria-label="Rio Chico Studio — Home">
-      <span class="nav__logo-accent">RIO</span>&nbsp;CHICO
-      <span class="nav__logo-dot" aria-hidden="true"></span>
-      STUDIO
+      <span>RIO CHICO</span>
+      <span class="nav__logo-accent">STUDIO</span>
     </a>
 
     <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
@@ -68,13 +67,16 @@
       <span class="nav__toggle-bar"></span>
     </button>
 
-    <ul class="nav__links" id="nav-links" role="list">
-      <li><a class="nav__link" href="index.html" data-nav="home"><span class="nav__link-num">01</span>Home</a></li>
-      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span>Gallery</a></li>
-      <li><a class="nav__link" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span>Characters</a></li>
-      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span>Profile</a></li>
-      <li><a class="nav__link is-active" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span>Contact</a></li>
+    <div class="nav__right">
+      <ul class="nav__links" id="nav-links" role="list">
+      <li><a class="nav__link" href="index.html" data-nav="home"><span class="nav__link-num">01</span><span class="nav__link-label">Home</span></a></li>
+      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span><span class="nav__link-label">Gallery</span></a></li>
+      <li><a class="nav__link" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span><span class="nav__link-label">Characters</span></a></li>
+      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span><span class="nav__link-label">Profile</span></a></li>
+      <li><a class="nav__link is-active" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span><span class="nav__link-label">Contact</span></a></li>
     </ul>
+      <a class="nav__commissions" href="contact.html">Commissions Open</a>
+    </div>
   </div>
 </nav>
 
@@ -105,53 +107,30 @@
       </a>
     </div>
 
-    <div class="social__grid">
-      <a class="social__card" href="https://instagram.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" aria-label="Instagram">
-        <div class="social__card-header">
-          <span class="social__card-icon">📸</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Instagram</div>
-          <div class="social__card-name">@riochicostudio</div>
-        </div>
-        <div class="social__card-handle">Artwork, WIPs, Stories</div>
+    <div class="social__list" data-r="up" data-rd="1">
+      <a class="social__row" href="https://instagram.com/riochicostudio" target="_blank" rel="noopener noreferrer">
+        <span class="social__row-platform">Instagram</span>
+        <span class="social__row-handle">@riochicostudio</span>
+        <span class="social__row-note">Artwork, WIPs, Stories</span>
+        <span class="social__row-arrow" aria-hidden="true">↗</span>
       </a>
-
-      <a class="social__card" href="https://twitter.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="1" aria-label="Twitter / X">
-        <div class="social__card-header">
-          <span class="social__card-icon">𝕏</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Twitter / X</div>
-          <div class="social__card-name">@riochicostudio</div>
-        </div>
-        <div class="social__card-handle">Thoughts, updates</div>
+      <a class="social__row" href="https://twitter.com/riochicostudio" target="_blank" rel="noopener noreferrer">
+        <span class="social__row-platform">Twitter / X</span>
+        <span class="social__row-handle">@riochicostudio</span>
+        <span class="social__row-note">Thoughts, updates</span>
+        <span class="social__row-arrow" aria-hidden="true">↗</span>
       </a>
-
-      <a class="social__card" href="https://www.pixiv.net/" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="2" aria-label="Pixiv">
-        <div class="social__card-header">
-          <span class="social__card-icon">🖼️</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Pixiv</div>
-          <div class="social__card-name">Rio Chico Studio</div>
-        </div>
-        <div class="social__card-handle">Full portfolio</div>
+      <a class="social__row" href="https://www.pixiv.net/" target="_blank" rel="noopener noreferrer">
+        <span class="social__row-platform">Pixiv</span>
+        <span class="social__row-handle">Rio Chico Studio</span>
+        <span class="social__row-note">Full portfolio</span>
+        <span class="social__row-arrow" aria-hidden="true">↗</span>
       </a>
-
-      <a class="social__card" href="https://ko-fi.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="3" aria-label="Ko-fi">
-        <div class="social__card-header">
-          <span class="social__card-icon">☕</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Ko-fi</div>
-          <div class="social__card-name">Rio Chico Studio</div>
-        </div>
-        <div class="social__card-handle">Support my work</div>
+      <a class="social__row" href="https://ko-fi.com/riochicostudio" target="_blank" rel="noopener noreferrer">
+        <span class="social__row-platform">Ko-fi</span>
+        <span class="social__row-handle">Rio Chico Studio</span>
+        <span class="social__row-note">Support my work</span>
+        <span class="social__row-arrow" aria-hidden="true">↗</span>
       </a>
     </div>
 
@@ -177,7 +156,7 @@
       <a href="legal/privacy-policy.html">Privacy Policy</a>
     </nav>
     <div class="social__footer-logo">
-      <span>RIO</span>&nbsp;CHICO&nbsp;<span>STUDIO</span>
+      RIO CHICO <span class="nav__logo-accent">STUDIO</span>
     </div>
   </footer>
 </div>

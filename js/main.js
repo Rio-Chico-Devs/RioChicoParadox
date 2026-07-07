@@ -135,71 +135,31 @@ const revealObs = new IntersectionObserver(entries => {
 
 revealEls.forEach(el => revealObs.observe(el));
 
-/* ── PARALLAX SCROLL ────────────────────────────────────── */
-const heroBgGlow = document.querySelector('.hero__bg-glow');
-const heroBgGrid = document.querySelector('.hero__bg-grid');
+/* ── HERO FEATURED — crossfade tra immagini nello stesso riquadro ──
+   Un solo frame visibile alla volta (stessa cornice/posizione fissa),
+   il contenuto ruota internamente con un dissolvenza incrociata.
+   ================================================================= */
+const heroFeaturedSlot = document.getElementById('heroFeaturedSlot');
+const heroFeaturedImgs = heroFeaturedSlot ? [...heroFeaturedSlot.querySelectorAll('.hero__featured-img')] : [];
+const heroFeaturedNum  = document.getElementById('heroFeaturedNum');
 
-if (!REDUCED_MOTION) {
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (heroBgGlow) heroBgGlow.style.transform = `translateY(${y * 0.3}px)`;
-    if (heroBgGrid) heroBgGrid.style.transform = `translateY(${y * 0.2}px)`;
-  }, { passive: true });
-}
+if (heroFeaturedImgs.length > 1) {
+  let heroFeaturedIdx = 0;
 
-/* ── ART WHEEL — 2D ferris wheel, counter-clockwise ────────
-   Uses @property --slot-angle so each card animates on a
-   circular arc while staying upright.
-   Angles (CSS convention, Y-down): east=0, south=90, west=180, north=270
-   CCW step = each card's angle decreases by 90° → next card arrives from north.
-   ========================================================= */
-const awStage = document.getElementById('artWheelStage');
-const awCards = awStage ? [...awStage.querySelectorAll('.art-wheel__card')] : [];
-const awDots  = [...document.querySelectorAll('.art-wheel__dot')];
-
-if (awStage && awCards.length === 4) {
-  // Initial angles matching --item-i order: 0=east, 1=south, 2=west(active), 3=north
-  const angles = [0, 90, 180, 270];
-
-  function applyAngles() {
-    awCards.forEach((card, i) => {
-      card.style.setProperty('--slot-angle', angles[i] + 'deg');
-    });
-  }
-
-  function findActive() {
-    return angles.findIndex(a => ((a % 360) + 360) % 360 === 180);
-  }
-
-  function updateActive() {
-    const idx = findActive();
-    awCards.forEach((card, i) => card.classList.toggle('is-active', i === idx));
-    awDots.forEach((dot, i) => dot.classList.toggle('is-active', i === idx));
-  }
-
-  // Init without transition (set angles before paint)
-  awCards.forEach(card => card.style.transition = 'none');
-  applyAngles();
-  updateActive();
-  // Re-enable transitions on next frame
-  requestAnimationFrame(() => {
-    awCards.forEach(card => card.style.transition = '');
-  });
-
-  function wheelNext() {
-    // CCW: decrease each angle by 90°
-    angles.forEach((_, i) => { angles[i] -= 90; });
-    applyAngles();
-    updateActive();
-    setTimeout(wheelNext, 3920);
+  function heroFeaturedNext() {
+    heroFeaturedImgs[heroFeaturedIdx].classList.remove('is-active');
+    heroFeaturedIdx = (heroFeaturedIdx + 1) % heroFeaturedImgs.length;
+    heroFeaturedImgs[heroFeaturedIdx].classList.add('is-active');
+    if (heroFeaturedNum) heroFeaturedNum.textContent = String(heroFeaturedIdx + 1).padStart(2, '0');
+    setTimeout(heroFeaturedNext, 3920);
   }
 
   // autoplay solo se l'utente non chiede meno animazioni. Parte dallo
   // stesso segnale del resto dell'hero (rcs:hero-ready) invece che da
-  // un timer fisso slegato dal loader — cosi' la prima rotazione non
+  // un timer fisso slegato dal loader — cosi' il primo cambio non
   // capita mai per caso mentre l'hero sta ancora comparendo.
   if (!REDUCED_MOTION) {
-    document.addEventListener('rcs:hero-ready', () => setTimeout(wheelNext, 1800), { once: true });
+    document.addEventListener('rcs:hero-ready', () => setTimeout(heroFeaturedNext, 1800), { once: true });
   }
 }
 

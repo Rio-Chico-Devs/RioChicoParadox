@@ -33,10 +33,10 @@
 
 /* Commission CTA banner */
 .social__cta-banner {
-  padding: 2rem 3rem;
+  padding: 34px 48px;
   background: var(--clr-accent);
-  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
-  margin-bottom: 4rem;
+  clip-path: polygon(24px 0, 100% 0, calc(100% - 24px) 100%, 0 100%);
+  margin-top: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -62,101 +62,57 @@
   margin-top: 0.25rem;
 }
 
-/* Social links grid */
-.social__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1px;
+/* Social links — lista impilata di righe, non una griglia di card */
+.social__list {
+  margin-top: 56px;
+  border-top: 1px solid var(--clr-border);
 }
 
-.social__card {
-  position: relative;
-  background: var(--clr-surface);
-  padding: 2rem 2rem;
+.social__row {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  overflow: hidden;
-  transition: background var(--dur-fast);
+  align-items: baseline;
+  gap: 28px;
+  padding: 22px 8px;
+  border-bottom: 1px solid var(--clr-border);
+  flex-wrap: wrap;
   text-decoration: none;
   color: inherit;
+  transition: background var(--dur-fast);
 }
 
-.social__card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  background: var(--clr-accent);
-  transition: width var(--dur-med) var(--ease-out-quart);
-  z-index: 0;
+.social__row:hover {
+  background: rgba(244, 241, 234, 0.05);
 }
 
-.social__card:hover::before {
-  width: 3px;
-}
-
-.social__card > * {
-  position: relative;
-  z-index: 1;
-}
-
-.social__card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.social__card-icon {
-  font-size: var(--text-2xl);
-  line-height: 1;
-  transition: transform var(--dur-med) var(--ease-spring);
-}
-
-.social__card:hover .social__card-icon {
-  transform: scale(1.2) rotate(-5deg);
-}
-
-.social__card-arrow {
-  font-size: var(--text-sm);
-  color: var(--clr-text-dim);
-  transition:
-    transform var(--dur-med) var(--ease-out-quart),
-    color var(--dur-fast);
-}
-
-.social__card:hover .social__card-arrow {
-  transform: translate(4px, -4px);
-  color: var(--clr-accent);
-}
-
-.social__card-platform {
+.social__row-platform {
+  width: 120px;
+  flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: var(--tracking-widest);
-  color: var(--clr-accent);
+  font-size: 10px;
+  letter-spacing: 3px;
   text-transform: uppercase;
+  color: var(--clr-accent);
 }
 
-.social__card-name {
+.social__row-handle {
+  flex: 1;
+  min-width: 200px;
   font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  letter-spacing: var(--tracking-wide);
+  font-size: 26px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--clr-text);
-  transition: color var(--dur-fast);
 }
 
-.social__card:hover .social__card-name {
-  color: var(--clr-text);
+.social__row-note {
+  font-size: 14px;
+  color: var(--clr-text-dim);
 }
 
-.social__card-handle {
+.social__row-arrow {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--clr-text-muted);
+  font-size: 16px;
+  color: var(--clr-accent);
 }
 
 /* Email section */
@@ -229,14 +185,10 @@
 
 .social__footer-logo {
   font-family: var(--font-heading);
-  font-size: var(--text-sm);
-  letter-spacing: var(--tracking-wider);
-  color: var(--clr-text-muted);
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--clr-text);
   text-transform: uppercase;
-}
-
-.social__footer-logo span {
-  color: var(--clr-accent);
 }
 
 .social__footer-legal {
@@ -264,18 +216,16 @@
     padding: 1.5rem;
   }
 
-  .social__grid {
-    grid-template-columns: 1fr 1fr;
+  .social__row {
+    gap: 4px 16px;
+  }
+
+  .social__row-handle {
+    font-size: 20px;
   }
 
   .social__footer {
     flex-direction: column;
     text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .social__grid {
-    grid-template-columns: 1fr;
   }
 }

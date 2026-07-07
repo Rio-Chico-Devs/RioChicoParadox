@@ -40,8 +40,8 @@
   <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
   <noscript><style>
     #loader { display: none !important; }
-    .hero__slash, .hero__shape, .hero__eyebrow, .hero__title-line,
-    .hero__desc, .hero__cta, .hero__stats, .hero__scroll, .hero__jp
+    .hero__eyebrow, .hero__title-line, .hero__desc, .hero__cta,
+    .hero__stats, .hero__right, .hero__jp
       { animation-play-state: running !important; }
     [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
   </style></noscript>
@@ -55,7 +55,7 @@
 <!-- ── LOADING SCREEN ──────────────────────────────────── -->
 <div class="loader" id="loader">
   <div class="loader__burst" aria-hidden="true"></div>
-  <div class="loader__logo"><span>RIO</span> CHICO STUDIO</div>
+  <div class="loader__logo">RIO CHICO <span>STUDIO</span></div>
   <div class="loader__jp" aria-hidden="true">ローディング</div>
   <div class="loader__bar"><div class="loader__bar-fill" id="loader-fill"></div></div>
   <div class="loader__count">NOW LOADING... <b><span id="loader-count">0</span>%</b></div>
@@ -71,9 +71,8 @@
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav__inner">
     <a class="nav__logo" href="index.html" aria-label="Rio Chico Studio — Home">
-      <span class="nav__logo-accent">RIO</span>&nbsp;CHICO
-      <span class="nav__logo-dot" aria-hidden="true"></span>
-      STUDIO
+      <span>RIO CHICO</span>
+      <span class="nav__logo-accent">STUDIO</span>
     </a>
 
     <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
@@ -82,13 +81,16 @@
       <span class="nav__toggle-bar"></span>
     </button>
 
-    <ul class="nav__links" id="nav-links" role="list">
-      <li><a class="nav__link is-active" href="index.html" data-nav="home"><span class="nav__link-num">01</span>Home</a></li>
-      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span>Gallery</a></li>
-      <li><a class="nav__link" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span>Characters</a></li>
-      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span>Profile</a></li>
-      <li><a class="nav__link" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span>Contact</a></li>
+    <div class="nav__right">
+      <ul class="nav__links" id="nav-links" role="list">
+      <li><a class="nav__link is-active" href="index.html" data-nav="home"><span class="nav__link-num">01</span><span class="nav__link-label">Home</span></a></li>
+      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span><span class="nav__link-label">Gallery</span></a></li>
+      <li><a class="nav__link" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span><span class="nav__link-label">Characters</span></a></li>
+      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span><span class="nav__link-label">Profile</span></a></li>
+      <li><a class="nav__link" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span><span class="nav__link-label">Contact</span></a></li>
     </ul>
+      <a class="nav__commissions" href="contact.html">Commissions Open</a>
+    </div>
   </div>
 </nav>
 
@@ -98,132 +100,78 @@
 ════════════════════════════════════════════════════════ -->
 <section class="hero" id="hero" aria-label="Welcome">
 
-  <div class="hero__bg" aria-hidden="true">
-    <div class="hero__bg-base"></div>
-    <div class="hero__bg-right"></div>
-    <div class="hero__bg-glow"></div>
-    <div class="hero__bg-grid"></div>
-    <div class="hero__scanline"></div>
-    <div class="hero__slash"></div>
-  </div>
+  <div class="hero__halftone-field" aria-hidden="true"></div>
 
-  <div class="hero__shapes" aria-hidden="true">
-    <div class="hero__shape hero__shape--1"></div>
-    <div class="hero__shape hero__shape--2"></div>
-    <div class="hero__shape hero__shape--3"></div>
-    <div class="hero__shape hero__shape--4"></div>
-  </div>
+  <div class="hero__row">
 
-  <!-- LEFT: TEXT ───────────────────────── -->
-  <div class="hero__left">
+    <!-- LEFT: TEXT ───────────────────────── -->
+    <div class="hero__left">
 
-    <p class="hero__eyebrow">
-      <span>Anime Artist &amp; Illustrator</span>
-    </p>
+      <p class="hero__eyebrow">
+        <span>Anime Artist &amp; Illustrator</span>
+      </p>
 
-    <h1 class="hero__title" aria-label="Rio Chico Studio">
-      <span class="hero__title-wrap"><span class="hero__title-line">RIO</span></span>
-      <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--red">CHICO</span></span>
-      <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--ghost">STUDIO</span></span>
-    </h1>
+      <h1 class="hero__title" aria-label="Rio Chico Studio">
+        <span class="hero__title-wrap"><span class="hero__title-line">RIO</span></span>
+        <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--red">CHICO</span></span>
+        <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--ghost">STUDIO</span></span>
+      </h1>
 
-    <p class="hero__desc">
-      Original illustrations, OC characters and anime-style
-      character design. Every drawing tells a story — mine.
-    </p>
+      <p class="hero__desc">
+        Original illustrations, OC characters and anime-style
+        character design. Every drawing tells a story — mine.
+      </p>
 
-    <div class="hero__cta">
-      <a class="btn btn--primary btn--lg" href="gallery.html">
-        View Gallery <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="btn btn--ghost btn--lg" href="contact.html">
-        Commissions
-      </a>
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="gallery.html">
+          View Gallery <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="contact.html">
+          Commissions
+        </a>
+      </div>
+
+      <div class="hero__stats">
+        <div>
+          <div class="hero__stat-num" data-count="100" data-suffix="+">100+</div>
+          <div class="hero__stat-label">Artworks</div>
+        </div>
+        <div>
+          <div class="hero__stat-num" data-count="3" data-suffix="">3</div>
+          <div class="hero__stat-label">OC Characters</div>
+        </div>
+        <div>
+          <div class="hero__stat-num" data-count="5" data-suffix="">5</div>
+          <div class="hero__stat-label">Years of Practice</div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="hero__stats">
-      <div>
-        <div class="hero__stat-num" data-count="100" data-suffix="+">100+</div>
-        <div class="hero__stat-label">Artworks</div>
-      </div>
-      <div>
-        <div class="hero__stat-num" data-count="3" data-suffix="">3</div>
-        <div class="hero__stat-label">OC Characters</div>
-      </div>
-      <div>
-        <div class="hero__stat-num" data-count="5" data-suffix="">5</div>
-        <div class="hero__stat-label">Years of Practice</div>
-      </div>
-    </div>
+    <!-- RIGHT: FEATURED ARTWORK — single frame, image rotates inside ── -->
+    <div class="hero__right">
 
-    <div class="hero__scroll" aria-hidden="true">
-      <span class="hero__scroll-text">scroll</span>
-      <span class="hero__scroll-line"></span>
-    </div>
+      <!-- Vertical katakana tag — editorial accent -->
+      <span class="hero__jp" aria-hidden="true">リオ・チコ・スタジオ</span>
 
-  </div>
-
-  <!-- RIGHT: ART WHEEL ─────────────────── -->
-  <div class="hero__right">
-
-    <!-- Vertical katakana tag — editorial accent -->
-    <span class="hero__jp" aria-hidden="true">リオ・チコ・スタジオ</span>
-
-    <!-- 2D ferris wheel: 4 cards at NSEW, active at west (left) -->
-    <div class="art-wheel" role="region" aria-label="Featured artworks">
-
-      <!-- Ambient glow — fixed at left/active position, does not rotate -->
-      <div class="art-wheel__glow" aria-hidden="true"></div>
-
-      <div class="art-wheel__stage" id="artWheelStage">
-
-        <!-- item-i:0 = east (right) -->
-        <div class="art-wheel__card halftone-card" style="--item-i:0">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-gallery-01.svg" alt="Artwork 01"
-               width="280" height="420" loading="lazy" decoding="async" />
-          <span class="art-wheel__num" aria-hidden="true">01</span>
+      <div class="hero__featured halftone-card" role="region" aria-label="Featured artwork">
+        <div class="hero__featured-header">
+          <span class="hero__featured-label">FEATURED · <span id="heroFeaturedNum">01</span></span>
+          <span class="hero__featured-year">2026</span>
         </div>
-
-        <!-- item-i:1 = north (top) -->
-        <div class="art-wheel__card halftone-card" style="--item-i:1">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-char-01.svg" alt="Character 01"
-               width="280" height="420"  loading="lazy" decoding="async" />
-          <span class="art-wheel__num" aria-hidden="true">02</span>
+        <div class="hero__featured-slot" id="heroFeaturedSlot">
+          <img class="hero__featured-img is-active" src="assets/img/ph-gallery-01.svg" alt="Artwork 01"
+               width="520" height="560" loading="eager" fetchpriority="high" decoding="sync" />
+          <img class="hero__featured-img" src="assets/img/ph-gallery-04.svg" alt="Artwork 02"
+               width="520" height="560" loading="lazy" decoding="async" />
+          <img class="hero__featured-img" src="assets/img/ph-char-01.svg" alt="Character 01"
+               width="520" height="560" loading="lazy" decoding="async" />
+          <img class="hero__featured-img" src="assets/img/ph-char-02.svg" alt="Character 02"
+               width="520" height="560" loading="lazy" decoding="async" />
         </div>
-
-        <!-- item-i:2 = west (left) — ACTIVE on load -->
-        <div class="art-wheel__card is-active halftone-card" style="--item-i:2">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-gallery-04.svg" alt="Artwork 03"
-               width="280" height="420" loading="eager" fetchpriority="high" decoding="sync" />
-          <span class="art-wheel__num" aria-hidden="true">03</span>
-        </div>
-
-        <!-- item-i:3 = south (bottom) -->
-        <div class="art-wheel__card halftone-card" style="--item-i:3">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-char-02.svg" alt="Character 02"
-               width="280" height="420"  loading="lazy" decoding="async" />
-          <span class="art-wheel__num" aria-hidden="true">04</span>
-        </div>
-
-      </div>
-
-      <!-- Diamond dot indicators -->
-      <div class="art-wheel__dots" aria-hidden="true">
-        <span class="art-wheel__dot"></span>
-        <span class="art-wheel__dot"></span>
-        <span class="art-wheel__dot is-active"></span>
-        <span class="art-wheel__dot"></span>
       </div>
     </div>
 
-    <!-- Floating stars -->
-    <span class="p-star" aria-hidden="true" style="--star-size:2.4rem; top:14%; left:8%; --sf-dur:3.6s;" data-r="star" data-rd="3"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.3rem; top:28%; right:9%; --sf-dur:2.8s; --sf-del:0.5s;" data-r="star" data-rd="4"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.8rem; bottom:20%; left:12%; --sf-dur:4s; --sf-del:0.9s;" data-r="star" data-rd="5"></span>
   </div>
 
 </section>
@@ -261,6 +209,42 @@
 
 
 <!-- ════════════════════════════════════════════════════════
+     SELECTED WORKS
+════════════════════════════════════════════════════════ -->
+<section class="selected" aria-labelledby="selected-title">
+  <div class="container">
+    <div class="selected__head">
+      <span class="section-label" data-r="up" id="selected-title">Selected Works</span>
+      <a class="selected__all" href="gallery.html" data-r="up">All Works <span class="btn__arrow" aria-hidden="true">→</span></a>
+    </div>
+    <div class="selected__grid">
+      <a class="selected__card" href="gallery.html" data-r="clip-up">
+        <img class="selected__card-img" src="assets/img/ph-gallery-01.svg" alt="Artwork 01" loading="lazy" decoding="async" />
+        <div class="selected__card-info">
+          <span class="selected__card-title">Artwork 01</span>
+          <span class="selected__card-cat">OC</span>
+        </div>
+      </a>
+      <a class="selected__card" href="gallery.html" data-r="clip-up" data-rd="1">
+        <img class="selected__card-img" src="assets/img/ph-gallery-02.svg" alt="Artwork 02" loading="lazy" decoding="async" />
+        <div class="selected__card-info">
+          <span class="selected__card-title">Artwork 02</span>
+          <span class="selected__card-cat">Char Design</span>
+        </div>
+      </a>
+      <a class="selected__card" href="gallery.html" data-r="clip-up" data-rd="2">
+        <img class="selected__card-img" src="assets/img/ph-gallery-03.svg" alt="Artwork 03" loading="lazy" decoding="async" />
+        <div class="selected__card-info">
+          <span class="selected__card-title">Artwork 03</span>
+          <span class="selected__card-cat">Fanart</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════════════════ -->
 <div class="container">
@@ -270,7 +254,7 @@
       <a href="legal/privacy-policy.html">Privacy Policy</a>
     </nav>
     <div class="social__footer-logo">
-      <span>RIO</span>&nbsp;CHICO&nbsp;<span>STUDIO</span>
+      RIO CHICO <span class="nav__logo-accent">STUDIO</span>
     </div>
   </footer>
 </div>

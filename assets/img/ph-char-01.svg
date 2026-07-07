@@ -10,12 +10,6 @@
   <rect width="420" height="600" fill="url(#g420600)"/>
   <rect width="420" height="600" fill="url(#d420600)"/>
 
-  <g opacity="0.85">
-    <rect x="0" y="0" width="420" height="34" fill="#e60012"/>
-    <text x="14" y="23" fill="#000" font-size="15" font-weight="bold" letter-spacing="3">OC · 01</text>
-    <text x="406" y="23" fill="#000" font-size="13" font-weight="bold" letter-spacing="1" text-anchor="end">SOSTITUISCI ►</text>
-  </g>
-
   
     <ellipse cx="210.0" cy="132.0" rx="45.0" ry="51.74999999999999" fill="#fff" opacity="0.92"/>
     <path d="M124.5,360.0
@@ -26,12 +20,6 @@
 
   <text x="210.0" y="444.0" fill="#fff" font-size="46" font-weight="bold" text-anchor="middle" letter-spacing="2">PROTAGONISTA</text>
   <text x="210.0" y="468.0" fill="#e60012" font-size="14" font-weight="bold" text-anchor="middle" letter-spacing="2" font-family="monospace">character 01</text>
-
-  <rect x="138.0" y="480.0" width="144" height="28" fill="#fff"/>
-  <text x="210.0" y="499.0" fill="#000" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="1" font-family="monospace">PNG · 420×600</text>
-
-  <rect x="115.0" y="522.0" width="190" height="26" fill="none" stroke="#e60012" stroke-width="2"/>
-  <text x="210.0" y="539.0" fill="#e60012" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="2" font-family="monospace">BOING ← SX</text>
 
   <rect x="3" y="3" width="414" height="594" fill="none" stroke="#e60012" stroke-width="4"/>
   <path d="M3,40 L3,3 L40,3" fill="none" stroke="#fff" stroke-width="5"/>

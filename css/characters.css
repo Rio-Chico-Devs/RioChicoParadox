@@ -352,3 +352,114 @@
     font-size: 40vw;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   MADE WITH LOVE — chiusura editoriale della pagina personaggi
+   ═══════════════════════════════════════════════════════════ */
+.made-with-love {
+  margin-top: 110px;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  align-items: center;
+}
+
+.made-with-love__text {
+  flex: 1 1 420px;
+  min-width: 300px;
+}
+
+.made-with-love__title {
+  margin-top: 16px;
+  font-family: var(--font-heading);
+  font-size: clamp(44px, 5.4vw, 76px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--clr-text);
+}
+.made-with-love__title span {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--clr-accent);
+}
+
+.made-with-love__desc {
+  margin-top: 26px;
+  max-width: 460px;
+  padding-left: 18px;
+  border-left: 3px solid var(--clr-accent);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--clr-text-muted);
+}
+
+.made-with-love__highlight {
+  margin-top: 24px;
+  max-width: 460px;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  letter-spacing: 1px;
+  line-height: 1.3;
+  color: var(--clr-text);
+}
+.made-with-love__highlight span {
+  color: var(--clr-accent);
+}
+
+/* Pannello knockout: immagine con "RIO" ritagliato sopra */
+.made-with-love__art {
+  position: relative;
+  flex: 1 1 400px;
+  min-width: 320px;
+  max-width: 520px;
+  border: 1px solid var(--clr-border-accent);
+  background: var(--clr-surface);
+  overflow: hidden;
+}
+
+.made-with-love__img {
+  display: block;
+  width: 100%;
+  height: 640px;
+  object-fit: cover;
+}
+
+.made-with-love__knockout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--font-heading);
+  font-size: 530px;
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: 6px;
+  color: var(--clr-bg);
+  transform: rotate(90deg) scaleY(1.4);
+}
+
+.made-with-love__caption {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--clr-text);
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .made-with-love__img,
+  .made-with-love__knockout {
+    height: 420px;
+  }
+  .made-with-love__knockout {
+    font-size: 320px;
+  }
+}
