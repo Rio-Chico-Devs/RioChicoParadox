@@ -3,867 +3,213 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Rio Chico Studio — Anime artist, original illustrations and character design." />
-  <title>RIO CHICO STUDIO</title>
-
-  <!-- Canonical: uncomment and insert the real domain to prevent
-       *.pages.dev previews or lookalike domains from being indexed -->
-  <!-- <link rel="canonical" href="https://yourdomain.com/" /> -->
-
-  <!-- Open Graph / Social sharing -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="Rio Chico Studio — Anime Artist &amp; Illustrator" />
-  <meta property="og:description" content="Original illustrations, OC characters and anime-style character design. Every drawing tells a story." />
-  <meta property="og:image"       content="assets/img/og-cover.png" />
-  <meta property="og:locale"      content="en_US" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:site"        content="@riochicostudio" />
-  <meta name="twitter:title"       content="Rio Chico Studio — Anime Artist" />
-  <meta name="twitter:description" content="Original illustrations, OC characters and anime-style character design." />
-  <meta name="twitter:image"       content="assets/img/og-cover.png" />
-
+  <meta name="description" content="Rio Chico Studio &mdash; Anime artist, original illustrations and character design." />
+  <title>Rio Chico Studio &mdash; Anime Artist &amp; Illustrator</title>
   <link rel="stylesheet" href="css/fonts.css" />
-  <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/buttons.css" />
-  <link rel="stylesheet" href="css/nav.css" />
-  <link rel="stylesheet" href="css/hero.css" />
-  <link rel="stylesheet" href="css/gallery.css" />
-  <link rel="stylesheet" href="css/characters.css" />
-  <link rel="stylesheet" href="css/persona.css" />
-  <link rel="stylesheet" href="css/profile.css" />
-  <link rel="stylesheet" href="css/social.css" />
-  <link rel="stylesheet" href="css/editorial.css" />
-
-  <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
-  <noscript><style>
-    #loader { display: none !important; }
-    .hero__slash, .hero__shape, .hero__eyebrow, .hero__title-line,
-    .hero__desc, .hero__cta, .hero__stats, .hero__char-wrap, .hero__scroll
-      { animation-play-state: running !important; }
-    [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
-  </style></noscript>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
-
 <body>
 
-<!-- ── SCROLL PROGRESS ─────────────────────────────────── -->
-<div class="scroll-progress" aria-hidden="true"></div>
-
-<!-- ── LOADING SCREEN ──────────────────────────────────── -->
-<div class="loader" id="loader">
-  <div class="loader__burst" aria-hidden="true"></div>
-  <div class="loader__logo"><span>RIO</span> CHICO STUDIO</div>
-  <div class="loader__jp" aria-hidden="true">ローディング</div>
-  <div class="loader__bar"><div class="loader__bar-fill" id="loader-fill"></div></div>
-  <div class="loader__count">NOW LOADING... <b><span id="loader-count">0</span>%</b></div>
-</div>
-
-<!-- ── NOISE OVERLAY ───────────────────────────────────── -->
-<div class="noise-overlay" aria-hidden="true"></div>
-
-
-<!-- ════════════════════════════════════════════════════════
-     NAV
-════════════════════════════════════════════════════════ -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
+<header class="nav">
   <div class="nav__inner">
-    <a class="nav__logo" href="#hero" aria-label="Rio Chico Studio — Home">
-      <span class="nav__logo-accent">RIO</span>&nbsp;CHICO
-      <span class="nav__logo-dot" aria-hidden="true"></span>
-      STUDIO
-    </a>
-
-    <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+    <a href="index.html" class="nav__logo">RIO CHICO<span class="nav__logo-accent">STUDIO</span></a>
+    <button class="nav__toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span class="nav__toggle-bar"></span>
       <span class="nav__toggle-bar"></span>
       <span class="nav__toggle-bar"></span>
     </button>
-
-    <ul class="nav__links" id="nav-links" role="list">
-      <li><a class="nav__link is-active" href="#hero"><span class="nav__link-num">01</span>Home</a></li>
-      <li><a class="nav__link" href="#gallery"><span class="nav__link-num">02</span>Gallery</a></li>
-      <li><a class="nav__link" href="#characters"><span class="nav__link-num">03</span>Characters</a></li>
-      <li><a class="nav__link" href="#profile"><span class="nav__link-num">04</span>Profile</a></li>
-      <li><a class="nav__link" href="#social"><span class="nav__link-num">05</span>Contact</a></li>
-    </ul>
+    <div class="nav__right">
+      <ul class="nav__links">
+        <li><a href="index.html" class="nav__link is-active"><span class="nav__link-num">01</span><span class="nav__link-label">HOME</span></a></li>
+        <li><a href="gallery.html" class="nav__link"><span class="nav__link-num">02</span><span class="nav__link-label">GALLERY</span></a></li>
+        <li><a href="characters.html" class="nav__link"><span class="nav__link-num">03</span><span class="nav__link-label">CHARACTERS</span></a></li>
+        <li><a href="profile.html" class="nav__link"><span class="nav__link-num">04</span><span class="nav__link-label">PROFILE</span></a></li>
+        <li><a href="contact.html" class="nav__link"><span class="nav__link-num">05</span><span class="nav__link-label">CONTACT</span></a></li>
+      </ul>
+      <!-- COMMISSIONS: remove this block when closed -->
+      <a href="contact.html" class="nav__commissions">COMMISSIONS OPEN</a>
+      <!-- /COMMISSIONS -->
+    </div>
   </div>
-</nav>
+</header>
 
+<main>
 
-<!-- ════════════════════════════════════════════════════════
-     HERO
-════════════════════════════════════════════════════════ -->
-<section class="hero" id="hero" aria-label="Welcome">
+  <!-- ── Hero ──────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__halftone" aria-hidden="true"></div>
 
-  <div class="hero__bg" aria-hidden="true">
-    <div class="hero__bg-base"></div>
-    <div class="hero__bg-right"></div>
-    <div class="hero__bg-glow"></div>
-    <div class="hero__bg-grid"></div>
-    <div class="hero__scanline"></div>
-    <div class="hero__slash"></div>
+    <div class="hero__left">
+      <div class="hero__eyebrow-clip">
+        <div class="hero__eyebrow-inner">
+          <span class="hero__eyebrow-bar" aria-hidden="true"></span>
+          <span class="hero__eyebrow-text">ANIME ARTIST &amp; ILLUSTRATOR</span>
+        </div>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="hero__title-clip"><span class="hero__title-line">RIO</span></span>
+        <span class="hero__title-clip"><span class="hero__title-line hero__title-line--red">CHICO</span></span>
+        <span class="hero__title-clip"><span class="hero__title-line hero__title-line--stroke">STUDIO</span></span>
+      </h1>
+
+      <p class="hero__desc">Original illustrations, OC characters and anime-style character design. Every drawing tells a story &mdash; mine.</p>
+
+      <div class="hero__cta">
+        <a href="gallery.html" class="btn-primary">VIEW GALLERY &rarr;</a>
+        <a href="contact.html" class="btn-ghost">COMMISSIONS</a>
+      </div>
+
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <div class="hero__stat-num">100+</div>
+          <div class="hero__stat-label">ARTWORKS</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-num">3</div>
+          <div class="hero__stat-label">OC CHARACTERS</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-num">5</div>
+          <div class="hero__stat-label">YEARS OF PRACTICE</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__right">
+      <div class="hf">
+        <div class="hf__dots" aria-hidden="true"></div>
+        <div class="hf__frame">
+          <div class="hf__header">
+            <span class="hf__label">FEATURED &middot; 01</span>
+            <span class="hf__label--year">2026</span>
+          </div>
+          <img src="images/gallery-01.webp" alt="Featured artwork — original illustration" class="hero__featured-img" />
+        </div>
+      </div>
+      <span class="hero__katakana" aria-hidden="true">リオ・チコ・スタジオ</span>
+    </div>
+  </section>
+
+  <!-- ── Ticker 1: paper ───────────────────────────────────────── -->
+  <div class="ticker ticker--paper" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
+      <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
+    </div>
   </div>
 
-  <div class="hero__shapes" aria-hidden="true">
-    <div class="hero__shape hero__shape--1"></div>
-    <div class="hero__shape hero__shape--2"></div>
-    <div class="hero__shape hero__shape--3"></div>
-    <div class="hero__shape hero__shape--4"></div>
-  </div>
-
-  <!-- LEFT: TEXT ───────────────────────── -->
-  <div class="hero__left">
-
-    <p class="hero__eyebrow">
-      <span>Anime Artist &amp; Illustrator</span>
-    </p>
-
-    <h1 class="hero__title" aria-label="Rio Chico Studio">
-      <span class="hero__title-wrap"><span class="hero__title-line">RIO</span></span>
-      <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--red">CHICO</span></span>
-      <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--ghost">STUDIO</span></span>
-    </h1>
-
-    <p class="hero__desc">
-      Original illustrations, OC characters and anime-style
-      character design. Every drawing tells a story — mine.
-    </p>
-
-    <div class="hero__cta">
-      <a class="btn btn--primary btn--lg" href="#gallery">
-        View Gallery <span class="btn__arrow" aria-hidden="true">→</span>
+  <!-- ── Selected works ───────────────────────────────────────── -->
+  <section class="selected">
+    <div class="selected__head">
+      <div class="eyebrow">
+        <span class="eyebrow__bar" aria-hidden="true"></span>
+        <span class="eyebrow__label">SELECTED WORKS</span>
+      </div>
+      <a href="gallery.html" class="selected__all">ALL WORKS &rarr;</a>
+    </div>
+    <div class="selected__grid">
+      <a href="gallery.html" class="selected__card">
+        <img src="images/gallery-01.webp" alt="Artwork 01 &mdash; original character illustration" class="selected__card-img" />
+        <div class="selected__card-info">
+          <span class="selected__card-title">ARTWORK 01</span>
+          <span class="selected__card-cat">OC</span>
+        </div>
       </a>
-      <a class="btn btn--ghost btn--lg" href="#social">
-        Commissions
+      <a href="gallery.html" class="selected__card">
+        <img src="images/gallery-02.webp" alt="Artwork 02 &mdash; character design" class="selected__card-img" />
+        <div class="selected__card-info">
+          <span class="selected__card-title">ARTWORK 02</span>
+          <span class="selected__card-cat">CHAR DESIGN</span>
+        </div>
       </a>
-    </div>
-
-    <div class="hero__stats">
-      <div>
-        <div class="hero__stat-num" data-count="100" data-suffix="+">100+</div>
-        <div class="hero__stat-label">Artworks</div>
-      </div>
-      <div>
-        <div class="hero__stat-num" data-count="3" data-suffix="">3</div>
-        <div class="hero__stat-label">OC Characters</div>
-      </div>
-      <div>
-        <div class="hero__stat-num" data-count="5" data-suffix="">5</div>
-        <div class="hero__stat-label">Years of Practice</div>
-      </div>
-    </div>
-
-    <div class="hero__scroll" aria-hidden="true">
-      <span class="hero__scroll-text">scroll</span>
-      <span class="hero__scroll-line"></span>
-    </div>
-
-  </div>
-
-  <!-- RIGHT: ART WHEEL ─────────────────── -->
-  <div class="hero__right">
-
-    <!-- Vertical katakana tag — editorial accent -->
-    <span class="hero__jp" aria-hidden="true">リオ・チコ・スタジオ</span>
-
-    <!-- 2D ferris wheel: 4 cards at NSEW, active at west (left) -->
-    <div class="art-wheel" role="region" aria-label="Featured artworks">
-
-      <!-- Ambient glow — fixed at left/active position, does not rotate -->
-      <div class="art-wheel__glow" aria-hidden="true"></div>
-
-      <div class="art-wheel__stage" id="artWheelStage">
-
-        <!-- item-i:0 = east (right) -->
-        <div class="art-wheel__card" style="--item-i:0">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-gallery-01.svg" alt="Artwork 01"
-               width="280" height="420" loading="lazy" decoding="async" />
-          <span class="art-wheel__num" aria-hidden="true">01</span>
+      <a href="gallery.html" class="selected__card">
+        <img src="images/gallery-05.webp" alt="Artwork 05 &mdash; figure studies" class="selected__card-img" />
+        <div class="selected__card-info">
+          <span class="selected__card-title">ARTWORK 05</span>
+          <span class="selected__card-cat">SKETCH</span>
         </div>
-
-        <!-- item-i:1 = north (top) -->
-        <div class="art-wheel__card" style="--item-i:1">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-char-01.svg" alt="Character 01"
-               width="280" height="420"  loading="lazy" decoding="async" />
-          <span class="art-wheel__num" aria-hidden="true">02</span>
-        </div>
-
-        <!-- item-i:2 = west (left) — ACTIVE on load -->
-        <div class="art-wheel__card is-active" style="--item-i:2">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-gallery-04.svg" alt="Artwork 03"
-               width="280" height="420" loading="eager" fetchpriority="high" decoding="sync" />
-          <span class="art-wheel__num" aria-hidden="true">03</span>
-        </div>
-
-        <!-- item-i:3 = south (bottom) -->
-        <div class="art-wheel__card" style="--item-i:3">
-          <span class="ph-flag">placeholder</span>
-          <img src="assets/img/ph-char-02.svg" alt="Character 02"
-               width="280" height="420"  loading="lazy" decoding="async" />
-          <span class="art-wheel__num" aria-hidden="true">04</span>
-        </div>
-
-      </div>
-
-      <!-- Diamond dot indicators -->
-      <div class="art-wheel__dots" aria-hidden="true">
-        <span class="art-wheel__dot"></span>
-        <span class="art-wheel__dot"></span>
-        <span class="art-wheel__dot is-active"></span>
-        <span class="art-wheel__dot"></span>
-      </div>
-    </div>
-
-    <!-- Floating stars -->
-    <span class="p-star" aria-hidden="true" style="--star-size:2.4rem; top:14%; left:8%; --sf-dur:3.6s;" data-r="star" data-rd="3"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.3rem; top:28%; right:9%; --sf-dur:2.8s; --sf-del:0.5s;" data-r="star" data-rd="4"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.8rem; bottom:20%; left:12%; --sf-dur:4s; --sf-del:0.9s;" data-r="star" data-rd="5"></span>
-  </div>
-
-</section>
-
-
-<!-- ── MARQUEE 01 ─────────────────────────────────────── -->
-<div class="marquee-strip marquee-strip--accent" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-  </div>
-</div>
-
-
-<!-- ════════════════════════════════════════════════════════
-     GALLERY
-════════════════════════════════════════════════════════ -->
-<section class="section gallery" id="gallery" aria-labelledby="gallery-title">
-  <div class="container">
-
-    <header class="section-header">
-      <span class="section-label" data-r="up">02 / Artwork</span>
-      <h2 class="section-title" data-r="wipe" id="gallery-title">
-        GALLE<span>RY</span>
-      </h2>
-      <p class="section-subtitle" data-r="up" data-rd="2">
-        Original illustrations, fanart and character design.
-      </p>
-      <span class="accent-bar" data-r="wipe" data-rd="3"></span>
-    </header>
-
-    <!-- editorial ghost text -->
-    <div class="gallery__editorial" aria-hidden="true">
-      <div class="gallery__editorial-ghost">GALLERY</div>
-      <div class="gallery__editorial-meta">
-        <div class="gallery__editorial-count">08</div>
-        <div class="gallery__editorial-label">Works on display · 2024</div>
-      </div>
-    </div>
-
-    <!-- Manga panel strips — featured works, MAZEBON/Death Note style -->
-    <div class="gallery__strips" aria-label="Featured works">
-
-      <a class="gallery__strip" href="#gallery" data-r="up">
-        <img class="gallery__strip-img" src="assets/img/ph-gallery-01.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-        <div class="gallery__strip-info">
-          <span class="gallery__strip-title">Original Character</span>
-          <span class="gallery__strip-cat">OC · Character Design · 2024</span>
-        </div>
-        <span class="gallery__strip-num" aria-hidden="true">01</span>
-        <span class="gallery__strip-cta" aria-hidden="true">↗</span>
-      </a>
-
-      <a class="gallery__strip" href="#gallery" data-r="up" data-rd="1">
-        <img class="gallery__strip-img" src="assets/img/ph-gallery-03.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-        <div class="gallery__strip-info">
-          <span class="gallery__strip-title">Character Study</span>
-          <span class="gallery__strip-cat">Fanart · Illustration · 2024</span>
-        </div>
-        <span class="gallery__strip-num" aria-hidden="true">02</span>
-        <span class="gallery__strip-cta" aria-hidden="true">↗</span>
-      </a>
-
-      <a class="gallery__strip" href="#gallery" data-r="up" data-rd="2">
-        <img class="gallery__strip-img" src="assets/img/ph-gallery-07.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-        <div class="gallery__strip-info">
-          <span class="gallery__strip-title">Illustrated Series</span>
-          <span class="gallery__strip-cat">Artwork · Sketch · 2024</span>
-        </div>
-        <span class="gallery__strip-num" aria-hidden="true">03</span>
-        <span class="gallery__strip-cta" aria-hidden="true">↗</span>
-      </a>
-
-    </div>
-
-    <div class="gallery__filters" data-r="up" data-rd="3" role="group" aria-label="Filter by category">
-      <button class="gallery__filter-btn is-active" data-filter="all">All</button>
-      <button class="gallery__filter-btn" data-filter="oc">OC</button>
-      <button class="gallery__filter-btn" data-filter="fanart">Fanart</button>
-      <button class="gallery__filter-btn" data-filter="character">Character Design</button>
-      <button class="gallery__filter-btn" data-filter="sketch">Sketch</button>
-    </div>
-
-    <div class="gallery__grid">
-
-      <article class="gallery__card" data-category="oc" data-r="clip-up">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-01.svg" alt="Artwork 01 — OC protagonist"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">01</span>
-        <span class="gallery__card-badge">Featured</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">OC</span>
-          <h3 class="gallery__card-title">First Look</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-      <article class="gallery__card" data-category="character" data-r="clip-up" data-rd="1">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-02.svg" alt="Artwork 02 — Character Design"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">02</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">Character Design</span>
-          <h3 class="gallery__card-title">Sheet 02</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-      <article class="gallery__card" data-category="fanart" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-03.svg" alt="Artwork 03 — Fanart"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">03</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">Fanart</span>
-          <h3 class="gallery__card-title">Tribute</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-      <article class="gallery__card" data-category="oc" data-r="clip-up" data-rd="1">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-04.svg" alt="Artwork 04 — OC"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">04</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">OC</span>
-          <h3 class="gallery__card-title">Silhouette</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-      <article class="gallery__card" data-category="sketch" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-05.svg" alt="Artwork 05 — Sketch"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">05</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">Sketch</span>
-          <h3 class="gallery__card-title">Line Study</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-      <article class="gallery__card" data-category="character" data-r="clip-up" data-rd="3">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-06.svg" alt="Artwork 06 — Character Design"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">06</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">Character Design</span>
-          <h3 class="gallery__card-title">Expressions</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-      <article class="gallery__card" data-category="fanart" data-r="clip-up" data-rd="2">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-07.svg" alt="Artwork 07 — Fanart"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">07</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">Fanart</span>
-          <h3 class="gallery__card-title">Homage</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-      <article class="gallery__card" data-category="oc" data-r="clip-up" data-rd="3">
-        <img class="gallery__card-img" src="assets/img/ph-gallery-08.svg" alt="Artwork 08 — OC"  loading="lazy" decoding="async" />
-        <span class="gallery__card-num">08</span>
-        <div class="gallery__card-overlay">
-          <span class="gallery__card-category">OC</span>
-          <h3 class="gallery__card-title">Final Light</h3>
-        </div>
-        <span class="gallery__card-arrow" aria-hidden="true">↗</span>
-      </article>
-
-    </div>
-
-    <div class="gallery__more" data-r="up" data-rd="2">
-      <a class="btn btn--ghost btn--lg" href="#social">
-        View all on Instagram <span class="btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
+  </section>
 
-  </div>
-</section>
-
-
-<!-- ── MARQUEE 02 ─────────────────────────────────────── -->
-<div class="marquee-strip marquee-strip--surface marquee-strip--reverse" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Characters</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Protagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Strategist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Antagonist</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Lore</span><span class="marquee-sep">✦</span>
-  </div>
-</div>
-
-
-<!-- ════════════════════════════════════════════════════════
-     CHARACTERS
-════════════════════════════════════════════════════════ -->
-<section class="characters" id="characters" aria-labelledby="chars-title">
-
-  <!-- Section intro -->
-  <div style="padding: 5rem 0 3rem; text-align:center; position:relative; overflow:hidden;">
-    <div style="max-width:var(--max-width); margin:0 auto; padding:0 var(--section-pad-x); position:relative; z-index:1;">
-      <span class="section-label" data-r="up" style="justify-content:center;">03 / Characters</span>
-      <h2 class="section-title" data-r="boing" id="chars-title" style="text-align:center;">
-        CHAR<span>ACTERS</span>
-      </h2>
-    </div>
-    <!-- big bg stars -->
-    <span class="p-star" aria-hidden="true" style="--star-size:3rem; top:20%; left:8%; --sf-dur:4s;" data-r="star" data-rd="2"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:1.5rem; top:30%; right:10%; --sf-dur:3.2s; --sf-del:0.5s;" data-r="star" data-rd="3"></span>
-    <span class="p-star" aria-hidden="true" style="--star-size:2rem; bottom:10%; left:20%; --sf-dur:3.8s; --sf-del:1s;" data-r="star" data-rd="4"></span>
-  </div>
-
-  <!-- ── PERSONAGGIO 01 ──────────────────────────────────── -->
-  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #200000 0%, #090909 70%); --char-glow: rgba(204,0,0,0.4); --char-accent: #dd2211;">
-
-    <div class="char-block__bg" aria-hidden="true">
-      <div class="char-block__bg-grad"></div>
-      <div class="char-block__lines"></div>
-      <span class="char-block__bg-star">☆</span>
-
-      <!-- Splash SVG — fill esplicito rosso (colore del protagonista) -->
-      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <polygon points="0,0 500,0 380,900 0,900" fill="#cc1100" opacity="0.18"/>
-        <polygon points="600,0 900,0 760,900 460,900" fill="#cc1100" opacity="0.08"/>
-        <polygon points="1100,200 1440,0 1440,400 1200,450" fill="#cc1100" opacity="0.12"/>
-      </svg>
-    </div>
-
-    <!-- Stars -->
-    <div class="char-block__stars" aria-hidden="true">
-      <span class="p-star" style="--star-size:2.5rem; top:12%; right:30%; --sf-dur:3.5s;" data-r="star" data-rd="3"></span>
-      <span class="p-star" style="--star-size:1rem; top:65%; right:52%; --sf-dur:2.8s; --sf-del:0.8s;" data-r="star" data-rd="5"></span>
-      <span class="p-star" style="--star-size:3.5rem; bottom:15%; left:5%; --sf-dur:4.2s; --sf-del:0.3s;" data-r="star" data-rd="4"></span>
-      <span class="p-star" style="--star-size:1.2rem; top:30%; left:45%; --sf-dur:3s;" data-r="star" data-rd="6"></span>
-    </div>
-
-    <!-- Character art -->
-    <div class="char-block__art">
-      <span class="char-block__number" aria-hidden="true">01</span>
-      <img class="char-block__img" src="assets/img/ph-char-01.svg"
-           alt="OC Character 01 — Protagonist"
-           width="420" height="600"
-           loading="lazy" decoding="async"
-           data-r="boing-l" data-rd="1" />
-      <!-- Float card personaggio -->
-      <div class="char-float-card" data-r="boing" data-rd="3">
-        <div class="char-float-card__header">FILE · 001 · PROTAGONIST</div>
-        <div class="char-float-card__body">
-          <div class="char-float-card__row"><span>ROLE</span><span>Protagonist</span></div>
-          <div class="char-float-card__row"><span>TYPE</span><span>Fighter</span></div>
-          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
-          <div class="char-float-card__row"><span>STATUS</span><span>Active ●</span></div>
-        </div>
-        <div class="char-float-card__scan"></div>
-      </div>
-    </div>
-
-    <!-- Info -->
-    <div class="char-block__info" data-r="boing-r" data-rd="2">
-      <span class="char-block__code">01 · Protagonist</span>
-      <div>
-        <span class="char-block__name-jp">プロタゴニスト</span>
-        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
-      </div>
-      <p class="char-block__bio">
-        Character description — their backstory, personality, motivations.
-        What makes them unique in your creative universe.
-        Every word reveals who they truly are.
-      </p>
-      <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:85%"></div></div><span class="char-stat__val">85</span></div>
-        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:72%"></div></div><span class="char-stat__val">72</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:60%"></div></div><span class="char-stat__val">60</span></div>
-        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:90%"></div></div><span class="char-stat__val">90</span></div>
-      </div>
-      <div class="char-block__tags">
-        <span class="char-block__tag">Brave</span>
-        <span class="char-block__tag">Fighter</span>
-        <span class="char-block__tag">Loyal</span>
-        <span class="char-block__tag">Lone Wolf</span>
-      </div>
+  <!-- ── Ticker 2: vermilion ───────────────────────────────────── -->
+  <div class="ticker ticker--vermilion" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
+      <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
     </div>
   </div>
 
-  <!-- Separatore -->
-  <div class="char-divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
-    </svg>
+  <!-- ── My Style ─────────────────────────────────────────────── -->
+  <section class="style-section">
+    <div class="eyebrow">
+      <span class="eyebrow__bar" aria-hidden="true"></span>
+      <span class="eyebrow__label">MY STYLE / 私のスタイル</span>
+    </div>
+    <h2 class="style-section__title">MY <span class="style-section__title-stroke">STYLE</span></h2>
+
+    <!-- Row 1: frame left, text right -->
+    <div class="style-row">
+      <div class="style-frame sr-bg">
+        <div class="style-frame__dots" aria-hidden="true"></div>
+        <div class="style-frame__inner">
+          <div class="style-frame__header">
+            <span class="style-frame__header-label">SCENE &middot; 01</span>
+          </div>
+          <div class="style-frame__stage">
+            <div class="style-frame__bg">
+              <img src="images/gallery-01.webp" alt="" />
+            </div>
+            <div class="style-frame__char sr-char">
+              <img src="images/gallery-02.webp" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="style-text sr-txt">
+        <p class="style-text__kana">手描きの線</p>
+        <h3 class="style-text__title">EVERY LINE<br /><span class="style-text__title-red">BY HAND</span></h3>
+        <p class="style-text__body">Characters and worlds are born on paper &mdash; pencil, ink, imperfections included &mdash; before any screen gets involved. It&rsquo;s how I&rsquo;ve drawn since 1999: the line comes first, technology comes after.</p>
+      </div>
+    </div>
+
+    <!-- Row 2: text left, frame right (reversed) -->
+    <div class="style-row style-row--rev">
+      <div class="style-frame style-frame--rev sr-bg">
+        <div class="style-frame__dots" aria-hidden="true"></div>
+        <div class="style-frame__inner">
+          <div class="style-frame__header">
+            <span class="style-frame__header-label">SCENE &middot; 02</span>
+          </div>
+          <div class="style-frame__stage">
+            <div class="style-frame__bg">
+              <img src="images/gallery-05.webp" alt="" />
+            </div>
+            <div class="style-frame__char sr-char">
+              <img src="images/gallery-01.webp" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="style-text sr-txt">
+        <p class="style-text__kana">千のスタイル</p>
+        <h3 class="style-text__title">A THOUSAND STYLES,<br /><span class="style-text__title-stroke">ONE HAND</span></h3>
+        <p class="style-text__body">From soft painterly scenes to sharp cel-shaded action: I move between styles, but background and character always belong to the same world &mdash; drawn to live together, like in traditional animation.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__copy">&copy; 2026 Rio Chico Studio &mdash; All rights reserved</p>
+    <a href="legal/privacy-policy.html" class="site-footer__privacy">PRIVACY POLICY</a>
+    <a href="index.html" class="site-footer__logo">RIO CHICO <span class="site-footer__logo-accent">STUDIO</span></a>
   </div>
+</footer>
 
-  <!-- ── PERSONAGGIO 02 ──────────────────────────────────── -->
-  <div class="char-block char-block--even" style="--char-grad: linear-gradient(135deg, #001525 0%, #06090d 70%); --char-glow: rgba(0,100,200,0.35); --char-accent: #0077cc;">
-
-    <div class="char-block__bg" aria-hidden="true">
-      <div class="char-block__bg-grad"></div>
-      <div class="char-block__lines"></div>
-      <span class="char-block__bg-star">☆</span>
-
-      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <polygon points="940,0 1440,0 1440,900 1060,900" opacity="0.12" fill="#0077cc"/>
-        <polygon points="540,0 840,0 680,900 380,900" opacity="0.05" fill="#0077cc"/>
-        <polygon points="0,500 300,300 200,900 0,900" opacity="0.08" fill="#0077cc"/>
-      </svg>
-    </div>
-
-    <div class="char-block__stars" aria-hidden="true">
-      <span class="p-star" style="--star-size:2rem; top:15%; left:32%; --sf-dur:3.8s; --sf-del:0.2s;" data-r="star" data-rd="3" ></span>
-      <span class="p-star" style="--star-size:3rem; bottom:20%; right:6%; --sf-dur:4s; --sf-del:0.6s;" data-r="star" data-rd="4"></span>
-      <span class="p-star" style="--star-size:1rem; top:55%; left:8%; --sf-dur:2.6s; --sf-del:1s;" data-r="star" data-rd="6"></span>
-    </div>
-
-    <div class="char-block__art">
-      <span class="char-block__number" aria-hidden="true">02</span>
-      <img class="char-block__img" src="assets/img/ph-char-02.svg"
-           alt="OC Character 02 — Strategist"
-           width="420" height="600"
-           loading="lazy" decoding="async"
-           data-r="boing-r" data-rd="1" />
-      <div class="char-float-card" data-r="boing" data-rd="3">
-        <div class="char-float-card__header">FILE · 002 · STRATEGIST</div>
-        <div class="char-float-card__body">
-          <div class="char-float-card__row"><span>ROLE</span><span>Strategist</span></div>
-          <div class="char-float-card__row"><span>TYPE</span><span>Support</span></div>
-          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
-          <div class="char-float-card__row"><span>STATUS</span><span>Active ●</span></div>
-        </div>
-        <div class="char-float-card__scan"></div>
-      </div>
-    </div>
-
-    <div class="char-block__info" data-r="boing-l" data-rd="2">
-      <span class="char-block__code">02 · Strategist</span>
-      <div>
-        <span class="char-block__name-jp">ストラテジスト</span>
-        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
-      </div>
-      <p class="char-block__bio">
-        The second character's description. Their backstory,
-        their relationship with the other characters and their role
-        in the narrative of your creative universe.
-      </p>
-      <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:45%"></div></div><span class="char-stat__val">45</span></div>
-        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:68%"></div></div><span class="char-stat__val">68</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:95%"></div></div><span class="char-stat__val">95</span></div>
-        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:55%"></div></div><span class="char-stat__val">55</span></div>
-      </div>
-      <div class="char-block__tags">
-        <span class="char-block__tag">Mysterious</span>
-        <span class="char-block__tag">Strategic</span>
-        <span class="char-block__tag">Cold</span>
-        <span class="char-block__tag">Brilliant</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Separatore -->
-  <div class="char-divider" aria-hidden="true" style="transform:scaleX(-1);">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <polygon points="0,0 1440,0 1440,80 0,20" fill="#0c0c0c"/>
-    </svg>
-  </div>
-
-  <!-- ── PERSONAGGIO 03 ──────────────────────────────────── -->
-  <div class="char-block char-block--odd" style="--char-grad: linear-gradient(135deg, #14001e 0%, #070609 70%); --char-glow: rgba(130,60,180,0.4); --char-accent: #9933cc;">
-
-    <div class="char-block__bg" aria-hidden="true">
-      <div class="char-block__bg-grad"></div>
-      <div class="char-block__lines"></div>
-      <span class="char-block__bg-star">☆</span>
-
-      <svg class="char-block__splash" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <polygon points="0,0 440,0 320,900 0,900" opacity="0.12" fill="#8e44ad"/>
-        <polygon points="1000,0 1440,0 1440,600 1100,900 900,900 1020,200" opacity="0.08" fill="#8e44ad"/>
-        <polygon points="500,0 800,0 680,500 380,400" opacity="0.05" fill="#8e44ad"/>
-      </svg>
-    </div>
-
-    <div class="char-block__stars" aria-hidden="true">
-      <span class="p-star" style="--star-size:4rem; top:10%; right:28%; --sf-dur:5s; --sf-del:0.4s;" data-r="star" data-rd="2"></span>
-      <span class="p-star" style="--star-size:1.5rem; bottom:25%; right:48%; --sf-dur:3s; --sf-del:0.9s;" data-r="star" data-rd="5"></span>
-      <span class="p-star" style="--star-size:2rem; top:50%; left:3%; --sf-dur:3.6s;" data-r="star" data-rd="4"></span>
-    </div>
-
-    <div class="char-block__art">
-      <span class="char-block__number" aria-hidden="true">03</span>
-      <img class="char-block__img" src="assets/img/ph-char-03.svg"
-           alt="OC Character 03 — Antagonist"
-           width="420" height="600"
-           loading="lazy" decoding="async"
-           data-r="boing-l" data-rd="1" />
-      <div class="char-float-card" data-r="boing" data-rd="3">
-        <div class="char-float-card__header">FILE · 003 · ANTAGONIST</div>
-        <div class="char-float-card__body">
-          <div class="char-float-card__row"><span>ROLE</span><span>Antagonist</span></div>
-          <div class="char-float-card__row"><span>TYPE</span><span>Dark</span></div>
-          <div class="char-float-card__row"><span>TEAM</span><span>????</span></div>
-          <div class="char-float-card__row"><span>STATUS</span><span>Unknown ●</span></div>
-        </div>
-        <div class="char-float-card__scan"></div>
-      </div>
-    </div>
-
-    <div class="char-block__info" data-r="boing-r" data-rd="2">
-      <span class="char-block__code">03 · Antagonist</span>
-      <div>
-        <span class="char-block__name-jp">アンタゴニスト</span>
-        <h3 class="char-block__name">CHAR<span>ACTER</span></h3>
-      </div>
-      <p class="char-block__bio">
-        The third character. Antagonist, ambiguous ally or
-        supporting role — tell who they are and why they
-        exist in your creative universe.
-      </p>
-      <div class="char-block__stats">
-        <div class="char-stat"><span class="char-stat__label">Strength</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:78%"></div></div><span class="char-stat__val">78</span></div>
-        <div class="char-stat"><span class="char-stat__label">Speed</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:82%"></div></div><span class="char-stat__val">82</span></div>
-        <div class="char-stat"><span class="char-stat__label">Magic</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:88%"></div></div><span class="char-stat__val">88</span></div>
-        <div class="char-stat"><span class="char-stat__label">Endurance</span><div class="char-stat__track"><div class="char-stat__fill" style="--bar-w:70%"></div></div><span class="char-stat__val">70</span></div>
-      </div>
-      <div class="char-block__tags">
-        <span class="char-block__tag">Dark</span>
-        <span class="char-block__tag">Ambitious</span>
-        <span class="char-block__tag">Ruthless</span>
-        <span class="char-block__tag">Complex</span>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-
-<!-- ════════════════════════════════════════════════════════
-     PROFILE
-════════════════════════════════════════════════════════ -->
-<section class="section profile" id="profile" aria-label="Artist profile">
-
-  <!-- ── LEFT: bio + metadata ──────────────────────────────── -->
-  <div class="profile__left">
-
-    <span class="profile__eyebrow" data-r="up">04 / Artist</span>
-
-    <!-- Metadata table — SUMMER-style labels -->
-    <div class="profile__meta" data-r="up" data-rd="1">
-      <div class="profile__meta-row">
-        <span class="profile__meta-key">ARTIST</span>
-        <span class="profile__meta-val">Rio Chico</span>
-      </div>
-      <div class="profile__meta-row">
-        <span class="profile__meta-key">STYLE</span>
-        <span class="profile__meta-val">Anime · Manga</span>
-      </div>
-      <div class="profile__meta-row">
-        <span class="profile__meta-key">MEDIUM</span>
-        <span class="profile__meta-val">Digital</span>
-      </div>
-      <div class="profile__meta-row">
-        <span class="profile__meta-key">ARTWORKS</span>
-        <span class="profile__meta-val">100+</span>
-      </div>
-      <div class="profile__meta-row">
-        <span class="profile__meta-key">OC</span>
-        <span class="profile__meta-val">3 Characters</span>
-      </div>
-    </div>
-
-    <!-- Bio quote -->
-    <blockquote class="profile__quote" data-r="up" data-rd="2">
-      "I create original characters and illustrations inspired by Japanese animation.
-      Every drawing tells a story — mine."
-    </blockquote>
-
-    <!-- Name + handle -->
-    <div class="profile__byline" data-r="up" data-rd="3">
-      <p class="profile__byline-name">RIO CHICO STUDIO</p>
-      <p class="profile__byline-handle">Anime Artist &amp; Illustrator · @riochicostudio</p>
-    </div>
-
-    <!-- Skill tags -->
-    <div class="profile__tags" data-r="up" data-rd="4">
-      <span class="profile__tag">Procreate</span>
-      <span class="profile__tag">Clip Studio Paint</span>
-      <span class="profile__tag">Character Design</span>
-      <span class="profile__tag">OC Universe</span>
-      <span class="profile__tag">Fanart</span>
-    </div>
-
-  </div>
-
-  <!-- ── RIGHT: image revealed THROUGH the "RIO" type ───────── -->
-  <div class="profile__visual">
-
-    <!-- Black panel; the artwork is seen ONLY through the stacked
-         "RIO" knockout (mask). One image flows across R / I / O. -->
-    <div class="profile__letters" aria-hidden="true"></div>
-
-    <!-- Left edge divider accent line -->
-    <div class="profile__slash" aria-hidden="true"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ════════════════════════════════════════════════════════
-     SOCIAL / CONTACT
-════════════════════════════════════════════════════════ -->
-<section class="section social" id="social" aria-labelledby="social-title">
-  <div class="social__bg-text" aria-hidden="true">FOLLOW</div>
-
-  <div class="container social__inner">
-
-    <header class="section-header">
-      <span class="section-label" data-r="up">05 / Contact</span>
-      <h2 class="section-title" data-r="wipe" id="social-title">
-        FIND<span> ME</span>
-      </h2>
-      <span class="accent-bar" data-r="wipe" data-rd="2"></span>
-    </header>
-
-    <div class="social__cta-banner" data-r="wipe">
-      <div>
-        <div class="social__cta-text">Commissions Open</div>
-        <div class="social__cta-sub">DM on Instagram or email for info &amp; pricing</div>
-      </div>
-      <a class="btn btn--ghost btn--lg js-mailto" data-u="tua" data-d="email.com">
-        Message Me <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-
-    <div class="social__grid">
-      <a class="social__card" href="https://instagram.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" aria-label="Instagram">
-        <div class="social__card-header">
-          <span class="social__card-icon">📸</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Instagram</div>
-          <div class="social__card-name">@riochicostudio</div>
-        </div>
-        <div class="social__card-handle">Artwork, WIPs, Stories</div>
-      </a>
-
-      <a class="social__card" href="https://twitter.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="1" aria-label="Twitter / X">
-        <div class="social__card-header">
-          <span class="social__card-icon">𝕏</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Twitter / X</div>
-          <div class="social__card-name">@riochicostudio</div>
-        </div>
-        <div class="social__card-handle">Thoughts, updates</div>
-      </a>
-
-      <a class="social__card" href="https://www.pixiv.net/" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="2" aria-label="Pixiv">
-        <div class="social__card-header">
-          <span class="social__card-icon">🖼️</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Pixiv</div>
-          <div class="social__card-name">Rio Chico Studio</div>
-        </div>
-        <div class="social__card-handle">Full portfolio</div>
-      </a>
-
-      <a class="social__card" href="https://ko-fi.com/riochicostudio" target="_blank" rel="noopener noreferrer" data-r="clip-up" data-rd="3" aria-label="Ko-fi">
-        <div class="social__card-header">
-          <span class="social__card-icon">☕</span>
-          <span class="social__card-arrow" aria-hidden="true">↗</span>
-        </div>
-        <div>
-          <div class="social__card-platform">Ko-fi</div>
-          <div class="social__card-name">Rio Chico Studio</div>
-        </div>
-        <div class="social__card-handle">Support my work</div>
-      </a>
-    </div>
-
-    <div class="social__email" data-r="up" data-rd="2">
-      <span class="social__email-label">Or reach me directly</span>
-      <a class="social__email-address js-mailto" data-u="tua" data-d="email.com">tua[at]email.com</a>
-      <a class="btn btn--primary btn--lg js-mailto" data-u="tua" data-d="email.com">
-        Send Email <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-
-    <footer class="social__footer" role="contentinfo">
-      <p class="social__footer-copy">&copy; 2026 Rio Chico Studio — All rights reserved</p>
-      <nav class="social__footer-legal" aria-label="Legal">
-        <a href="legal/privacy-policy.html">Privacy Policy</a>
-      </nav>
-      <div class="social__footer-logo">
-        <span>RIO</span>&nbsp;CHICO&nbsp;<span>STUDIO</span>
-      </div>
-    </footer>
-
-  </div>
-</section>
-
-<script src="js/main.js" defer></script>
 </body>
 </html>
