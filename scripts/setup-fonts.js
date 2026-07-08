@@ -140,6 +140,7 @@ function faceCSS(face, file) {
 
 async function main() {
   fs.mkdirSync(FONTS_DIR, { recursive: true });
+  fs.mkdirSync(path.dirname(CSS_OUT), { recursive: true });
 
   const kept = [];
 
