@@ -1,9 +1,6 @@
 {
   "name": "rio-chico-studio",
   "private": true,
-  "version": "1.0.0",
-  "description": "Rio Chico Studio — portfolio anime artist. Vanilla HTML/CSS/JS, zero runtime dependencies.",
-  "scripts": {
-    "preview": "node scripts/build-preview.js"
-  }
+  "version": "2.0.0",
+  "description": "Rio Chico Studio — portfolio anime artist. Static site."
 }

@@ -27,19 +27,18 @@
   Cross-Origin-Opener-Policy: same-origin
 
   # ── Content Security Policy ──────────────────────────────
-  # Ogni origine è esplicita. Nessun wildcard (*).
-  # Font self-hostati: fonts.googleapis.com e fonts.gstatic.com rimossi.
-  # Zero richieste a server esterni durante la navigazione del sito.
+  # Ogni origine e' esplicita. Nessun wildcard (*).
+  # Google Fonts CDN attivo (TODO: self-hosting -> font-src 'self').
   #
-  # script-src 'self'          → solo js/main.js, zero JS inline o da CDN
-  # style-src  'unsafe-inline' → necessario per gli attributi style="" nell'HTML
-  #                              (custom properties --item-i, --char-accent, ecc.)
-  #                              TODO: rimuovere spostando gli inline style in classi CSS
-  # img-src    data:           → SVG data-URI nel noise overlay (base.css)
-  # frame-ancestors 'none'     → moderno equivalente di X-Frame-Options (doppia protezione)
-  # form-action 'none'         → nessun <form> nel sito
-  # upgrade-insecure-requests  → il browser upgrada automaticamente http→https
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  # script-src 'self'               -> solo script.js, zero JS inline o da CDN
+  # style-src  'unsafe-inline'      -> necessario per gli attributi style="" nell'HTML
+  # fonts.googleapis.com            -> foglio stile Google Fonts
+  # font-src   fonts.gstatic.com    -> file WOFF2 Google Fonts
+  # img-src    data:                -> data-URI riserva
+  # frame-ancestors 'none'          -> equivalente di X-Frame-Options (doppia protezione)
+  # form-action 'none'              -> nessun <form> nel sito
+  # upgrade-insecure-requests       -> il browser upgrada http->https
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
 # ── Cache-Control ────────────────────────────────────────────
 # HTML: sempre rivalidato → gli aggiornamenti si vedono subito

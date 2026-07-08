@@ -3,262 +3,215 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Rio Chico Studio — Anime artist, original illustrations and character design." />
-  <title>RIO CHICO STUDIO</title>
-
-  <!-- Canonical: uncomment and insert the real domain to prevent
-       *.pages.dev previews or lookalike domains from being indexed -->
-  <!-- <link rel="canonical" href="https://yourdomain.com/" /> -->
-
-  <!-- Open Graph / Social sharing -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="Rio Chico Studio — Anime Artist &amp; Illustrator" />
-  <meta property="og:description" content="Original illustrations, OC characters and anime-style character design. Every drawing tells a story." />
-  <meta property="og:image"       content="assets/img/og-cover.png" />
-  <meta property="og:locale"      content="en_US" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:site"        content="@riochicostudio" />
-  <meta name="twitter:title"       content="Rio Chico Studio — Anime Artist" />
-  <meta name="twitter:description" content="Original illustrations, OC characters and anime-style character design." />
-  <meta name="twitter:image"       content="assets/img/og-cover.png" />
-
-  <link rel="stylesheet" href="css/fonts.css" />
-  <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/buttons.css" />
-  <link rel="stylesheet" href="css/nav.css" />
-  <link rel="stylesheet" href="css/hero.css" />
-  <link rel="stylesheet" href="css/gallery.css" />
-  <link rel="stylesheet" href="css/characters.css" />
-  <link rel="stylesheet" href="css/persona.css" />
-  <link rel="stylesheet" href="css/profile.css" />
-  <link rel="stylesheet" href="css/social.css" />
-  <link rel="stylesheet" href="css/editorial.css" />
-
-  <!-- Fallback senza JavaScript: niente loader, tutto visibile -->
-  <noscript><style>
-    #loader { display: none !important; }
-    .hero__eyebrow, .hero__title-line, .hero__desc, .hero__cta,
-    .hero__stats, .hero__right, .hero__jp
-      { animation-play-state: running !important; }
-    [data-r] { opacity: 1 !important; clip-path: none !important; transform: none !important; }
-  </style></noscript>
+  <meta name="description" content="Rio Chico Studio &mdash; Anime artist, original illustrations and character design." />
+  <title>Rio Chico Studio &mdash; Anime Artist &amp; Illustrator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
+<body>
 
-<body data-page="home">
-
-<!-- ── SCROLL PROGRESS ─────────────────────────────────── -->
-<div class="scroll-progress" aria-hidden="true"></div>
-
-<!-- ── LOADING SCREEN ──────────────────────────────────── -->
-<div class="loader" id="loader">
-  <div class="loader__burst" aria-hidden="true"></div>
-  <div class="loader__logo">RIO CHICO <span>STUDIO</span></div>
-  <div class="loader__jp" aria-hidden="true">ローディング</div>
-  <div class="loader__bar"><div class="loader__bar-fill" id="loader-fill"></div></div>
-  <div class="loader__count">NOW LOADING... <b><span id="loader-count">0</span>%</b></div>
-</div>
-
-<!-- ── NOISE OVERLAY ───────────────────────────────────── -->
-<div class="noise-overlay" aria-hidden="true"></div>
-
-
-<!-- ════════════════════════════════════════════════════════
-     NAV
-════════════════════════════════════════════════════════ -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
+<header class="nav">
   <div class="nav__inner">
-    <a class="nav__logo" href="index.html" aria-label="Rio Chico Studio — Home">
-      <span>RIO CHICO</span>
-      <span class="nav__logo-accent">STUDIO</span>
-    </a>
-
-    <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+    <a href="/" class="nav__logo">RIO CHICO<span class="nav__logo-accent">STUDIO</span></a>
+    <button class="nav__toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span class="nav__toggle-bar"></span>
       <span class="nav__toggle-bar"></span>
       <span class="nav__toggle-bar"></span>
     </button>
-
     <div class="nav__right">
-      <ul class="nav__links" id="nav-links" role="list">
-      <li><a class="nav__link is-active" href="index.html" data-nav="home"><span class="nav__link-num">01</span><span class="nav__link-label">Home</span></a></li>
-      <li><a class="nav__link" href="gallery.html" data-nav="gallery"><span class="nav__link-num">02</span><span class="nav__link-label">Gallery</span></a></li>
-      <li><a class="nav__link" href="characters.html" data-nav="characters"><span class="nav__link-num">03</span><span class="nav__link-label">Characters</span></a></li>
-      <li><a class="nav__link" href="profile.html" data-nav="profile"><span class="nav__link-num">04</span><span class="nav__link-label">Profile</span></a></li>
-      <li><a class="nav__link" href="contact.html" data-nav="contact"><span class="nav__link-num">05</span><span class="nav__link-label">Contact</span></a></li>
-    </ul>
-      <a class="nav__commissions" href="contact.html">Commissions Open</a>
+      <ul class="nav__links">
+        <li><a href="/" class="nav__link is-active"><span class="nav__link-num">01</span><span class="nav__link-label">HOME</span></a></li>
+        <li><a href="/gallery" class="nav__link"><span class="nav__link-num">02</span><span class="nav__link-label">GALLERY</span></a></li>
+        <li><a href="/characters" class="nav__link"><span class="nav__link-num">03</span><span class="nav__link-label">CHARACTERS</span></a></li>
+        <li><a href="/profile" class="nav__link"><span class="nav__link-num">04</span><span class="nav__link-label">PROFILE</span></a></li>
+        <li><a href="/contact" class="nav__link"><span class="nav__link-num">05</span><span class="nav__link-label">CONTACT</span></a></li>
+      </ul>
+      <!-- COMMISSIONS: remove this block when closed -->
+      <a href="/contact" class="nav__commissions">COMMISSIONS OPEN</a>
+      <!-- /COMMISSIONS -->
     </div>
   </div>
-</nav>
+</header>
 
+<main>
 
-<!-- ════════════════════════════════════════════════════════
-     HERO
-════════════════════════════════════════════════════════ -->
-<section class="hero" id="hero" aria-label="Welcome">
+  <!-- ── Hero ──────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__halftone" aria-hidden="true"></div>
 
-  <div class="hero__halftone-field" aria-hidden="true"></div>
-
-  <div class="hero__row">
-
-    <!-- LEFT: TEXT ───────────────────────── -->
     <div class="hero__left">
+      <div class="hero__eyebrow-clip">
+        <div class="hero__eyebrow-inner">
+          <span class="hero__eyebrow-bar" aria-hidden="true"></span>
+          <span class="hero__eyebrow-text">ANIME ARTIST &amp; ILLUSTRATOR</span>
+        </div>
+      </div>
 
-      <p class="hero__eyebrow">
-        <span>Anime Artist &amp; Illustrator</span>
-      </p>
-
-      <h1 class="hero__title" aria-label="Rio Chico Studio">
-        <span class="hero__title-wrap"><span class="hero__title-line">RIO</span></span>
-        <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--red">CHICO</span></span>
-        <span class="hero__title-wrap"><span class="hero__title-line hero__title-line--ghost">STUDIO</span></span>
+      <h1 class="hero__title">
+        <span class="hero__title-clip"><span class="hero__title-line">RIO</span></span>
+        <span class="hero__title-clip"><span class="hero__title-line hero__title-line--red">CHICO</span></span>
+        <span class="hero__title-clip"><span class="hero__title-line hero__title-line--stroke">STUDIO</span></span>
       </h1>
 
-      <p class="hero__desc">
-        Original illustrations, OC characters and anime-style
-        character design. Every drawing tells a story — mine.
-      </p>
+      <p class="hero__desc">Original illustrations, OC characters and anime-style character design. Every drawing tells a story &mdash; mine.</p>
 
       <div class="hero__cta">
-        <a class="btn btn--primary btn--lg" href="gallery.html">
-          View Gallery <span class="btn__arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="btn btn--ghost btn--lg" href="contact.html">
-          Commissions
-        </a>
+        <a href="/gallery" class="btn-primary">VIEW GALLERY &rarr;</a>
+        <a href="/contact" class="btn-ghost">COMMISSIONS</a>
       </div>
 
       <div class="hero__stats">
-        <div>
-          <div class="hero__stat-num" data-count="100" data-suffix="+">100+</div>
-          <div class="hero__stat-label">Artworks</div>
+        <div class="hero__stat">
+          <div class="hero__stat-num">100+</div>
+          <div class="hero__stat-label">ARTWORKS</div>
         </div>
-        <div>
-          <div class="hero__stat-num" data-count="3" data-suffix="">3</div>
-          <div class="hero__stat-label">OC Characters</div>
+        <div class="hero__stat">
+          <div class="hero__stat-num">3</div>
+          <div class="hero__stat-label">OC CHARACTERS</div>
         </div>
-        <div>
-          <div class="hero__stat-num" data-count="5" data-suffix="">5</div>
-          <div class="hero__stat-label">Years of Practice</div>
+        <div class="hero__stat">
+          <div class="hero__stat-num">5</div>
+          <div class="hero__stat-label">YEARS OF PRACTICE</div>
         </div>
       </div>
-
     </div>
 
-    <!-- RIGHT: FEATURED ARTWORK — single frame, image rotates inside ── -->
     <div class="hero__right">
-
-      <!-- Vertical katakana tag — editorial accent -->
-      <span class="hero__jp" aria-hidden="true">リオ・チコ・スタジオ</span>
-
-      <div class="hero__featured halftone-card" role="region" aria-label="Featured artwork">
-        <div class="hero__featured-header">
-          <span class="hero__featured-label">FEATURED · <span id="heroFeaturedNum">01</span></span>
-          <span class="hero__featured-year">2026</span>
-        </div>
-        <div class="hero__featured-slot" id="heroFeaturedSlot">
-          <img class="hero__featured-img is-active" src="assets/img/gallery-01.webp" alt="Artwork 01"
-               width="520" height="560" loading="eager" fetchpriority="high" decoding="sync" />
-          <img class="hero__featured-img" src="assets/img/ph-gallery-04.svg" alt="Artwork 02"
-               width="520" height="560" loading="lazy" decoding="async" />
-          <img class="hero__featured-img" src="assets/img/ph-char-01.svg" alt="Character 01"
-               width="520" height="560" loading="lazy" decoding="async" />
-          <img class="hero__featured-img" src="assets/img/ph-char-02.svg" alt="Character 02"
-               width="520" height="560" loading="lazy" decoding="async" />
+      <div class="hf">
+        <div class="hf__dots" aria-hidden="true"></div>
+        <div class="hf__frame">
+          <div class="hf__header">
+            <span class="hf__label">FEATURED &middot; 01</span>
+            <span class="hf__label--year">2026</span>
+          </div>
+          <img src="images/gallery-01.webp" alt="Featured artwork — original illustration" class="hero__featured-img" />
         </div>
       </div>
+      <span class="hero__katakana" aria-hidden="true">リオ・チコ・スタジオ</span>
     </div>
+  </section>
 
+  <!-- ── Ticker 1: paper ───────────────────────────────────────── -->
+  <div class="ticker ticker--paper" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
+      <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
+    </div>
   </div>
 
-</section>
-
-
-<!-- ── MARQUEE ────────────────────────────────────────── -->
-<div class="marquee-strip marquee-strip--accent" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Rio Chico Studio</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anime Art</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Character Design</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Original Illustrations</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">OC Universe</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Digital Art</span><span class="marquee-sep">✦</span>
-  </div>
-</div>
-
-
-<!-- ════════════════════════════════════════════════════════
-     SELECTED WORKS
-════════════════════════════════════════════════════════ -->
-<section class="selected" aria-labelledby="selected-title">
-  <div class="container">
+  <!-- ── Selected works ───────────────────────────────────────── -->
+  <section class="selected">
     <div class="selected__head">
-      <span class="section-label" data-r="up" id="selected-title">Selected Works</span>
-      <a class="selected__all" href="gallery.html" data-r="up">All Works <span class="btn__arrow" aria-hidden="true">→</span></a>
+      <div class="eyebrow">
+        <span class="eyebrow__bar" aria-hidden="true"></span>
+        <span class="eyebrow__label">SELECTED WORKS</span>
+      </div>
+      <a href="/gallery" class="selected__all">ALL WORKS &rarr;</a>
     </div>
     <div class="selected__grid">
-      <a class="selected__card" href="gallery.html" data-r="clip-up">
-        <img class="selected__card-img" src="assets/img/gallery-01.webp" alt="Artwork 01" loading="lazy" decoding="async" />
+      <a href="/gallery" class="selected__card">
+        <img src="images/gallery-01.webp" alt="Artwork 01 &mdash; original character illustration" class="selected__card-img" />
         <div class="selected__card-info">
-          <span class="selected__card-title">Artwork 01</span>
+          <span class="selected__card-title">ARTWORK 01</span>
           <span class="selected__card-cat">OC</span>
         </div>
       </a>
-      <a class="selected__card" href="gallery.html" data-r="clip-up" data-rd="1">
-        <img class="selected__card-img" src="assets/img/gallery-02.webp" alt="Artwork 02" loading="lazy" decoding="async" />
+      <a href="/gallery" class="selected__card">
+        <img src="images/gallery-02.webp" alt="Artwork 02 &mdash; character design" class="selected__card-img" />
         <div class="selected__card-info">
-          <span class="selected__card-title">Artwork 02</span>
-          <span class="selected__card-cat">Char Design</span>
+          <span class="selected__card-title">ARTWORK 02</span>
+          <span class="selected__card-cat">CHAR DESIGN</span>
         </div>
       </a>
-      <a class="selected__card" href="gallery.html" data-r="clip-up" data-rd="2">
-        <img class="selected__card-img" src="assets/img/ph-gallery-03.svg" alt="Artwork 03" loading="lazy" decoding="async" />
+      <a href="/gallery" class="selected__card">
+        <img src="images/gallery-05.webp" alt="Artwork 05 &mdash; figure studies" class="selected__card-img" />
         <div class="selected__card-info">
-          <span class="selected__card-title">Artwork 03</span>
-          <span class="selected__card-cat">Fanart</span>
+          <span class="selected__card-title">ARTWORK 05</span>
+          <span class="selected__card-cat">SKETCH</span>
         </div>
       </a>
+    </div>
+  </section>
+
+  <!-- ── Ticker 2: vermilion ───────────────────────────────────── -->
+  <div class="ticker ticker--vermilion" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
+      <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
     </div>
   </div>
-</section>
 
-
-<!-- ════════════════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════════════════ -->
-<div class="container">
-  <footer class="social__footer" role="contentinfo">
-    <p class="social__footer-copy">&copy; 2026 Rio Chico Studio — All rights reserved</p>
-    <nav class="social__footer-legal" aria-label="Legal">
-      <a href="legal/privacy-policy.html">Privacy Policy</a>
-    </nav>
-    <div class="social__footer-logo">
-      RIO CHICO <span class="nav__logo-accent">STUDIO</span>
+  <!-- ── My Style ─────────────────────────────────────────────── -->
+  <section class="style-section">
+    <div class="eyebrow">
+      <span class="eyebrow__bar" aria-hidden="true"></span>
+      <span class="eyebrow__label">MY STYLE / 私のスタイル</span>
     </div>
-  </footer>
-</div>
+    <h2 class="style-section__title">MY <span class="style-section__title-stroke">STYLE</span></h2>
 
-<script src="js/main.js" defer></script>
+    <!-- Row 1: frame left, text right -->
+    <div class="style-row">
+      <div class="style-frame sr-bg">
+        <div class="style-frame__dots" aria-hidden="true"></div>
+        <div class="style-frame__inner">
+          <div class="style-frame__header">
+            <span class="style-frame__header-label">SCENE &middot; 01</span>
+          </div>
+          <div class="style-frame__stage">
+            <div class="style-frame__bg">
+              <img src="images/gallery-01.webp" alt="" />
+            </div>
+            <div class="style-frame__char sr-char">
+              <img src="images/gallery-02.webp" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="style-text sr-txt">
+        <p class="style-text__kana">手描きの線</p>
+        <h3 class="style-text__title">EVERY LINE<br /><span class="style-text__title-red">BY HAND</span></h3>
+        <p class="style-text__body">Characters and worlds are born on paper &mdash; pencil, ink, imperfections included &mdash; before any screen gets involved. It&rsquo;s how I&rsquo;ve drawn since 1999: the line comes first, technology comes after.</p>
+      </div>
+    </div>
+
+    <!-- Row 2: text left, frame right (reversed) -->
+    <div class="style-row style-row--rev">
+      <div class="style-frame style-frame--rev sr-bg">
+        <div class="style-frame__dots" aria-hidden="true"></div>
+        <div class="style-frame__inner">
+          <div class="style-frame__header">
+            <span class="style-frame__header-label">SCENE &middot; 02</span>
+          </div>
+          <div class="style-frame__stage">
+            <div class="style-frame__bg">
+              <img src="images/gallery-05.webp" alt="" />
+            </div>
+            <div class="style-frame__char sr-char">
+              <img src="images/gallery-01.webp" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="style-text sr-txt">
+        <p class="style-text__kana">千のスタイル</p>
+        <h3 class="style-text__title">A THOUSAND STYLES,<br /><span class="style-text__title-stroke">ONE HAND</span></h3>
+        <p class="style-text__body">From soft painterly scenes to sharp cel-shaded action: I move between styles, but background and character always belong to the same world &mdash; drawn to live together, like in traditional animation.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__copy">&copy; 2026 Rio Chico Studio &mdash; All rights reserved</p>
+    <a href="/legal/privacy" class="site-footer__privacy">PRIVACY POLICY</a>
+    <a href="/" class="site-footer__logo">RIO CHICO <span class="site-footer__logo-accent">STUDIO</span></a>
+  </div>
+</footer>
+
 </body>
 </html>

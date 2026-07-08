@@ -200,9 +200,9 @@ const previewBlocked = /preview/.test(htaccess) && /\\?\.html/.test(htaccess);
   : warn("File interni: verifica che .htaccess blocchi tutti i file sensibili (security-audit.js, SECURITY.md, CLAUDE.md, preview*.html)");
 
 /* ═══════════════════════════════════════════════════════════
-   2. js/main.js — XSS sinks e code injection
+   2. script.js — XSS sinks e code injection
    ═══════════════════════════════════════════════════════════ */
-const js = read('js/main.js');
+const js = read('script.js');
 
 // Sinks pericolosi
 const jsSinks = [
