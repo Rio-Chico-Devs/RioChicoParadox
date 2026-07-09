@@ -18,6 +18,10 @@ body {
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
+/* Anton esiste solo in peso 400: senza questo reset i browser applicano
+   il bold di default dei titoli sintetizzandolo (faux-bold), e le lettere
+   risultano piu' spesse e ravvicinate rispetto al design di riferimento. */
+h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 
 /* ── Keyframes ──────────────────────────────────────── */
 @keyframes rise {
@@ -66,7 +70,7 @@ a { color: inherit; }
   backdrop-filter: blur(8px);
 }
 .nav__inner {
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
   height: 66px;
@@ -175,7 +179,7 @@ a { color: inherit; }
   border-top: 1px solid rgba(244, 241, 234, 0.12);
 }
 .site-footer__inner {
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 28px 40px;
   display: flex;
@@ -243,7 +247,7 @@ a { color: inherit; }
 
 /* ── HOME: Hero ──────────────────────────────────────── */
 .hero {
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 72px 40px 40px;
   display: flex;
@@ -274,9 +278,9 @@ a { color: inherit; }
 .hero__title {
   margin-top: 22px;
   font-family: 'Anton', sans-serif;
-  line-height: 0.9;
-  font-size: clamp(90px, 13vw, 190px);
-  letter-spacing: -1px;
+  line-height: 0.92;
+  font-size: clamp(84px, 11vw, 150px);
+  letter-spacing: 1px;
 }
 .hero__title-clip { overflow: hidden; display: block; }
 .hero__title-line {
@@ -285,7 +289,7 @@ a { color: inherit; }
   animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }
 .hero__title-line--red { color: #E63424; animation-delay: 0.24s; }
-.hero__title-line--stroke { color: transparent; -webkit-text-stroke: 3px #F4F1EA; animation-delay: 0.38s; }
+.hero__title-line--stroke { color: transparent; -webkit-text-stroke: 2px #F4F1EA; animation-delay: 0.38s; }
 
 .hero__desc {
   margin-top: 30px;
@@ -352,7 +356,7 @@ a { color: inherit; }
 
 /* ── HOME: Selected works ────────────────────────────── */
 .selected {
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 80px 40px 30px;
 }
@@ -381,7 +385,7 @@ a { color: inherit; }
 .selected__card-cat { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #E63424; }
 
 /* ── HOME: My Style ──────────────────────────────────── */
-.style-section { max-width: 1320px; margin: 0 auto; padding: 90px 40px 0; }
+.style-section { max-width: 1400px; margin: 0 auto; padding: 90px 40px 0; }
 .style-section__title {
   margin-top: 16px;
   font-family: 'Anton', sans-serif;
@@ -434,7 +438,7 @@ a { color: inherit; }
 .style-text__body { margin-top: 20px; max-width: 440px; padding-left: 18px; border-left: 3px solid #E63424; font-size: 17px; line-height: 1.7; color: #B9B5AD; }
 
 /* ── GALLERY page ────────────────────────────────────── */
-.gal { max-width: 1320px; margin: 0 auto; padding: 64px 40px 30px; }
+.gal { max-width: 1400px; margin: 0 auto; padding: 64px 40px 30px; }
 .gal__title { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(64px, 8vw, 110px); line-height: 1; color: #F4F1EA; }
 .gal__title-red { color: #E63424; }
 .gal__sub { margin-top: 14px; max-width: 420px; font-size: 16px; line-height: 1.6; color: #B9B5AD; }
@@ -494,7 +498,7 @@ a { color: inherit; }
 .gal__instagram:hover { border-color: #E63424; color: #E63424; }
 
 /* ── CHARACTERS page ─────────────────────────────────── */
-.chars { max-width: 1320px; margin: 0 auto; padding: 64px 40px 30px; }
+.chars { max-width: 1400px; margin: 0 auto; padding: 64px 40px 30px; }
 .chars__title { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(56px, 8vw, 110px); line-height: 1; color: #F4F1EA; }
 .chars__title-stroke { color: transparent; -webkit-text-stroke: 2px #E63424; }
 
@@ -576,7 +580,7 @@ a { color: inherit; }
 }
 
 /* ── PROFILE page ────────────────────────────────────── */
-.profile { max-width: 1320px; margin: 0 auto; padding: 64px 40px 30px; display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start; }
+.profile { max-width: 1400px; margin: 0 auto; padding: 64px 40px 30px; display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start; }
 .profile__left { flex: 1 1 440px; min-width: 320px; }
 .profile__title { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(52px, 6vw, 84px); line-height: 1; color: #F4F1EA; }
 .profile__title-red { color: #E63424; }
@@ -592,7 +596,7 @@ a { color: inherit; }
 .profile__img { display: block; width: 100%; height: 620px; object-fit: cover; }
 
 /* ── CONTACT page ────────────────────────────────────── */
-.contact { max-width: 1320px; margin: 0 auto; padding: 64px 40px 30px; }
+.contact { max-width: 1400px; margin: 0 auto; padding: 64px 40px 30px; }
 .contact__title { margin-top: 16px; font-family: 'Anton', sans-serif; font-size: clamp(64px, 8vw, 110px); line-height: 1; color: #F4F1EA; }
 .contact__title-red { color: #E63424; }
 
