@@ -56,6 +56,14 @@
   var valid = ['oc', 'fanart', 'char-design', 'sketch'];
   if (hash && valid.indexOf(hash) !== -1) {
     filterGallery(hash);
+  } else {
+    /* Anche al primo paint le card entrano in cascata (0.06s l'una),
+       come nel reference — non solo dopo un click sui filtri. */
+    var delay = 0;
+    cards.forEach(function (card) {
+      card.style.animationDelay = delay + 's';
+      delay += 0.06;
+    });
   }
 })();
 
