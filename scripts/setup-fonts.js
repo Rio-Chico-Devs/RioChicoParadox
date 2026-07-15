@@ -67,8 +67,13 @@ const FONTS = [
   { tag: 'anton',    url: 'https://fonts.googleapis.com/css2?family=Anton&display=swap' },
   { tag: 'instrument', url: 'https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap' },
   { tag: 'plexmono', url: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap' },
-  { tag: 'noto',     url: () => 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap&text=' +
-                                 encodeURIComponent(katakanaFromSite()) }
+  // keepAll: la richiesta &text= e' GIA' un subset minimo, ma Google puo'
+  // etichettare i blocchi come 'japanese' (o altro): senza keepAll il
+  // filtro KEEP li scartava in silenzio -> ZERO file Noto scaricati e
+  // tutto il giapponese del sito finiva nel font di sistema.
+  { tag: 'noto',     keepAll: true,
+    url: () => 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap&text=' +
+               encodeURIComponent(katakanaFromSite()) }
 ];
 
 /* ── helpers ──────────────────────────────────────────────────────── */
@@ -147,9 +152,12 @@ async function main() {
   for (const f of FONTS) {
     const url = typeof f.url === 'function' ? f.url() : f.url;
     process.stdout.write(`Fetching CSS [${f.tag}] ... `);
-    const css   = (await get(url)).toString('utf8');
-    const faces = parseFaces(css).filter(x => KEEP.test(x.label));
-    console.log(`${faces.length} face(s) tenute`);
+    const all   = parseFaces((await get(url)).toString('utf8'));
+    const faces = f.keepAll ? all : all.filter(x => KEEP.test(x.label));
+    const skipped = all.length - faces.length;
+    console.log(`${faces.length} face(s) tenute` + (skipped ? ` (${skipped} scartate: ${[...new Set(all.filter(x => !faces.includes(x)).map(x => x.label))].join(', ')})` : ''));
+    if (faces.length === 0)
+      console.warn(`  ATTENZIONE [${f.tag}]: nessuna face tenuta — il font NON verra' self-hostato.`);
     kept.push(...faces);
   }
 

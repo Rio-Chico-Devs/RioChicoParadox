@@ -3,11 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="About Rio Chico &mdash; anime artist and illustrator inspired by Japanese animation." />
+  <meta name="description" content="About Rio Chico &mdash; anime artist and illustrator inspired by Japanese animation. My journey from 1999 to today." />
   <title>Profile &mdash; Rio Chico Studio</title>
+  <link rel="preload" href="assets/fonts/anton-400-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rio Chico Studio" />
+  <meta property="og:title" content="Profile &mdash; Rio Chico Studio" />
+  <meta property="og:description" content="Anime artist and illustrator inspired by Japanese animation. My journey from 1999 to today." />
+  <meta property="og:image" content="images/hero-04.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- TODO: quando il dominio e' deciso, aggiungere <link rel="canonical">
+       e riscrivere og:image con URL assoluto (i crawler non garantiscono
+       la risoluzione dei percorsi relativi). -->
 </head>
 <body>
 
@@ -26,6 +36,7 @@
         <li><a href="characters.html" class="nav__link"><span class="nav__link-num">03</span><span class="nav__link-label">CHARACTERS</span></a></li>
         <li><a href="profile.html" class="nav__link is-active"><span class="nav__link-num">04</span><span class="nav__link-label">PROFILE</span></a></li>
         <li><a href="contact.html" class="nav__link"><span class="nav__link-num">05</span><span class="nav__link-label">CONTACT</span></a></li>
+        <li><a href="support.html" class="nav__link"><span class="nav__link-num">06</span><span class="nav__link-label">SUPPORT</span></a></li>
       </ul>
       <!-- COMMISSIONS: remove this block when closed -->
       <a href="contact.html" class="nav__commissions">COMMISSIONS OPEN</a>
@@ -90,11 +101,98 @@
             <span class="hf__label">SELF PORTRAIT / SIGNATURE PIECE</span>
             <span class="hf__label--kana">アーティスト</span>
           </div>
+          <!-- TODO: sostituire con il vero autoritratto (portrait, >=1100x1400) -->
           <img src="images/gallery-01.webp" alt="Self portrait &mdash; Rio Chico" class="profile__img" />
         </div>
       </div>
     </div>
 
+  </div>
+
+  <!-- ── My Journey: scrollytelling stepper ──────────────────────
+       Copy segnaposto (dal reference): i testi definitivi arrivano
+       dall'artista. Le 7 foto sono placeholder in attesa di quelle reali. -->
+  <div class="journey">
+    <div class="eyebrow">
+      <span class="eyebrow__bar" aria-hidden="true"></span>
+      <span class="eyebrow__label">MY JOURNEY / 軌跡</span>
+    </div>
+    <h2 class="journey__title">MY <span class="journey__title-stroke">JOURNEY</span></h2>
+
+    <div class="journey__cols">
+      <div class="journey__rows">
+
+        <div class="journey__row is-active" data-year="1999">
+          <div class="journey__year">1999</div>
+          <div class="journey__label">MY FIRST SKETCHBOOK</div>
+          <p class="journey__desc">Placeholder text &mdash; talk about your first sketchbook: what you drew, how it started, and why it mattered to you. This paragraph is placeholder copy &mdash; swap it for the real story: what happened, how it felt, and what changed afterward. Aim for five or six lines like this once it&rsquo;s the real thing, so the layout keeps its rhythm.</p>
+        </div>
+
+        <div class="journey__row" data-year="2003">
+          <div class="journey__year">2003</div>
+          <div class="journey__label">MY FIRST DIGITAL GRAPHIC DESIGN DIPLOMA</div>
+          <p class="journey__desc">Placeholder text &mdash; talk about earning your first diploma in digital graphic design and what it opened up for you. This paragraph is placeholder copy &mdash; swap it for the real story: what happened, how it felt, and what changed afterward. Aim for five or six lines like this once it&rsquo;s the real thing, so the layout keeps its rhythm.</p>
+        </div>
+
+        <div class="journey__row" data-year="2008">
+          <div class="journey__year">2008</div>
+          <div class="journey__label">MY FIRST AWARD FOR AN ONLINE AVATAR ILLUSTRATION</div>
+          <p class="journey__desc">Placeholder text &mdash; talk about winning your first award for an online avatar illustration. This paragraph is placeholder copy &mdash; swap it for the real story: what happened, how it felt, and what changed afterward. Aim for five or six lines like this once it&rsquo;s the real thing, so the layout keeps its rhythm.</p>
+        </div>
+
+        <div class="journey__row" data-year="2016">
+          <div class="journey__year">2016</div>
+          <div class="journey__label">MY FIRST PROFESSIONAL GRAPHIC DESIGN JOB</div>
+          <p class="journey__desc">Placeholder text &mdash; talk about landing your first professional graphic design job. This paragraph is placeholder copy &mdash; swap it for the real story: what happened, how it felt, and what changed afterward. Aim for five or six lines like this once it&rsquo;s the real thing, so the layout keeps its rhythm.</p>
+        </div>
+
+        <div class="journey__row" data-year="2020">
+          <div class="journey__year">2020</div>
+          <div class="journey__label">MY FIRST PROFESSIONAL EQUIPMENT</div>
+          <p class="journey__desc">Placeholder text &mdash; talk about getting your first professional equipment and how your process changed. This paragraph is placeholder copy &mdash; swap it for the real story: what happened, how it felt, and what changed afterward. Aim for five or six lines like this once it&rsquo;s the real thing, so the layout keeps its rhythm.</p>
+        </div>
+
+        <div class="journey__row" data-year="2024">
+          <div class="journey__year">2024</div>
+          <div class="journey__label">THE START OF MY ONLINE GROWTH</div>
+          <p class="journey__desc">Placeholder text &mdash; talk about how your online growth began and what shifted for you. This paragraph is placeholder copy &mdash; swap it for the real story: what happened, how it felt, and what changed afterward. Aim for five or six lines like this once it&rsquo;s the real thing, so the layout keeps its rhythm.</p>
+        </div>
+
+        <div class="journey__row" data-year="2026">
+          <div class="journey__year">2026</div>
+          <div class="journey__label">MY STUDIO &amp; WEBSITE GO LIVE</div>
+          <p class="journey__desc">Placeholder text &mdash; talk about launching your studio and this website. This paragraph is placeholder copy &mdash; swap it for the real story: what happened, how it felt, and what changed afterward. Aim for five or six lines like this once it&rsquo;s the real thing, so the layout keeps its rhythm.</p>
+        </div>
+
+        <!-- Spacer: tiene la foto sticky visibile quando il lettore
+             raggiunge il 2026, invece di farla risalire a fine pagina -->
+        <div class="journey__spacer" aria-hidden="true"></div>
+      </div>
+
+      <div class="journey__side">
+        <div class="journey__sticky">
+          <div class="journey__frame-wrap">
+            <div class="journey__dots" aria-hidden="true"></div>
+            <div class="journey__frame">
+              <div class="journey__bar">
+                <span class="journey__bar-label">TIMELINE</span>
+                <span class="journey__badge">1999</span>
+              </div>
+              <div class="journey__imgbox">
+                <!-- TODO: sostituire i placeholder con le 7 foto reali (una per anno) -->
+                <div class="journey__img is-active" data-year="1999"><div class="journey__ph">PHOTO &middot; 1999</div></div>
+                <div class="journey__img" data-year="2003"><div class="journey__ph">PHOTO &middot; 2003</div></div>
+                <div class="journey__img" data-year="2008"><div class="journey__ph">PHOTO &middot; 2008</div></div>
+                <div class="journey__img" data-year="2016"><div class="journey__ph">PHOTO &middot; 2016</div></div>
+                <div class="journey__img" data-year="2020"><div class="journey__ph">PHOTO &middot; 2020</div></div>
+                <div class="journey__img" data-year="2024"><div class="journey__ph">PHOTO &middot; 2024</div></div>
+                <div class="journey__img" data-year="2026"><div class="journey__ph">PHOTO &middot; 2026</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 

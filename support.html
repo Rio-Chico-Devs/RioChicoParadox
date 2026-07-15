@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Support Rio Chico Studio &mdash; a one-person, self-funded illustration project. Every coffee keeps the studio drawing." />
+  <title>Support &mdash; Rio Chico Studio</title>
+  <link rel="preload" href="assets/fonts/anton-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rio Chico Studio" />
+  <meta property="og:title" content="Support &mdash; Rio Chico Studio" />
+  <meta property="og:description" content="A one-person, self-funded illustration project. Every coffee keeps the studio drawing." />
+  <meta property="og:image" content="images/hero-04.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- TODO: quando il dominio e' deciso, aggiungere <link rel="canonical">
+       e riscrivere og:image con URL assoluto (i crawler non garantiscono
+       la risoluzione dei percorsi relativi). -->
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">RIO CHICO<span class="nav__logo-accent">STUDIO</span></a>
+    <button class="nav__toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+    <div class="nav__right">
+      <ul class="nav__links">
+        <li><a href="index.html" class="nav__link"><span class="nav__link-num">01</span><span class="nav__link-label">HOME</span></a></li>
+        <li><a href="gallery.html" class="nav__link"><span class="nav__link-num">02</span><span class="nav__link-label">GALLERY</span></a></li>
+        <li><a href="characters.html" class="nav__link"><span class="nav__link-num">03</span><span class="nav__link-label">CHARACTERS</span></a></li>
+        <li><a href="profile.html" class="nav__link"><span class="nav__link-num">04</span><span class="nav__link-label">PROFILE</span></a></li>
+        <li><a href="contact.html" class="nav__link"><span class="nav__link-num">05</span><span class="nav__link-label">CONTACT</span></a></li>
+        <li><a href="support.html" class="nav__link is-active"><span class="nav__link-num">06</span><span class="nav__link-label">SUPPORT</span></a></li>
+      </ul>
+      <!-- COMMISSIONS: remove this block when closed -->
+      <a href="contact.html" class="nav__commissions">COMMISSIONS OPEN</a>
+      <!-- /COMMISSIONS -->
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="support">
+
+    <div class="eyebrow">
+      <span class="eyebrow__bar" aria-hidden="true"></span>
+      <span class="eyebrow__label eyebrow__label--red">06 / SUPPORT</span>
+    </div>
+    <h1 class="support__title">SUP<span class="support__title-stroke">PORT</span></h1>
+    <p class="support__intro">Rio Chico Studio is a one-person, self-funded project &mdash; no studio, no publisher behind it. Just years of practice and a dream I&rsquo;ve carried since I was a kid.</p>
+
+    <div class="support__cols">
+
+      <!-- Story -->
+      <div class="support__story">
+        <p class="support__kana">自主制作 / SELF-FUNDED</p>
+        <h2 class="support__story-title">THE CARNIVALS PROJECT</h2>
+        <p class="support__story-body">Carnivals is my original, self-funded universe &mdash; the characters and stories running through this whole site. There&rsquo;s no publisher and no studio behind it: just commissions, late nights, and one illustration at a time.</p>
+
+        <p class="support__kana support__kana--second">夢 / THE DREAM</p>
+        <h2 class="support__story-title">A DREAM SINCE I WAS A KID</h2>
+        <p class="support__story-body">I&rsquo;ve wanted to open my own illustration studio since I was little. That dream starts with you, not me &mdash; the client always comes first. The more this studio grows, the better I can serve every project you bring me next: faster turnarounds, deeper worlds, sharper work.</p>
+
+        <p class="support__motto">Per aspera ad astra &mdash; <span class="support__motto-red">through hardship, to the stars.</span></p>
+      </div>
+
+      <!-- Ko-fi card -->
+      <div class="kofi">
+        <div class="kofi__dots" aria-hidden="true"></div>
+        <div class="kofi__card">
+          <!-- TODO: sostituire con il banner artwork dedicato al Ko-fi -->
+          <img src="images/hero-04.webp" alt="Support banner artwork" class="kofi__banner" />
+          <div class="kofi__bar">
+            <span class="kofi__bar-label">SUPPORT &middot; KO-FI</span>
+            <span class="kofi__bar-star">✦</span>
+          </div>
+          <div class="kofi__content">
+            <p class="kofi__eyebrow">ONE-TIME OR MONTHLY</p>
+            <h2 class="kofi__title">KEEP THE STUDIO DRAWING</h2>
+            <p class="kofi__body">Every coffee helps fund tools, time and the Carnivals universe &mdash; original art posted here first.</p>
+            <!-- TODO: sostituire con l'URL Ko-fi reale dell'artista -->
+            <a href="https://ko-fi.com" target="_blank" rel="noopener" class="kofi__cta">SUPPORT ON KO-FI &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__copy">&copy; 2026 Rio Chico Studio &mdash; All rights reserved</p>
+    <a href="legal/privacy-policy.html" class="site-footer__privacy">PRIVACY POLICY</a>
+    <a href="index.html" class="site-footer__logo">RIO CHICO <span class="site-footer__logo-accent">STUDIO</span></a>
+  </div>
+</footer>
+
+</body>
+</html>

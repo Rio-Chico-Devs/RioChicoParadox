@@ -5,9 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Rio Chico Studio &mdash; Anime artist, original illustrations and character design." />
   <title>Rio Chico Studio &mdash; Anime Artist &amp; Illustrator</title>
+  <link rel="preload" href="assets/fonts/anton-400-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rio Chico Studio" />
+  <meta property="og:title" content="Rio Chico Studio &mdash; Anime Artist &amp; Illustrator" />
+  <meta property="og:description" content="Original illustrations, OC characters and anime-style character design." />
+  <meta property="og:image" content="images/hero-04.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- TODO: quando il dominio e' deciso, aggiungere <link rel="canonical">
+       e riscrivere og:image con URL assoluto (i crawler non garantiscono
+       la risoluzione dei percorsi relativi). -->
 </head>
 <body>
 
@@ -26,6 +36,7 @@
         <li><a href="characters.html" class="nav__link"><span class="nav__link-num">03</span><span class="nav__link-label">CHARACTERS</span></a></li>
         <li><a href="profile.html" class="nav__link"><span class="nav__link-num">04</span><span class="nav__link-label">PROFILE</span></a></li>
         <li><a href="contact.html" class="nav__link"><span class="nav__link-num">05</span><span class="nav__link-label">CONTACT</span></a></li>
+        <li><a href="support.html" class="nav__link"><span class="nav__link-num">06</span><span class="nav__link-label">SUPPORT</span></a></li>
       </ul>
       <!-- COMMISSIONS: remove this block when closed -->
       <a href="contact.html" class="nav__commissions">COMMISSIONS OPEN</a>
@@ -78,14 +89,15 @@
     </div>
 
     <div class="hero__right">
-      <div class="hf">
-        <div class="hf__dots" aria-hidden="true"></div>
-        <div class="hf__frame">
-          <div class="hf__header">
-            <span class="hf__label">FEATURED &middot; 01</span>
-            <span class="hf__label--year">2026</span>
-          </div>
-          <img src="images/gallery-01.webp" alt="Featured artwork — original illustration" class="hero__featured-img" />
+      <!-- Reel auto-rotante: pura CSS, 4 artwork + duplicato del primo -->
+      <div class="hero-reel">
+        <div class="hero-reel__strip">
+          <!-- TODO: sostituire i primi due frame con gli hero artwork reali 1 e 2 -->
+          <div class="hero-reel__frame"><img src="images/gallery-01.webp" alt="Hero artwork 1 &mdash; original illustration" /></div>
+          <div class="hero-reel__frame"><img src="images/gallery-02.webp" alt="Hero artwork 2 &mdash; character design" /></div>
+          <div class="hero-reel__frame"><img src="images/hero-03.webp" alt="Hero artwork 3 &mdash; original illustration" /></div>
+          <div class="hero-reel__frame"><img src="images/hero-04.webp" alt="Hero artwork 4 &mdash; original illustration" /></div>
+          <div class="hero-reel__frame" aria-hidden="true"><img src="images/gallery-01.webp" alt="" /></div>
         </div>
       </div>
       <span class="hero__katakana" aria-hidden="true">リオ・チコ・スタジオ</span>
@@ -93,10 +105,12 @@
   </section>
 
   <!-- ── Ticker 1: paper ───────────────────────────────────────── -->
-  <div class="ticker ticker--paper" aria-hidden="true">
-    <div class="ticker__track">
-      <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
-      <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
+  <div class="ticker-wrap ticker-wrap--paper" aria-hidden="true">
+    <div class="ticker ticker--paper">
+      <div class="ticker__track">
+        <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
+        <span class="ticker__chunk">ANIME ART <span class="ticker__sep--red">✦</span> CHARACTER DESIGN <span class="ticker__sep--red">✦</span> ORIGINAL ILLUSTRATION <span class="ticker__sep--red">✦</span> OC UNIVERSE <span class="ticker__sep--red">✦</span> FANART <span class="ticker__sep--red">✦</span> RIO CHICO STUDIO <span class="ticker__sep--red">✦</span>&nbsp;</span>
+      </div>
     </div>
   </div>
 
@@ -125,20 +139,22 @@
         </div>
       </a>
       <a href="gallery.html" class="selected__card">
-        <img src="images/gallery-05.webp" alt="Artwork 05 &mdash; figure studies" class="selected__card-img" />
+        <img src="images/gallery-05.webp" alt="Artwork 03 &mdash; fanart" class="selected__card-img" />
         <div class="selected__card-info">
-          <span class="selected__card-title">ARTWORK 05</span>
-          <span class="selected__card-cat">SKETCH</span>
+          <span class="selected__card-title">ARTWORK 03</span>
+          <span class="selected__card-cat">FANART</span>
         </div>
       </a>
     </div>
   </section>
 
   <!-- ── Ticker 2: vermilion ───────────────────────────────────── -->
-  <div class="ticker ticker--vermilion" aria-hidden="true">
-    <div class="ticker__track">
-      <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
-      <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
+  <div class="ticker-wrap ticker-wrap--vermilion" aria-hidden="true">
+    <div class="ticker ticker--vermilion">
+      <div class="ticker__track">
+        <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
+        <span class="ticker__chunk">MADE WITH LOVE <span class="ticker__sep--paper">✦</span> HANDMADE DRAWINGS <span class="ticker__sep--paper">✦</span> TRADITIONAL ANIMATION <span class="ticker__sep--paper">✦</span> THOUSANDS OF STYLES <span class="ticker__sep--paper">✦</span> DRAWING SINCE 1999 <span class="ticker__sep--paper">✦</span>&nbsp;</span>
+      </div>
     </div>
   </div>
 
@@ -150,53 +166,42 @@
     </div>
     <h2 class="style-section__title">MY <span class="style-section__title-stroke">STYLE</span></h2>
 
-    <!-- Row 1: frame left, text right -->
+    <!-- Row 1: immagini a sinistra, testo a destra -->
     <div class="style-row">
-      <div class="style-frame sr-bg">
-        <div class="style-frame__dots" aria-hidden="true"></div>
-        <div class="style-frame__inner">
-          <div class="style-frame__header">
-            <span class="style-frame__header-label">SCENE &middot; 01</span>
+      <div class="style-stage-wrap">
+        <div class="style-stage">
+          <div class="style-stage__bg" data-sr="bg">
+            <img src="images/style-bg-01.webp" alt="" />
           </div>
-          <div class="style-frame__stage">
-            <div class="style-frame__bg">
-              <img src="images/gallery-01.webp" alt="" />
-            </div>
-            <div class="style-frame__char sr-char">
-              <img src="images/gallery-02.webp" alt="" />
-            </div>
+          <div class="style-stage__char" data-sr="char">
+            <img src="images/style-char-01.webp" alt="Character illustration layered over its background scene" />
           </div>
         </div>
       </div>
-      <div class="style-text sr-txt">
+      <div class="style-text" data-sr="txt">
         <p class="style-text__kana">手描きの線</p>
-        <h3 class="style-text__title">EVERY LINE<br /><span class="style-text__title-red">BY HAND</span></h3>
+        <h3 class="style-text__title">EVERY LINE <span class="style-text__title-red">BY HAND</span></h3>
         <p class="style-text__body">Characters and worlds are born on paper &mdash; pencil, ink, imperfections included &mdash; before any screen gets involved. It&rsquo;s how I&rsquo;ve drawn since 1999: the line comes first, technology comes after.</p>
       </div>
     </div>
 
-    <!-- Row 2: text left, frame right (reversed) -->
-    <div class="style-row style-row--rev">
-      <div class="style-frame style-frame--rev sr-bg">
-        <div class="style-frame__dots" aria-hidden="true"></div>
-        <div class="style-frame__inner">
-          <div class="style-frame__header">
-            <span class="style-frame__header-label">SCENE &middot; 02</span>
+    <!-- Row 2: testo a sinistra, immagini a destra -->
+    <div class="style-row style-row--2">
+      <div class="style-text" data-sr="txt">
+        <p class="style-text__kana">千のスタイル</p>
+        <h3 class="style-text__title">A THOUSAND STYLES, <span class="style-text__title-stroke">ONE HAND</span></h3>
+        <p class="style-text__body">From soft painterly scenes to sharp cel-shaded action: I move between styles, but background and character always belong to the same world &mdash; drawn to live together, like in traditional animation.</p>
+      </div>
+      <div class="style-stage-wrap">
+        <div class="style-stage">
+          <!-- TODO: sostituire con background + character reali della Row 2 -->
+          <div class="style-stage__bg" data-sr="bg">
+            <img src="images/gallery-05.webp" alt="" />
           </div>
-          <div class="style-frame__stage">
-            <div class="style-frame__bg">
-              <img src="images/gallery-05.webp" alt="" />
-            </div>
-            <div class="style-frame__char sr-char">
-              <img src="images/gallery-01.webp" alt="" />
-            </div>
+          <div class="style-stage__char" data-sr="char">
+            <img src="images/style-char-01.webp" alt="Character illustration layered over its background scene" />
           </div>
         </div>
-      </div>
-      <div class="style-text sr-txt">
-        <p class="style-text__kana">千のスタイル</p>
-        <h3 class="style-text__title">A THOUSAND STYLES,<br /><span class="style-text__title-stroke">ONE HAND</span></h3>
-        <p class="style-text__body">From soft painterly scenes to sharp cel-shaded action: I move between styles, but background and character always belong to the same world &mdash; drawn to live together, like in traditional animation.</p>
       </div>
     </div>
   </section>
